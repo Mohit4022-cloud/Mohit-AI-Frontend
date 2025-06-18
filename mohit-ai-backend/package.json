@@ -8,7 +8,10 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "express": "^4.19.2",
