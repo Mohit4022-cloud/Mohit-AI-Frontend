@@ -30,10 +30,28 @@ export const useAuthStore = create<AuthState>()(
 
       login: async (email: string, password: string) => {
         try {
+          console.log('Attempting login to:', `${API_URL}/auth/login`);
+          
           const response = await axios.post(`${API_URL}/auth/login`, {
             email,
             password,
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            validateStatus: (status) => status < 500, // Don't throw on 4xx
           });
+
+          // Check if we got HTML instead of JSON
+          const contentType = response.headers['content-type'];
+          if (contentType && contentType.includes('text/html')) {
+            console.error('Received HTML instead of JSON. Response:', response.data.substring(0, 200));
+            throw new Error('API endpoint not found. Please check the backend deployment.');
+          }
+
+          if (response.status !== 200) {
+            throw new Error(response.data?.message || 'Login failed');
+          }
 
           const { user, token } = response.data;
           
@@ -46,7 +64,10 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: true,
           });
         } catch (error: any) {
-          throw new Error(error.response?.data?.message || 'Login failed');
+          if (error.code === 'ECONNREFUSED') {
+            throw new Error('Cannot connect to server. Please check if the backend is running.');
+          }
+          throw new Error(error.response?.data?.message || error.message || 'Login failed');
         }
       },
 
