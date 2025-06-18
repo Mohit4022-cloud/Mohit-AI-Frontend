@@ -17,6 +17,15 @@ services:
         generateValue: true
       - key: PORT
         value: 5000
+      - key: LOG_LEVEL
+        value: info
+      # Add these manually in Render dashboard for security:
+      # - TWILIO_ACCOUNT_SID
+      # - TWILIO_AUTH_TOKEN
+      # - TWILIO_PHONE_NUMBER
+      # - ELEVENLABS_API_KEY
+      # - OPENAI_API_KEY or GOOGLE_AI_API_KEY
+      # - SENDGRID_API_KEY or SMTP credentials
 
   # Frontend Service
   - type: web
@@ -34,3 +43,4 @@ databases:
     databaseName: mohit_ai
     user: mohit_ai_user
     plan: free
+    postgresMajorVersion: 15
