@@ -1,155 +1,142 @@
-# Mohit AI - Inbound SDR Platform
+# Mohit AI Frontend
 
-Never miss another inbound lead with AI-powered sub-5-minute response times.
+Modern, responsive frontend for the Mohit AI Inbound SDR platform.
 
-## 🚀 Overview
+## Features
 
-Mohit AI is an intelligent inbound SDR platform that automatically responds to and qualifies leads 24/7. Built for B2B and B2C businesses who want to maximize their inbound lead conversion.
+- 🎨 **Modern UI**: Built with Next.js 14 and Tailwind CSS
+- 📱 **Responsive Design**: Works seamlessly on desktop and mobile
+- 🚀 **Real-time Updates**: WebSocket integration for live data
+- 📊 **Interactive Dashboard**: Monitor lead response metrics
+- 🔒 **Secure Auth**: JWT-based authentication
+- 🌙 **Dark Mode**: Built-in theme support
 
-### Key Features
+## Tech Stack
 
-- ⚡ **Sub-5-minute Response**: Industry-leading response times (average 47 seconds)
-- 🤖 **AI-Powered Conversations**: Natural voice and text interactions using ElevenLabs
-- 📞 **Multi-Channel Support**: Voice, SMS, Email, and Live Chat
-- 📊 **Smart Qualification**: BANT/FAINT/MEDDIC frameworks with AI scoring
-- 🔗 **CRM Integration**: Seamless sync with HubSpot, Salesforce, Pipedrive
-- 📈 **Real-time Analytics**: Track performance and conversion metrics
-- 💰 **ROI Focused**: 391% higher conversion rates vs 5-minute response
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Radix UI
+- **State**: Zustand for global state
+- **Data Fetching**: TanStack Query
+- **Charts**: Recharts
+- **Forms**: React Hook Form + Zod
 
-## 🏗️ Architecture
+## Quick Start
 
-```
-mohit-inbound-sdr/
-├── mohit-ai-backend/      # Node.js/Express API server
-│   ├── src/              # Source code
-│   ├── prisma/           # Database schema
-│   └── package.json      # Dependencies
-├── mohit-ai-frontend/     # Next.js frontend application
-│   ├── src/              # Source code
-│   └── package.json      # Dependencies
-└── README.md             # This file
-```
-
-## 🛠️ Tech Stack
-
-### Backend
-- Node.js 18+ with Express
-- PostgreSQL with Prisma ORM
-- Redis for queuing
-- Twilio for voice/SMS
-- ElevenLabs for AI voice
-- Socket.io for real-time
-
-### Frontend
-- Next.js 14 with App Router
-- TypeScript
-- Tailwind CSS
-- Zustand for state
-- TanStack Query
-- Recharts
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+
-- PostgreSQL
-- Redis
-- Twilio account
-- ElevenLabs API key
-
-### Backend Setup
-
+1. Install dependencies:
 ```bash
-cd mohit-ai-backend
 npm install
-cp .env.example .env
-# Configure your .env file
-npx prisma migrate dev
+```
+
+2. Set up environment variables:
+```bash
+# Create .env.local file
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
+
+3. Start development server:
+```bash
 npm run dev
 ```
 
-### Frontend Setup
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-```bash
-cd mohit-ai-frontend
-npm install
-# Create .env.local with NEXT_PUBLIC_API_URL
-npm run dev
+## Project Structure
+
+```
+src/
+├── app/                # Next.js app router pages
+│   ├── (auth)/        # Authentication pages
+│   ├── (dashboard)/   # Protected dashboard pages
+│   └── api/           # API routes (if needed)
+├── components/        # Reusable components
+│   ├── ui/           # Base UI components
+│   ├── layouts/      # Layout components
+│   └── features/     # Feature-specific components
+├── lib/              # Utilities and helpers
+├── services/         # API service layer
+├── stores/           # Zustand stores
+└── types/            # TypeScript types
 ```
 
-Visit http://localhost:3000 to see the application.
+## Key Features
 
-## 📊 Market Opportunity
+### Dashboard
+- Real-time lead response metrics
+- Response time tracking
+- Channel distribution visualization
+- Active lead monitoring
 
-The inbound SDR AI platform market is projected to reach **$61.69 billion by 2032** with significant gaps in serving SMBs and mid-market companies.
+### Lead Management
+- Lead list with search and filters
+- Lead detail view with conversation history
+- Bulk import and assignment
+- Qualification scoring
 
-### Target Market
-- **SMBs**: $20-90/user/month pricing tier
-- **Mid-Market**: Custom enterprise pricing
-- **Industries**: SaaS, E-commerce, Professional Services
+### Live Queue
+- Real-time view of incoming leads
+- Response status monitoring
+- Channel-specific queues
 
-### Competitive Advantages
-1. **Fastest Response Times**: Sub-60 second average
-2. **Transparent Pricing**: No hidden fees or setup costs
-3. **Easy Integration**: 5-minute setup with popular CRMs
-4. **Multi-Channel**: Voice + Text in one platform
+### Analytics
+- Response time trends
+- Conversion funnel analysis
+- Team performance metrics
+- ROI calculations
 
-## 📱 Core Use Cases
+## Development
 
-### B2B Sales Teams
-- Qualify enterprise leads instantly
-- Book demos automatically
-- Route to appropriate sales reps
+### Code Style
+- Use TypeScript strict mode
+- Follow Next.js best practices
+- Prefer server components when possible
+- Use Tailwind for styling
 
-### B2C E-commerce
-- Answer product questions
-- Capture contact information
-- Schedule consultations
+### Testing
+```bash
+npm run test        # Run tests
+npm run test:watch  # Watch mode
+npm run test:e2e    # E2E tests
+```
 
-### Professional Services
-- Initial client screening
-- Appointment scheduling
-- Service matching
+### Building
+```bash
+npm run build       # Production build
+npm run start       # Start production server
+```
 
-## 🔧 Configuration
+## Deployment
 
-### Response Strategies
-- **Voice First**: For high-value leads
-- **Omnichannel**: Parallel outreach
-- **Smart Routing**: Based on lead score
+### Vercel (Recommended)
+```bash
+vercel
+```
 
-### Qualification Frameworks
-- **BANT**: Budget, Authority, Need, Timeline
-- **FAINT**: Funds, Authority, Interest, Need, Timeline
-- **MEDDIC**: For enterprise deals
+### Docker
+```bash
+docker build -t mohit-ai-frontend .
+docker run -p 3000:3000 mohit-ai-frontend
+```
 
-## 📈 Performance Metrics
+### Traditional Hosting
+```bash
+npm run build
+npm run start
+```
 
-- **Response Time**: < 60 seconds average
-- **Qualification Rate**: 68% of inbound leads
-- **Conversion Rate**: 24% to opportunities
-- **ROI**: 391% improvement vs 5-min response
+## Environment Variables
 
-## 🤝 Contributing
+- `NEXT_PUBLIC_API_URL`: Backend API URL
+- `NEXT_PUBLIC_WEBSOCKET_URL`: WebSocket server URL
 
-We welcome contributions! Please see our contributing guidelines.
+## Contributing
 
 1. Fork the repository
-2. Create your feature branch
+2. Create feature branch
 3. Commit your changes
 4. Push to the branch
 5. Open a Pull Request
 
-## 📄 License
+## License
 
-Proprietary - Mohit AI © 2024. All rights reserved.
-
-## 🙋 Support
-
-- Documentation: [docs.mohitai.com](https://docs.mohitai.com)
-- Email: support@mohitai.com
-- Chat: Available in-app
-
----
-
-Built with ❤️ to help businesses never miss another opportunity.
+Proprietary - Mohit AI © 2024# Trigger Render rebuild
