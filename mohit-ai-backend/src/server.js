@@ -51,7 +51,11 @@ app.get('/health', (req, res) => {
 app.use('/api', routes);
 
 // WebSocket initialization
+global.io = io; // Make io available globally
 initializeWebSocketHandlers(io);
+
+// TODO: Add WebSocket relay for Twilio-ElevenLabs voice streaming
+// This requires additional setup with express-ws or a separate WebSocket server
 
 // Error handling
 app.use(errorHandler);

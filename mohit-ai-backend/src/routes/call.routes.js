@@ -18,7 +18,6 @@ router.post('/twilio/status', callController.handleTwilioStatus);
 router.post('/twilio/recording', callController.handleTwilioRecording);
 router.post('/twilio/transcription', callController.handleTwilioTranscription);
 
-// WebSocket relay for ElevenLabs
-router.ws('/relay/:callId', callController.handleVoiceRelay);
+// WebSocket relay endpoint is handled separately in server.js
 
 export default router;
