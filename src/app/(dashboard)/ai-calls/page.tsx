@@ -12,7 +12,7 @@ import { ContentCards } from "@/components/ai-calls/ContentCards";
 import { ProgressiveSettings } from "@/components/ai-calls/ProgressiveSettings";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Phone, Plus, Settings, Activity, History, QueueList } from "lucide-react";
+import { Phone, Plus, Settings, Activity, History, ListOrdered } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -64,7 +64,7 @@ export default function AICallsPage() {
             size="sm"
             onClick={() => router.push("/ai-calls/queue")}
           >
-            <QueueList className="h-4 w-4 mr-2" />
+            <ListOrdered className="h-4 w-4 mr-2" />
             Call Queue
           </Button>
           <Button
@@ -235,7 +235,6 @@ export default function AICallsPage() {
           <TranscriptPanel
             callId={selectedCall.id}
             onClose={() => setShowTranscript(false)}
-            mode="subtitle"
           />
         </div>
       )}
