@@ -67,15 +67,15 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
     const uniqueSpeakers = Array.from(new Set(callTranscripts.map(t => t.speaker)));
     
     // Pre-assign colors for known speakers
-    if (uniqueSpeakers.includes('AI')) {
+    if (uniqueSpeakers.includes('AI') && SPEAKER_COLORS[0]) {
       map.set('AI', SPEAKER_COLORS[0]); // Blue for AI
     }
     
     // Assign colors to other speakers
     let colorIndex = 1;
     uniqueSpeakers.forEach(speaker => {
-      if (!map.has(speaker) && colorIndex < SPEAKER_COLORS.length) {
-        map.set(speaker, SPEAKER_COLORS[colorIndex]);
+      if (!map.has(speaker) && colorIndex < SPEAKER_COLORS.length && SPEAKER_COLORS[colorIndex]) {
+        map.set(speaker, SPEAKER_COLORS[colorIndex]!);
         colorIndex++;
       }
     });
@@ -297,7 +297,7 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
                 {/* Timestamp markers */}
                 {filteredTranscripts.map((entry, index) => {
                   const showTimestamp = index === 0 || 
-                    (index > 0 && 
+                    (index > 0 && filteredTranscripts[index - 1] &&
                      entry.timestamp.getTime() - filteredTranscripts[index - 1].timestamp.getTime() > 30000);
                   
                   return (
@@ -353,7 +353,7 @@ function TranscriptEntry({ entry, highlight, speakerColor, highlightKeywords }: 
     return <User className="h-4 w-4" />;
   };
 
-  const colors = speakerColor || SPEAKER_COLORS[0];
+  const colors = speakerColor || SPEAKER_COLORS[0] || { bg: "bg-gray-50", text: "text-gray-600", border: "border-gray-200" };
 
   const highlightText = (text: string) => {
     let processedText: React.ReactNode[] = [text];
@@ -459,9 +459,9 @@ function TranscriptEntry({ entry, highlight, speakerColor, highlightKeywords }: 
 function TranscriptSubtitleEntry({ entry }: { entry: any }) {
   // Use the same color mapping logic
   const speakerColors = useMemo(() => {
-    if (entry.speaker === 'AI') return SPEAKER_COLORS[0];
-    if (entry.speaker === 'AGENT') return SPEAKER_COLORS[1];
-    if (entry.speaker === 'LEAD') return SPEAKER_COLORS[2];
+    if (entry.speaker === 'AI') return SPEAKER_COLORS[0] || { bg: "bg-blue-50", text: "text-blue-600", border: "border-blue-200" };
+    if (entry.speaker === 'AGENT') return SPEAKER_COLORS[1] || { bg: "bg-green-50", text: "text-green-600", border: "border-green-200" };
+    if (entry.speaker === 'LEAD') return SPEAKER_COLORS[2] || { bg: "bg-purple-50", text: "text-purple-600", border: "border-purple-200" };
     return SPEAKER_COLORS[3];
   }, [entry.speaker]);
 

@@ -51,7 +51,7 @@ export function CallControls({ callId }: CallControlsProps) {
   };
 
   const handleVolumeChange = (value: number[]) => {
-    setVolume(value[0]);
+    setVolume(value[0] ?? 100);
     // In production, this would control actual audio volume
   };
 
@@ -233,7 +233,7 @@ export function CallControls({ callId }: CallControlsProps) {
                       </div>
                       <Slider
                         value={[aiSpeed]}
-                        onValueChange={(value) => setAiSpeed(value[0])}
+                        onValueChange={(value) => setAiSpeed(value[0] ?? 50)}
                         max={100}
                         step={1}
                         className="[&_[role=slider]]:bg-purple-600 [&_[role=slider]]:border-purple-600 [&_.relative]:bg-purple-100 [&_[data-orientation]]:bg-purple-600"
@@ -252,7 +252,7 @@ export function CallControls({ callId }: CallControlsProps) {
                       </div>
                       <Slider
                         value={[aiFormality]}
-                        onValueChange={(value) => setAiFormality(value[0])}
+                        onValueChange={(value) => setAiFormality(value[0] ?? 50)}
                         max={100}
                         step={1}
                         className="[&_[role=slider]]:bg-purple-600 [&_[role=slider]]:border-purple-600 [&_.relative]:bg-purple-100 [&_[data-orientation]]:bg-purple-600"
@@ -271,7 +271,7 @@ export function CallControls({ callId }: CallControlsProps) {
                       </div>
                       <Slider
                         value={[aiEmpathy]}
-                        onValueChange={(value) => setAiEmpathy(value[0])}
+                        onValueChange={(value) => setAiEmpathy(value[0] ?? 50)}
                         max={100}
                         step={1}
                         className="[&_[role=slider]]:bg-purple-600 [&_[role=slider]]:border-purple-600 [&_.relative]:bg-purple-100 [&_[data-orientation]]:bg-purple-600"
@@ -290,7 +290,7 @@ export function CallControls({ callId }: CallControlsProps) {
                       </div>
                       <Slider
                         value={[aiTechnicality]}
-                        onValueChange={(value) => setAiTechnicality(value[0])}
+                        onValueChange={(value) => setAiTechnicality(value[0] ?? 50)}
                         max={100}
                         step={1}
                         className="[&_[role=slider]]:bg-purple-600 [&_[role=slider]]:border-purple-600 [&_.relative]:bg-purple-100 [&_[data-orientation]]:bg-purple-600"

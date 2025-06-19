@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authenticateRequest, AuthError } from '@/lib/auth-edge';
 import { rateLimit, securityHeaders, logSecurityEvent } from '@/lib/security-edge';
 
+// Re-export authenticateRequest for use in other modules
+export { authenticateRequest, AuthError };
+
 // Public routes that don't require authentication
 const PUBLIC_ROUTES = [
   '/api/auth/login',

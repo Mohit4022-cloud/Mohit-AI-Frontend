@@ -190,9 +190,16 @@ export const UsernameSchema = z.string().min(3).max(30).regex(/^[a-zA-Z0-9_-]+$/
 export const PhoneSchema = z.string().regex(/^\+?[1-9]\d{1,14}$/);
 export const URLSchema = z.string().url().max(2048);
 
+// Note: This file uses Node.js crypto and should only be used in API routes
+// For Edge Runtime, use security-edge.ts or security-web-crypto.ts
+
 // Encryption utilities
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || crypto.randomBytes(32).toString('hex');
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || '';
 const IV_LENGTH = 16;
+
+if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length !== 32) {
+  console.warn('ENCRYPTION_KEY must be exactly 32 characters. Using a temporary key for development.');
+}
 
 export function encrypt(text: string): string {
   const iv = crypto.randomBytes(IV_LENGTH);

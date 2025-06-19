@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { authenticateWebSocket } from '@/middleware/auth';
-import { logSecurityEvent } from '@/lib/security';
+import { logSecurityEvent } from '@/lib/security-edge';
 
 // This is a placeholder for WebSocket handling
 // In a real implementation, you would use a WebSocket server like Socket.io

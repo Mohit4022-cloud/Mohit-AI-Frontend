@@ -34,11 +34,11 @@ interface ContentCardsProps {
 export function ContentCards({ callId, className }: ContentCardsProps) {
   const [cards, setCards] = useState<ContentCard[]>([]);
   const [dismissedCards, setDismissedCards] = useState<Set<string>>(new Set());
-  const { getTranscript } = useAICallStore();
+  const { transcripts } = useAICallStore();
 
   useEffect(() => {
     // Simulate keyword detection from transcript
-    const transcript = getTranscript(callId);
+    const transcript = transcripts.get(callId) || [];
     const lastEntries = transcript.slice(-5);
     const keywords = lastEntries.map(e => e.text.toLowerCase()).join(" ");
 
@@ -150,7 +150,7 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
 
     // Filter out dismissed cards
     setCards(newCards.filter(card => !dismissedCards.has(card.id)));
-  }, [callId, getTranscript, dismissedCards]);
+  }, [callId, transcripts, dismissedCards]);
 
   const dismissCard = (cardId: string) => {
     setDismissedCards(prev => new Set(prev).add(cardId));

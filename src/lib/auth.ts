@@ -43,7 +43,7 @@ export class AuthError extends Error {
 // NOT in middleware or Edge Runtime contexts
 export async function hashPassword(password: string): Promise<string> {
   // Only use in API routes, not in Edge Runtime
-  if (typeof EdgeRuntime !== 'undefined') {
+  if (process.env.NEXT_RUNTIME === 'edge') {
     throw new Error('hashPassword cannot be used in Edge Runtime');
   }
   const bcrypt = await import('bcryptjs');
@@ -53,7 +53,7 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
   // Only use in API routes, not in Edge Runtime
-  if (typeof EdgeRuntime !== 'undefined') {
+  if (process.env.NEXT_RUNTIME === 'edge') {
     throw new Error('verifyPassword cannot be used in Edge Runtime');
   }
   const bcrypt = await import('bcryptjs');

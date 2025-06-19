@@ -25,7 +25,7 @@ export function AIInsights({ callId }: AIInsightsProps) {
   // Group insights by type
   const groupedInsights = callInsights.reduce((acc, insight) => {
     if (!acc[insight.type]) acc[insight.type] = [];
-    acc[insight.type].push(insight);
+    acc[insight.type]!.push(insight);
     return acc;
   }, {} as Record<string, AIInsight[]>);
 
@@ -284,7 +284,7 @@ function TalkingPoint({ icon: Icon, text, confidence }: TalkingPointProps) {
       <div className="flex-1">
         <p className="text-sm">{text}</p>
       </div>
-      <Badge variant="ghost" className="text-xs opacity-0 group-hover:opacity-100">
+      <Badge variant="outline" className="text-xs opacity-0 group-hover:opacity-100">
         {confidence}%
       </Badge>
     </div>

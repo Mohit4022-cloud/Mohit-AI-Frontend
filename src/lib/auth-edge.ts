@@ -1,6 +1,6 @@
 // Edge-compatible authentication utilities (no bcrypt)
 import { NextRequest } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { SignJWT, jwtVerify } from 'jose';
 import { z } from 'zod';
 
 // Environment configuration with strict validation
@@ -36,15 +36,16 @@ export class AuthError extends Error {
 }
 
 // Token verification (Edge-compatible)
-export function verifyAccessToken(token: string): TokenPayload {
+export async function verifyAccessToken(token: string): Promise<TokenPayload> {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as any;
-    return TokenPayloadSchema.parse(decoded);
-  } catch (error) {
-    if (error instanceof jwt.TokenExpiredError) {
+    const secret = new TextEncoder().encode(JWT_SECRET);
+    const { payload } = await jwtVerify(token, secret);
+    return TokenPayloadSchema.parse(payload);
+  } catch (error: any) {
+    if (error?.code === 'ERR_JWT_EXPIRED') {
       throw new AuthError('Token expired', 401, 'TOKEN_EXPIRED');
     }
-    if (error instanceof jwt.JsonWebTokenError) {
+    if (error?.code === 'ERR_JWT_INVALID' || error?.code === 'ERR_JWS_INVALID') {
       throw new AuthError('Invalid token', 401, 'INVALID_TOKEN');
     }
     throw new AuthError('Token verification failed', 401, 'TOKEN_VERIFICATION_FAILED');
@@ -71,13 +72,14 @@ export async function authenticateRequest(request: NextRequest): Promise<TokenPa
     throw new AuthError('No authentication token provided', 401, 'NO_TOKEN');
   }
   
-  return verifyAccessToken(token);
+  return await verifyAccessToken(token);
 }
 
 // CSRF Protection (Edge-compatible)
-export function verifyCSRFToken(token: string): boolean {
+export async function verifyCSRFToken(token: string): Promise<boolean> {
   try {
-    jwt.verify(token, JWT_SECRET);
+    const secret = new TextEncoder().encode(JWT_SECRET);
+    await jwtVerify(token, secret);
     return true;
   } catch {
     return false;
