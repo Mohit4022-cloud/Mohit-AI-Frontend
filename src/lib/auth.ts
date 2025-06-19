@@ -1,6 +1,8 @@
+// Main auth module that re-exports from appropriate modules
+// This helps with import organization
+
 import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
 // Environment configuration with strict validation
@@ -37,13 +39,24 @@ export class AuthError extends Error {
   }
 }
 
-// Password hashing utilities
+// Password hashing utilities - these should only be used in API routes
+// NOT in middleware or Edge Runtime contexts
 export async function hashPassword(password: string): Promise<string> {
+  // Only use in API routes, not in Edge Runtime
+  if (typeof EdgeRuntime !== 'undefined') {
+    throw new Error('hashPassword cannot be used in Edge Runtime');
+  }
+  const bcrypt = await import('bcryptjs');
   const saltRounds = 12;
   return bcrypt.hash(password, saltRounds);
 }
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  // Only use in API routes, not in Edge Runtime
+  if (typeof EdgeRuntime !== 'undefined') {
+    throw new Error('verifyPassword cannot be used in Edge Runtime');
+  }
+  const bcrypt = await import('bcryptjs');
   return bcrypt.compare(password, hash);
 }
 

@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { generateAccessToken, generateRefreshToken, verifyPassword } from '@/lib/auth';
-import { logSecurityEvent, EmailSchema, sanitizeInput } from '@/lib/security';
+import { generateAccessToken, generateRefreshToken } from '@/lib/auth';
+import { EmailSchema } from '@/lib/validation';
+import { sanitizeInput } from '@/lib/security-edge';
 import { getUserByEmail } from '@/lib/mockData';
+
+// Ensure this route runs in Node.js runtime, not Edge Runtime
+export const runtime = 'nodejs';
 
 // Login request schema
 const LoginSchema = z.object({
@@ -18,15 +22,8 @@ export async function POST(request: NextRequest) {
     
     const validationResult = LoginSchema.safeParse(sanitizedBody);
     if (!validationResult.success) {
-      logSecurityEvent({
-        ip: request.ip || 'unknown',
-        method: 'POST',
-        path: '/api/auth/login',
-        userAgent: request.headers.get('user-agent') || 'unknown',
-        action: 'login_validation_failed',
-        result: 'failure',
-        details: validationResult.error.issues,
-      });
+      // Log validation failure
+      console.error('[AUTH] Login validation failed:', validationResult.error.issues);
       
       return NextResponse.json(
         { error: 'Invalid input', details: validationResult.error.issues },
@@ -48,15 +45,8 @@ export async function POST(request: NextRequest) {
     );
     
     if (!user || !isValidPassword) {
-      logSecurityEvent({
-        ip: request.ip || 'unknown',
-        method: 'POST',
-        path: '/api/auth/login',
-        userAgent: request.headers.get('user-agent') || 'unknown',
-        action: 'login_failed',
-        result: 'failure',
-        details: { email },
-      });
+      // Log login failure
+      console.error('[AUTH] Login failed for email:', email);
       
       // Simulate processing delay to prevent timing attacks
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -79,15 +69,7 @@ export async function POST(request: NextRequest) {
     const refreshToken = generateRefreshToken(tokenPayload);
     
     // Log successful login
-    logSecurityEvent({
-      ip: request.ip || 'unknown',
-      method: 'POST',
-      path: '/api/auth/login',
-      userAgent: request.headers.get('user-agent') || 'unknown',
-      userId: user.id,
-      action: 'login_success',
-      result: 'success',
-    });
+    console.log('[AUTH] Login successful for user:', user.id);
     
     // Create response with secure cookie
     const response = NextResponse.json({
@@ -123,15 +105,8 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Login error:', error);
     
-    logSecurityEvent({
-      ip: request.ip || 'unknown',
-      method: 'POST',
-      path: '/api/auth/login',
-      userAgent: request.headers.get('user-agent') || 'unknown',
-      action: 'login_error',
-      result: 'failure',
-      details: error instanceof Error ? error.message : 'Unknown error',
-    });
+    // Log error
+    console.error('[AUTH] Login error:', error instanceof Error ? error.message : 'Unknown error');
     
     return NextResponse.json(
       { error: 'Internal server error' },

@@ -56,7 +56,9 @@ export async function GET(request: NextRequest) {
 }
 
 // WebSocket message handlers (to be used with actual WebSocket server)
-export const websocketHandlers = {
+// Note: These are not exported as Next.js route handlers
+// They should be used by a separate WebSocket server
+const websocketHandlers = {
   // Handle incoming audio from Twilio
   async handleAudioChunk(data: {
     callId: string;
@@ -193,3 +195,6 @@ declare global {
   var transcriptListeners: ((data: any) => void)[];
   var io: any;
 }
+
+// Export handlers for use in WebSocket server (not as Next.js route export)
+export { websocketHandlers };

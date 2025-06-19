@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticateRequest, AuthError } from '@/lib/auth';
-import { rateLimit, securityHeaders, logSecurityEvent } from '@/lib/security';
+import { authenticateRequest, AuthError } from '@/lib/auth-edge';
+import { rateLimit, securityHeaders, logSecurityEvent } from '@/lib/security-edge';
 
 // Public routes that don't require authentication
 const PUBLIC_ROUTES = [
@@ -142,7 +142,7 @@ export async function authenticateWebSocket(token: string): Promise<any> {
     // This would be imported from your auth library
     // For now, we'll create a simple validation
     if (!token) {
-      throw new AuthError('No token provided', 'NO_TOKEN', 401);
+      throw new AuthError('No token provided', 401, 'NO_TOKEN');
     }
     
     // In a real implementation, validate the JWT token
@@ -153,6 +153,6 @@ export async function authenticateWebSocket(token: string): Promise<any> {
       role: 'user',
     };
   } catch (error) {
-    throw new AuthError('Invalid WebSocket token', 'INVALID_TOKEN', 401);
+    throw new AuthError('Invalid WebSocket token', 401, 'INVALID_TOKEN');
   }
 }
