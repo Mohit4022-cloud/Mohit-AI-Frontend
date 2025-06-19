@@ -1,0 +1,11 @@
+# Robots.txt for Mohit AI Platform
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://your-domain.com/sitemap.xml
+EOF < /dev/null

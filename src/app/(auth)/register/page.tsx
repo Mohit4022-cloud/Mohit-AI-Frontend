@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuthStore } from "@/stores/authStore";
 import { Zap } from "lucide-react";
+import { getApiUrl } from "@/lib/config";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -29,18 +30,18 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/auth/register`, {
+      const response = await fetch(getApiUrl('/auth/register'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error?.message || 'Registration failed');
+        const errorData = await response.json();
+        throw new Error(errorData.error?.message || 'Registration failed');
       }
 
-      const data = await response.json();
+      await response.json(); // Registration successful
       
       // Auto-login after registration
       await login(formData.email, formData.password);

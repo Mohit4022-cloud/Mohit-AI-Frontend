@@ -1,0 +1,6 @@
+# Allow example tokens in documentation and .env.example
+.*\.example:.*ghp_x+.*
+.*\.example:.*sk-x+.*
+.*\.md:.*OPENAI_API_KEY.*
+.*\.md:.*<your-.*>.*
+EOF < /dev/null

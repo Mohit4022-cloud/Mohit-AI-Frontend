@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import axios from 'axios';
+import { config, getApiUrl } from '@/lib/config';
 
 interface User {
   id: string;
@@ -19,8 +20,6 @@ interface AuthState {
   updateUser: (user: User) => void;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
@@ -30,22 +29,20 @@ export const useAuthStore = create<AuthState>()(
 
       login: async (email: string, password: string) => {
         try {
-          console.log('Attempting login to:', `${API_URL}/auth/login`);
-          
-          const response = await axios.post(`${API_URL}/auth/login`, {
+          const response = await axios.post(getApiUrl('/auth/login'), {
             email,
             password,
           }, {
             headers: {
               'Content-Type': 'application/json',
             },
+            timeout: config.api.timeout,
             validateStatus: (status) => status < 500, // Don't throw on 4xx
           });
 
           // Check if we got HTML instead of JSON
           const contentType = response.headers['content-type'];
           if (contentType && contentType.includes('text/html')) {
-            console.error('Received HTML instead of JSON. Response:', response.data.substring(0, 200));
             throw new Error('API endpoint not found. Please check the backend deployment.');
           }
 
@@ -85,7 +82,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: 'auth-storage',
+      name: config.auth.tokenKey,
     }
   )
 );

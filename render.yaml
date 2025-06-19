@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: mohit-ai-frontend
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        value: https://mohit-ai-backend.onrender.com/api
+      - key: NEXT_PUBLIC_WS_URL
+        value: wss://mohit-ai-backend.onrender.com
+      - key: NEXT_PUBLIC_APP_NAME
+        value: Mohit AI
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://mohit-ai-frontend.onrender.com
+    healthCheckPath: /
+    autoDeploy: true
