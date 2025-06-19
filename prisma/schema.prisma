@@ -1,0 +1,266 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  password       String
+  name           String?
+  role           String    @default("user")
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  calls          AICall[]
+  callTakeovers  CallTakeover[]
+  callPauses     CallPause[]
+  
+  @@index([email])
+  @@index([organizationId])
+}
+
+// Organization model
+model Organization {
+  id        String    @id @default(cuid())
+  name      String
+  plan      String    @default("starter")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  // Relations
+  users     User[]
+  campaigns Campaign[]
+  calls     AICall[]
+  leads     Lead[]
+}
+
+// Lead model
+model Lead {
+  id             String    @id @default(cuid())
+  name           String
+  email          String?
+  phone          String
+  company        String?
+  title          String?
+  status         String    @default("new")
+  source         String?
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  calls          AICall[]
+  
+  @@index([organizationId])
+  @@index([phone])
+}
+
+// Campaign model
+model Campaign {
+  id             String    @id @default(cuid())
+  name           String
+  description    String?
+  status         String    @default("active")
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  settings       Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  calls          AICall[]
+  
+  @@index([organizationId])
+}
+
+// AI Call model
+model AICall {
+  id               String    @id @default(cuid())
+  twilioCallSid    String?   @unique
+  leadId           String
+  lead             Lead      @relation(fields: [leadId], references: [id])
+  userId           String
+  user             User      @relation(fields: [userId], references: [id])
+  organizationId   String
+  organization     Organization @relation(fields: [organizationId], references: [id])
+  campaignId       String?
+  campaign         Campaign? @relation(fields: [campaignId], references: [id])
+  
+  // Call details
+  status           CallStatus @default(CONNECTING)
+  mode             CallMode   @default(AI)
+  direction        String     @default("outbound")
+  phone            String
+  startTime        DateTime?
+  endTime          DateTime?
+  duration         Int        @default(0)
+  
+  // AI details
+  aiAgentId        String?
+  aiModel          String?
+  aiSettings       Json?
+  
+  // Call metrics
+  sentiment        Int        @default(50)
+  talkRatio        Json?
+  outcome          String?
+  qualificationScore Int?
+  
+  // Flags
+  hasRecording     Boolean   @default(false)
+  hasTranscript    Boolean   @default(false)
+  hasSummary       Boolean   @default(false)
+  hasInsights      Boolean   @default(false)
+  
+  // Metadata
+  tags             String[]
+  metadata         Json?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  
+  // Relations
+  transcripts      Transcript[]
+  recordings       Recording[]
+  summaries        Summary[]
+  takeovers        CallTakeover[]
+  pauses           CallPause[]
+  events           CallEvent[]
+  
+  @@index([organizationId])
+  @@index([userId])
+  @@index([leadId])
+  @@index([campaignId])
+  @@index([status])
+  @@index([startTime])
+}
+
+// Transcript model
+model Transcript {
+  id         String    @id @default(cuid())
+  callId     String
+  call       AICall    @relation(fields: [callId], references: [id], onDelete: Cascade)
+  speaker    Speaker
+  text       String
+  startTime  Float?
+  endTime    Float?
+  confidence Float?
+  sentiment  Float?
+  metadata   Json?
+  createdAt  DateTime  @default(now())
+  
+  @@index([callId])
+  @@index([speaker])
+}
+
+// Recording model
+model Recording {
+  id         String    @id @default(cuid())
+  callId     String
+  call       AICall    @relation(fields: [callId], references: [id], onDelete: Cascade)
+  url        String
+  duration   Int?
+  size       Int?
+  format     String    @default("mp3")
+  status     String    @default("processing")
+  metadata   Json?
+  createdAt  DateTime  @default(now())
+  
+  @@index([callId])
+}
+
+// Summary model
+model Summary {
+  id              String    @id @default(cuid())
+  callId          String
+  call            AICall    @relation(fields: [callId], references: [id], onDelete: Cascade)
+  overview        String
+  keyPoints       String[]
+  actionItems     Json[]
+  nextSteps       String[]
+  highlights      Json[]
+  metrics         Json?
+  generatedBy     String?
+  generatedAt     DateTime  @default(now())
+  
+  @@index([callId])
+}
+
+// Call Takeover model
+model CallTakeover {
+  id         String    @id @default(cuid())
+  callId     String
+  call       AICall    @relation(fields: [callId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+  reason     String?
+  notes      String?
+  timestamp  DateTime  @default(now())
+  
+  @@index([callId])
+  @@index([userId])
+}
+
+// Call Pause model
+model CallPause {
+  id         String    @id @default(cuid())
+  callId     String
+  call       AICall    @relation(fields: [callId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+  pausedAt   DateTime  @default(now())
+  resumedAt  DateTime?
+  duration   Int?
+  reason     String?
+  
+  @@index([callId])
+  @@index([userId])
+}
+
+// Call Event model
+model CallEvent {
+  id         String    @id @default(cuid())
+  callId     String
+  call       AICall    @relation(fields: [callId], references: [id], onDelete: Cascade)
+  type       String
+  data       Json?
+  timestamp  DateTime  @default(now())
+  
+  @@index([callId])
+  @@index([type])
+  @@index([timestamp])
+}
+
+// Enums
+enum CallStatus {
+  CONNECTING
+  RINGING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELED
+}
+
+enum CallMode {
+  AI
+  HUMAN
+  HYBRID
+}
+
+enum Speaker {
+  AI
+  LEAD
+  HUMAN
+}
