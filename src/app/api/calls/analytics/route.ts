@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticateRequest } from '@/middleware/auth';
+import { authenticateRequest } from '@/lib/auth-helpers';
 import { logSecurityEvent } from '@/lib/security';
 import { subDays, startOfDay, endOfDay } from 'date-fns';
 
@@ -186,23 +186,23 @@ function generateTimeSeriesData(calls: any[], groupBy: string) {
   
   calls.forEach(call => {
     const date = new Date(call.startTime);
-    let key: string;
+    let key: string = '';
     
     switch (groupBy) {
       case 'day':
-        key = date.toISOString().split('T')[0];
+        key = date.toISOString().split('T')[0]!;
         break;
       case 'week':
         // Get week number
         const weekStart = new Date(date);
         weekStart.setDate(date.getDate() - date.getDay());
-        key = weekStart.toISOString().split('T')[0];
+        key = weekStart.toISOString().split('T')[0]!;
         break;
       case 'month':
         key = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
         break;
       default:
-        key = date.toISOString().split('T')[0];
+        key = date.toISOString().split('T')[0]!;
     }
     
     if (!grouped.has(key)) {

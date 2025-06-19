@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticateRequest } from '@/middleware/auth';
+import { authenticateRequest } from '@/lib/auth-helpers';
 import { logSecurityEvent } from '@/lib/security';
 
 // Mock transcript database
@@ -186,6 +186,6 @@ interface TranscriptEntry {
 // Global type declarations
 declare global {
   var aiCallsDb: Record<string, any>;
-  var transcriptsDb: Record<string, TranscriptEntry[]>;
+  var transcriptsDb: Record<string, any[]>;
   var transcriptListeners: ((data: any) => void)[];
 }

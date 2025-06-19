@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticateRequest } from '@/middleware/auth';
+import { authenticateRequest } from '@/lib/auth-helpers';
 import { logSecurityEvent } from '@/lib/security';
 import { z } from 'zod';
 

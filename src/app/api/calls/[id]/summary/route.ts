@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticateRequest } from '@/middleware/auth';
+import { authenticateRequest } from '@/lib/auth-helpers';
 import { logSecurityEvent } from '@/lib/security';
 import { z } from 'zod';
 
@@ -178,7 +178,7 @@ function generateMockSummary(
   transcript: any[],
   options: any
 ) {
-  const summary = {
+  const summary: any = {
     id: `summary_${call.id}`,
     callId: call.id,
     generatedAt: new Date(),

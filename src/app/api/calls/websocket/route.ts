@@ -105,7 +105,7 @@ const websocketHandlers = {
     if (!global.transcriptsDb[data.callId]) {
       global.transcriptsDb[data.callId] = [];
     }
-    global.transcriptsDb[data.callId].push(transcriptEntry);
+    global.transcriptsDb[data.callId]!.push(transcriptEntry);
     
     // Emit to listeners
     if (global.transcriptListeners) {
@@ -117,9 +117,11 @@ const websocketHandlers = {
     // If final, process with AI
     if (data.isFinal && data.speaker === 'LEAD') {
       // Generate AI response
-      const aiResponse = await generateAIResponse(data.callId, data.text);
+      const aiResponse = await websocketHandlers.generateAIResponse(data.callId, data.text);
       return aiResponse;
     }
+    
+    return null;
   },
   
   // Generate AI response
@@ -147,7 +149,7 @@ const websocketHandlers = {
       confidence: response.confidence,
     };
     
-    global.transcriptsDb[callId].push(aiTranscriptEntry);
+    global.transcriptsDb[callId]!.push(aiTranscriptEntry);
     
     // Return TTS request
     return {
@@ -166,7 +168,7 @@ const websocketHandlers = {
     status: string;
     event: string;
   }) {
-    const call = global.aiCallsDb?.[callId];
+    const call = global.aiCallsDb?.[data.callId];
     if (!call) return;
     
     // Update call status
@@ -196,5 +198,5 @@ declare global {
   var io: any;
 }
 
-// Export handlers for use in WebSocket server (not as Next.js route export)
-export { websocketHandlers };
+// Note: websocketHandlers should be moved to a separate non-route file
+// and imported where needed for actual WebSocket server implementation

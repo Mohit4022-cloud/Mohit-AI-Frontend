@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { authenticateRequest, getUserFromRequest } from '@/middleware/auth';
+import { authenticateRequest, getUserFromRequest } from '@/lib/auth-helpers';
 import { logSecurityEvent } from '@/lib/security';
 import twilio from 'twilio';
 
