@@ -37,7 +37,7 @@ const securityHeaders = [
       style-src 'self' 'unsafe-inline';
       img-src 'self' blob: data: https:;
       font-src 'self';
-      connect-src 'self' ${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'} ${process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:5000'} *.google-analytics.com;
+      connect-src 'self' http://localhost:* ws://localhost:* https://*.com wss://*.com *.google-analytics.com;
       media-src 'self';
       object-src 'none';
       child-src 'self';

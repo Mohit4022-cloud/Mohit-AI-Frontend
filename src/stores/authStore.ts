@@ -61,8 +61,12 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: true,
           });
         } catch (error: any) {
-          if (error.code === 'ECONNREFUSED') {
+          console.error('Login error:', error);
+          if (error.code === 'ECONNREFUSED' || error.code === 'ERR_NETWORK') {
             throw new Error('Cannot connect to server. Please check if the backend is running.');
+          }
+          if (error.response?.status === 404) {
+            throw new Error('Login endpoint not found. Please check your configuration.');
           }
           throw new Error(error.response?.data?.message || error.message || 'Login failed');
         }
