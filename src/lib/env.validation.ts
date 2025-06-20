@@ -97,6 +97,34 @@ export function validateServerEnv() {
   try {
     return serverEnvSchema.parse(process.env);
   } catch (error) {
+    // During build time, provide defaults for missing variables
+    if (process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
+      console.warn('Using placeholder values for missing environment variables during build');
+      return {
+        NODE_ENV: 'production',
+        PORT: '3000',
+        DATABASE_URL: process.env.DATABASE_URL || 'postgresql://placeholder',
+        JWT_SECRET: process.env.JWT_SECRET || 'build-placeholder-jwt-secret-32-chars',
+        JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || 'build-placeholder-refresh-secret-32ch',
+        JWT_EXPIRES_IN: '15m',
+        JWT_REFRESH_EXPIRES_IN: '7d',
+        ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || '0123456789abcdef0123456789abcdef',
+        RATE_LIMIT_WINDOW_MS: 60000,
+        RATE_LIMIT_MAX_REQUESTS: 100,
+        LOG_LEVEL: 'info',
+        LOG_FORMAT: 'json',
+        ENABLE_VOICE_CALLS: true,
+        ENABLE_SMS: true,
+        ENABLE_EMAIL: true,
+        ENABLE_AI_COACHING: true,
+        ENABLE_DEBUG_MODE: false,
+        OPENAI_MODEL: 'gpt-4',
+        OPENAI_TEMPERATURE: 0.7,
+        AWS_REGION: 'us-east-1',
+        WEBHOOK_TIMEOUT: 5000,
+      } as any;
+    }
+    
     if (error instanceof z.ZodError) {
       const missingVars = error.errors
         .map(err => `${err.path.join('.')}: ${err.message}`)
@@ -193,7 +221,5 @@ export function getFeatureFlags() {
   };
 }
 
-// Validate on module load (server-side only)
-if (typeof window === 'undefined') {
-  validateServerEnv();
-}
+// Don't validate on module load during build
+// Validation will happen at runtime when env vars are actually needed

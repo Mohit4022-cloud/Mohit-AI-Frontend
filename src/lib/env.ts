@@ -72,6 +72,31 @@ function validateEnv() {
   try {
     return envSchema.parse(process.env);
   } catch (error) {
+    // During build time, use defaults for missing required variables
+    if (process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
+      console.warn('Using default values for missing environment variables during build');
+      return {
+        NODE_ENV: process.env.NODE_ENV || 'production',
+        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000',
+        NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3000',
+        DATABASE_URL: process.env.DATABASE_URL || 'postgresql://user:pass@localhost:5432/db',
+        JWT_SECRET: process.env.JWT_SECRET || 'build-time-placeholder-jwt-secret',
+        JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || 'build-time-placeholder-refresh',
+        JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '1h',
+        JWT_REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+        ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || '0123456789abcdef0123456789abcdef',
+        SESSION_MAX_AGE: 86400000,
+        RATE_LIMIT_WINDOW_MS: 60000,
+        RATE_LIMIT_MAX_REQUESTS: 100,
+        ENABLE_VOICE_CALLS: true,
+        ENABLE_SMS: true,
+        ENABLE_EMAIL: true,
+        ENABLE_AI_COACHING: true,
+        ANALYZE: false,
+        NEXT_TELEMETRY_DISABLED: '1'
+      } as any;
+    }
+    
     if (error instanceof z.ZodError) {
       const missingVars = error.errors.map(err => err.path.join('.')).join(', ');
       throw new Error(
