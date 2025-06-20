@@ -93,7 +93,7 @@ const clientEnvSchema = z.object({
  * Validates server environment variables
  * @throws {Error} if validation fails
  */
-export function validateServerEnv() {
+export function validateServerEnv(): ServerEnv {
   try {
     return serverEnvSchema.parse(process.env);
   } catch (error) {
@@ -101,7 +101,7 @@ export function validateServerEnv() {
     if (process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
       console.warn('Using placeholder values for missing environment variables during build');
       return {
-        NODE_ENV: 'production',
+        NODE_ENV: 'production' as const,
         PORT: '3000',
         DATABASE_URL: process.env.DATABASE_URL || 'postgresql://placeholder',
         JWT_SECRET: process.env.JWT_SECRET || 'build-placeholder-jwt-secret-32-chars',
@@ -111,8 +111,8 @@ export function validateServerEnv() {
         ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || '0123456789abcdef0123456789abcdef',
         RATE_LIMIT_WINDOW_MS: 60000,
         RATE_LIMIT_MAX_REQUESTS: 100,
-        LOG_LEVEL: 'info',
-        LOG_FORMAT: 'json',
+        LOG_LEVEL: 'info' as const,
+        LOG_FORMAT: 'json' as const,
         ENABLE_VOICE_CALLS: true,
         ENABLE_SMS: true,
         ENABLE_EMAIL: true,
@@ -122,7 +122,7 @@ export function validateServerEnv() {
         OPENAI_TEMPERATURE: 0.7,
         AWS_REGION: 'us-east-1',
         WEBHOOK_TIMEOUT: 5000,
-      } as any;
+      } as ServerEnv;
     }
     
     if (error instanceof z.ZodError) {
