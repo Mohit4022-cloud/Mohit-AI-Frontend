@@ -3,7 +3,7 @@ services:
     name: mohit-ai-frontend
     runtime: node
     plan: free
-    buildCommand: npm ci && npx prisma generate && npm run build
+    buildCommand: npm ci --ignore-scripts && npx prisma generate && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV

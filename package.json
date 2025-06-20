@@ -15,7 +15,6 @@
     "test:coverage": "jest --coverage",
     "security:audit": "npm audit && node scripts/security-audit.js",
     "analyze": "ANALYZE=true next build",
-    "postinstall": "prisma generate && echo 'Frontend dependencies installed successfully'",
     "prepare": "husky"
   },
   "dependencies": {
