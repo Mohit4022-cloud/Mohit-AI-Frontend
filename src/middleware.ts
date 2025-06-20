@@ -23,12 +23,13 @@ export const config = {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
-  // Skip middleware for static assets
+  // Skip middleware for static assets and health check
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/public') ||
     pathname.endsWith('.ico') ||
-    pathname.endsWith('.txt')
+    pathname.endsWith('.txt') ||
+    pathname === '/api/health'
   ) {
     return NextResponse.next();
   }
