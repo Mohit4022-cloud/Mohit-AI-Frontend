@@ -217,6 +217,9 @@ export function encrypt(text: string): string {
 
 export function decrypt(text: string): string {
   const parts = text.split(':');
+  if (parts.length !== 2 || !parts[0] || !parts[1]) {
+    throw new Error('Invalid encrypted text format');
+  }
   const iv = Buffer.from(parts[0], 'hex');
   const encryptedText = parts[1];
   

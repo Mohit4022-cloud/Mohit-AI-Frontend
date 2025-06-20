@@ -4,11 +4,15 @@ import { authenticateRequest, getUserFromRequest } from '@/lib/auth-helpers';
 import { logSecurityEvent } from '@/lib/security';
 import twilio from 'twilio';
 
-// Initialize Twilio client
-const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID!;
-const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN!;
-const twilioClient = twilio(twilioAccountSid, twilioAuthToken);
-const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER!;
+// Twilio configuration
+const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID || '';
+const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN || '';
+const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER || '';
+
+// Only initialize Twilio client if credentials are available
+const twilioClient = twilioAccountSid && twilioAuthToken && twilioAccountSid.startsWith('AC') 
+  ? twilio(twilioAccountSid, twilioAuthToken)
+  : null;
 
 // Request validation schema
 const InitiateCallSchema = z.object({
@@ -86,6 +90,14 @@ export async function POST(request: NextRequest) {
         </Connect>
       </Response>
     `;
+    
+    // Check if Twilio is configured
+    if (!twilioClient) {
+      return NextResponse.json(
+        { error: 'Twilio not configured. Please set TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN environment variables.' },
+        { status: 503 }
+      );
+    }
     
     // Create Twilio call
     try {

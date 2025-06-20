@@ -2,7 +2,7 @@
 // This helps with import organization
 
 import { NextRequest } from 'next/server';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { z } from 'zod';
 
 // Environment configuration with strict validation
@@ -62,17 +62,17 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
 
 // Token generation utilities
 export function generateAccessToken(payload: Omit<TokenPayload, 'exp' | 'iat'>): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+  return jwt.sign(payload as any, JWT_SECRET as string, { expiresIn: JWT_EXPIRES_IN } as jwt.SignOptions);
 }
 
 export function generateRefreshToken(payload: Omit<TokenPayload, 'exp' | 'iat'>): string {
-  return jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRES_IN });
+  return jwt.sign(payload as any, JWT_REFRESH_SECRET as string, { expiresIn: JWT_REFRESH_EXPIRES_IN } as jwt.SignOptions);
 }
 
 // Token verification
 export function verifyAccessToken(token: string): TokenPayload {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as any;
+    const decoded = jwt.verify(token, JWT_SECRET as string) as any;
     return TokenPayloadSchema.parse(decoded);
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
@@ -87,7 +87,7 @@ export function verifyAccessToken(token: string): TokenPayload {
 
 export function verifyRefreshToken(token: string): TokenPayload {
   try {
-    const decoded = jwt.verify(token, JWT_REFRESH_SECRET) as any;
+    const decoded = jwt.verify(token, JWT_REFRESH_SECRET as string) as any;
     return TokenPayloadSchema.parse(decoded);
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
@@ -138,12 +138,12 @@ export function requireOrganization(userOrgId: string | undefined, requiredOrgId
 
 // CSRF Protection
 export function generateCSRFToken(): string {
-  return jwt.sign({ csrf: true }, JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ csrf: true }, JWT_SECRET as string, { expiresIn: '1h' } as jwt.SignOptions);
 }
 
 export function verifyCSRFToken(token: string): boolean {
   try {
-    jwt.verify(token, JWT_SECRET);
+    jwt.verify(token, JWT_SECRET as string);
     return true;
   } catch {
     return false;

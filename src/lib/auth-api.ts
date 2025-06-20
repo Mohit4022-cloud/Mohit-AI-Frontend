@@ -2,7 +2,7 @@
 // This file is NOT Edge-compatible and should only be used in API routes
 
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { z } from 'zod';
 
 import { env } from './env';
@@ -37,14 +37,14 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
 
 // Token generation utilities
 export function generateAccessToken(payload: Omit<TokenPayload, 'exp' | 'iat'>): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+  return jwt.sign(payload as any, JWT_SECRET as string, { expiresIn: JWT_EXPIRES_IN } as jwt.SignOptions);
 }
 
 export function generateRefreshToken(payload: Omit<TokenPayload, 'exp' | 'iat'>): string {
-  return jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRES_IN });
+  return jwt.sign(payload as any, JWT_REFRESH_SECRET as string, { expiresIn: JWT_REFRESH_EXPIRES_IN } as jwt.SignOptions);
 }
 
 // CSRF Protection
 export function generateCSRFToken(): string {
-  return jwt.sign({ csrf: true }, JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ csrf: true }, JWT_SECRET as string, { expiresIn: '1h' } as jwt.SignOptions);
 }

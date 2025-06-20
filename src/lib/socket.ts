@@ -94,7 +94,7 @@ export function initializeSocketServer(httpServer: HTTPServer) {
     // Handle AI control commands
     socket.on('ai:pause', async (data: { callId: string; duration?: number }) => {
       const call = global.aiCallsDb?.[data.callId];
-      if (call && call.userId === user.userId) {
+      if (call && call.userId === user.userId && io) {
         // Emit to call participants
         io.to(`call:${data.callId}`).emit('ai:paused', {
           callId: data.callId,
@@ -106,7 +106,7 @@ export function initializeSocketServer(httpServer: HTTPServer) {
 
     socket.on('ai:resume', async (data: { callId: string }) => {
       const call = global.aiCallsDb?.[data.callId];
-      if (call && call.userId === user.userId) {
+      if (call && call.userId === user.userId && io) {
         // Emit to call participants
         io.to(`call:${data.callId}`).emit('ai:resumed', {
           callId: data.callId,
@@ -166,9 +166,3 @@ export function broadcastEvent(event: string, data: any) {
   }
 }
 
-// Global type declarations
-declare global {
-  var io: SocketIOServer | null;
-  var aiCallsDb: Record<string, any>;
-  var transcriptsDb: Record<string, any[]>;
-}

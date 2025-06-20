@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authMiddleware } from './middleware/auth-secure';
+import { authMiddleware } from './middleware/auth';
 import { applyRateLimit } from './middleware/rate-limit';
 import { securityMiddleware } from './middleware/security-headers';
 

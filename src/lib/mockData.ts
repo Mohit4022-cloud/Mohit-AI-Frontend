@@ -55,11 +55,12 @@ export function updateUser(id: string, updates: Partial<User>): User | null {
   const userIndex = mockUsers.findIndex(user => user.id === id);
   if (userIndex === -1) return null;
   
+  const currentUser = mockUsers[userIndex];
   mockUsers[userIndex] = {
-    ...mockUsers[userIndex],
+    ...currentUser,
     ...updates,
     updatedAt: new Date(),
-  };
+  } as User;
   
   return mockUsers[userIndex];
 }

@@ -298,7 +298,7 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
                 {filteredTranscripts.map((entry, index) => {
                   const showTimestamp = index === 0 || 
                     (index > 0 && filteredTranscripts[index - 1] &&
-                     entry.timestamp.getTime() - filteredTranscripts[index - 1].timestamp.getTime() > 30000);
+                     entry.timestamp.getTime() - filteredTranscripts[index - 1]!.timestamp.getTime() > 30000);
                   
                   return (
                     <div key={entry.id}>
@@ -462,7 +462,7 @@ function TranscriptSubtitleEntry({ entry }: { entry: any }) {
     if (entry.speaker === 'AI') return SPEAKER_COLORS[0] || { bg: "bg-blue-50", text: "text-blue-600", border: "border-blue-200" };
     if (entry.speaker === 'AGENT') return SPEAKER_COLORS[1] || { bg: "bg-green-50", text: "text-green-600", border: "border-green-200" };
     if (entry.speaker === 'LEAD') return SPEAKER_COLORS[2] || { bg: "bg-purple-50", text: "text-purple-600", border: "border-purple-200" };
-    return SPEAKER_COLORS[3];
+    return SPEAKER_COLORS[3] || { bg: "bg-gray-50", text: "text-gray-600", border: "border-gray-200" };
   }, [entry.speaker]);
 
   return (
@@ -474,12 +474,12 @@ function TranscriptSubtitleEntry({ entry }: { entry: any }) {
       <div className="flex items-center gap-2 min-w-0">
         <div className={cn(
           "flex items-center gap-1.5 px-2 py-0.5 rounded-full",
-          speakerColors.bg,
-          speakerColors.border,
+          speakerColors?.bg,
+          speakerColors?.border,
           "border"
         )}>
           {entry.speaker === "AI" && <Bot className="h-3 w-3" />}
-          <span className={cn("text-xs font-semibold uppercase", speakerColors.text)}>
+          <span className={cn("text-xs font-semibold uppercase", speakerColors?.text)}>
             {entry.speaker}
           </span>
         </div>

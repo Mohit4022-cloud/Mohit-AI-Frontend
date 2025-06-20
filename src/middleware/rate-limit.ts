@@ -61,7 +61,7 @@ export function rateLimit(config: RateLimitConfig) {
     );
     
     // Check if limit exceeded
-    if (recentRequests.length >= maxRequests) {
+    if (recentRequests.length >= maxRequests && recentRequests[0] !== undefined) {
       const retryAfter = Math.ceil(
         (recentRequests[0] + windowMs - now) / 1000
       );
@@ -95,7 +95,7 @@ export function rateLimit(config: RateLimitConfig) {
     
     // Add rate limit headers to response
     const remaining = Math.max(0, maxRequests - recentRequests.length);
-    const reset = recentRequests.length > 0 
+    const reset = recentRequests.length > 0 && recentRequests[0] !== undefined
       ? new Date(recentRequests[0] + windowMs).toISOString()
       : new Date(now + windowMs).toISOString();
     

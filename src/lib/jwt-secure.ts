@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { z } from 'zod';
-import { getServerEnv } from './env.validation';
+import { getServerEnv, getClientEnv } from './env.validation';
 
 // Token payload schema
 const tokenPayloadSchema = z.object({
@@ -26,18 +26,19 @@ interface JWTPayload extends TokenPayload {
  */
 export function generateAccessToken(payload: TokenPayload): string {
   const env = getServerEnv();
+  const clientEnv = getClientEnv();
   
   const jwtPayload: JWTPayload = {
     ...payload,
     sub: payload.userId,
-    iss: env.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
+    iss: clientEnv.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
     aud: 'mohit-ai-sdr-api',
   };
   
   return jwt.sign(jwtPayload, env.JWT_SECRET, {
     expiresIn: env.JWT_EXPIRES_IN,
     algorithm: 'HS256',
-  });
+  } as jwt.SignOptions);
 }
 
 /**
@@ -45,18 +46,19 @@ export function generateAccessToken(payload: TokenPayload): string {
  */
 export function generateRefreshToken(payload: TokenPayload): string {
   const env = getServerEnv();
+  const clientEnv = getClientEnv();
   
   const jwtPayload: JWTPayload = {
     ...payload,
     sub: payload.userId,
-    iss: env.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
+    iss: clientEnv.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
     aud: 'mohit-ai-sdr-refresh',
   };
   
   return jwt.sign(jwtPayload, env.JWT_REFRESH_SECRET, {
     expiresIn: env.JWT_REFRESH_EXPIRES_IN,
     algorithm: 'HS256',
-  });
+  } as jwt.SignOptions);
 }
 
 /**
@@ -64,11 +66,12 @@ export function generateRefreshToken(payload: TokenPayload): string {
  */
 export async function verifyAccessToken(token: string): Promise<TokenPayload> {
   const env = getServerEnv();
+  const clientEnv = getClientEnv();
   
   try {
     const decoded = jwt.verify(token, env.JWT_SECRET, {
       algorithms: ['HS256'],
-      issuer: env.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
+      issuer: clientEnv.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
       audience: 'mohit-ai-sdr-api',
     }) as JWTPayload;
     
@@ -97,11 +100,12 @@ export async function verifyAccessToken(token: string): Promise<TokenPayload> {
  */
 export async function verifyRefreshToken(token: string): Promise<TokenPayload> {
   const env = getServerEnv();
+  const clientEnv = getClientEnv();
   
   try {
     const decoded = jwt.verify(token, env.JWT_REFRESH_SECRET, {
       algorithms: ['HS256'],
-      issuer: env.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
+      issuer: clientEnv.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
       audience: 'mohit-ai-sdr-refresh',
     }) as JWTPayload;
     
