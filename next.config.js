@@ -53,7 +53,6 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'standalone',
   compress: true,
   
   // Image optimization

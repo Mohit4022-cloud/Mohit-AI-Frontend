@@ -4,7 +4,7 @@ const next = require('next');
 const { Server } = require('socket.io');
 
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = 'localhost';
+const hostname = '0.0.0.0'; // Listen on all interfaces for production
 const port = parseInt(process.env.PORT || '3000', 10);
 
 // Create Next.js app
@@ -41,8 +41,9 @@ app.prepare().then(() => {
     initializeSocketServer(server);
   }
 
-  server.listen(port, (err) => {
+  server.listen(port, hostname, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://${hostname}:${port}`);
+    console.log(`> Server is listening on port ${port}`);
   });
 });
