@@ -71,6 +71,15 @@ export function extractTokenFromRequest(request: NextRequest): string | null {
 
 // Authentication middleware (Edge-compatible)
 export async function authenticateRequest(request: NextRequest): Promise<TokenPayload> {
+  // DEMO BYPASS: Always return demo user
+  return {
+    userId: 'demo-user',
+    email: 'demo@mohitai.com',
+    role: 'admin',
+    organizationId: 'demo-org'
+  };
+  
+  /* ORIGINAL CODE - DISABLED FOR DEMO
   const token = extractTokenFromRequest(request);
   
   if (!token) {
@@ -78,6 +87,7 @@ export async function authenticateRequest(request: NextRequest): Promise<TokenPa
   }
   
   return await verifyAccessToken(token);
+  */
 }
 
 // CSRF Protection (Edge-compatible)
