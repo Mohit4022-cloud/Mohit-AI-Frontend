@@ -8,6 +8,11 @@ export const twilioConfig = {
   },
 };
 
+export const TWILIO_VOICE_SETTINGS = {
+  voice: 'Polly.Joanna',
+  language: 'en-US',
+};
+
 export function getTwilioClient() {
   if (!twilioConfig.accountSid || !twilioConfig.authToken) {
     console.warn('Twilio credentials not configured');
