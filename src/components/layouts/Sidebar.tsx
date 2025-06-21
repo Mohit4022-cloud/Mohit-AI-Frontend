@@ -12,27 +12,13 @@ import {
   Zap,
   MessageSquare,
   Clock,
-  Target,
-  Sparkles
+  Target
 } from "lucide-react";
 
-interface NavItem {
-  name: string;
-  href: string;
-  icon: React.ElementType;
-  badge?: React.ReactNode;
-}
-
-const navigation: NavItem[] = [
+const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Leads", href: "/leads", icon: Users },
   { name: "Live Queue", href: "/queue", icon: Clock },
-  { 
-    name: "AI Calls", 
-    href: "/ai-calls", 
-    icon: Phone,
-    badge: <Sparkles className="h-3 w-3 absolute -top-1 -right-1 text-blue-500" />
-  },
   { name: "Conversations", href: "/conversations", icon: MessageSquare },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
   { name: "Campaigns", href: "/campaigns", icon: Target },
@@ -57,16 +43,13 @@ export function Sidebar() {
               key={item.name}
               href={item.href}
               className={cn(
-                "relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               )}
             >
-              <div className="relative">
-                <item.icon className="h-5 w-5" />
-                {item.badge}
-              </div>
+              <item.icon className="h-5 w-5" />
               {item.name}
             </Link>
           );

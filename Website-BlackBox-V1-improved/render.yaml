@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: mohit-ai-phase5-website
+    env: python
+    buildCommand: echo "Static site, no build needed"
+    startCommand: python3 -m http.server $PORT --directory user-workspace
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0

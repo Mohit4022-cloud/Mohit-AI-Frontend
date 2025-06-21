@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mohit AI Pricing - Simple, Transparent Plans for Every Team">
+    <title>Pricing - Mohit AI</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/master/_brand/favicon-32x32.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#3498DB',
+                        accent: '#A855F7',
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-gray-900/95 backdrop-blur-md border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-white">Mohit AI</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="product.html" class="text-gray-300 hover:text-white transition-colors">Product</a>
+                    <a href="pricing.html" class="text-white font-semibold transition-colors">Pricing</a>
+                    <div class="relative group">
+                        <button class="text-gray-300 hover:text-white transition-colors flex items-center">
+                            Solutions
+                            <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 rounded-md shadow-lg hover:shadow-primary/20 bg-gray-900 ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="py-1">
+                                <a href="solutions.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">By Industry</a>
+                                <a href="for-sdrs.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">For SDRs</a>
+                                <a href="for-managers.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">For Managers</a>
+                                <a href="enterprise.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">Enterprise</a>
+                                <a href="small-business.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">Small Business</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="resources.html" class="text-gray-300 hover:text-white transition-colors">Resources</a>
+                    <a href="security.html" class="text-gray-300 hover:text-white transition-colors">Security</a>
+                    <a href="dashboard.html" class="inline-flex items-center px-6 py-2.5 border border-white text-white font-medium rounded-lg hover:shadow-lg hover:shadow-primary/20 hover:shadow-primary/50 transform hover:scale-105 transition-all duration-200">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-bold text-white mb-6">Simple, Transparent Pricing</h1>
+            <p class="text-xl text-gray-300 mb-8">Choose the plan that fits your team's needs. All plans include a 14-day free trial.</p>
+            <div class="flex justify-center gap-4 text-sm text-gray-300">
+                <div class="flex items-center gap-2">
+                    <span class="font-semibold">14-Day</span> Free Trial
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="font-semibold">No</span> Credit Card Required
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="font-semibold">Cancel</span> Anytime
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Plans -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800 hover:shadow-xl transition-all duration-300">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-4">Starter</h3>
+                        <div class="mb-4">
+                            <span class="text-4xl font-bold">$49</span>
+                            <span class="text-gray-300">/user/month</span>
+                        </div>
+                        <p class="text-gray-300">Perfect for small sales teams getting started with AI</p>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Up to 1,000 monitored contacts
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Basic lead scoring
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Email tracking and automation
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            CRM integration (1 platform)
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Real-time alerts
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Basic analytics dashboard
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Email support
+                        </li>
+                    </ul>
+                    <a href="dashboard.html" class="block w-full text-center px-6 py-3 border border-white text-white font-medium rounded-lg hover:shadow-lg hover:shadow-primary/20 hover:shadow-primary/50 transform hover:scale-105 transition-all duration-200">
+                        Login to Dashboard
+                    </a>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="bg-gray-900 p-8 rounded-2xl border-2 border-accent shadow-xl relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
+                    </div>
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-4">Professional</h3>
+                        <div class="mb-4">
+                            <span class="text-4xl font-bold">$99</span>
+                            <span class="text-gray-300">/user/month</span>
+                        </div>
+                        <p class="text-gray-300">Advanced features for growing sales teams</p>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Up to 10,000 monitored contacts
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            AI-powered lead scoring
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Advanced email automation
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Multiple CRM integrations
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Intent data and buying signals
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Custom workflows
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Team collaboration tools
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Advanced analytics
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Priority support
+                        </li>
+                    </ul>
+                    <a href="dashboard.html" class="block w-full text-center px-6 py-3 bg-gradient-primary text-white font-medium rounded-lg hover:opacity-90 transition-all duration-200">
+                        Login to Dashboard
+                    </a>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800 hover:shadow-xl transition-all duration-300">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-4">Enterprise</h3>
+                        <div class="mb-4">
+                            <span class="text-4xl font-bold">Custom</span>
+                        </div>
+                        <p class="text-gray-300">Tailored solutions for large organizations</p>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Unlimited monitored contacts
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Custom AI models
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            White-label options
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Unlimited integrations
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Advanced security features
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Custom data retention
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            Dedicated success manager
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            SLA guarantees
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                            On-premise deployment option
+                        </li>
+                    </ul>
+                    <a href="dashboard.html" class="block w-full text-center px-6 py-3 border border-white text-white font-medium rounded-lg hover:shadow-lg hover:shadow-primary/20 hover:shadow-primary/50 transform hover:scale-105 transition-all duration-200">
+                        Login to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-white text-center mb-16">Frequently Asked Questions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800">
+                    <h4 class="text-xl font-bold text-white mb-4">Can I change plans anytime?</h4>
+                    <p class="text-gray-300">Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the next billing cycle.</p>
+                </div>
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800">
+                    <h4 class="text-xl font-bold text-white mb-4">Do you offer discounts for annual billing?</h4>
+                    <p class="text-gray-300">Yes, we offer a 20% discount when you pay annually. Contact our sales team for more details.</p>
+                </div>
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800">
+                    <h4 class="text-xl font-bold text-white mb-4">What happens to my data if I cancel?</h4>
+                    <p class="text-gray-300">You can export all your data before cancellation. We retain your data for 30 days after cancellation.</p>
+                </div>
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800">
+                    <h4 class="text-xl font-bold text-white mb-4">Is there a setup fee?</h4>
+                    <p class="text-gray-300">No, there are no setup fees for any of our plans. Enterprise customers may opt for paid onboarding services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6">Ready to Get Started?</h2>
+            <p class="text-xl text-gray-300 mb-12">Join thousands of sales teams already using Mohit AI</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="dashboard.html" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-gray-900 hover:text-white transition-all duration-200">
+                    Login to Dashboard
+                </a>
+                <a href="demo.html" class="inline-flex items-center justify-center px-8 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-100 transition-all duration-200">
+                    View Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-700 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-3">
+                        <li><a href="features.html" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Integrations</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Solutions</h4>
+                    <ul class="space-y-3">
+                        <li><a href="for-sdrs.html" class="text-gray-300 hover:text-white transition-colors">For SDRs</a></li>
+                        <li><a href="for-managers.html" class="text-gray-300 hover:text-white transition-colors">For Managers</a></li>
+                        <li><a href="enterprise.html" class="text-gray-300 hover:text-white transition-colors">Enterprise</a></li>
+                        <li><a href="small-business.html" class="text-gray-300 hover:text-white transition-colors">Small Business</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Support</a></li>
+                        <li><a href="security.html" class="text-gray-300 hover:text-white transition-colors">Security</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-gray-800">
+                <p class="text-gray-300 text-center">&copy; 2024 Mohit AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

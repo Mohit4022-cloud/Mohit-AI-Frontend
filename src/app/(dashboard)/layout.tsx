@@ -12,10 +12,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  // DEMO BYPASS: Always consider user authenticated
-  const isAuthenticated = true; // useAuthStore((state) => state.isAuthenticated);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  /* DISABLED FOR DEMO
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/login");
@@ -25,7 +23,6 @@ export default function DashboardLayout({
   if (!isAuthenticated) {
     return null;
   }
-  */
 
   return (
     <div className="min-h-screen bg-background">

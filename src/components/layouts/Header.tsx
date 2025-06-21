@@ -19,8 +19,8 @@ export function Header() {
   const { user, logout } = useAuthStore();
 
   const handleLogout = () => {
-    // DEMO BYPASS: Just refresh to login which auto-redirects back
     logout();
+    router.push("/login");
   };
 
   return (

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get Started with Mohit AI - Your AI SDR Solution">
+    <title>Get Started - Mohit AI</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/master/_brand/favicon-32x32.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#3498DB',
+                        accent: '#A855F7',
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-800 text-gray-900">
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-gray-900/95 backdrop-blur-md border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-white">Mohit AI</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="product.html" class="text-gray-300 hover:text-white transition-colors">Product</a>
+                    <a href="pricing.html" class="text-gray-300 hover:text-white transition-colors">Pricing</a>
+                    <div class="relative group">
+                        <button class="text-gray-300 hover:text-white transition-colors flex items-center">
+                            Solutions
+                            <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 rounded-md shadow-lg hover:shadow-primary/20 bg-gray-900 ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="py-1">
+                                <a href="solutions.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">By Industry</a>
+                                <a href="for-sdrs.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">For SDRs</a>
+                                <a href="for-managers.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">For Managers</a>
+                                <a href="enterprise.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">Enterprise</a>
+                                <a href="small-business.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">Small Business</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="resources.html" class="text-gray-300 hover:text-white transition-colors">Resources</a>
+                    <a href="security.html" class="text-gray-300 hover:text-white transition-colors">Security</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Signup Section -->
+    <section class="pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-800">
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-4">Start Your Free Trial</h1>
+                        <p class="text-gray-300">14 days free. No credit card required.</p>
+                    </div>
+                    <form id="signup-form" class="space-y-6" onsubmit="return handleSubmit(event)">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-200 mb-2" for="firstName">First name</label>
+                                <input type="text" id="firstName" name="firstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-200 mb-2" for="lastName">Last name</label>
+                                <input type="text" id="lastName" name="lastName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-200 mb-2" for="workEmail">Work email</label>
+                            <input type="email" id="workEmail" name="workEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-200 mb-2" for="company">Company name</label>
+                            <input type="text" id="company" name="company" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-200 mb-2" for="phone">Phone number</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-200 mb-2" for="employees">Number of SDRs</label>
+                            <select id="employees" name="employees" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all" required>
+                                <option value="">Select...</option>
+                                <option value="1-5">1-5 SDRs</option>
+                                <option value="6-10">6-10 SDRs</option>
+                                <option value="11-25">11-25 SDRs</option>
+                                <option value="26+">26+ SDRs</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-primary text-white py-3 px-6 rounded-lg hover:opacity-90 transition-all duration-200 font-medium">
+                            Start Free Trial
+                        </button>
+                        <p class="text-xs text-gray-400 text-center mt-4">
+                            By clicking "Start Free Trial," you agree to our Terms of Service and Privacy Policy.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-700 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-3">
+                        <li><a href="features.html" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Integrations</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Solutions</h4>
+                    <ul class="space-y-3">
+                        <li><a href="for-sdrs.html" class="text-gray-300 hover:text-white transition-colors">For SDRs</a></li>
+                        <li><a href="for-managers.html" class="text-gray-300 hover:text-white transition-colors">For Managers</a></li>
+                        <li><a href="enterprise.html" class="text-gray-300 hover:text-white transition-colors">Enterprise</a></li>
+                        <li><a href="small-business.html" class="text-gray-300 hover:text-white transition-colors">Small Business</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Support</a></li>
+                        <li><a href="security.html" class="text-gray-300 hover:text-white transition-colors">Security</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-gray-800">
+                <p class="text-gray-300 text-center">&copy; 2024 Mohit AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Here you would typically send this data to your backend
+            console.log('Form submitted:', data);
+            
+            // Show success message
+            alert("Thank you for signing up! We'll be in touch shortly to get you started.");
+            
+            // Reset form
+            event.target.reset();
+            
+            return false;
+        }
+    </script>
+</body>
+</html>

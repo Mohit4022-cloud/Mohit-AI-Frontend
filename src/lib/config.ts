@@ -1,7 +1,7 @@
 // Centralized configuration to avoid hardcoded values
 export const config = {
   api: {
-    baseUrl: process.env.NEXT_PUBLIC_API_URL || '/api',
+    baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
     wsUrl: process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:5000',
     timeout: 30000,
     retries: 3,

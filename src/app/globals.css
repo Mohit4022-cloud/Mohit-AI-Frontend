@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import BlackBox V1 Styles */
+@import './styles-phase5.css';
+@import './styles.css';
+
 @layer base {
   :root {
     --background: 0 0% 100%;
