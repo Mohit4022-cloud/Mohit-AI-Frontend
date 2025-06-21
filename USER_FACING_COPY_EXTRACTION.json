@@ -1,0 +1,3117 @@
+[
+  {
+    "file_path": "src/app/page.tsx",
+    "component_or_context": "Logo",
+    "copy_key": "inline",
+    "text": "H",
+    "line_number": 23
+  },
+  {
+    "file_path": "src/app/page.tsx",
+    "component_or_context": "Loading State",
+    "copy_key": "inline",
+    "text": "Loading Harper AI...",
+    "line_number": 26
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Logo",
+    "copy_key": "inline",
+    "text": "H",
+    "line_number": 57
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Welcome to Harper AI",
+    "line_number": 59
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Sign in to your account to continue",
+    "line_number": 60
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "CardHeader",
+    "copy_key": "inline",
+    "text": "Sign In",
+    "line_number": 65
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Enter your credentials to access your account",
+    "line_number": 67
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Email",
+    "line_number": 80
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter your email",
+    "line_number": 87
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "validation",
+    "copy_key": "inline",
+    "text": "Please enter a valid email address",
+    "line_number": 17
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Password",
+    "line_number": 99
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter your password",
+    "line_number": 106
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "validation",
+    "copy_key": "inline",
+    "text": "Password must be at least 6 characters",
+    "line_number": 18
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Checkbox",
+    "copy_key": "inline",
+    "text": "Remember me",
+    "line_number": 126
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Forgot password?",
+    "line_number": 132
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Signing in...",
+    "line_number": 144
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Sign In",
+    "line_number": 147
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "separator",
+    "copy_key": "inline",
+    "text": "Or continue with",
+    "line_number": 158
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Google",
+    "line_number": 182
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Microsoft",
+    "line_number": 188
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Don't have an account? Sign up",
+    "line_number": 194
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "development-mode",
+    "copy_key": "inline",
+    "text": "🚀 Development Mode",
+    "line_number": 203
+  },
+  {
+    "file_path": "src/app/(auth)/login/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Skip Login (Dev Bypass) →",
+    "line_number": 209
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Logo",
+    "copy_key": "inline",
+    "text": "H",
+    "line_number": 61
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Join Harper AI",
+    "line_number": 63
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Create your account to get started",
+    "line_number": 64
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "CardHeader",
+    "copy_key": "inline",
+    "text": "Create Account",
+    "line_number": 69
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Enter your details to create your account",
+    "line_number": 71
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Full Name",
+    "line_number": 84
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter your full name",
+    "line_number": 91
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Email Address",
+    "line_number": 103
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter your email",
+    "line_number": 110
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Organization Name",
+    "line_number": 122
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter your organization name",
+    "line_number": 129
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Password",
+    "line_number": 141
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Create a password",
+    "line_number": 148
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Confirm Password",
+    "line_number": 167
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Confirm your password",
+    "line_number": 174
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Checkbox",
+    "copy_key": "inline",
+    "text": "I agree to the Terms of Service and Privacy Policy",
+    "line_number": 199
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Creating Account...",
+    "line_number": 218
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Create Account",
+    "line_number": 221
+  },
+  {
+    "file_path": "src/app/(auth)/register/page.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Already have an account? Sign in",
+    "line_number": 227
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "Logo",
+    "copy_key": "inline",
+    "text": "H",
+    "line_number": 77
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Forgot Password",
+    "line_number": 79
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Enter your email to reset your password",
+    "line_number": 80
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "CardHeader",
+    "copy_key": "inline",
+    "text": "Reset Password",
+    "line_number": 85
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "We'll send you a link to reset your password",
+    "line_number": 87
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Email Address",
+    "line_number": 100
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter your email",
+    "line_number": 107
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Sending...",
+    "line_number": 125
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Send Reset Link",
+    "line_number": 128
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Back to Sign In",
+    "line_number": 139
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "success-title",
+    "copy_key": "inline",
+    "text": "Check your email",
+    "line_number": 56
+  },
+  {
+    "file_path": "src/app/(auth)/forgot-password/page.tsx",
+    "component_or_context": "success-message",
+    "copy_key": "inline",
+    "text": "We've sent a password reset link to your email address.",
+    "line_number": 58
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Dashboard",
+    "line_number": 133
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Welcome back! Here's your performance overview.",
+    "line_number": 134
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "MetricCard",
+    "copy_key": "inline",
+    "text": "Calls Today",
+    "line_number": 20
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "MetricCard",
+    "copy_key": "inline",
+    "text": "Emails Sent",
+    "line_number": 28
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "MetricCard",
+    "copy_key": "inline",
+    "text": "New Leads",
+    "line_number": 36
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "MetricCard",
+    "copy_key": "inline",
+    "text": "Deals Won",
+    "line_number": 44
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Today",
+    "line_number": 139
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Start Calling",
+    "line_number": 143
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Recent Activity",
+    "line_number": 174
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Today's Tasks",
+    "line_number": 220
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Performance Overview",
+    "line_number": 254
+  },
+  {
+    "file_path": "src/app/(dashboard)/dashboard/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Team Leaderboard",
+    "line_number": 269
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "AI-Powered Calling",
+    "line_number": 260
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "Badge",
+    "copy_key": "inline",
+    "text": "AI Enhanced",
+    "line_number": 263
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Make intelligent calls with real-time coaching and analytics",
+    "line_number": 267
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "status",
+    "copy_key": "inline",
+    "text": "Call Active",
+    "line_number": 274
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Call Settings",
+    "line_number": 281
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Test Twilio + ElevenLabs Integration",
+    "line_number": 292
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Make a test call to verify your Twilio and ElevenLabs setup",
+    "line_number": 295
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Call Queue",
+    "line_number": 315
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Dialer",
+    "line_number": 348
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Contacts",
+    "line_number": 350
+  },
+  {
+    "file_path": "src/app/(dashboard)/calling/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "History",
+    "line_number": 353
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Contacts",
+    "line_number": 118
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Export",
+    "line_number": 134
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Add Contact",
+    "line_number": 138
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Total Contacts",
+    "line_number": 148
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Active",
+    "line_number": 159
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Prospects",
+    "line_number": 172
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Customers",
+    "line_number": 185
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "All Contacts",
+    "line_number": 199
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Search contacts...",
+    "line_number": 203
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "TableHead",
+    "copy_key": "inline",
+    "text": "Name",
+    "line_number": 230
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "TableHead",
+    "copy_key": "inline",
+    "text": "Contact Info",
+    "line_number": 231
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "TableHead",
+    "copy_key": "inline",
+    "text": "Company",
+    "line_number": 232
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "TableHead",
+    "copy_key": "inline",
+    "text": "Status",
+    "line_number": 233
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "TableHead",
+    "copy_key": "inline",
+    "text": "Lead Score",
+    "line_number": 234
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "TableHead",
+    "copy_key": "inline",
+    "text": "Actions",
+    "line_number": 235
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "DropdownMenuItem",
+    "copy_key": "inline",
+    "text": "Edit",
+    "line_number": 284
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "DropdownMenuItem",
+    "copy_key": "inline",
+    "text": "Delete",
+    "line_number": 291
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "loading-state",
+    "copy_key": "inline",
+    "text": "Loading contacts...",
+    "line_number": 220
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "empty-state",
+    "copy_key": "inline",
+    "text": "No contacts found matching your search.",
+    "line_number": 224
+  },
+  {
+    "file_path": "src/app/(dashboard)/contacts/page.tsx",
+    "component_or_context": "empty-state",
+    "copy_key": "inline",
+    "text": "No contacts yet. Add your first contact!",
+    "line_number": 224
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Calendar",
+    "line_number": 165
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "New Event",
+    "line_number": 187
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Today",
+    "line_number": 198
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "This Week",
+    "line_number": 210
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Calls",
+    "line_number": 222
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Meetings",
+    "line_number": 234
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Upcoming Events",
+    "line_number": 299
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Quick Actions",
+    "line_number": 350
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "View All Events",
+    "line_number": 360
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Schedule for Tomorrow",
+    "line_number": 371
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Sync with Google Calendar",
+    "line_number": 379
+  },
+  {
+    "file_path": "src/app/(dashboard)/calendar/page.tsx",
+    "component_or_context": "Badge",
+    "copy_key": "inline",
+    "text": "Soon",
+    "line_number": 380
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "AI Email Personalization",
+    "line_number": 224
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Generate hyper-personalized cold emails at scale",
+    "line_number": 225
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Email Settings",
+    "line_number": 233
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Configure your email generation preferences",
+    "line_number": 234
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Tone",
+    "line_number": 238
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Professional",
+    "line_number": 247
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Consultative",
+    "line_number": 248
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Direct",
+    "line_number": 249
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Friendly",
+    "line_number": 250
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Urgent",
+    "line_number": 251
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Length",
+    "line_number": 257
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "RadioGroupItem",
+    "copy_key": "inline",
+    "text": "Short (Under 100 words)",
+    "line_number": 266
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "RadioGroupItem",
+    "copy_key": "inline",
+    "text": "Medium (100-150 words)",
+    "line_number": 267
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "RadioGroupItem",
+    "copy_key": "inline",
+    "text": "Long (150-200 words)",
+    "line_number": 268
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Subject Style",
+    "line_number": 273
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Call to Action",
+    "line_number": 293
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Focus Areas",
+    "line_number": 302
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Include Features",
+    "line_number": 323
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Custom Instructions",
+    "line_number": 344
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Select Recipients",
+    "line_number": 361
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Choose contacts from your database or upload a CSV",
+    "line_number": 362
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Upload CSV",
+    "line_number": 367
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Existing Contacts",
+    "line_number": 368
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Upload CSV file",
+    "line_number": 375
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "CSV must include: name, email, company, title",
+    "line_number": 385
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Loaded Contacts",
+    "line_number": 392
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Search contacts...",
+    "line_number": 416
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "loading-state",
+    "copy_key": "inline",
+    "text": "Loading contacts...",
+    "line_number": 426
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "empty-state",
+    "copy_key": "inline",
+    "text": "No contacts found",
+    "line_number": 431
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Add Contacts",
+    "line_number": 437
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Select All",
+    "line_number": 451
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Deselect All",
+    "line_number": 451
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Generate Emails",
+    "line_number": 498
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Generated Emails",
+    "line_number": 512
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Review and export your personalized emails",
+    "line_number": 513
+  },
+  {
+    "file_path": "src/app/(dashboard)/email/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Export CSV",
+    "line_number": 517
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Pipeline",
+    "line_number": 13
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Track deals and sales opportunities",
+    "line_number": 14
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Filter",
+    "line_number": 19
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Add Deal",
+    "line_number": 23
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "h2",
+    "copy_key": "inline",
+    "text": "🚧 Under Construction",
+    "line_number": 32
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "The sales pipeline is being built. Coming soon with features like:",
+    "line_number": 34
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Deal tracking",
+    "line_number": 38
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Stage management",
+    "line_number": 41
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Revenue forecasting",
+    "line_number": 44
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Win/loss analysis",
+    "line_number": 47
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Activity timeline",
+    "line_number": 50
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Custom fields",
+    "line_number": 53
+  },
+  {
+    "file_path": "src/app/(dashboard)/pipeline/page.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "← Back to Dashboard",
+    "line_number": 57
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Playbooks",
+    "line_number": 13
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Sales scripts and conversation guides",
+    "line_number": 14
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Search",
+    "line_number": 19
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Create Playbook",
+    "line_number": 23
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "h2",
+    "copy_key": "inline",
+    "text": "🚧 Under Construction",
+    "line_number": 32
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "The playbooks system is being built. Coming soon with features like:",
+    "line_number": 34
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Sales scripts",
+    "line_number": 38
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Objection handling",
+    "line_number": 41
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Call guides",
+    "line_number": 44
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Best practices",
+    "line_number": 47
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Template library",
+    "line_number": 50
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Performance tips",
+    "line_number": 53
+  },
+  {
+    "file_path": "src/app/(dashboard)/playbooks/page.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "← Back to Dashboard",
+    "line_number": 57
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Reports & Analytics",
+    "line_number": 104
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Track performance and gain insights",
+    "line_number": 108
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Today",
+    "line_number": 92
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "This Week",
+    "line_number": 93
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "This Month",
+    "line_number": 94
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "This Quarter",
+    "line_number": 95
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "This Year",
+    "line_number": 96
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Exporting...",
+    "line_number": 142
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Export",
+    "line_number": 147
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Overview",
+    "line_number": 167
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Performance",
+    "line_number": 171
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "AI Insights",
+    "line_number": 175
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Top Performers",
+    "line_number": 190
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Activity Distribution",
+    "line_number": 214
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Cold Calls",
+    "line_number": 219
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Follow-ups",
+    "line_number": 220
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Email Outreach",
+    "line_number": 221
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Social Selling",
+    "line_number": 222
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Response Time",
+    "line_number": 257
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Average time to respond",
+    "line_number": 261
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Follow-up Rate",
+    "line_number": 267
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Leads followed up",
+    "line_number": 271
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Lead Velocity",
+    "line_number": 277
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "New leads per day",
+    "line_number": 281
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Quick Stats",
+    "line_number": 298
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Best Day",
+    "line_number": 302
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Tuesday",
+    "line_number": 303
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Best Time",
+    "line_number": 306
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "10-11 AM",
+    "line_number": 307
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Avg Deal Size",
+    "line_number": 310
+  },
+  {
+    "file_path": "src/app/(dashboard)/reports/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Tasks Done",
+    "line_number": 314
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Settings",
+    "line_number": 40
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Manage your account and preferences",
+    "line_number": 41
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "loading-state",
+    "copy_key": "inline",
+    "text": "Loading settings...",
+    "line_number": 50
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Profile",
+    "line_number": 61
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Notifications",
+    "line_number": 65
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Theme",
+    "line_number": 69
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "TabsList",
+    "copy_key": "inline",
+    "text": "Integrations",
+    "line_number": 73
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "CardHeader",
+    "copy_key": "inline",
+    "text": "Profile Settings",
+    "line_number": 81
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Update your personal information and account details",
+    "line_number": 83
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "CardHeader",
+    "copy_key": "inline",
+    "text": "Notification Preferences",
+    "line_number": 96
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Choose how you want to be notified about activity",
+    "line_number": 98
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "CardHeader",
+    "copy_key": "inline",
+    "text": "Theme Preferences",
+    "line_number": 111
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Customize the appearance of the application",
+    "line_number": 113
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "CardHeader",
+    "copy_key": "inline",
+    "text": "Integration Settings",
+    "line_number": 126
+  },
+  {
+    "file_path": "src/app/(dashboard)/settings/page.tsx",
+    "component_or_context": "CardDescription",
+    "copy_key": "inline",
+    "text": "Connect and configure external services",
+    "line_number": 128
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Team",
+    "line_number": 13
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Manage team members and permissions",
+    "line_number": 14
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Team Settings",
+    "line_number": 19
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Invite Member",
+    "line_number": 23
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "h2",
+    "copy_key": "inline",
+    "text": "🚧 Under Construction",
+    "line_number": 32
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "The team management system is being built. Coming soon with features like:",
+    "line_number": 34
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Team members",
+    "line_number": 38
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Role permissions",
+    "line_number": 41
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Performance tracking",
+    "line_number": 44
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Team goals",
+    "line_number": 47
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Activity monitoring",
+    "line_number": 50
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "• Coaching tools",
+    "line_number": 53
+  },
+  {
+    "file_path": "src/app/(dashboard)/team/page.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "← Back to Dashboard",
+    "line_number": 57
+  },
+  {
+    "file_path": "src/app/layout.tsx",
+    "component_or_context": "metadata.title",
+    "copy_key": "inline",
+    "text": "Harper AI - Modern SDR Platform",
+    "line_number": 10
+  },
+  {
+    "file_path": "src/app/layout.tsx",
+    "component_or_context": "metadata.description",
+    "copy_key": "inline",
+    "text": "Advanced Sales Development Representative platform with AI-powered calling and email automation",
+    "line_number": 11
+  },
+  {
+    "file_path": "src/app/layout.tsx",
+    "component_or_context": "metadata.keywords",
+    "copy_key": "inline",
+    "text": "SDR, sales, CRM, calling, email automation, AI",
+    "line_number": 12
+  },
+  {
+    "file_path": "src/app/error.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "Oops! Something went wrong",
+    "line_number": 31
+  },
+  {
+    "file_path": "src/app/error.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "An unexpected error occurred. We apologize for the inconvenience.",
+    "line_number": 37
+  },
+  {
+    "file_path": "src/app/error.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Error ID:",
+    "line_number": 43
+  },
+  {
+    "file_path": "src/app/error.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Try Again",
+    "line_number": 54
+  },
+  {
+    "file_path": "src/app/error.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Go to Dashboard",
+    "line_number": 63
+  },
+  {
+    "file_path": "src/app/error.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "If this problem persists, please contact",
+    "line_number": 69
+  },
+  {
+    "file_path": "src/app/error.tsx",
+    "component_or_context": "a",
+    "copy_key": "inline",
+    "text": "support@harperai.com",
+    "line_number": 74
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "h1",
+    "copy_key": "inline",
+    "text": "404 - Page Not Found",
+    "line_number": 41
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "The page you're looking for doesn't exist or has been moved.",
+    "line_number": 45
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Go Back",
+    "line_number": 55
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Go to Dashboard",
+    "line_number": 64
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Popular pages:",
+    "line_number": 71
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Dashboard",
+    "line_number": 25
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Calling",
+    "line_number": 25
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Reports",
+    "line_number": 26
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "Link",
+    "copy_key": "inline",
+    "text": "Contacts",
+    "line_number": 27
+  },
+  {
+    "file_path": "src/app/not-found.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Many features are still under development. Check back soon!",
+    "line_number": 93
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "Logo",
+    "copy_key": "inline",
+    "text": "H",
+    "line_number": 199
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "brand",
+    "copy_key": "inline",
+    "text": "Harper AI",
+    "line_number": 205
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Dashboard",
+    "line_number": 71
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Contacts",
+    "line_number": 78
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Calling",
+    "line_number": 84
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Email",
+    "line_number": 90
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Calendar",
+    "line_number": 96
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Pipeline",
+    "line_number": 102
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Reports",
+    "line_number": 108
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Team",
+    "line_number": 114
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Playbooks",
+    "line_number": 120
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Settings",
+    "line_number": 126
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Debug",
+    "line_number": 132
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "nav-item",
+    "copy_key": "inline",
+    "text": "Dev Login",
+    "line_number": 139
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "dropdown-trigger",
+    "copy_key": "inline",
+    "text": "John Doe",
+    "line_number": 265
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "dropdown-trigger",
+    "copy_key": "inline",
+    "text": "john@example.com",
+    "line_number": 266
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "DropdownMenuItem",
+    "copy_key": "inline",
+    "text": "Profile",
+    "line_number": 279
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "DropdownMenuItem",
+    "copy_key": "inline",
+    "text": "Settings",
+    "line_number": 286
+  },
+  {
+    "file_path": "src/components/layouts/Sidebar.tsx",
+    "component_or_context": "DropdownMenuItem",
+    "copy_key": "inline",
+    "text": "Logout",
+    "line_number": 295
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Make a Call",
+    "line_number": 117
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Phone Number",
+    "line_number": 121
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter phone number",
+    "line_number": 127
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Device: Ready",
+    "line_number": 134
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "Button.disconnected",
+    "copy_key": "inline",
+    "text": "Call",
+    "line_number": 145
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "Button.ringing",
+    "copy_key": "inline",
+    "text": "Calling...",
+    "line_number": 149
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "Button.connected",
+    "copy_key": "inline",
+    "text": "End Call",
+    "line_number": 153
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "CardTitle",
+    "copy_key": "inline",
+    "text": "Call Status",
+    "line_number": 162
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "status-disconnected",
+    "copy_key": "inline",
+    "text": "Ready to call",
+    "line_number": 168
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "status-pending",
+    "copy_key": "inline",
+    "text": "Connecting...",
+    "line_number": 170
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "status-ringing",
+    "copy_key": "inline",
+    "text": "Ringing...",
+    "line_number": 172
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "status-connected",
+    "copy_key": "inline",
+    "text": "Connected",
+    "line_number": 174
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "status-error",
+    "copy_key": "inline",
+    "text": "Call failed",
+    "line_number": 176
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "loading-state",
+    "copy_key": "inline",
+    "text": "Loading...",
+    "line_number": 96
+  },
+  {
+    "file_path": "src/components/calling/CallInterface.tsx",
+    "component_or_context": "error-state",
+    "copy_key": "inline",
+    "text": "Failed to initialize calling service. Please check your settings.",
+    "line_number": 103
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "DialogTitle",
+    "copy_key": "inline",
+    "text": "Test Twilio Call",
+    "line_number": 172
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "DialogDescription",
+    "copy_key": "inline",
+    "text": "Make a test call to verify your Twilio configuration. This will call your phone and speak a test message using ElevenLabs.",
+    "line_number": 174
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Your Phone Number",
+    "line_number": 181
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "+1234567890",
+    "line_number": 188
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Enter your phone number in E.164 format (e.g., +1234567890)",
+    "line_number": 191
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "test-message-title",
+    "copy_key": "inline",
+    "text": "Test Message",
+    "line_number": 195
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "test-message",
+    "copy_key": "inline",
+    "text": "Hello! This is a test call from Harper AI. Your Twilio and ElevenLabs integration is working correctly. Have a great day!",
+    "line_number": 196
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "success-title",
+    "copy_key": "inline",
+    "text": "✅ Test Call Initiated Successfully!",
+    "line_number": 206
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "success-message",
+    "copy_key": "inline",
+    "text": "Your phone should ring shortly. The call will play the test message using ElevenLabs text-to-speech.",
+    "line_number": 209
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Call SID:",
+    "line_number": 213
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "error-title",
+    "copy_key": "inline",
+    "text": "❌ Test Call Failed",
+    "line_number": 221
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "error-message",
+    "copy_key": "inline",
+    "text": "There was an error initiating the test call. Please check your configuration.",
+    "line_number": 224
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Error:",
+    "line_number": 228
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "troubleshooting-title",
+    "copy_key": "inline",
+    "text": "Troubleshooting Tips:",
+    "line_number": 233
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "Verify your Twilio credentials in Settings",
+    "line_number": 235
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "Ensure your Twilio phone number can make outbound calls",
+    "line_number": 236
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "Check that your ElevenLabs API key is valid",
+    "line_number": 237
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "li",
+    "copy_key": "inline",
+    "text": "Make sure the phone number is in E.164 format",
+    "line_number": 238
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "transcript-title",
+    "copy_key": "inline",
+    "text": "📞 Live Transcript",
+    "line_number": 247
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "transcript-waiting",
+    "copy_key": "inline",
+    "text": "Waiting for call to connect...",
+    "line_number": 253
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Initiating Call...",
+    "line_number": 271
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Make Test Call",
+    "line_number": 279
+  },
+  {
+    "file_path": "src/components/calling/TestCallDialog.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Close",
+    "line_number": 284
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "DialogTitle.add",
+    "copy_key": "inline",
+    "text": "Add New Contact",
+    "line_number": 118
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "DialogTitle.edit",
+    "copy_key": "inline",
+    "text": "Edit Contact",
+    "line_number": 118
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "DialogDescription",
+    "copy_key": "inline",
+    "text": "Fill in the contact details below.",
+    "line_number": 121
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "First Name",
+    "line_number": 128
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "John",
+    "line_number": 135
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Last Name",
+    "line_number": 142
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Doe",
+    "line_number": 149
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Email",
+    "line_number": 158
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "john.doe@example.com",
+    "line_number": 166
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Phone",
+    "line_number": 173
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "+1 (555) 123-4567",
+    "line_number": 180
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Company",
+    "line_number": 189
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Acme Corp",
+    "line_number": 196
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Title",
+    "line_number": 203
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Sales Manager",
+    "line_number": 210
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Lead Status",
+    "line_number": 219
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "SelectTrigger.placeholder",
+    "copy_key": "inline",
+    "text": "Select status",
+    "line_number": 227
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "New",
+    "line_number": 231
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Contacted",
+    "line_number": 232
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Qualified",
+    "line_number": 233
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Proposal",
+    "line_number": 234
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Negotiation",
+    "line_number": 235
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Closed Won",
+    "line_number": 236
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Closed Lost",
+    "line_number": 237
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Notes",
+    "line_number": 244
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Textarea.placeholder",
+    "copy_key": "inline",
+    "text": "Add any notes about this contact...",
+    "line_number": 250
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Cancel",
+    "line_number": 256
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Button.loading.add",
+    "copy_key": "inline",
+    "text": "Adding...",
+    "line_number": 259
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Button.loading.edit",
+    "copy_key": "inline",
+    "text": "Updating...",
+    "line_number": 259
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Button.add",
+    "copy_key": "inline",
+    "text": "Add Contact",
+    "line_number": 259
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "Button.edit",
+    "copy_key": "inline",
+    "text": "Update Contact",
+    "line_number": 259
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "toast.success.add",
+    "copy_key": "inline",
+    "text": "Contact added successfully",
+    "line_number": 81
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "toast.success.edit",
+    "copy_key": "inline",
+    "text": "Contact updated successfully",
+    "line_number": 81
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "toast.error.title",
+    "copy_key": "inline",
+    "text": "Error",
+    "line_number": 85
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "toast.error.description.add",
+    "copy_key": "inline",
+    "text": "Failed to add contact",
+    "line_number": 86
+  },
+  {
+    "file_path": "src/components/contacts/ContactFormModal.tsx",
+    "component_or_context": "toast.error.description.edit",
+    "copy_key": "inline",
+    "text": "Failed to update contact",
+    "line_number": 86
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "DialogTitle",
+    "copy_key": "inline",
+    "text": "Import Contacts",
+    "line_number": 90
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "DialogDescription",
+    "copy_key": "inline",
+    "text": "Upload a CSV file to import multiple contacts at once",
+    "line_number": 92
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "CSV File",
+    "line_number": 99
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "CSV must include columns: firstName, lastName, email, phone (optional), company (optional), title (optional)",
+    "line_number": 108
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Cancel",
+    "line_number": 138
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Importing...",
+    "line_number": 141
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Import Contacts",
+    "line_number": 141
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "preview-title",
+    "copy_key": "inline",
+    "text": "Preview",
+    "line_number": 114
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "preview-summary",
+    "copy_key": "inline",
+    "text": "contacts ready to import",
+    "line_number": 115
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "preview-columns",
+    "copy_key": "inline",
+    "text": "Columns detected:",
+    "line_number": 118
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "toast.error",
+    "copy_key": "inline",
+    "text": "Invalid CSV file. Please check the format and try again.",
+    "line_number": 38
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "toast.success.title",
+    "copy_key": "inline",
+    "text": "Import Successful",
+    "line_number": 68
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "toast.success.description",
+    "copy_key": "inline",
+    "text": "contacts imported successfully",
+    "line_number": 69
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "toast.error.title",
+    "copy_key": "inline",
+    "text": "Import Failed",
+    "line_number": 73
+  },
+  {
+    "file_path": "src/components/contacts/ImportContactsModal.tsx",
+    "component_or_context": "toast.error.description",
+    "copy_key": "inline",
+    "text": "Failed to import contacts",
+    "line_number": 74
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Personal Information",
+    "line_number": 70
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Full Name",
+    "line_number": 73
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Input.value",
+    "copy_key": "inline",
+    "text": "John Doe",
+    "line_number": 77
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Email",
+    "line_number": 82
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Input.value",
+    "copy_key": "inline",
+    "text": "john@example.com",
+    "line_number": 86
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Phone",
+    "line_number": 92
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Input.value",
+    "copy_key": "inline",
+    "text": "+1 (555) 123-4567",
+    "line_number": 96
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Security",
+    "line_number": 104
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Current Password",
+    "line_number": 107
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter current password",
+    "line_number": 114
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "New Password",
+    "line_number": 119
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter new password",
+    "line_number": 126
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Confirm New Password",
+    "line_number": 131
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Confirm new password",
+    "line_number": 138
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Leave password fields empty if you don't want to change it",
+    "line_number": 141
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Saving...",
+    "line_number": 147
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Save Changes",
+    "line_number": 147
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "toast.success",
+    "copy_key": "inline",
+    "text": "Profile updated successfully",
+    "line_number": 44
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "toast.error.title",
+    "copy_key": "inline",
+    "text": "Error",
+    "line_number": 51
+  },
+  {
+    "file_path": "src/components/settings/ProfileSettings.tsx",
+    "component_or_context": "toast.error.description",
+    "copy_key": "inline",
+    "text": "Failed to update profile. Please try again.",
+    "line_number": 52
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Email Notifications",
+    "line_number": 84
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "Switch.label",
+    "copy_key": "inline",
+    "text": "New lead assigned",
+    "line_number": 92
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Receive notifications when new leads are assigned to you",
+    "line_number": 93
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "Switch.label",
+    "copy_key": "inline",
+    "text": "Call reminders",
+    "line_number": 103
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Get reminded about scheduled calls",
+    "line_number": 104
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "Switch.label",
+    "copy_key": "inline",
+    "text": "Performance reports",
+    "line_number": 114
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Receive weekly performance summaries",
+    "line_number": 115
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Push Notifications",
+    "line_number": 123
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "Switch.label",
+    "copy_key": "inline",
+    "text": "Desktop notifications",
+    "line_number": 131
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Show desktop alerts for important events",
+    "line_number": 132
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "Switch.label",
+    "copy_key": "inline",
+    "text": "Sound alerts",
+    "line_number": 142
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Play sound for notifications",
+    "line_number": 143
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Email Frequency",
+    "line_number": 151
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Digest frequency",
+    "line_number": 154
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Real-time",
+    "line_number": 163
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Daily",
+    "line_number": 164
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Weekly",
+    "line_number": 165
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Never",
+    "line_number": 166
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Saving...",
+    "line_number": 174
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Save Preferences",
+    "line_number": 174
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "toast.success",
+    "copy_key": "inline",
+    "text": "Notification preferences saved",
+    "line_number": 58
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "toast.error.title",
+    "copy_key": "inline",
+    "text": "Error",
+    "line_number": 65
+  },
+  {
+    "file_path": "src/components/settings/NotificationSettings.tsx",
+    "component_or_context": "toast.error.description",
+    "copy_key": "inline",
+    "text": "Failed to save preferences. Please try again.",
+    "line_number": 66
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Appearance",
+    "line_number": 31
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Select your preferred theme",
+    "line_number": 32
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Light",
+    "line_number": 44
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Classic light theme",
+    "line_number": 48
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Dark",
+    "line_number": 56
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Easy on the eyes",
+    "line_number": 60
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "System",
+    "line_number": 68
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Match your device",
+    "line_number": 72
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Customization",
+    "line_number": 78
+  },
+  {
+    "file_path": "src/components/settings/ThemeSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "More customization options coming soon",
+    "line_number": 79
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "Twilio Configuration",
+    "line_number": 109
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Configure your Twilio account for voice calling",
+    "line_number": 110
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Account SID",
+    "line_number": 114
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "AC...",
+    "line_number": 121
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Auth Token",
+    "line_number": 127
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter your Twilio auth token",
+    "line_number": 135
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Phone Number",
+    "line_number": 140
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "+1234567890",
+    "line_number": 147
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Your Twilio phone number in E.164 format",
+    "line_number": 149
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "h4",
+    "copy_key": "inline",
+    "text": "Webhook URLs",
+    "line_number": 154
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Configure these URLs in your Twilio console:",
+    "line_number": 155
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Voice URL",
+    "line_number": 159
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Status Callback URL",
+    "line_number": 171
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "h3",
+    "copy_key": "inline",
+    "text": "ElevenLabs Configuration",
+    "line_number": 187
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "p",
+    "copy_key": "inline",
+    "text": "Configure ElevenLabs for AI voice synthesis",
+    "line_number": 188
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "API Key",
+    "line_number": 192
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Input.placeholder",
+    "copy_key": "inline",
+    "text": "Enter your ElevenLabs API key",
+    "line_number": 200
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Label",
+    "copy_key": "inline",
+    "text": "Voice ID",
+    "line_number": 205
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "SelectTrigger.placeholder",
+    "copy_key": "inline",
+    "text": "Select a voice",
+    "line_number": 213
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Rachel - American Female",
+    "line_number": 217
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Josh - American Male",
+    "line_number": 220
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Emily - British Female",
+    "line_number": 223
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "SelectItem",
+    "copy_key": "inline",
+    "text": "Adam - Deep Male",
+    "line_number": 226
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Button.loading",
+    "copy_key": "inline",
+    "text": "Saving...",
+    "line_number": 238
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Save Integration Settings",
+    "line_number": 241
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Test Twilio Connection",
+    "line_number": 249
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "Button",
+    "copy_key": "inline",
+    "text": "Test ElevenLabs Connection",
+    "line_number": 256
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "toast.success",
+    "copy_key": "inline",
+    "text": "Integration settings saved successfully",
+    "line_number": 53
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "toast.error.title",
+    "copy_key": "inline",
+    "text": "Error",
+    "line_number": 60
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "toast.error.description",
+    "copy_key": "inline",
+    "text": "Failed to save settings. Please try again.",
+    "line_number": 61
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "toast.success.twilio",
+    "copy_key": "inline",
+    "text": "Twilio connection successful!",
+    "line_number": 75
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "toast.error.twilio",
+    "copy_key": "inline",
+    "text": "Failed to connect to Twilio. Please check your credentials.",
+    "line_number": 77
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "toast.success.elevenlabs",
+    "copy_key": "inline",
+    "text": "ElevenLabs connection successful!",
+    "line_number": 88
+  },
+  {
+    "file_path": "src/components/settings/IntegrationSettings.tsx",
+    "component_or_context": "toast.error.elevenlabs",
+    "copy_key": "inline",
+    "text": "Failed to connect to ElevenLabs. Please check your API key.",
+    "line_number": 90
+  }
+]
