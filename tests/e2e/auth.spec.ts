@@ -25,7 +25,7 @@ test.describe('Authentication Flow', () => {
     await page.goto('/login');
     
     // Fill in login form
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.fill('input[type="password"]', 'Demo123!');
     
     // Click login button
@@ -42,7 +42,7 @@ test.describe('Authentication Flow', () => {
     await page.goto('/login');
     
     // Fill in invalid credentials
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.fill('input[type="password"]', 'WrongPassword');
     
     // Click login button
@@ -72,7 +72,7 @@ test.describe('Authentication Flow', () => {
   test('should logout successfully', async ({ page }) => {
     // First login
     await page.goto('/login');
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.fill('input[type="password"]', 'Demo123!');
     await page.click('button[type="submit"]');
     await expect(page).toHaveURL('/dashboard');
@@ -94,7 +94,7 @@ test.describe('Authentication Flow', () => {
   test('should persist login across page refreshes', async ({ page }) => {
     // Login
     await page.goto('/login');
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.fill('input[type="password"]', 'Demo123!');
     await page.click('button[type="submit"]');
     await expect(page).toHaveURL('/dashboard');
@@ -115,7 +115,7 @@ test.describe('Authentication Flow', () => {
     await expect(page).toHaveURL('/login?redirect=%2Fsettings');
     
     // Login
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.fill('input[type="password"]', 'Demo123!');
     await page.click('button[type="submit"]');
     
@@ -128,7 +128,7 @@ test.describe('Authentication Flow', () => {
     await context.route('**/api/auth/login', route => route.abort());
     
     await page.goto('/login');
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.fill('input[type="password"]', 'Demo123!');
     await page.click('button[type="submit"]');
     
@@ -144,7 +144,7 @@ test.describe('Authentication Flow', () => {
     });
     
     await page.goto('/login');
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.fill('input[type="password"]', 'Demo123!');
     await page.click('button[type="submit"]');
     
@@ -213,7 +213,7 @@ test.describe('Password Reset Flow', () => {
     await expect(page).toHaveURL('/forgot-password');
     
     // Fill email
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.click('button[type="submit"]');
     
     // Should show success message
@@ -225,7 +225,7 @@ test.describe('Two-Factor Authentication', () => {
   test('should enable 2FA', async ({ page }) => {
     // Login first
     await page.goto('/login');
-    await page.fill('input[type="email"]', 'demo@harperai.com');
+    await page.fill('input[type="email"]', 'demo@mohitai.com');
     await page.fill('input[type="password"]', 'Demo123!');
     await page.click('button[type="submit"]');
     

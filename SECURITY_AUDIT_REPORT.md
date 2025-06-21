@@ -1,4 +1,4 @@
-# Security Audit Report - Harper AI Inbound SDR
+# Security Audit Report - Mohit AI Inbound SDR
 
 **Date:** December 19, 2024  
 **Application:** mohit-inbound-sdr Next.js Application  
@@ -6,7 +6,7 @@
 
 ## Executive Summary
 
-This comprehensive security audit identified multiple critical and high-severity vulnerabilities in the Harper AI Inbound SDR application. The application requires immediate security hardening before production deployment.
+This comprehensive security audit identified multiple critical and high-severity vulnerabilities in the Mohit AI Inbound SDR application. The application requires immediate security hardening before production deployment.
 
 ## Severity Levels
 

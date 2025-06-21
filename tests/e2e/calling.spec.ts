@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 // Helper function to login
 async function login(page) {
   await page.goto('/login');
-  await page.fill('input[type="email"]', 'demo@harperai.com');
+  await page.fill('input[type="email"]', 'demo@mohitai.com');
   await page.fill('input[type="password"]', 'Demo123!');
   await page.click('button[type="submit"]');
   await expect(page).toHaveURL('/dashboard');

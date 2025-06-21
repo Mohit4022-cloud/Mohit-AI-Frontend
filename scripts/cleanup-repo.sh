@@ -16,7 +16,7 @@ rm -rf Desktop/ Documents/ Downloads/ Movies/ Music/ Pictures/ Public/ Applicati
 
 # Remove other projects that should be separate repositories
 echo "Removing embedded projects..."
-rm -rf Harper-AI-Frontend/ harper-ai-marketing-website/ harper-ai-website-v3/ harper-ai-website/
+rm -rf Mohit-AI-Frontend/ mohit-ai-marketing-website/ mohit-ai-website-v3/ mohit-ai-website/
 rm -rf Website-BlackBox-V1/ mohit-ai-backend-new/ ai-chat-app/ v3-frontend/ vibe-debug-system/
 
 # Remove temporary files

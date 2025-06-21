@@ -47,6 +47,13 @@ export default function LoginPage() {
           <CardDescription>
             Sign in to your Mohit AI account
           </CardDescription>
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mt-4 p-3 bg-muted rounded-md text-sm">
+              <p className="font-semibold">Demo Credentials:</p>
+              <p>Email: demo@mohitai.com</p>
+              <p>Password: Demo123!</p>
+            </div>
+          )}
         </CardHeader>
         
         <form onSubmit={handleSubmit}>

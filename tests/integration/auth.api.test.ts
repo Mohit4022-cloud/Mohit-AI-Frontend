@@ -15,7 +15,7 @@ describe('Authentication API Integration Tests', () => {
       const request = new NextRequest('http://localhost:3000/api/auth/login', {
         method: 'POST',
         body: JSON.stringify({
-          email: 'demo@harperai.com',
+          email: 'demo@mohitai.com',
           password: 'Demo123!',
         }),
         headers: {
@@ -29,7 +29,7 @@ describe('Authentication API Integration Tests', () => {
       const data = await response.json();
       expect(data).toHaveProperty('user');
       expect(data).toHaveProperty('token');
-      expect(data.user.email).toBe('demo@harperai.com');
+      expect(data.user.email).toBe('demo@mohitai.com');
       expect(data.user.role).toBe('admin');
 
       // Check cookies
@@ -42,7 +42,7 @@ describe('Authentication API Integration Tests', () => {
       const request = new NextRequest('http://localhost:3000/api/auth/login', {
         method: 'POST',
         body: JSON.stringify({
-          email: 'demo@harperai.com',
+          email: 'demo@mohitai.com',
           password: 'WrongPassword123!',
         }),
         headers: {
@@ -81,7 +81,7 @@ describe('Authentication API Integration Tests', () => {
       const request = new NextRequest('http://localhost:3000/api/auth/login', {
         method: 'POST',
         body: JSON.stringify({
-          email: 'demo@harperai.com',
+          email: 'demo@mohitai.com',
           password: '',
         }),
         headers: {
@@ -119,7 +119,7 @@ describe('Authentication API Integration Tests', () => {
       const request = new NextRequest('http://localhost:3000/api/auth/login', {
         method: 'POST',
         body: JSON.stringify({
-          email: 'demo@harperai.com',
+          email: 'demo@mohitai.com',
           password: 'Demo123!',
         }),
         headers: {
@@ -189,7 +189,7 @@ describe('Authentication API Integration Tests', () => {
       const request = new NextRequest('http://localhost:3000/api/auth/register', {
         method: 'POST',
         body: JSON.stringify({
-          email: 'demo@harperai.com', // Existing user
+          email: 'demo@mohitai.com', // Existing user
           password: 'NewUser123!',
           name: 'New User',
           organizationName: 'Test Org',
@@ -302,7 +302,7 @@ describe('Authentication API Integration Tests', () => {
       const request = new NextRequest('http://localhost:3000/api/auth/login', {
         method: 'POST',
         body: JSON.stringify({
-          email: 'demo@harperai.com',
+          email: 'demo@mohitai.com',
           password: 'Demo123!',
         }),
         headers: {

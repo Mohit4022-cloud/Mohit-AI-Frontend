@@ -39,8 +39,8 @@ export async function POST(request: NextRequest) {
     // For demo purposes, accept specific test credentials
     // In production, use actual password verification
     const isValidPassword = (
-      (email === 'demo@harperai.com' && password === 'Demo123!') ||
-      (email === 'admin@harperai.com' && password === 'Admin123!') ||
+      (email === 'demo@mohitai.com' && password === 'Demo123!') ||
+      (email === 'admin@mohitai.com' && password === 'Admin123!') ||
       (process.env.NODE_ENV === 'development' && password === 'password123')
     );
     

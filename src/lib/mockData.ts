@@ -13,7 +13,7 @@ export interface User {
 const mockUsers: User[] = [
   {
     id: '1',
-    email: 'demo@harperai.com',
+    email: 'demo@mohitai.com',
     name: 'Demo User',
     role: 'admin',
     organizationId: 'org-1',
@@ -22,7 +22,7 @@ const mockUsers: User[] = [
   },
   {
     id: '2',
-    email: 'admin@harperai.com',
+    email: 'admin@mohitai.com',
     name: 'Admin User',
     role: 'admin',
     organizationId: 'org-1',
@@ -31,7 +31,7 @@ const mockUsers: User[] = [
   },
   {
     id: '3',
-    email: 'user@harperai.com',
+    email: 'user@mohitai.com',
     name: 'Standard User',
     role: 'user',
     organizationId: 'org-1',
@@ -150,8 +150,8 @@ if (!global.settingsDb) {
       emailSettings: {
         provider: 'sendgrid',
         apiKey: 'mock-sendgrid-key',
-        fromEmail: 'noreply@harperai.com',
-        fromName: 'Harper AI',
+        fromEmail: 'noreply@mohitai.com',
+        fromName: 'Mohit AI',
       },
       twilioSettings: {
         accountSid: 'mock-twilio-sid',

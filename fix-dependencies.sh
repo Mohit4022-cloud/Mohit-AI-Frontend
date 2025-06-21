@@ -3,10 +3,10 @@
 
 echo "🔧 Fixing missing dependencies..."
 
-# Navigate to Harper-AI-Frontend if it exists
-if [ -d "Harper-AI-Frontend" ]; then
-  cd Harper-AI-Frontend
-  echo "📦 Installing missing dependencies in Harper-AI-Frontend..."
+# Navigate to Mohit-AI-Frontend if it exists
+if [ -d "Mohit-AI-Frontend" ]; then
+  cd Mohit-AI-Frontend
+  echo "📦 Installing missing dependencies in Mohit-AI-Frontend..."
   npm install @faker-js/faker papaparse csv-parse
   npm install --save-dev @types/papaparse
   cd ..
