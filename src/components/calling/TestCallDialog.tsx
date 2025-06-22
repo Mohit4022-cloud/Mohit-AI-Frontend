@@ -195,7 +195,7 @@ export function TestCallDialog() {
                 disabled={isLoading}
               />
               <p className="text-xs text-muted-foreground">
-                US numbers only. We'll call you immediately.
+                US numbers only. We&apos;ll call you immediately.
               </p>
             </div>
           )}
@@ -241,7 +241,7 @@ export function TestCallDialog() {
               <div className="rounded-lg bg-purple-50 dark:bg-purple-900/20 p-4 space-y-2">
                 <p className="text-sm font-medium flex items-center gap-2">
                   <Volume2 className="h-4 w-4" />
-                  What you'll hear:
+                  What you&apos;ll hear:
                 </p>
                 <ul className="text-xs text-muted-foreground space-y-1 ml-6">
                   <li>• A greeting from Mohit AI</li>
