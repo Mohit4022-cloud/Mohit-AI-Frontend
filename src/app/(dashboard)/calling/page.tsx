@@ -5,10 +5,10 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PhoneCall, Users, History, Settings, Sparkles, Upload, Phone } from 'lucide-react';
-import Dialer from '@/app/calling/components/Dialer';
+import { Dialer } from '@/app/calling/components/Dialer';
 import TranscriptDisplay from '@/app/calling/components/TranscriptDisplay';
-import CoachingCards from '@/app/calling/components/CoachingCards';
-import CallAnalytics from '@/app/calling/components/CallAnalytics';
+import { CoachingCards } from '@/app/calling/components/CoachingCards';
+import { CallAnalytics } from '@/app/calling/components/CallAnalytics';
 import CallHistory from '@/app/calling/components/CallHistory';
 
 // New components

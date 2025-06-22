@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { verifyToken } from '@/lib/jwt'
 import { mockMetrics } from '@/lib/mockData'
 
+// Force dynamic rendering since we use request.headers
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     // Get token from Authorization header

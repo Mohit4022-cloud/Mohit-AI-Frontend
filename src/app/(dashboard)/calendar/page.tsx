@@ -21,8 +21,9 @@ import { CalendarHeader } from '@/components/calendar/CalendarHeader'
 import { MonthView } from '@/components/calendar/MonthView'
 import { ListView } from '@/components/calendar/ListView'
 import { EventDialog } from '@/components/calendar/EventDialog'
-import { CalendarEvent, CalendarView, EVENT_TYPE_COLORS } from '@/types/calendar'
+import { CalendarEvent, CalendarView, EVENT_TYPE_COLORS, CalendarEventSchema } from '@/types/calendar'
 import { useToast } from '@/components/ui/use-toast'
+import { z } from 'zod'
 import { 
   addMonths, 
   subMonths, 
@@ -35,6 +36,15 @@ import {
   format,
 } from 'date-fns'
 import { cn } from '@/lib/utils'
+
+// Form schema type (matching EventDialog)
+const EventFormSchema = CalendarEventSchema.omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+})
+
+type EventFormData = z.infer<typeof EventFormSchema>
 
 export default function CalendarPage() {
   const { toast } = useToast()
@@ -118,11 +128,11 @@ export default function CalendarPage() {
     setShowEventDialog(true)
   }
 
-  const handleSaveEvent = async (eventData: Omit<CalendarEvent, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const handleSaveEvent = async (eventData: EventFormData) => {
     if (selectedEvent) {
-      await updateEvent(selectedEvent.id, eventData)
+      await updateEvent(selectedEvent.id, eventData as any)
     } else {
-      await addEvent(eventData)
+      await addEvent(eventData as Omit<CalendarEvent, 'id' | 'createdAt' | 'updatedAt'>)
     }
   }
 

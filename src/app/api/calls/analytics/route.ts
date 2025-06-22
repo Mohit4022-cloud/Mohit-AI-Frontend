@@ -3,6 +3,9 @@ import { authenticateRequest } from '@/lib/auth-helpers';
 import { logSecurityEvent } from '@/lib/security';
 import { subDays, startOfDay, endOfDay } from 'date-fns';
 
+// Force dynamic rendering since we use searchParams
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     // Authenticate request

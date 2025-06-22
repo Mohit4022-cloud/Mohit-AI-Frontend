@@ -3,6 +3,9 @@ import { ReportData, ReportMetrics, AIInsight, ChartDataPoint } from '@/types/re
 import { faker } from '@faker-js/faker'
 import { addDays, format, parseISO, differenceInDays } from 'date-fns'
 
+// Force dynamic rendering since we use request.url
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/reports
  * Generate analytics report for the specified period
