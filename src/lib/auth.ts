@@ -11,13 +11,13 @@ const getJWTSecret = () =>
   (process.env.NODE_ENV === "production"
     ? undefined
     : "dev-jwt-secret-min-32-characters-long");
-    
+
 const getJWTRefreshSecret = () =>
   process.env.JWT_REFRESH_SECRET ||
   (process.env.NODE_ENV === "production"
     ? undefined
     : "dev-jwt-refresh-secret-min-32-chars");
-    
+
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1h";
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || "7d";
 
@@ -112,10 +112,13 @@ export function verifyAccessToken(token: string): TokenPayload {
     return TokenPayloadSchema.parse(decoded);
   } catch (error: any) {
     // Check error.message first since that's most reliable
-    if (error.message === 'jwt expired') {
+    if (error.message === "jwt expired") {
       throw new AuthError("Token expired", 401, "TOKEN_EXPIRED");
     }
-    if (error.name === 'JsonWebTokenError' || error instanceof jwt.JsonWebTokenError) {
+    if (
+      error.name === "JsonWebTokenError" ||
+      error instanceof jwt.JsonWebTokenError
+    ) {
       throw new AuthError("Invalid token", 401, "INVALID_TOKEN");
     }
     throw new AuthError(
@@ -132,14 +135,21 @@ export function verifyRefreshToken(token: string): TokenPayload {
     return TokenPayloadSchema.parse(decoded);
   } catch (error: any) {
     // Check for TokenExpiredError first since it extends JsonWebTokenError
-    if (error.name === 'TokenExpiredError' || error.message === 'jwt expired' || error instanceof jwt.TokenExpiredError) {
+    if (
+      error.name === "TokenExpiredError" ||
+      error.message === "jwt expired" ||
+      error instanceof jwt.TokenExpiredError
+    ) {
       throw new AuthError(
         "Refresh token expired",
         401,
         "REFRESH_TOKEN_EXPIRED",
       );
     }
-    if (error.name === 'JsonWebTokenError' || error instanceof jwt.JsonWebTokenError) {
+    if (
+      error.name === "JsonWebTokenError" ||
+      error instanceof jwt.JsonWebTokenError
+    ) {
       throw new AuthError(
         "Invalid refresh token",
         401,

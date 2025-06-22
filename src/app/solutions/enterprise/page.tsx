@@ -21,11 +21,15 @@ export default function EnterprisePage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Enterprise contact form submitted:", formData);
-    alert("Thank you for your interest! Our enterprise team will contact you shortly.");
+    alert(
+      "Thank you for your interest! Our enterprise team will contact you shortly.",
+    );
     setFormData({ name: "", email: "", company: "", phone: "", message: "" });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -42,7 +46,8 @@ export default function EnterprisePage() {
               Enterprise-Grade AI Sales Platform
             </h1>
             <p className="text-xl text-gray-300 mb-12">
-              Scale your sales operations with the security, compliance, and support that enterprise organizations demand.
+              Scale your sales operations with the security, compliance, and
+              support that enterprise organizations demand.
             </p>
             <div className="flex gap-4 justify-center">
               <Link href="#contact">
@@ -97,7 +102,8 @@ export default function EnterprisePage() {
                 Enterprise Security
               </h3>
               <p className="text-gray-300">
-                Bank-level encryption, SSO, role-based access control, and comprehensive audit logs.
+                Bank-level encryption, SSO, role-based access control, and
+                comprehensive audit logs.
               </p>
             </div>
             <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
@@ -108,7 +114,8 @@ export default function EnterprisePage() {
                 Dedicated Support
               </h3>
               <p className="text-gray-300">
-                24/7 priority support, dedicated success manager, and custom onboarding.
+                24/7 priority support, dedicated success manager, and custom
+                onboarding.
               </p>
             </div>
             <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
@@ -119,7 +126,8 @@ export default function EnterprisePage() {
                 Custom Integrations
               </h3>
               <p className="text-gray-300">
-                Seamless integration with your existing CRM, sales tools, and data warehouse.
+                Seamless integration with your existing CRM, sales tools, and
+                data warehouse.
               </p>
             </div>
             <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
@@ -130,7 +138,8 @@ export default function EnterprisePage() {
                 Advanced Analytics
               </h3>
               <p className="text-gray-300">
-                Custom dashboards, unlimited data retention, and API access for deep insights.
+                Custom dashboards, unlimited data retention, and API access for
+                deep insights.
               </p>
             </div>
           </div>
@@ -155,7 +164,8 @@ export default function EnterprisePage() {
                       SOC 2 Type II Certified
                     </h3>
                     <p className="text-gray-300">
-                      Annual third-party audits ensure the highest security standards
+                      Annual third-party audits ensure the highest security
+                      standards
                     </p>
                   </div>
                 </div>
@@ -194,7 +204,8 @@ export default function EnterprisePage() {
                       Data Residency Options
                     </h3>
                     <p className="text-gray-300">
-                      Choose where your data is stored with multi-region deployment
+                      Choose where your data is stored with multi-region
+                      deployment
                     </p>
                   </div>
                 </div>
@@ -252,7 +263,8 @@ export default function EnterprisePage() {
                 Dedicated Success Manager
               </h3>
               <p className="text-gray-300 mb-4">
-                Your single point of contact for strategic guidance and best practices.
+                Your single point of contact for strategic guidance and best
+                practices.
               </p>
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li>• Weekly check-ins</li>
@@ -298,14 +310,17 @@ export default function EnterprisePage() {
               Let&apos;s Talk About Your Needs
             </h2>
             <p className="text-xl text-gray-300">
-              Get in touch with our enterprise team to discuss custom pricing and implementation
+              Get in touch with our enterprise team to discuss custom pricing
+              and implementation
             </p>
           </div>
           <div className="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-700">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label htmlFor="name" className="text-gray-200">Full name</Label>
+                  <Label htmlFor="name" className="text-gray-200">
+                    Full name
+                  </Label>
                   <Input
                     type="text"
                     id="name"
@@ -317,7 +332,9 @@ export default function EnterprisePage() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="email" className="text-gray-200">Work email</Label>
+                  <Label htmlFor="email" className="text-gray-200">
+                    Work email
+                  </Label>
                   <Input
                     type="email"
                     id="email"
@@ -331,7 +348,9 @@ export default function EnterprisePage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label htmlFor="company" className="text-gray-200">Company name</Label>
+                  <Label htmlFor="company" className="text-gray-200">
+                    Company name
+                  </Label>
                   <Input
                     type="text"
                     id="company"
@@ -343,7 +362,9 @@ export default function EnterprisePage() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="phone" className="text-gray-200">Phone number</Label>
+                  <Label htmlFor="phone" className="text-gray-200">
+                    Phone number
+                  </Label>
                   <Input
                     type="tel"
                     id="phone"
@@ -356,7 +377,9 @@ export default function EnterprisePage() {
                 </div>
               </div>
               <div>
-                <Label htmlFor="message" className="text-gray-200">Tell us about your requirements</Label>
+                <Label htmlFor="message" className="text-gray-200">
+                  Tell us about your requirements
+                </Label>
                 <Textarea
                   id="message"
                   name="message"
@@ -389,7 +412,8 @@ export default function EnterprisePage() {
             Ready to Scale Your Sales with AI?
           </h2>
           <p className="text-xl text-white/90 mb-12">
-            Join Fortune 500 companies using Mohit AI to transform their sales operations
+            Join Fortune 500 companies using Mohit AI to transform their sales
+            operations
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="#contact">

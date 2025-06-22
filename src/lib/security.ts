@@ -206,17 +206,26 @@ export const UsernameSchema = z
   .min(3)
   .max(30)
   .regex(/^[a-zA-Z0-9_-]+$/);
-export const PhoneSchema = z.string().regex(/^\+?[\d\s\-\(\)]+$/).min(3).max(20);
-export const URLSchema = z.string().url().max(2048).refine(
-  (url) => url.startsWith('http://') || url.startsWith('https://'),
-  { message: 'URL must use http or https protocol' }
-);
+export const PhoneSchema = z
+  .string()
+  .regex(/^\+?[\d\s\-\(\)]+$/)
+  .min(3)
+  .max(20);
+export const URLSchema = z
+  .string()
+  .url()
+  .max(2048)
+  .refine((url) => url.startsWith("http://") || url.startsWith("https://"), {
+    message: "URL must use http or https protocol",
+  });
 
 // Note: This file uses Node.js crypto and should only be used in API routes
 // For Edge Runtime, use security-edge.ts or security-web-crypto.ts
 
 // Encryption utilities
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
+const ENCRYPTION_KEY =
+  process.env.ENCRYPTION_KEY ||
+  "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 const IV_LENGTH = 16;
 
 if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length !== 64) {

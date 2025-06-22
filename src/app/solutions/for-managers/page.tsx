@@ -5,7 +5,13 @@ import { PublicLayout } from "@/components/layouts/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Check } from "lucide-react";
 import { useState } from "react";
 
@@ -49,7 +55,9 @@ export default function ForManagersPage() {
                 Empower Your Sales Team with AI-Driven Insights
               </h1>
               <p className="text-xl text-gray-300 mb-12">
-                Get complete visibility into your team&apos;s performance, automate routine tasks, and coach your reps to success with Mohit AI&apos;s manager tools.
+                Get complete visibility into your team&apos;s performance,
+                automate routine tasks, and coach your reps to success with
+                Mohit AI&apos;s manager tools.
               </p>
               <div className="flex gap-4 mb-12">
                 <Link href="/signup">
@@ -82,7 +90,8 @@ export default function ForManagersPage() {
                         Real-Time Analytics
                       </h4>
                       <p className="text-gray-300">
-                        Monitor team performance and track key metrics in real-time
+                        Monitor team performance and track key metrics in
+                        real-time
                       </p>
                     </div>
                   </li>
@@ -108,7 +117,8 @@ export default function ForManagersPage() {
                         Automated Reporting
                       </h4>
                       <p className="text-gray-300">
-                        Customizable reports delivered automatically to your inbox
+                        Customizable reports delivered automatically to your
+                        inbox
                       </p>
                     </div>
                   </li>
@@ -136,7 +146,8 @@ export default function ForManagersPage() {
                 Performance Analytics
               </h3>
               <p className="text-gray-300">
-                Track individual and team performance metrics, identify trends, and spot opportunities for improvement.
+                Track individual and team performance metrics, identify trends,
+                and spot opportunities for improvement.
               </p>
             </div>
             <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
@@ -144,7 +155,8 @@ export default function ForManagersPage() {
                 Call Coaching
               </h3>
               <p className="text-gray-300">
-                AI-powered call analysis provides insights and coaching recommendations for every conversation.
+                AI-powered call analysis provides insights and coaching
+                recommendations for every conversation.
               </p>
             </div>
             <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
@@ -152,7 +164,8 @@ export default function ForManagersPage() {
                 Pipeline Management
               </h3>
               <p className="text-gray-300">
-                Get a clear view of your team&apos;s pipeline with AI-driven forecasting and risk analysis.
+                Get a clear view of your team&apos;s pipeline with AI-driven
+                forecasting and risk analysis.
               </p>
             </div>
           </div>
@@ -177,7 +190,8 @@ export default function ForManagersPage() {
                       Data-Driven Decisions
                     </h3>
                     <p className="text-gray-300">
-                      Make informed decisions with real-time data and AI-powered insights into your team&apos;s performance.
+                      Make informed decisions with real-time data and AI-powered
+                      insights into your team&apos;s performance.
                     </p>
                   </div>
                 </div>
@@ -190,7 +204,8 @@ export default function ForManagersPage() {
                       Efficient Coaching
                     </h3>
                     <p className="text-gray-300">
-                      Scale your coaching efforts with AI-generated insights and recommendations for each team member.
+                      Scale your coaching efforts with AI-generated insights and
+                      recommendations for each team member.
                     </p>
                   </div>
                 </div>
@@ -203,7 +218,8 @@ export default function ForManagersPage() {
                       Increased Productivity
                     </h3>
                     <p className="text-gray-300">
-                      Automate routine tasks and reporting to focus on strategic initiatives and team development.
+                      Automate routine tasks and reporting to focus on strategic
+                      initiatives and team development.
                     </p>
                   </div>
                 </div>
@@ -216,7 +232,9 @@ export default function ForManagersPage() {
                 </h3>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div>
-                    <Label htmlFor="name" className="text-gray-200">Full name</Label>
+                    <Label htmlFor="name" className="text-gray-200">
+                      Full name
+                    </Label>
                     <Input
                       type="text"
                       id="name"
@@ -228,7 +246,9 @@ export default function ForManagersPage() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email" className="text-gray-200">Work email</Label>
+                    <Label htmlFor="email" className="text-gray-200">
+                      Work email
+                    </Label>
                     <Input
                       type="email"
                       id="email"
@@ -240,7 +260,9 @@ export default function ForManagersPage() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="company" className="text-gray-200">Company name</Label>
+                    <Label htmlFor="company" className="text-gray-200">
+                      Company name
+                    </Label>
                     <Input
                       type="text"
                       id="company"
@@ -252,8 +274,13 @@ export default function ForManagersPage() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="team-size" className="text-gray-200">Team size</Label>
-                    <Select value={formData.teamSize} onValueChange={handleSelectChange}>
+                    <Label htmlFor="team-size" className="text-gray-200">
+                      Team size
+                    </Label>
+                    <Select
+                      value={formData.teamSize}
+                      onValueChange={handleSelectChange}
+                    >
                       <SelectTrigger className="mt-1 bg-gray-700 border-gray-600 text-white">
                         <SelectValue placeholder="Select team size" />
                       </SelectTrigger>
@@ -285,7 +312,8 @@ export default function ForManagersPage() {
             Ready to Transform Your Sales Team?
           </h2>
           <p className="text-xl text-white/90 mb-12">
-            Join hundreds of sales leaders who use Mohit AI to drive better results
+            Join hundreds of sales leaders who use Mohit AI to drive better
+            results
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/signup">

@@ -5,7 +5,13 @@ import { PublicLayout } from "@/components/layouts/PublicLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Check, DollarSign, Clock, TrendingUp, HeadphonesIcon } from "lucide-react";
+import {
+  Check,
+  DollarSign,
+  Clock,
+  TrendingUp,
+  HeadphonesIcon,
+} from "lucide-react";
 import { useState } from "react";
 
 export default function SmallBusinessPage() {
@@ -39,7 +45,8 @@ export default function SmallBusinessPage() {
               AI-Powered Sales for Growing Businesses
             </h1>
             <p className="text-xl text-gray-600 mb-12">
-              Get enterprise-level sales capabilities without the enterprise price tag. Start booking more meetings today.
+              Get enterprise-level sales capabilities without the enterprise
+              price tag. Start booking more meetings today.
             </p>
             <div className="flex gap-4 justify-center mb-12">
               <Link href="/signup">
@@ -83,18 +90,18 @@ export default function SmallBusinessPage() {
                 Affordable Pricing
               </h3>
               <p className="text-gray-600">
-                Pay only for what you use with transparent, scalable pricing that grows with your business.
+                Pay only for what you use with transparent, scalable pricing
+                that grows with your business.
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
                 <Clock className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-black mb-4">
-                Quick Setup
-              </h3>
+              <h3 className="text-xl font-bold text-black mb-4">Quick Setup</h3>
               <p className="text-gray-600">
-                Get up and running in minutes, not months. No complex integrations or lengthy onboarding.
+                Get up and running in minutes, not months. No complex
+                integrations or lengthy onboarding.
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
@@ -105,7 +112,8 @@ export default function SmallBusinessPage() {
                 Proven Results
               </h3>
               <p className="text-gray-600">
-                Small businesses see 3x more qualified meetings within the first 30 days.
+                Small businesses see 3x more qualified meetings within the first
+                30 days.
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
@@ -116,7 +124,8 @@ export default function SmallBusinessPage() {
                 Dedicated Support
               </h3>
               <p className="text-gray-600">
-                Get help when you need it with responsive support and helpful resources.
+                Get help when you need it with responsive support and helpful
+                resources.
               </p>
             </div>
           </div>
@@ -190,7 +199,9 @@ export default function SmallBusinessPage() {
               <div className="space-y-6">
                 <div className="bg-white rounded-lg p-6 shadow-sm">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">Meetings Booked</span>
+                    <span className="text-sm font-medium text-gray-600">
+                      Meetings Booked
+                    </span>
                     <span className="text-sm text-purple-600">+247%</span>
                   </div>
                   <div className="text-3xl font-bold text-black">43</div>
@@ -198,18 +209,26 @@ export default function SmallBusinessPage() {
                 </div>
                 <div className="bg-white rounded-lg p-6 shadow-sm">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">Response Rate</span>
+                    <span className="text-sm font-medium text-gray-600">
+                      Response Rate
+                    </span>
                     <span className="text-sm text-purple-600">+18%</span>
                   </div>
                   <div className="text-3xl font-bold text-black">32%</div>
-                  <div className="text-sm text-gray-500">Above industry average</div>
+                  <div className="text-sm text-gray-500">
+                    Above industry average
+                  </div>
                 </div>
                 <div className="bg-white rounded-lg p-6 shadow-sm">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">Time Saved</span>
+                    <span className="text-sm font-medium text-gray-600">
+                      Time Saved
+                    </span>
                   </div>
                   <div className="text-3xl font-bold text-black">20 hrs</div>
-                  <div className="text-sm text-gray-500">Per week on outreach</div>
+                  <div className="text-sm text-gray-500">
+                    Per week on outreach
+                  </div>
                 </div>
               </div>
             </div>
@@ -231,16 +250,23 @@ export default function SmallBusinessPage() {
           <div className="max-w-md mx-auto">
             <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-purple-500">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-black mb-2">Small Business</h3>
+                <h3 className="text-2xl font-bold text-black mb-2">
+                  Small Business
+                </h3>
                 <div className="text-4xl font-bold text-black mb-1">
-                  $299<span className="text-lg text-gray-600 font-normal">/month</span>
+                  $299
+                  <span className="text-lg text-gray-600 font-normal">
+                    /month
+                  </span>
                 </div>
                 <p className="text-gray-600">Perfect for growing teams</p>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center space-x-3">
                   <Check className="w-5 h-5 text-purple-500" />
-                  <span className="text-gray-700">Up to 1,000 AI-powered outreaches/month</span>
+                  <span className="text-gray-700">
+                    Up to 1,000 AI-powered outreaches/month
+                  </span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="w-5 h-5 text-purple-500" />
@@ -256,7 +282,9 @@ export default function SmallBusinessPage() {
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="w-5 h-5 text-purple-500" />
-                  <span className="text-gray-700">Weekly performance reports</span>
+                  <span className="text-gray-700">
+                    Weekly performance reports
+                  </span>
                 </li>
               </ul>
               <Link href="/signup" className="block">
@@ -283,24 +311,34 @@ export default function SmallBusinessPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-8 rounded-2xl">
               <div className="mb-6">
-                <div className="text-5xl font-bold text-purple-600 mb-2">312%</div>
+                <div className="text-5xl font-bold text-purple-600 mb-2">
+                  312%
+                </div>
                 <p className="text-gray-600">increase in qualified leads</p>
               </div>
               <p className="text-gray-700 mb-4">
-                &ldquo;Mohit AI helped us triple our pipeline in just 2 months. It&apos;s like having a full sales team at a fraction of the cost.&rdquo;
+                &ldquo;Mohit AI helped us triple our pipeline in just 2 months.
+                It&apos;s like having a full sales team at a fraction of the
+                cost.&rdquo;
               </p>
               <div>
                 <p className="font-semibold text-black">Sarah Chen</p>
-                <p className="text-sm text-gray-600">CEO, TechStart Solutions</p>
+                <p className="text-sm text-gray-600">
+                  CEO, TechStart Solutions
+                </p>
               </div>
             </div>
             <div className="bg-gray-50 p-8 rounded-2xl">
               <div className="mb-6">
-                <div className="text-5xl font-bold text-purple-600 mb-2">28</div>
+                <div className="text-5xl font-bold text-purple-600 mb-2">
+                  28
+                </div>
                 <p className="text-gray-600">hours saved per week</p>
               </div>
               <p className="text-gray-700 mb-4">
-                &ldquo;We went from spending all day on cold outreach to focusing on closing deals. Game changer for our small team.&rdquo;
+                &ldquo;We went from spending all day on cold outreach to
+                focusing on closing deals. Game changer for our small
+                team.&rdquo;
               </p>
               <div>
                 <p className="font-semibold text-black">Mike Rodriguez</p>
@@ -309,11 +347,14 @@ export default function SmallBusinessPage() {
             </div>
             <div className="bg-gray-50 p-8 rounded-2xl">
               <div className="mb-6">
-                <div className="text-5xl font-bold text-purple-600 mb-2">$2.4M</div>
+                <div className="text-5xl font-bold text-purple-600 mb-2">
+                  $2.4M
+                </div>
                 <p className="text-gray-600">in new revenue</p>
               </div>
               <p className="text-gray-700 mb-4">
-                &ldquo;The ROI has been incredible. Mohit AI paid for itself in the first week and has been driving growth ever since.&rdquo;
+                &ldquo;The ROI has been incredible. Mohit AI paid for itself in
+                the first week and has been driving growth ever since.&rdquo;
               </p>
               <div>
                 <p className="font-semibold text-black">Lisa Park</p>
@@ -334,7 +375,8 @@ export default function SmallBusinessPage() {
                   Ready to Grow Your Business?
                 </h2>
                 <p className="text-gray-600 mb-8">
-                  Join thousands of small businesses using Mohit AI to compete with the big players.
+                  Join thousands of small businesses using Mohit AI to compete
+                  with the big players.
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-center space-x-3">
@@ -343,7 +385,9 @@ export default function SmallBusinessPage() {
                   </li>
                   <li className="flex items-center space-x-3">
                     <Check className="w-5 h-5 text-purple-500" />
-                    <span className="text-gray-700">No credit card required</span>
+                    <span className="text-gray-700">
+                      No credit card required
+                    </span>
                   </li>
                   <li className="flex items-center space-x-3">
                     <Check className="w-5 h-5 text-purple-500" />
