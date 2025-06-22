@@ -216,12 +216,12 @@ export const URLSchema = z.string().url().max(2048).refine(
 // For Edge Runtime, use security-edge.ts or security-web-crypto.ts
 
 // Encryption utilities
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "0123456789abcdef0123456789abcdef";
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 const IV_LENGTH = 16;
 
-if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length !== 32) {
+if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length !== 64) {
   console.warn(
-    "ENCRYPTION_KEY must be exactly 32 characters. Using a temporary key for development.",
+    "ENCRYPTION_KEY must be exactly 64 characters (32 bytes in hex). Using a temporary key for development.",
   );
 }
 

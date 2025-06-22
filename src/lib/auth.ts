@@ -6,18 +6,24 @@ import * as jwt from "jsonwebtoken";
 import { z } from "zod";
 
 // Environment configuration with strict validation
-const JWT_SECRET =
+const getJWTSecret = () =>
   process.env.JWT_SECRET ||
   (process.env.NODE_ENV === "production"
     ? undefined
     : "dev-jwt-secret-min-32-characters-long");
-const JWT_REFRESH_SECRET =
+    
+const getJWTRefreshSecret = () =>
   process.env.JWT_REFRESH_SECRET ||
   (process.env.NODE_ENV === "production"
     ? undefined
     : "dev-jwt-refresh-secret-min-32-chars");
+    
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1h";
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || "7d";
+
+// For backwards compatibility
+const JWT_SECRET = getJWTSecret();
+const JWT_REFRESH_SECRET = getJWTRefreshSecret();
 
 // Only throw error at runtime in production, not during build
 if (
@@ -84,7 +90,7 @@ export function generateAccessToken(
 ): string {
   return jwt.sign(
     payload as any,
-    JWT_SECRET as string,
+    getJWTSecret() as string,
     { expiresIn: JWT_EXPIRES_IN } as jwt.SignOptions,
   );
 }
@@ -94,7 +100,7 @@ export function generateRefreshToken(
 ): string {
   return jwt.sign(
     payload as any,
-    JWT_REFRESH_SECRET as string,
+    getJWTRefreshSecret() as string,
     { expiresIn: JWT_REFRESH_EXPIRES_IN } as jwt.SignOptions,
   );
 }
@@ -102,13 +108,14 @@ export function generateRefreshToken(
 // Token verification
 export function verifyAccessToken(token: string): TokenPayload {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET as string) as any;
+    const decoded = jwt.verify(token, getJWTSecret() as string) as any;
     return TokenPayloadSchema.parse(decoded);
-  } catch (error) {
-    if (error instanceof jwt.TokenExpiredError) {
+  } catch (error: any) {
+    // Check error.message first since that's most reliable
+    if (error.message === 'jwt expired') {
       throw new AuthError("Token expired", 401, "TOKEN_EXPIRED");
     }
-    if (error instanceof jwt.JsonWebTokenError) {
+    if (error.name === 'JsonWebTokenError' || error instanceof jwt.JsonWebTokenError) {
       throw new AuthError("Invalid token", 401, "INVALID_TOKEN");
     }
     throw new AuthError(
@@ -121,17 +128,18 @@ export function verifyAccessToken(token: string): TokenPayload {
 
 export function verifyRefreshToken(token: string): TokenPayload {
   try {
-    const decoded = jwt.verify(token, JWT_REFRESH_SECRET as string) as any;
+    const decoded = jwt.verify(token, getJWTRefreshSecret() as string) as any;
     return TokenPayloadSchema.parse(decoded);
-  } catch (error) {
-    if (error instanceof jwt.TokenExpiredError) {
+  } catch (error: any) {
+    // Check for TokenExpiredError first since it extends JsonWebTokenError
+    if (error.name === 'TokenExpiredError' || error.message === 'jwt expired' || error instanceof jwt.TokenExpiredError) {
       throw new AuthError(
         "Refresh token expired",
         401,
         "REFRESH_TOKEN_EXPIRED",
       );
     }
-    if (error instanceof jwt.JsonWebTokenError) {
+    if (error.name === 'JsonWebTokenError' || error instanceof jwt.JsonWebTokenError) {
       throw new AuthError(
         "Invalid refresh token",
         401,
@@ -195,14 +203,14 @@ export function requireOrganization(
 export function generateCSRFToken(): string {
   return jwt.sign(
     { csrf: true },
-    JWT_SECRET as string,
+    getJWTSecret() as string,
     { expiresIn: "1h" } as jwt.SignOptions,
   );
 }
 
 export function verifyCSRFToken(token: string): boolean {
   try {
-    jwt.verify(token, JWT_SECRET as string);
+    jwt.verify(token, getJWTSecret() as string);
     return true;
   } catch {
     return false;

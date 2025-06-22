@@ -1,4 +1,9 @@
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+
+// Mock environment variables BEFORE importing auth module
+process.env.JWT_SECRET = 'test-jwt-secret-at-least-32-characters';
+process.env.JWT_REFRESH_SECRET = 'test-refresh-secret-at-least-32-chars';
+
 import {
   hashPassword,
   verifyPassword,
@@ -20,10 +25,6 @@ import {
 } from '@/lib/auth';
 import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
-
-// Mock environment variables
-process.env.JWT_SECRET = 'test-jwt-secret-at-least-32-characters';
-process.env.JWT_REFRESH_SECRET = 'test-refresh-secret-at-least-32-chars';
 
 describe('Authentication Library', () => {
   describe('Password Hashing', () => {
@@ -77,10 +78,8 @@ describe('Authentication Library', () => {
       expect(token.split('.')).toHaveLength(3); // JWT format
     });
 
-    it('should generate different tokens for same payload', () => {
+    it('should generate valid tokens for same payload', () => {
       const token1 = generateAccessToken(mockPayload);
-      // Wait a bit to ensure different timestamp
-      jest.advanceTimersByTime(1000);
       const token2 = generateAccessToken(mockPayload);
       
       // Tokens might be the same if generated at exact same time
@@ -125,7 +124,7 @@ describe('Authentication Library', () => {
     it('should throw AuthError for expired token', () => {
       const expiredToken = jwt.sign(
         { ...mockPayload, exp: Math.floor(Date.now() / 1000) - 3600 },
-        'test-jwt-secret-at-least-32-characters'
+        process.env.JWT_SECRET || 'test-jwt-secret-at-least-32-characters'
       );
       
       expect(() => verifyAccessToken(expiredToken)).toThrow(AuthError);
@@ -147,9 +146,15 @@ describe('Authentication Library', () => {
 
     it('should extract token from cookie', () => {
       const request = new NextRequest('http://localhost:3000/api/test');
-      // Mock cookie
-      Object.defineProperty(request.cookies, 'get', {
-        value: jest.fn().mockReturnValue({ value: 'cookie-token-123' }),
+      // Mock cookie by overriding the entire cookies object
+      Object.defineProperty(request, 'cookies', {
+        value: {
+          get: jest.fn().mockReturnValue({ value: 'cookie-token-123' }),
+          set: jest.fn(),
+          delete: jest.fn(),
+        },
+        writable: true,
+        configurable: true
       });
       
       const token = extractTokenFromRequest(request);

@@ -53,12 +53,22 @@ global.Response = class Response {
     this.body = body;
     this.status = init?.status || 200;
     this.statusText = init?.statusText || 'OK';
-    this.headers = new Map();
+    const headers = new Map();
     if (init?.headers) {
       Object.entries(init.headers).forEach(([key, value]) => {
-        this.headers.set(key, value);
+        headers.set(key.toLowerCase(), value);
       });
     }
+    this.headers = {
+      get: (name) => headers.get(name.toLowerCase()),
+      set: (name, value) => headers.set(name.toLowerCase(), value),
+      has: (name) => headers.has(name.toLowerCase()),
+      delete: (name) => headers.delete(name.toLowerCase()),
+      entries: () => headers.entries(),
+      forEach: (callback) => headers.forEach(callback),
+      keys: () => headers.keys(),
+      values: () => headers.values(),
+    };
   }
   
   json() {
@@ -116,21 +126,57 @@ jest.mock('next/server', () => ({
         set: jest.fn(),
         delete: jest.fn(),
       };
+      // Define headers as a getter to override the parent class
+      Object.defineProperty(this, 'headers', {
+        get: () => ({
+          get: (name) => {
+            // Handle case-insensitive header names
+            const lowerName = name.toLowerCase();
+            for (const [key, value] of this._headers.entries()) {
+              if (key.toLowerCase() === lowerName) {
+                return value;
+              }
+            }
+            return null;
+          },
+          set: (name, value) => this._headers.set(name.toLowerCase(), value),
+          has: (name) => this._headers.has(name.toLowerCase()),
+          delete: (name) => this._headers.delete(name.toLowerCase()),
+          entries: () => this._headers.entries(),
+          forEach: (callback) => this._headers.forEach(callback),
+          keys: () => this._headers.keys(),
+          values: () => this._headers.values(),
+        }),
+        enumerable: true,
+        configurable: true
+      });
     }
   },
-  NextResponse: {
-    json: (body, init) => new global.Response(JSON.stringify(body), {
-      ...init,
-      headers: {
-        'content-type': 'application/json',
-        ...(init?.headers || {}),
-      },
-    }),
-    next: () => new global.Response(null, { status: 200 }),
-    redirect: (url) => new global.Response(null, {
-      status: 302,
-      headers: { Location: url.toString() },
-    }),
+  NextResponse: class NextResponse extends global.Response {
+    constructor(body, init) {
+      super(body, init);
+    }
+    
+    static json(body, init) {
+      return new this(JSON.stringify(body), {
+        ...init,
+        headers: {
+          'content-type': 'application/json',
+          ...(init?.headers || {}),
+        },
+      });
+    }
+    
+    static next() {
+      return new this(null, { status: 200 });
+    }
+    
+    static redirect(url) {
+      return new this(null, {
+        status: 302,
+        headers: { Location: url.toString() },
+      });
+    }
   },
 }));
 
