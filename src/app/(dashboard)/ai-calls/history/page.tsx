@@ -26,9 +26,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { 
-  ArrowLeft, Download, Filter, Search, Calendar as CalendarIcon,
-  Play, FileText, BarChart3, Phone, Clock, TrendingUp
+import {
+  ArrowLeft,
+  Download,
+  Filter,
+  Search,
+  Calendar as CalendarIcon,
+  Play,
+  FileText,
+  BarChart3,
+  Phone,
+  Clock,
+  TrendingUp,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { format, subDays } from "date-fns";
@@ -80,11 +89,12 @@ export default function CallHistoryPage() {
   const [filterOutcome, setFilterOutcome] = useState("all");
   const [filterMode, setFilterMode] = useState("all");
 
-  const filteredHistory = mockCallHistory.filter(call => {
-    const matchesSearch = 
+  const filteredHistory = mockCallHistory.filter((call) => {
+    const matchesSearch =
       call.leadName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       call.company.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesOutcome = filterOutcome === "all" || call.outcome === filterOutcome;
+    const matchesOutcome =
+      filterOutcome === "all" || call.outcome === filterOutcome;
     const matchesMode = filterMode === "all" || call.mode === filterMode;
     return matchesSearch && matchesOutcome && matchesMode;
   });
@@ -92,13 +102,17 @@ export default function CallHistoryPage() {
   const stats = {
     totalCalls: mockCallHistory.length,
     avgDuration: Math.round(
-      mockCallHistory.reduce((sum, call) => sum + call.duration, 0) / mockCallHistory.length
+      mockCallHistory.reduce((sum, call) => sum + call.duration, 0) /
+        mockCallHistory.length,
     ),
     avgSentiment: Math.round(
-      mockCallHistory.reduce((sum, call) => sum + call.sentiment, 0) / mockCallHistory.length
+      mockCallHistory.reduce((sum, call) => sum + call.sentiment, 0) /
+        mockCallHistory.length,
     ),
     qualificationRate: Math.round(
-      (mockCallHistory.filter(c => c.outcome === "Qualified").length / mockCallHistory.length) * 100
+      (mockCallHistory.filter((c) => c.outcome === "Qualified").length /
+        mockCallHistory.length) *
+        100,
     ),
   };
 
@@ -135,7 +149,9 @@ export default function CallHistoryPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Calls</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Total Calls
+                </p>
                 <p className="text-2xl font-bold">{stats.totalCalls}</p>
               </div>
               <Phone className="h-5 w-5 text-muted-foreground" />
@@ -146,8 +162,13 @@ export default function CallHistoryPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Avg Duration</p>
-                <p className="text-2xl font-bold">{Math.floor(stats.avgDuration / 60)}:{(stats.avgDuration % 60).toString().padStart(2, '0')}</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Avg Duration
+                </p>
+                <p className="text-2xl font-bold">
+                  {Math.floor(stats.avgDuration / 60)}:
+                  {(stats.avgDuration % 60).toString().padStart(2, "0")}
+                </p>
               </div>
               <Clock className="h-5 w-5 text-muted-foreground" />
             </div>
@@ -157,7 +178,9 @@ export default function CallHistoryPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Avg Sentiment</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Avg Sentiment
+                </p>
                 <p className="text-2xl font-bold">{stats.avgSentiment}%</p>
               </div>
               <TrendingUp className="h-5 w-5 text-muted-foreground" />
@@ -168,7 +191,9 @@ export default function CallHistoryPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Qualification Rate</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Qualification Rate
+                </p>
                 <p className="text-2xl font-bold">{stats.qualificationRate}%</p>
               </div>
               <BarChart3 className="h-5 w-5 text-muted-foreground" />
@@ -190,10 +215,13 @@ export default function CallHistoryPage() {
             />
           </div>
         </div>
-        
+
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="justify-start text-left font-normal">
+            <Button
+              variant="outline"
+              className="justify-start text-left font-normal"
+            >
               <CalendarIcon className="mr-2 h-4 w-4" />
               {dateRange.from ? (
                 dateRange.to ? (
@@ -219,7 +247,7 @@ export default function CallHistoryPage() {
                 if (range) {
                   setDateRange({
                     from: range.from,
-                    to: range.to
+                    to: range.to,
                   });
                 }
               }}
@@ -280,30 +308,44 @@ export default function CallHistoryPage() {
                   <TableCell>
                     <div>
                       <p className="font-medium">{call.leadName}</p>
-                      <p className="text-sm text-muted-foreground">{call.company}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {call.company}
+                      </p>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div>
                       <p>{format(call.date, "MMM d, yyyy")}</p>
-                      <p className="text-sm text-muted-foreground">{format(call.date, "h:mm a")}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {format(call.date, "h:mm a")}
+                      </p>
                     </div>
                   </TableCell>
                   <TableCell>
-                    {Math.floor(call.duration / 60)}:{(call.duration % 60).toString().padStart(2, '0')}
+                    {Math.floor(call.duration / 60)}:
+                    {(call.duration % 60).toString().padStart(2, "0")}
                   </TableCell>
                   <TableCell>
-                    <Badge variant={getModeVariant(call.mode)}>{call.mode}</Badge>
+                    <Badge variant={getModeVariant(call.mode)}>
+                      {call.mode}
+                    </Badge>
                   </TableCell>
                   <TableCell>
-                    <Badge variant={getOutcomeVariant(call.outcome)}>{call.outcome}</Badge>
+                    <Badge variant={getOutcomeVariant(call.outcome)}>
+                      {call.outcome}
+                    </Badge>
                   </TableCell>
                   <TableCell>
-                    <span className={cn(
-                      "font-medium",
-                      call.sentiment >= 80 ? "text-green-600" :
-                      call.sentiment >= 60 ? "text-amber-600" : "text-red-600"
-                    )}>
+                    <span
+                      className={cn(
+                        "font-medium",
+                        call.sentiment >= 80
+                          ? "text-green-600"
+                          : call.sentiment >= 60
+                            ? "text-amber-600"
+                            : "text-red-600",
+                      )}
+                    >
                       {call.sentiment}%
                     </span>
                   </TableCell>

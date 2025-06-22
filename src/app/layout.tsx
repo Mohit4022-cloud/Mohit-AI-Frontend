@@ -5,27 +5,27 @@ import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
-  display: 'swap',
+  display: "swap",
   preload: true,
 });
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#1a1a1a' }
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1a1a" },
   ],
-}
+};
 
 export const metadata: Metadata = {
   title: {
     default: `${config.app.name} - Never Miss Another Inbound Lead`,
-    template: `%s | ${config.app.name}`
+    template: `%s | ${config.app.name}`,
   },
   description: config.app.description,
   keywords: config.app.keywords,
@@ -39,18 +39,18 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(config.app.url),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
     title: `${config.app.name} - Never Miss Another Inbound Lead`,
     description: config.app.description,
     url: config.app.url,
     siteName: config.app.name,
-    locale: 'en_US',
-    type: 'website',
+    locale: "en_US",
+    type: "website",
     images: [
       {
-        url: '/og-image.png',
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: config.app.name,
@@ -58,10 +58,10 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: `${config.app.name} - Never Miss Another Inbound Lead`,
     description: config.app.description,
-    images: ['/twitter-image.png'],
+    images: ["/twitter-image.png"],
   },
   robots: {
     index: true,
@@ -69,21 +69,19 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
     ],
-    apple: [
-      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
-  manifest: '/manifest.json',
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({

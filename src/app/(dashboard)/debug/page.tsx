@@ -1,4 +1,4 @@
-import { ApiDebugPanel } from '@/components/debug/ApiDebugPanel'
+import { ApiDebugPanel } from "@/components/debug/ApiDebugPanel";
 
 export default function DebugPage() {
   return (
@@ -6,5 +6,5 @@ export default function DebugPage() {
       <h1 className="text-2xl font-bold mb-6">API Debug Tools</h1>
       <ApiDebugPanel />
     </div>
-  )
+  );
 }

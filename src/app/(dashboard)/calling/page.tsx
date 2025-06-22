@@ -1,51 +1,67 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PhoneCall, Users, History, Settings, Sparkles, Upload, Phone } from 'lucide-react';
-import { Dialer } from '@/app/calling/components/Dialer';
-import TranscriptDisplay from '@/app/calling/components/TranscriptDisplay';
-import { CoachingCards } from '@/app/calling/components/CoachingCards';
-import { CallAnalytics } from '@/app/calling/components/CallAnalytics';
-import CallHistory from '@/app/calling/components/CallHistory';
+import { useState, useEffect, useCallback } from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  PhoneCall,
+  Users,
+  History,
+  Settings,
+  Sparkles,
+  Upload,
+  Phone,
+} from "lucide-react";
+import { Dialer } from "@/app/calling/components/Dialer";
+import TranscriptDisplay from "@/app/calling/components/TranscriptDisplay";
+import { CoachingCards } from "@/app/calling/components/CoachingCards";
+import { CallAnalytics } from "@/app/calling/components/CallAnalytics";
+import CallHistory from "@/app/calling/components/CallHistory";
 
 // New components
-import { CSVUploader } from '@/components/calling/CSVUploader';
-import { AutoDialer } from '@/components/calling/AutoDialer';
-import { LiveTranscript } from '@/components/calling/LiveTranscript';
-import { CallHistoryTable } from '@/components/calling/CallHistoryTable';
-import { ContactsTable } from '@/components/calling/ContactsTable';
-import { TestCallDialog } from '@/components/calling/TestCallDialog';
+import { CSVUploader } from "@/components/calling/CSVUploader";
+import { AutoDialer } from "@/components/calling/AutoDialer";
+import { LiveTranscript } from "@/components/calling/LiveTranscript";
+import { CallHistoryTable } from "@/components/calling/CallHistoryTable";
+import { ContactsTable } from "@/components/calling/ContactsTable";
+import { TestCallDialog } from "@/components/calling/TestCallDialog";
 
-import { useCallStore } from '@/stores/callStore';
-import { useCallQueueStore } from '@/stores/callQueueStore';
+import { useCallStore } from "@/stores/callStore";
+import { useCallQueueStore } from "@/stores/callQueueStore";
 // import twilioService from '@/services/twilio/twilioService'; // TODO: Implement when Twilio service is ready
-import TranscriptionService from '@/services/ai/transcriptionService';
-import { TranscriptSegment } from '@/types/transcript';
-import { CoachingCard, CallAnalytics as ICallAnalytics } from '@/types/advanced';
-import { generateTranscript, generateCallInsights, generateCoachingSuggestions } from '@/lib/mockDataGenerators';
+import TranscriptionService from "@/services/ai/transcriptionService";
+import { TranscriptSegment } from "@/types/transcript";
+import {
+  CoachingCard,
+  CallAnalytics as ICallAnalytics,
+} from "@/types/advanced";
+import {
+  generateTranscript,
+  generateCallInsights,
+  generateCoachingSuggestions,
+} from "@/lib/mockDataGenerators";
 
 export default function CallingPage() {
-  const [activeTab, setActiveTab] = useState('dialer');
+  const [activeTab, setActiveTab] = useState("dialer");
   const [isCallActive, setIsCallActive] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isOnHold, setIsOnHold] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
-  const [transcriptSegments, setTranscriptSegments] = useState<TranscriptSegment[]>([]);
+  const [transcriptSegments, setTranscriptSegments] = useState<
+    TranscriptSegment[]
+  >([]);
   const [coachingCards, setCoachingCards] = useState<CoachingCard[]>([]);
-  const [callAnalytics, setCallAnalytics] = useState<ICallAnalytics | null>(null);
-  const [transcriptionService, setTranscriptionService] = useState<TranscriptionService | null>(null);
+  const [callAnalytics, setCallAnalytics] = useState<ICallAnalytics | null>(
+    null,
+  );
+  const [transcriptionService, setTranscriptionService] =
+    useState<TranscriptionService | null>(null);
   const [twilioDevice, setTwilioDevice] = useState<any>(null);
   const [isDeviceReady, setIsDeviceReady] = useState(false);
 
-  const { 
-    activeCall, 
-    addTranscriptLine, 
-    queue,
-    currentIndex 
-  } = useCallQueueStore();
+  const { activeCall, addTranscriptLine, queue, currentIndex } =
+    useCallQueueStore();
 
   // Initialize Twilio on component mount
   useEffect(() => {
@@ -59,7 +75,7 @@ export default function CallingPage() {
     let interval: NodeJS.Timeout;
     if (isCallActive && !isOnHold) {
       interval = setInterval(() => {
-        setCallDuration(prev => prev + 1);
+        setCallDuration((prev) => prev + 1);
       }, 1000);
     }
     return () => clearInterval(interval);
@@ -67,48 +83,48 @@ export default function CallingPage() {
 
   // Sync with auto-dialer state
   useEffect(() => {
-    setIsCallActive(!!activeCall && activeCall.status === 'connected');
+    setIsCallActive(!!activeCall && activeCall.status === "connected");
   }, [activeCall]);
 
   const handleCall = async (phoneNumber: string) => {
     try {
       // Call the mock API
-      const response = await fetch('/api/calls', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phoneNumber, contactId: 'mock-contact-001' })
+      const response = await fetch("/api/calls", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phoneNumber, contactId: "mock-contact-001" }),
       });
-      
+
       const { data: callSession } = await response.json();
-      
+
       setIsCallActive(true);
       setCallDuration(0);
-      
+
       // Start simulating real-time transcription
       startMockTranscription();
-      
+
       // Simulate dynamic coaching cards
       startCoachingSimulation();
-      
+
       // Initialize mock analytics
       setCallAnalytics({
         sentimentAnalysis: {
           overall: {
             score: 0.2,
             magnitude: 0.7,
-            label: 'positive'
+            label: "positive",
           },
           timeline: [],
           customerSentiment: {
             score: 0.15,
             magnitude: 0.6,
-            label: 'positive'
+            label: "positive",
           },
           agentSentiment: {
             score: 0.25,
             magnitude: 0.8,
-            label: 'positive'
-          }
+            label: "positive",
+          },
         },
         performanceScore: {
           overall: 75,
@@ -117,93 +133,103 @@ export default function CallingPage() {
             presentation: 70,
             objectionHandling: 75,
             closing: 65,
-            rapport: 85
-          }
+            rapport: 85,
+          },
         },
         talkRatio: 0.6,
         interruptionCount: 2,
         silencePercentage: 15,
-        keywordsDetected: ['pricing', 'features', 'timeline', 'budget']
+        keywordsDetected: ["pricing", "features", "timeline", "budget"],
       });
-
     } catch (error) {
-      console.error('Failed to make call:', error);
+      console.error("Failed to make call:", error);
       setIsCallActive(false);
     }
   };
-  
+
   const startMockTranscription = () => {
     const mockTranscript = generateTranscript();
     let index = 0;
-    
+
     const interval = setInterval(() => {
       if (index < mockTranscript.length && isCallActive) {
         const segment = mockTranscript[index];
-        const transcriptLine = `${segment.role === 'agent' ? 'AI' : 'Prospect'}: ${segment.text}`;
-        
+        const transcriptLine = `${segment.role === "agent" ? "AI" : "Prospect"}: ${segment.text}`;
+
         // Add to queue store for live transcript
         addTranscriptLine(transcriptLine);
-        
+
         // Also update local state for backward compatibility
-        setTranscriptSegments(prev => [...prev, {
-          speaker: segment.role as 'agent' | 'customer',
-          text: segment.text,
-          startTime: Date.now() - (mockTranscript.length - index) * 3000,
-          endTime: Date.now(),
-          sentiment: {
-            score: segment.sentiment === 'positive' ? 0.8 : segment.sentiment === 'negative' ? -0.8 : 0,
-            magnitude: 0.5,
-            label: segment.sentiment as 'positive' | 'neutral' | 'negative'
-          }
-        }]);
+        setTranscriptSegments((prev) => [
+          ...prev,
+          {
+            speaker: segment.role as "agent" | "customer",
+            text: segment.text,
+            startTime: Date.now() - (mockTranscript.length - index) * 3000,
+            endTime: Date.now(),
+            sentiment: {
+              score:
+                segment.sentiment === "positive"
+                  ? 0.8
+                  : segment.sentiment === "negative"
+                    ? -0.8
+                    : 0,
+              magnitude: 0.5,
+              label: segment.sentiment as "positive" | "neutral" | "negative",
+            },
+          },
+        ]);
         index++;
       } else {
         clearInterval(interval);
       }
     }, 3000); // Add new segment every 3 seconds
-    
+
     return () => clearInterval(interval);
   };
-  
+
   const startCoachingSimulation = () => {
     const suggestions = generateCoachingSuggestions();
     let suggestionIndex = 0;
-    
+
     const interval = setInterval(() => {
       if (suggestionIndex < suggestions.length && isCallActive) {
         const suggestion = suggestions[suggestionIndex];
-        setCoachingCards(prev => [...prev, {
-          id: `card-${Date.now()}`,
-          type: suggestion.type as any,
-          title: suggestion.title,
-          content: suggestion.suggestion,
-          priority: suggestion.priority as any,
-          script: suggestion.script,
-          triggerCondition: 'manual'
-        }]);
+        setCoachingCards((prev) => [
+          ...prev,
+          {
+            id: `card-${Date.now()}`,
+            type: suggestion.type as any,
+            title: suggestion.title,
+            content: suggestion.suggestion,
+            priority: suggestion.priority as any,
+            script: suggestion.script,
+            triggerCondition: "manual",
+          },
+        ]);
         suggestionIndex++;
       } else {
         clearInterval(interval);
       }
     }, 15000); // New coaching card every 15 seconds
-    
+
     return () => clearInterval(interval);
   };
 
   const handleEndCall = async () => {
     try {
       // TODO: await twilioService.endCall();
-      
+
       if (transcriptionService) {
         await transcriptionService.stopTranscription();
         setTranscriptionService(null);
       }
-      
+
       setIsCallActive(false);
       setIsMuted(false);
       setIsOnHold(false);
     } catch (error) {
-      console.error('Failed to end call:', error);
+      console.error("Failed to end call:", error);
     }
   };
 
@@ -212,7 +238,7 @@ export default function CallingPage() {
       // TODO: await twilioService.muteCall(muted);
       setIsMuted(muted);
     } catch (error) {
-      console.error('Failed to toggle mute:', error);
+      console.error("Failed to toggle mute:", error);
     }
   };
 
@@ -221,7 +247,7 @@ export default function CallingPage() {
   };
 
   const updateTranscript = (segment: TranscriptSegment, isPartial: boolean) => {
-    setTranscriptSegments(prev => {
+    setTranscriptSegments((prev) => {
       if (isPartial && prev.length > 0) {
         // Update the last segment if it's partial
         const last = prev[prev.length - 1];
@@ -235,7 +261,7 @@ export default function CallingPage() {
 
   const updateAnalytics = (sentiment: any) => {
     // Update analytics based on sentiment data
-    setCallAnalytics(prev => {
+    setCallAnalytics((prev) => {
       if (!prev) return null;
       return {
         ...prev,
@@ -244,9 +270,9 @@ export default function CallingPage() {
           overall: {
             score: sentiment.score || 0,
             magnitude: sentiment.magnitude || 0.5,
-            label: sentiment.label || 'neutral'
-          }
-        }
+            label: sentiment.label || "neutral",
+          },
+        },
       };
     });
   };
@@ -272,7 +298,8 @@ export default function CallingPage() {
             <div className="flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/20 rounded-lg animate-pulse">
               <div className="h-3 w-3 bg-red-500 rounded-full animate-pulse" />
               <span className="text-red-700 dark:text-red-400 font-medium">
-                Call Active • {Math.floor(callDuration / 60)}:{(callDuration % 60).toString().padStart(2, '0')}
+                Call Active • {Math.floor(callDuration / 60)}:
+                {(callDuration % 60).toString().padStart(2, "0")}
               </span>
             </div>
           )}
@@ -308,23 +335,25 @@ export default function CallingPage() {
         <div className="col-span-12 lg:col-span-3 space-y-6">
           {/* Auto Dialer */}
           <AutoDialer device={twilioDevice} isDeviceReady={isDeviceReady} />
-          
+
           {/* Queue Info */}
           {queue.length > 0 && (
             <Card className="p-4">
               <h3 className="font-medium mb-2">Call Queue</h3>
               <div className="space-y-2 max-h-48 overflow-y-auto">
-                {queue.slice(currentIndex, currentIndex + 5).map((contact, idx) => (
-                  <div 
-                    key={contact.id} 
-                    className={`text-sm p-2 rounded ${idx === 0 ? 'bg-primary/10 font-medium' : ''}`}
-                  >
-                    <p>{contact.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {contact.company} • {contact.title}
-                    </p>
-                  </div>
-                ))}
+                {queue
+                  .slice(currentIndex, currentIndex + 5)
+                  .map((contact, idx) => (
+                    <div
+                      key={contact.id}
+                      className={`text-sm p-2 rounded ${idx === 0 ? "bg-primary/10 font-medium" : ""}`}
+                    >
+                      <p>{contact.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {contact.company} • {contact.title}
+                      </p>
+                    </div>
+                  ))}
                 {queue.length > currentIndex + 5 && (
                   <p className="text-xs text-muted-foreground">
                     ... and {queue.length - currentIndex - 5} more
@@ -379,7 +408,7 @@ export default function CallingPage() {
             <CoachingCards
               cards={coachingCards}
               onDismiss={(cardId) => {
-                setCoachingCards(prev => prev.filter(c => c.id !== cardId));
+                setCoachingCards((prev) => prev.filter((c) => c.id !== cardId));
               }}
             />
           )}
@@ -388,7 +417,7 @@ export default function CallingPage() {
         {/* Right Column - Live Transcript & Analytics */}
         <div className="col-span-12 lg:col-span-4 space-y-6">
           <LiveTranscript />
-          
+
           <CallAnalytics
             analytics={callAnalytics}
             duration={callDuration}

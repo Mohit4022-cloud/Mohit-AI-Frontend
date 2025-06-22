@@ -1,17 +1,36 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -26,20 +45,59 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { 
-  Clock, Timer, AlertTriangle, TrendingUp, Users, 
-  Zap, Settings, Plus, Edit, Trash2, Play, Pause,
-  BarChart3, Target, Shield, Bell, Mail, Phone,
-  MessageSquare, Calendar, CheckCircle, XCircle,
-  Info, RefreshCw, Save, ArrowUp, ArrowDown, ArrowRight,
-  GitBranch, Activity, Eye, Filter, Search
+import {
+  Clock,
+  Timer,
+  AlertTriangle,
+  TrendingUp,
+  Users,
+  Zap,
+  Settings,
+  Plus,
+  Edit,
+  Trash2,
+  Play,
+  Pause,
+  BarChart3,
+  Target,
+  Shield,
+  Bell,
+  Mail,
+  Phone,
+  MessageSquare,
+  Calendar,
+  CheckCircle,
+  XCircle,
+  Info,
+  RefreshCw,
+  Save,
+  ArrowUp,
+  ArrowDown,
+  ArrowRight,
+  GitBranch,
+  Activity,
+  Eye,
+  Filter,
+  Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format, formatDistanceToNow, addMinutes } from "date-fns";
 import {
-  LineChart, Line, AreaChart, Area, BarChart, Bar,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ResponsiveContainer, PieChart, Pie, Cell
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
 
 interface QueueItem {
@@ -47,17 +105,17 @@ interface QueueItem {
   leadId: string;
   leadName: string;
   company: string;
-  priority: 'low' | 'medium' | 'high' | 'urgent';
-  status: 'waiting' | 'in_progress' | 'escalated' | 'completed' | 'abandoned';
+  priority: "low" | "medium" | "high" | "urgent";
+  status: "waiting" | "in_progress" | "escalated" | "completed" | "abandoned";
   assignedTo?: string;
   enqueuedAt: string;
   startedAt?: string;
   waitTime: number; // in minutes
   handleTime?: number;
-  channel: 'web' | 'email' | 'phone' | 'chat' | 'social';
+  channel: "web" | "email" | "phone" | "chat" | "social";
   reason: string;
   tags: string[];
-  slaStatus: 'on_track' | 'at_risk' | 'breached';
+  slaStatus: "on_track" | "at_risk" | "breached";
   escalationLevel: number;
 }
 
@@ -66,13 +124,18 @@ interface EscalationRule {
   name: string;
   description: string;
   trigger: {
-    type: 'wait_time' | 'priority' | 'vip' | 'score' | 'attempts';
-    operator: 'greater_than' | 'less_than' | 'equals';
+    type: "wait_time" | "priority" | "vip" | "score" | "attempts";
+    operator: "greater_than" | "less_than" | "equals";
     value: number;
-    unit?: 'minutes' | 'hours' | 'attempts';
+    unit?: "minutes" | "hours" | "attempts";
   };
   actions: {
-    type: 'change_priority' | 'reassign' | 'notify' | 'auto_respond' | 'create_task';
+    type:
+      | "change_priority"
+      | "reassign"
+      | "notify"
+      | "auto_respond"
+      | "create_task";
     target?: string;
     message?: string;
     priority?: string;
@@ -135,11 +198,11 @@ interface AdvancedQueueManagerProps {
   className?: string;
 }
 
-export function AdvancedQueueManager({ 
-  queueItems = [], 
+export function AdvancedQueueManager({
+  queueItems = [],
   onQueueUpdate,
   onEscalation,
-  className 
+  className,
 }: AdvancedQueueManagerProps) {
   const [queue, setQueue] = useState<QueueItem[]>(queueItems);
   const [escalationRules, setEscalationRules] = useState<EscalationRule[]>([]);
@@ -153,111 +216,118 @@ export function AdvancedQueueManager({
       score: 30,
       waitTime: 40,
       channel: 20,
-      vip: 10
+      vip: 10,
     },
     channels: {
       web: true,
       email: true,
       phone: true,
       chat: true,
-      social: true
-    }
+      social: true,
+    },
   });
   const [selectedItem, setSelectedItem] = useState<QueueItem | null>(null);
   const [showRuleDialog, setShowRuleDialog] = useState(false);
   const [showSLADialog, setShowSLADialog] = useState(false);
   const [editingRule, setEditingRule] = useState<EscalationRule | null>(null);
   const [editingSLA, setEditingSLA] = useState<SLAPolicy | null>(null);
-  const [filterChannel, setFilterChannel] = useState<string>('all');
-  const [filterPriority, setFilterPriority] = useState<string>('all');
+  const [filterChannel, setFilterChannel] = useState<string>("all");
+  const [filterPriority, setFilterPriority] = useState<string>("all");
 
   useEffect(() => {
     // Load default escalation rules
     const defaultRules: EscalationRule[] = [
       {
-        id: '1',
-        name: 'High Priority Escalation',
-        description: 'Escalate high priority items waiting over 15 minutes',
+        id: "1",
+        name: "High Priority Escalation",
+        description: "Escalate high priority items waiting over 15 minutes",
         trigger: {
-          type: 'wait_time',
-          operator: 'greater_than',
+          type: "wait_time",
+          operator: "greater_than",
           value: 15,
-          unit: 'minutes'
+          unit: "minutes",
         },
         actions: [
-          { type: 'change_priority', priority: 'urgent' },
-          { type: 'notify', target: 'manager@company.com', message: 'High priority lead escalated' }
-        ],
-        conditions: [
-          { field: 'priority', operator: 'equals', value: 'high' }
-        ],
-        enabled: true,
-        triggerCount: 0
-      },
-      {
-        id: '2',
-        name: 'VIP Auto Response',
-        description: 'Send automatic response to VIP leads',
-        trigger: {
-          type: 'score',
-          operator: 'greater_than',
-          value: 90
-        },
-        actions: [
-          { 
-            type: 'auto_respond', 
-            message: 'Thank you for your interest. A senior representative will contact you within 5 minutes.' 
+          { type: "change_priority", priority: "urgent" },
+          {
+            type: "notify",
+            target: "manager@company.com",
+            message: "High priority lead escalated",
           },
-          { type: 'change_priority', priority: 'urgent' }
         ],
+        conditions: [{ field: "priority", operator: "equals", value: "high" }],
         enabled: true,
-        triggerCount: 0
+        triggerCount: 0,
       },
       {
-        id: '3',
-        name: 'Abandoned Lead Recovery',
-        description: 'Create follow-up task for abandoned leads',
+        id: "2",
+        name: "VIP Auto Response",
+        description: "Send automatic response to VIP leads",
         trigger: {
-          type: 'wait_time',
-          operator: 'greater_than',
-          value: 60,
-          unit: 'minutes'
+          type: "score",
+          operator: "greater_than",
+          value: 90,
         },
         actions: [
-          { type: 'create_task', target: 'Follow up with abandoned lead' },
-          { type: 'notify', target: 'sales-team', message: 'Lead abandoned queue' }
+          {
+            type: "auto_respond",
+            message:
+              "Thank you for your interest. A senior representative will contact you within 5 minutes.",
+          },
+          { type: "change_priority", priority: "urgent" },
         ],
         enabled: true,
-        triggerCount: 0
-      }
+        triggerCount: 0,
+      },
+      {
+        id: "3",
+        name: "Abandoned Lead Recovery",
+        description: "Create follow-up task for abandoned leads",
+        trigger: {
+          type: "wait_time",
+          operator: "greater_than",
+          value: 60,
+          unit: "minutes",
+        },
+        actions: [
+          { type: "create_task", target: "Follow up with abandoned lead" },
+          {
+            type: "notify",
+            target: "sales-team",
+            message: "Lead abandoned queue",
+          },
+        ],
+        enabled: true,
+        triggerCount: 0,
+      },
     ];
     setEscalationRules(defaultRules);
 
     // Load default SLA policies
     const defaultSLAs: SLAPolicy[] = [
       {
-        id: '1',
-        name: 'Standard SLA',
-        description: 'Default service level agreement',
+        id: "1",
+        name: "Standard SLA",
+        description: "Default service level agreement",
         targets: [
-          { priority: 'urgent', firstResponseTime: 5, resolutionTime: 30 },
-          { priority: 'high', firstResponseTime: 15, resolutionTime: 60 },
-          { priority: 'medium', firstResponseTime: 30, resolutionTime: 240 },
-          { priority: 'low', firstResponseTime: 60, resolutionTime: 480 }
+          { priority: "urgent", firstResponseTime: 5, resolutionTime: 30 },
+          { priority: "high", firstResponseTime: 15, resolutionTime: 60 },
+          { priority: "medium", firstResponseTime: 30, resolutionTime: 240 },
+          { priority: "low", firstResponseTime: 60, resolutionTime: 480 },
         ],
         businessHours: {
           enabled: true,
-          timezone: 'America/New_York',
+          timezone: "America/New_York",
           hours: [
-            { day: 'Monday', start: '09:00', end: '18:00' },
-            { day: 'Tuesday', start: '09:00', end: '18:00' },
-            { day: 'Wednesday', start: '09:00', end: '18:00' },
-            { day: 'Thursday', start: '09:00', end: '18:00' },
-            { day: 'Friday', start: '09:00', end: '18:00' }
-          ]
+            { day: "Monday", start: "09:00", end: "18:00" },
+            { day: "Tuesday", start: "09:00", end: "18:00" },
+            { day: "Wednesday", start: "09:00", end: "18:00" },
+            { day: "Thursday", start: "09:00", end: "18:00" },
+            { day: "Friday", start: "09:00", end: "18:00" },
+          ],
         },
-        enabled: true
-      }
+        enabled: true,
+      },
     ];
     setSlaPolicies(defaultSLAs);
 
@@ -271,37 +341,43 @@ export function AdvancedQueueManager({
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateQueueMetrics = () => {
-    setQueue(prevQueue => 
-      prevQueue.map(item => {
-        if (item.status === 'waiting') {
+    setQueue((prevQueue) =>
+      prevQueue.map((item) => {
+        if (item.status === "waiting") {
           const waitTime = Math.floor(
-            (Date.now() - new Date(item.enqueuedAt).getTime()) / 60000
+            (Date.now() - new Date(item.enqueuedAt).getTime()) / 60000,
           );
           return { ...item, waitTime };
         }
         return item;
-      })
+      }),
     );
   };
 
   const checkEscalationRules = () => {
-    queue.forEach(item => {
-      if (item.status !== 'waiting' && item.status !== 'in_progress') return;
+    queue.forEach((item) => {
+      if (item.status !== "waiting" && item.status !== "in_progress") return;
 
-      escalationRules.forEach(rule => {
+      escalationRules.forEach((rule) => {
         if (!rule.enabled) return;
 
         let shouldTrigger = false;
 
         // Check trigger condition
         switch (rule.trigger.type) {
-          case 'wait_time':
-            if (rule.trigger.operator === 'greater_than' && item.waitTime > rule.trigger.value) {
+          case "wait_time":
+            if (
+              rule.trigger.operator === "greater_than" &&
+              item.waitTime > rule.trigger.value
+            ) {
               shouldTrigger = true;
             }
             break;
-          case 'priority':
-            if (getPriorityValue(item.priority) >= getPriorityValue(rule.trigger.value.toString())) {
+          case "priority":
+            if (
+              getPriorityValue(item.priority) >=
+              getPriorityValue(rule.trigger.value.toString())
+            ) {
               shouldTrigger = true;
             }
             break;
@@ -310,13 +386,17 @@ export function AdvancedQueueManager({
 
         // Check additional conditions
         if (shouldTrigger && rule.conditions) {
-          shouldTrigger = rule.conditions.every(condition => {
+          shouldTrigger = rule.conditions.every((condition) => {
             const fieldValue = (item as any)[condition.field];
             switch (condition.operator) {
-              case 'equals': return fieldValue === condition.value;
-              case 'greater_than': return fieldValue > condition.value;
-              case 'less_than': return fieldValue < condition.value;
-              default: return true;
+              case "equals":
+                return fieldValue === condition.value;
+              case "greater_than":
+                return fieldValue > condition.value;
+              case "less_than":
+                return fieldValue < condition.value;
+              default:
+                return true;
             }
           });
         }
@@ -329,23 +409,25 @@ export function AdvancedQueueManager({
   };
 
   const executeEscalationActions = (item: QueueItem, rule: EscalationRule) => {
-    rule.actions.forEach(action => {
+    rule.actions.forEach((action) => {
       switch (action.type) {
-        case 'change_priority':
-          updateQueueItem(item.id, { 
-            priority: action.priority as any, 
-            escalationLevel: item.escalationLevel + 1 
+        case "change_priority":
+          updateQueueItem(item.id, {
+            priority: action.priority as any,
+            escalationLevel: item.escalationLevel + 1,
           });
           break;
-        case 'notify':
+        case "notify":
           // In real app, send notification
-          console.log(`Notification sent to ${action.target}: ${action.message}`);
+          console.log(
+            `Notification sent to ${action.target}: ${action.message}`,
+          );
           break;
-        case 'auto_respond':
+        case "auto_respond":
           // In real app, send auto response
           console.log(`Auto response sent: ${action.message}`);
           break;
-        case 'create_task':
+        case "create_task":
           // In real app, create task
           console.log(`Task created: ${action.target}`);
           break;
@@ -353,12 +435,16 @@ export function AdvancedQueueManager({
     });
 
     // Update rule statistics
-    setEscalationRules(rules => 
-      rules.map(r => 
-        r.id === rule.id 
-          ? { ...r, lastTriggered: new Date().toISOString(), triggerCount: r.triggerCount + 1 }
-          : r
-      )
+    setEscalationRules((rules) =>
+      rules.map((r) =>
+        r.id === rule.id
+          ? {
+              ...r,
+              lastTriggered: new Date().toISOString(),
+              triggerCount: r.triggerCount + 1,
+            }
+          : r,
+      ),
     );
 
     if (onEscalation) {
@@ -367,10 +453,10 @@ export function AdvancedQueueManager({
   };
 
   const updateQueueItem = (id: string, updates: Partial<QueueItem>) => {
-    setQueue(prevQueue => 
-      prevQueue.map(item => 
-        item.id === id ? { ...item, ...updates } : item
-      )
+    setQueue((prevQueue) =>
+      prevQueue.map((item) =>
+        item.id === id ? { ...item, ...updates } : item,
+      ),
     );
   };
 
@@ -379,54 +465,62 @@ export function AdvancedQueueManager({
     return values[priority as keyof typeof values] || 0;
   };
 
-  const calculateSLAStatus = (item: QueueItem): 'on_track' | 'at_risk' | 'breached' => {
-    const activePolicy = slaPolicies.find(p => p.enabled);
-    if (!activePolicy) return 'on_track';
+  const calculateSLAStatus = (
+    item: QueueItem,
+  ): "on_track" | "at_risk" | "breached" => {
+    const activePolicy = slaPolicies.find((p) => p.enabled);
+    if (!activePolicy) return "on_track";
 
-    const target = activePolicy.targets.find(t => t.priority === item.priority);
-    if (!target) return 'on_track';
+    const target = activePolicy.targets.find(
+      (t) => t.priority === item.priority,
+    );
+    if (!target) return "on_track";
 
     const percentUsed = (item.waitTime / target.firstResponseTime) * 100;
-    
-    if (percentUsed >= 100) return 'breached';
-    if (percentUsed >= 80) return 'at_risk';
-    return 'on_track';
+
+    if (percentUsed >= 100) return "breached";
+    if (percentUsed >= 80) return "at_risk";
+    return "on_track";
   };
 
   const getQueueMetrics = () => {
     const metrics = {
       total: queue.length,
-      waiting: queue.filter(i => i.status === 'waiting').length,
-      inProgress: queue.filter(i => i.status === 'in_progress').length,
-      escalated: queue.filter(i => i.escalationLevel > 0).length,
-      avgWaitTime: queue.reduce((sum, i) => sum + i.waitTime, 0) / queue.length || 0,
+      waiting: queue.filter((i) => i.status === "waiting").length,
+      inProgress: queue.filter((i) => i.status === "in_progress").length,
+      escalated: queue.filter((i) => i.escalationLevel > 0).length,
+      avgWaitTime:
+        queue.reduce((sum, i) => sum + i.waitTime, 0) / queue.length || 0,
       slaCompliance: {
-        onTrack: queue.filter(i => calculateSLAStatus(i) === 'on_track').length,
-        atRisk: queue.filter(i => calculateSLAStatus(i) === 'at_risk').length,
-        breached: queue.filter(i => calculateSLAStatus(i) === 'breached').length
-      }
+        onTrack: queue.filter((i) => calculateSLAStatus(i) === "on_track")
+          .length,
+        atRisk: queue.filter((i) => calculateSLAStatus(i) === "at_risk").length,
+        breached: queue.filter((i) => calculateSLAStatus(i) === "breached")
+          .length,
+      },
     };
     return metrics;
   };
 
   const getChannelDistribution = () => {
-    const channels = ['web', 'email', 'phone', 'chat', 'social'];
-    return channels.map(channel => ({
+    const channels = ["web", "email", "phone", "chat", "social"];
+    return channels.map((channel) => ({
       name: channel.charAt(0).toUpperCase() + channel.slice(1),
-      value: queue.filter(i => i.channel === channel).length,
+      value: queue.filter((i) => i.channel === channel).length,
       color: {
-        web: '#8884d8',
-        email: '#82ca9d',
-        phone: '#ffc658',
-        chat: '#ff7c7c',
-        social: '#8dd1e1'
-      }[channel]
+        web: "#8884d8",
+        email: "#82ca9d",
+        phone: "#ffc658",
+        chat: "#ff7c7c",
+        social: "#8dd1e1",
+      }[channel],
     }));
   };
 
-  const filteredQueue = queue.filter(item => {
-    if (filterChannel !== 'all' && item.channel !== filterChannel) return false;
-    if (filterPriority !== 'all' && item.priority !== filterPriority) return false;
+  const filteredQueue = queue.filter((item) => {
+    if (filterChannel !== "all" && item.channel !== filterChannel) return false;
+    if (filterPriority !== "all" && item.priority !== filterPriority)
+      return false;
     return true;
   });
 
@@ -461,7 +555,8 @@ export function AdvancedQueueManager({
             </div>
           </div>
           <CardDescription>
-            Real-time queue monitoring with automated escalation and SLA management
+            Real-time queue monitoring with automated escalation and SLA
+            management
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -485,26 +580,40 @@ export function AdvancedQueueManager({
                   <CardContent>
                     <div className="flex items-center gap-2 text-xs">
                       <Badge variant="outline">{metrics.waiting} waiting</Badge>
-                      <Badge variant="secondary">{metrics.inProgress} active</Badge>
+                      <Badge variant="secondary">
+                        {metrics.inProgress} active
+                      </Badge>
                     </div>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="pb-2">
                     <CardDescription>Avg Wait Time</CardDescription>
-                    <CardTitle className="text-2xl">{metrics.avgWaitTime.toFixed(1)}m</CardTitle>
+                    <CardTitle className="text-2xl">
+                      {metrics.avgWaitTime.toFixed(1)}m
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <Progress value={Math.min(100, (metrics.avgWaitTime / queueConfig.maxWaitTime) * 100)} className="h-2" />
+                    <Progress
+                      value={Math.min(
+                        100,
+                        (metrics.avgWaitTime / queueConfig.maxWaitTime) * 100,
+                      )}
+                      className="h-2"
+                    />
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="pb-2">
                     <CardDescription>SLA Compliance</CardDescription>
                     <CardTitle className="text-2xl">
-                      {metrics.total > 0 
-                        ? Math.round((metrics.slaCompliance.onTrack / metrics.total) * 100)
-                        : 100}%
+                      {metrics.total > 0
+                        ? Math.round(
+                            (metrics.slaCompliance.onTrack / metrics.total) *
+                              100,
+                          )
+                        : 100}
+                      %
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -524,7 +633,9 @@ export function AdvancedQueueManager({
                 <Card>
                   <CardHeader className="pb-2">
                     <CardDescription>Escalations</CardDescription>
-                    <CardTitle className="text-2xl">{metrics.escalated}</CardTitle>
+                    <CardTitle className="text-2xl">
+                      {metrics.escalated}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-xs text-muted-foreground">
@@ -537,7 +648,9 @@ export function AdvancedQueueManager({
               {/* Channel Distribution */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Channel Distribution</CardTitle>
+                  <CardTitle className="text-lg">
+                    Channel Distribution
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={200}>
@@ -577,7 +690,10 @@ export function AdvancedQueueManager({
                     <SelectItem value="social">Social</SelectItem>
                   </SelectContent>
                 </Select>
-                <Select value={filterPriority} onValueChange={setFilterPriority}>
+                <Select
+                  value={filterPriority}
+                  onValueChange={setFilterPriority}
+                >
                   <SelectTrigger className="w-[150px]">
                     <SelectValue />
                   </SelectTrigger>
@@ -617,7 +733,9 @@ export function AdvancedQueueManager({
                         <TableCell>
                           <div>
                             <div className="font-medium">{item.leadName}</div>
-                            <div className="text-sm text-muted-foreground">{item.company}</div>
+                            <div className="text-sm text-muted-foreground">
+                              {item.company}
+                            </div>
                           </div>
                         </TableCell>
                         <TableCell>
@@ -626,11 +744,17 @@ export function AdvancedQueueManager({
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={
-                            item.priority === 'urgent' ? 'destructive' :
-                            item.priority === 'high' ? 'default' :
-                            item.priority === 'medium' ? 'secondary' : 'outline'
-                          }>
+                          <Badge
+                            variant={
+                              item.priority === "urgent"
+                                ? "destructive"
+                                : item.priority === "high"
+                                  ? "default"
+                                  : item.priority === "medium"
+                                    ? "secondary"
+                                    : "outline"
+                            }
+                          >
                             {item.priority}
                             {item.escalationLevel > 0 && (
                               <ArrowUp className="h-3 w-3 ml-1" />
@@ -644,19 +768,28 @@ export function AdvancedQueueManager({
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={
-                            calculateSLAStatus(item) === 'on_track' ? 'outline' :
-                            calculateSLAStatus(item) === 'at_risk' ? 'secondary' : 'destructive'
-                          }>
-                            {calculateSLAStatus(item).replace('_', ' ')}
+                          <Badge
+                            variant={
+                              calculateSLAStatus(item) === "on_track"
+                                ? "outline"
+                                : calculateSLAStatus(item) === "at_risk"
+                                  ? "secondary"
+                                  : "destructive"
+                            }
+                          >
+                            {calculateSLAStatus(item).replace("_", " ")}
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          {item.assignedTo || <span className="text-muted-foreground">Unassigned</span>}
+                          {item.assignedTo || (
+                            <span className="text-muted-foreground">
+                              Unassigned
+                            </span>
+                          )}
                         </TableCell>
                         <TableCell>
                           <Badge variant="outline" className="capitalize">
-                            {item.status.replace('_', ' ')}
+                            {item.status.replace("_", " ")}
                           </Badge>
                         </TableCell>
                         <TableCell>
@@ -673,10 +806,10 @@ export function AdvancedQueueManager({
 
             <TabsContent value="rules" className="space-y-4">
               {escalationRules.map((rule) => (
-                <Card key={rule.id} className={cn(
-                  "border",
-                  !rule.enabled && "opacity-60"
-                )}>
+                <Card
+                  key={rule.id}
+                  className={cn("border", !rule.enabled && "opacity-60")}
+                >
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between">
                       <div className="space-y-2 flex-1">
@@ -685,9 +818,13 @@ export function AdvancedQueueManager({
                           <Switch
                             checked={rule.enabled}
                             onCheckedChange={(checked) => {
-                              setEscalationRules(rules => rules.map(r => 
-                                r.id === rule.id ? { ...r, enabled: checked } : r
-                              ));
+                              setEscalationRules((rules) =>
+                                rules.map((r) =>
+                                  r.id === rule.id
+                                    ? { ...r, enabled: checked }
+                                    : r,
+                                ),
+                              );
                             }}
                           />
                         </div>
@@ -696,18 +833,22 @@ export function AdvancedQueueManager({
                         </p>
                         <div className="flex items-center gap-2 text-sm">
                           <Badge variant="outline">
-                            {rule.trigger.type} {rule.trigger.operator} {rule.trigger.value} {rule.trigger.unit}
+                            {rule.trigger.type} {rule.trigger.operator}{" "}
+                            {rule.trigger.value} {rule.trigger.unit}
                           </Badge>
                           <ArrowRight className="h-4 w-4 text-muted-foreground" />
                           {rule.actions.map((action, idx) => (
                             <Badge key={idx} variant="secondary">
-                              {action.type.replace('_', ' ')}
+                              {action.type.replace("_", " ")}
                             </Badge>
                           ))}
                         </div>
                         {rule.lastTriggered && (
                           <div className="text-xs text-muted-foreground">
-                            Last triggered {formatDistanceToNow(new Date(rule.lastTriggered), { addSuffix: true })}
+                            Last triggered{" "}
+                            {formatDistanceToNow(new Date(rule.lastTriggered), {
+                              addSuffix: true,
+                            })}
                             • {rule.triggerCount} times total
                           </div>
                         )}
@@ -727,7 +868,9 @@ export function AdvancedQueueManager({
                           size="icon"
                           variant="ghost"
                           onClick={() => {
-                            setEscalationRules(rules => rules.filter(r => r.id !== rule.id));
+                            setEscalationRules((rules) =>
+                              rules.filter((r) => r.id !== rule.id),
+                            );
                           }}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -751,26 +894,37 @@ export function AdvancedQueueManager({
                       <Switch
                         checked={policy.enabled}
                         onCheckedChange={(checked) => {
-                          setSlaPolicies(policies => policies.map(p => 
-                            p.id === policy.id ? { ...p, enabled: checked } : p
-                          ));
+                          setSlaPolicies((policies) =>
+                            policies.map((p) =>
+                              p.id === policy.id
+                                ? { ...p, enabled: checked }
+                                : p,
+                            ),
+                          );
                         }}
                       />
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div>
-                      <Label className="text-sm text-muted-foreground mb-2">Response Time Targets</Label>
+                      <Label className="text-sm text-muted-foreground mb-2">
+                        Response Time Targets
+                      </Label>
                       <div className="space-y-2">
                         {policy.targets.map((target, idx) => (
-                          <div key={idx} className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
+                          <div
+                            key={idx}
+                            className="flex items-center justify-between p-2 rounded-lg bg-muted/50"
+                          >
                             <Badge variant="outline" className="capitalize">
                               {target.priority}
                             </Badge>
                             <div className="flex items-center gap-4 text-sm">
                               <div className="flex items-center gap-2">
                                 <Clock className="h-3 w-3 text-muted-foreground" />
-                                <span>{target.firstResponseTime}m first response</span>
+                                <span>
+                                  {target.firstResponseTime}m first response
+                                </span>
                               </div>
                               <div className="flex items-center gap-2">
                                 <CheckCircle className="h-3 w-3 text-muted-foreground" />
@@ -783,12 +937,16 @@ export function AdvancedQueueManager({
                     </div>
                     {policy.businessHours.enabled && (
                       <div>
-                        <Label className="text-sm text-muted-foreground mb-2">Business Hours</Label>
+                        <Label className="text-sm text-muted-foreground mb-2">
+                          Business Hours
+                        </Label>
                         <div className="text-sm space-y-1">
                           {policy.businessHours.hours.map((hours, idx) => (
                             <div key={idx} className="flex items-center gap-2">
                               <span className="w-20">{hours.day}:</span>
-                              <span>{hours.start} - {hours.end}</span>
+                              <span>
+                                {hours.start} - {hours.end}
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -807,18 +965,20 @@ export function AdvancedQueueManager({
                   </CardHeader>
                   <CardContent>
                     <ResponsiveContainer width="100%" height={200}>
-                      <LineChart data={[
-                        { time: '8am', wait: 5 },
-                        { time: '9am', wait: 8 },
-                        { time: '10am', wait: 15 },
-                        { time: '11am', wait: 22 },
-                        { time: '12pm', wait: 18 },
-                        { time: '1pm', wait: 12 },
-                        { time: '2pm', wait: 10 },
-                        { time: '3pm', wait: 14 },
-                        { time: '4pm', wait: 20 },
-                        { time: '5pm', wait: 16 }
-                      ]}>
+                      <LineChart
+                        data={[
+                          { time: "8am", wait: 5 },
+                          { time: "9am", wait: 8 },
+                          { time: "10am", wait: 15 },
+                          { time: "11am", wait: 22 },
+                          { time: "12pm", wait: 18 },
+                          { time: "1pm", wait: 12 },
+                          { time: "2pm", wait: 10 },
+                          { time: "3pm", wait: 14 },
+                          { time: "4pm", wait: 20 },
+                          { time: "5pm", wait: 16 },
+                        ]}
+                      >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="time" />
                         <YAxis />
@@ -831,19 +991,27 @@ export function AdvancedQueueManager({
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Escalation Triggers</CardTitle>
+                    <CardTitle className="text-lg">
+                      Escalation Triggers
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
                       {escalationRules.map((rule) => (
-                        <div key={rule.id} className="flex items-center justify-between">
+                        <div
+                          key={rule.id}
+                          className="flex items-center justify-between"
+                        >
                           <div className="flex items-center gap-2">
                             <Zap className="h-4 w-4 text-muted-foreground" />
                             <span className="text-sm">{rule.name}</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <Badge variant="outline">{rule.triggerCount}</Badge>
-                            <Progress value={Math.min(100, rule.triggerCount * 10)} className="w-20 h-2" />
+                            <Progress
+                              value={Math.min(100, rule.triggerCount * 10)}
+                              className="w-20 h-2"
+                            />
                           </div>
                         </div>
                       ))}
@@ -858,12 +1026,14 @@ export function AdvancedQueueManager({
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={200}>
-                    <BarChart data={[
-                      { priority: 'Urgent', met: 92, breached: 8 },
-                      { priority: 'High', met: 85, breached: 15 },
-                      { priority: 'Medium', met: 95, breached: 5 },
-                      { priority: 'Low', met: 98, breached: 2 }
-                    ]}>
+                    <BarChart
+                      data={[
+                        { priority: "Urgent", met: 92, breached: 8 },
+                        { priority: "High", met: 85, breached: 15 },
+                        { priority: "Medium", met: 95, breached: 5 },
+                        { priority: "Low", met: 98, breached: 2 },
+                      ]}
+                    >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="priority" />
                       <YAxis />
@@ -885,7 +1055,7 @@ export function AdvancedQueueManager({
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>
-              {editingRule ? 'Edit Escalation Rule' : 'Create Escalation Rule'}
+              {editingRule ? "Edit Escalation Rule" : "Create Escalation Rule"}
             </DialogTitle>
             <DialogDescription>
               Define conditions and actions for automatic queue escalation
@@ -943,35 +1113,48 @@ export function AdvancedQueueManager({
                 </div>
                 <div className="flex items-center space-x-2">
                   <Checkbox />
-                  <Label className="text-sm font-normal">Reassign to specific user/team</Label>
+                  <Label className="text-sm font-normal">
+                    Reassign to specific user/team
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Checkbox />
-                  <Label className="text-sm font-normal">Send notification</Label>
+                  <Label className="text-sm font-normal">
+                    Send notification
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Checkbox />
-                  <Label className="text-sm font-normal">Send auto-response</Label>
+                  <Label className="text-sm font-normal">
+                    Send auto-response
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Checkbox />
-                  <Label className="text-sm font-normal">Create follow-up task</Label>
+                  <Label className="text-sm font-normal">
+                    Create follow-up task
+                  </Label>
                 </div>
               </div>
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => {
-              setShowRuleDialog(false);
-              setEditingRule(null);
-            }}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowRuleDialog(false);
+                setEditingRule(null);
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={() => {
-              setShowRuleDialog(false);
-              setEditingRule(null);
-            }}>
-              {editingRule ? 'Update' : 'Create'} Rule
+            <Button
+              onClick={() => {
+                setShowRuleDialog(false);
+                setEditingRule(null);
+              }}
+            >
+              {editingRule ? "Update" : "Create"} Rule
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -983,7 +1166,8 @@ export function AdvancedQueueManager({
           <DialogHeader>
             <DialogTitle>Configure SLA Policy</DialogTitle>
             <DialogDescription>
-              Set response and resolution time targets for different priority levels
+              Set response and resolution time targets for different priority
+              levels
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
@@ -994,8 +1178,11 @@ export function AdvancedQueueManager({
             <div className="space-y-2">
               <Label>Response Time Targets (minutes)</Label>
               <div className="space-y-2">
-                {['urgent', 'high', 'medium', 'low'].map(priority => (
-                  <div key={priority} className="grid grid-cols-3 gap-4 items-center">
+                {["urgent", "high", "medium", "low"].map((priority) => (
+                  <div
+                    key={priority}
+                    className="grid grid-cols-3 gap-4 items-center"
+                  >
                     <Label className="capitalize">{priority}</Label>
                     <Input type="number" placeholder="First Response" />
                     <Input type="number" placeholder="Resolution" />
@@ -1011,16 +1198,21 @@ export function AdvancedQueueManager({
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => {
-              setShowSLADialog(false);
-              setEditingSLA(null);
-            }}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowSLADialog(false);
+                setEditingSLA(null);
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={() => {
-              setShowSLADialog(false);
-              setEditingSLA(null);
-            }}>
+            <Button
+              onClick={() => {
+                setShowSLADialog(false);
+                setEditingSLA(null);
+              }}
+            >
               Save Policy
             </Button>
           </DialogFooter>

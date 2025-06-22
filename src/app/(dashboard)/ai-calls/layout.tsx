@@ -10,9 +10,5 @@ export default function AICallsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="flex flex-col h-full">
-      {children}
-    </div>
-  );
+  return <div className="flex flex-col h-full">{children}</div>;
 }

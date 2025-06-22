@@ -1,53 +1,58 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { 
-  Calendar, 
-  CalendarPlus, 
-  Clock, 
-  Video, 
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Calendar,
+  CalendarPlus,
+  Clock,
+  Video,
   Phone,
   Users,
   ChevronRight,
   Loader2,
   RefreshCw,
-} from 'lucide-react'
-import { useCalendarStore } from '@/stores/calendarStore'
-import { CalendarHeader } from '@/components/calendar/CalendarHeader'
-import { MonthView } from '@/components/calendar/MonthView'
-import { ListView } from '@/components/calendar/ListView'
-import { EventDialog } from '@/components/calendar/EventDialog'
-import { CalendarEvent, CalendarView, EVENT_TYPE_COLORS, CalendarEventSchema } from '@/types/calendar'
-import { useToast } from '@/components/ui/use-toast'
-import { z } from 'zod'
-import { 
-  addMonths, 
-  subMonths, 
-  addWeeks, 
-  subWeeks, 
-  addDays, 
+} from "lucide-react";
+import { useCalendarStore } from "@/stores/calendarStore";
+import { CalendarHeader } from "@/components/calendar/CalendarHeader";
+import { MonthView } from "@/components/calendar/MonthView";
+import { ListView } from "@/components/calendar/ListView";
+import { EventDialog } from "@/components/calendar/EventDialog";
+import {
+  CalendarEvent,
+  CalendarView,
+  EVENT_TYPE_COLORS,
+  CalendarEventSchema,
+} from "@/types/calendar";
+import { useToast } from "@/components/ui/use-toast";
+import { z } from "zod";
+import {
+  addMonths,
+  subMonths,
+  addWeeks,
+  subWeeks,
+  addDays,
   subDays,
   startOfMonth,
   endOfMonth,
   format,
-} from 'date-fns'
-import { cn } from '@/lib/utils'
+} from "date-fns";
+import { cn } from "@/lib/utils";
 
 // Form schema type (matching EventDialog)
 const EventFormSchema = CalendarEventSchema.omit({
   id: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 
-type EventFormData = z.infer<typeof EventFormSchema>
+type EventFormData = z.infer<typeof EventFormSchema>;
 
 export default function CalendarPage() {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const {
     events,
     selectedDate,
@@ -62,111 +67,119 @@ export default function CalendarPage() {
     setView,
     getEventsForDateRange,
     getUpcomingEvents,
-  } = useCalendarStore()
+  } = useCalendarStore();
 
-  const [showEventDialog, setShowEventDialog] = useState(false)
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
-  const [dialogDefaultDate, setDialogDefaultDate] = useState<Date | undefined>()
+  const [showEventDialog, setShowEventDialog] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
+    null,
+  );
+  const [dialogDefaultDate, setDialogDefaultDate] = useState<
+    Date | undefined
+  >();
 
   // Fetch events on mount
   useEffect(() => {
-    fetchEvents()
-  }, [fetchEvents])
+    fetchEvents();
+  }, [fetchEvents]);
 
   // Show error if any
   useEffect(() => {
     if (error) {
       toast({
-        title: 'Error',
+        title: "Error",
         description: error,
-        variant: 'destructive',
-      })
+        variant: "destructive",
+      });
     }
-  }, [error, toast])
+  }, [error, toast]);
 
   // Navigation handlers
-  const handleNavigate = (direction: 'prev' | 'next' | 'today') => {
+  const handleNavigate = (direction: "prev" | "next" | "today") => {
     switch (direction) {
-      case 'prev':
-        if (view === 'month') {
-          setSelectedDate(subMonths(selectedDate, 1))
-        } else if (view === 'week') {
-          setSelectedDate(subWeeks(selectedDate, 1))
-        } else if (view === 'day') {
-          setSelectedDate(subDays(selectedDate, 1))
+      case "prev":
+        if (view === "month") {
+          setSelectedDate(subMonths(selectedDate, 1));
+        } else if (view === "week") {
+          setSelectedDate(subWeeks(selectedDate, 1));
+        } else if (view === "day") {
+          setSelectedDate(subDays(selectedDate, 1));
         }
-        break
-      case 'next':
-        if (view === 'month') {
-          setSelectedDate(addMonths(selectedDate, 1))
-        } else if (view === 'week') {
-          setSelectedDate(addWeeks(selectedDate, 1))
-        } else if (view === 'day') {
-          setSelectedDate(addDays(selectedDate, 1))
+        break;
+      case "next":
+        if (view === "month") {
+          setSelectedDate(addMonths(selectedDate, 1));
+        } else if (view === "week") {
+          setSelectedDate(addWeeks(selectedDate, 1));
+        } else if (view === "day") {
+          setSelectedDate(addDays(selectedDate, 1));
         }
-        break
-      case 'today':
-        setSelectedDate(new Date())
-        break
+        break;
+      case "today":
+        setSelectedDate(new Date());
+        break;
     }
-  }
+  };
 
   // Event handlers
   const handleDateClick = (date: Date) => {
-    setSelectedDate(date)
-    setView('day')
-  }
+    setSelectedDate(date);
+    setView("day");
+  };
 
   const handleEventClick = (event: CalendarEvent) => {
-    setSelectedEvent(event)
-    setShowEventDialog(true)
-  }
+    setSelectedEvent(event);
+    setShowEventDialog(true);
+  };
 
   const handleAddEvent = (date?: Date) => {
-    setSelectedEvent(null)
-    setDialogDefaultDate(date || selectedDate)
-    setShowEventDialog(true)
-  }
+    setSelectedEvent(null);
+    setDialogDefaultDate(date || selectedDate);
+    setShowEventDialog(true);
+  };
 
   const handleSaveEvent = async (eventData: EventFormData) => {
     if (selectedEvent) {
-      await updateEvent(selectedEvent.id, eventData as any)
+      await updateEvent(selectedEvent.id, eventData as any);
     } else {
-      await addEvent(eventData as Omit<CalendarEvent, 'id' | 'createdAt' | 'updatedAt'>)
+      await addEvent(
+        eventData as Omit<CalendarEvent, "id" | "createdAt" | "updatedAt">,
+      );
     }
-  }
+  };
 
   // Get events for current view
-  const currentEvents = view === 'list' 
-    ? events.filter(e => new Date(e.startTime) >= new Date())
-    : getEventsForDateRange(
-        startOfMonth(selectedDate),
-        endOfMonth(selectedDate)
-      )
+  const currentEvents =
+    view === "list"
+      ? events.filter((e) => new Date(e.startTime) >= new Date())
+      : getEventsForDateRange(
+          startOfMonth(selectedDate),
+          endOfMonth(selectedDate),
+        );
 
   // Get upcoming events
-  const upcomingEvents = getUpcomingEvents(5)
+  const upcomingEvents = getUpcomingEvents(5);
 
   // Stats calculation
   const stats = {
-    todayEvents: events.filter(e => {
-      const eventDate = new Date(e.startTime)
-      const today = new Date()
+    todayEvents: events.filter((e) => {
+      const eventDate = new Date(e.startTime);
+      const today = new Date();
       return (
         eventDate.getDate() === today.getDate() &&
         eventDate.getMonth() === today.getMonth() &&
         eventDate.getFullYear() === today.getFullYear()
-      )
+      );
     }).length,
-    weekEvents: events.filter(e => {
-      const eventDate = new Date(e.startTime)
-      const now = new Date()
-      const weekFromNow = addDays(now, 7)
-      return eventDate >= now && eventDate <= weekFromNow
+    weekEvents: events.filter((e) => {
+      const eventDate = new Date(e.startTime);
+      const now = new Date();
+      const weekFromNow = addDays(now, 7);
+      return eventDate >= now && eventDate <= weekFromNow;
     }).length,
-    calls: events.filter(e => e.type === 'call' && !e.isCompleted).length,
-    meetings: events.filter(e => e.type === 'meeting' && !e.isCompleted).length,
-  }
+    calls: events.filter((e) => e.type === "call" && !e.isCompleted).length,
+    meetings: events.filter((e) => e.type === "meeting" && !e.isCompleted)
+      .length,
+  };
 
   return (
     <div className="p-6 space-y-6">
@@ -177,7 +190,7 @@ export default function CalendarPage() {
           <p className="text-gray-600 mt-1">
             {stats.todayEvents > 0
               ? `${stats.todayEvents} events today`
-              : 'Schedule meetings and manage appointments'}
+              : "Schedule meetings and manage appointments"}
           </p>
         </div>
         <div className="flex items-center space-x-3">
@@ -187,9 +200,9 @@ export default function CalendarPage() {
             onClick={() => fetchEvents()}
             disabled={loading}
           >
-            <RefreshCw className={cn('h-4 w-4', loading && 'animate-spin')} />
+            <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
           </Button>
-          <Button 
+          <Button
             className="gradient-purple-pink hover:opacity-90"
             onClick={() => handleAddEvent()}
           >
@@ -271,7 +284,7 @@ export default function CalendarPage() {
             {/* Calendar Views */}
             {!loading && (
               <>
-                {view === 'month' && (
+                {view === "month" && (
                   <MonthView
                     currentDate={selectedDate}
                     events={currentEvents}
@@ -280,18 +293,18 @@ export default function CalendarPage() {
                     onAddEvent={handleAddEvent}
                   />
                 )}
-                {view === 'list' && (
+                {view === "list" && (
                   <ListView
                     events={currentEvents}
                     onEventClick={handleEventClick}
                   />
                 )}
-                {(view === 'week' || view === 'day') && (
+                {(view === "week" || view === "day") && (
                   <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
                     <div className="text-center">
                       <Clock className="h-12 w-12 text-gray-300 mx-auto mb-4" />
                       <p className="text-gray-500">
-                        {view === 'week' ? 'Week' : 'Day'} view coming soon
+                        {view === "week" ? "Week" : "Day"} view coming soon
                       </p>
                     </div>
                   </div>
@@ -318,7 +331,7 @@ export default function CalendarPage() {
               ) : (
                 <div className="space-y-3">
                   {upcomingEvents.map((event) => {
-                    const eventDate = new Date(event.startTime)
+                    const eventDate = new Date(event.startTime);
                     return (
                       <button
                         key={event.id}
@@ -331,14 +344,17 @@ export default function CalendarPage() {
                           </h4>
                           <Badge
                             variant="secondary"
-                            className={cn('text-xs', EVENT_TYPE_COLORS[event.type])}
+                            className={cn(
+                              "text-xs",
+                              EVENT_TYPE_COLORS[event.type],
+                            )}
                           >
                             {event.type}
                           </Badge>
                         </div>
                         <div className="flex items-center gap-2 text-xs text-gray-500">
                           <Clock className="h-3 w-3" />
-                          {format(eventDate, 'MMM d, h:mm a')}
+                          {format(eventDate, "MMM d, h:mm a")}
                         </div>
                         {event.contactName && (
                           <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
@@ -347,7 +363,7 @@ export default function CalendarPage() {
                           </div>
                         )}
                       </button>
-                    )
+                    );
                   })}
                 </div>
               )}
@@ -364,7 +380,7 @@ export default function CalendarPage() {
                 variant="outline"
                 className="w-full justify-between"
                 onClick={() => {
-                  setView('list')
+                  setView("list");
                 }}
               >
                 View All Events
@@ -374,8 +390,8 @@ export default function CalendarPage() {
                 variant="outline"
                 className="w-full justify-between"
                 onClick={() => {
-                  const tomorrow = addDays(new Date(), 1)
-                  handleAddEvent(tomorrow)
+                  const tomorrow = addDays(new Date(), 1);
+                  handleAddEvent(tomorrow);
                 }}
               >
                 Schedule for Tomorrow
@@ -387,7 +403,9 @@ export default function CalendarPage() {
                 disabled
               >
                 Sync with Google Calendar
-                <Badge variant="secondary" className="ml-2">Soon</Badge>
+                <Badge variant="secondary" className="ml-2">
+                  Soon
+                </Badge>
               </Button>
             </CardContent>
           </Card>
@@ -403,5 +421,5 @@ export default function CalendarPage() {
         defaultDate={dialogDefaultDate}
       />
     </div>
-  )
+  );
 }

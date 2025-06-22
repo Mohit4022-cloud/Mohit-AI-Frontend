@@ -1,25 +1,25 @@
 /**
  * Twilio Voice Webhook Handler
- * 
+ *
  * Handles incoming voice calls and generates TwiML responses
  * This endpoint is called by Twilio when making outbound calls
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { getTwilioConfig, TWILIO_VOICE_SETTINGS } from '@/config/twilio';
-import { logger } from '@/lib/logger';
+import { NextRequest, NextResponse } from "next/server";
+import { getTwilioConfig, TWILIO_VOICE_SETTINGS } from "@/config/twilio";
+import { logger } from "@/lib/logger";
 
 export async function POST(request: NextRequest) {
   try {
     // Get form data from Twilio webhook
     const formData = await request.formData();
-    const callSid = formData.get('CallSid') as string;
-    const from = formData.get('From') as string;
-    const to = formData.get('To') as string;
-    const callStatus = formData.get('CallStatus') as string;
-    const direction = formData.get('Direction') as string;
+    const callSid = formData.get("CallSid") as string;
+    const from = formData.get("From") as string;
+    const to = formData.get("To") as string;
+    const callStatus = formData.get("CallStatus") as string;
+    const direction = formData.get("Direction") as string;
 
-    logger.info('[Twilio Voice Webhook] Received call:', {
+    logger.info("[Twilio Voice Webhook] Received call:", {
       callSid,
       from,
       to,
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     // Get Twilio configuration
     const twilioConfig = getTwilioConfig();
     if (!twilioConfig) {
-      return new NextResponse('Twilio not configured', { status: 503 });
+      return new NextResponse("Twilio not configured", { status: 503 });
     }
 
     // Generate TwiML response
@@ -44,12 +44,12 @@ export async function POST(request: NextRequest) {
     return new NextResponse(twiml, {
       status: 200,
       headers: {
-        'Content-Type': 'text/xml',
+        "Content-Type": "text/xml",
       },
     });
   } catch (error) {
-    logger.error('[Twilio Voice Webhook] Error:', error);
-    return new NextResponse('Internal server error', { status: 500 });
+    logger.error("[Twilio Voice Webhook] Error:", error);
+    return new NextResponse("Internal server error", { status: 500 });
   }
 }
 
@@ -101,7 +101,7 @@ function generateTwiML(options: {
     </Dial>
   `;
 
-  twiml += '</Response>';
+  twiml += "</Response>";
 
   return twiml;
 }
@@ -111,8 +111,8 @@ function generateTwiML(options: {
  */
 export async function GET(request: NextRequest) {
   return NextResponse.json({
-    message: 'Twilio Voice Webhook is ready',
-    endpoint: '/api/twilio/voice',
-    method: 'POST',
+    message: "Twilio Voice Webhook is ready",
+    endpoint: "/api/twilio/voice",
+    method: "POST",
   });
 }

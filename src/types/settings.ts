@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // User Settings Schema
 export const UserSettingsSchema = z.object({
@@ -13,24 +13,28 @@ export const UserSettingsSchema = z.object({
     push: z.boolean(),
   }),
   integrations: z.object({
-    twilio: z.object({
-      enabled: z.boolean(),
-      accountSid: z.string(),
-      authToken: z.string(),
-    }).optional(),
-    salesforce: z.object({
-      enabled: z.boolean(),
-      instanceUrl: z.string(),
-    }).optional(),
+    twilio: z
+      .object({
+        enabled: z.boolean(),
+        accountSid: z.string(),
+        authToken: z.string(),
+      })
+      .optional(),
+    salesforce: z
+      .object({
+        enabled: z.boolean(),
+        instanceUrl: z.string(),
+      })
+      .optional(),
   }),
 });
 
 // Default user settings
 export const defaultUserSettings = {
   general: {
-    companyName: '',
-    timezone: 'UTC',
-    dateFormat: 'MM/dd/yyyy',
+    companyName: "",
+    timezone: "UTC",
+    dateFormat: "MM/dd/yyyy",
   },
   notifications: {
     email: true,

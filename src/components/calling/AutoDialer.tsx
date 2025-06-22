@@ -1,20 +1,26 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect, useCallback } from 'react'
-import { Device } from '@twilio/voice-sdk'
-import { Play, Pause, SkipForward, PhoneOff, AlertCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
-import { useCallQueueStore } from '@/stores/callQueueStore'
-import { generateMockTranscript } from '@/lib/mockContacts'
-import { cn } from '@/lib/utils'
+import React, { useState, useEffect, useCallback } from "react";
+import { Device } from "@twilio/voice-sdk";
+import { Play, Pause, SkipForward, PhoneOff, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { useCallQueueStore } from "@/stores/callQueueStore";
+import { generateMockTranscript } from "@/lib/mockContacts";
+import { cn } from "@/lib/utils";
 
 interface AutoDialerProps {
-  device: Device | null
-  isDeviceReady: boolean
+  device: Device | null;
+  isDeviceReady: boolean;
 }
 
 export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
@@ -33,114 +39,128 @@ export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
     resumeAutoDialing,
     addTranscriptLine,
     clearTranscript,
-  } = useCallQueueStore()
+  } = useCallQueueStore();
 
-  const [error, setError] = useState<string | null>(null)
-  const [isConnecting, setIsConnecting] = useState(false)
-  const [callDuration, setCallDuration] = useState(0)
-  const [mockMode, setMockMode] = useState(!isDeviceReady)
+  const [error, setError] = useState<string | null>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [callDuration, setCallDuration] = useState(0);
+  const [mockMode, setMockMode] = useState(!isDeviceReady);
 
   // Call duration timer
   useEffect(() => {
-    let interval: NodeJS.Timeout
-    if (activeCall && activeCall.status === 'connected') {
+    let interval: NodeJS.Timeout;
+    if (activeCall && activeCall.status === "connected") {
       interval = setInterval(() => {
-        setCallDuration((prev) => prev + 1)
-      }, 1000)
+        setCallDuration((prev) => prev + 1);
+      }, 1000);
     } else {
-      setCallDuration(0)
+      setCallDuration(0);
     }
-    return () => clearInterval(interval)
-  }, [activeCall])
+    return () => clearInterval(interval);
+  }, [activeCall]);
 
   // Mock call simulation
-  const simulateMockCall = useCallback(async (contact: any) => {
-    setIsConnecting(true)
-    clearTranscript()
-    
-    // Simulate ringing
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    
-    // Update status to connected
-    if (activeCall) {
-      activeCall.status = 'connected'
-    }
-    setIsConnecting(false)
-    
-    // Generate mock transcript over time
-    const transcript = generateMockTranscript(60)
-    for (let i = 0; i < transcript.length; i++) {
-      if (!isAutoDialing || isPaused) break
-      await new Promise((resolve) => setTimeout(resolve, 3000))
-      addTranscriptLine(transcript[i])
-    }
-    
-    // End call
-    endCall('completed', 60)
-  }, [activeCall, isAutoDialing, isPaused, addTranscriptLine, endCall, clearTranscript])
+  const simulateMockCall = useCallback(
+    async (contact: any) => {
+      setIsConnecting(true);
+      clearTranscript();
+
+      // Simulate ringing
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Update status to connected
+      if (activeCall) {
+        activeCall.status = "connected";
+      }
+      setIsConnecting(false);
+
+      // Generate mock transcript over time
+      const transcript = generateMockTranscript(60);
+      for (let i = 0; i < transcript.length; i++) {
+        if (!isAutoDialing || isPaused) break;
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        addTranscriptLine(transcript[i]);
+      }
+
+      // End call
+      endCall("completed", 60);
+    },
+    [
+      activeCall,
+      isAutoDialing,
+      isPaused,
+      addTranscriptLine,
+      endCall,
+      clearTranscript,
+    ],
+  );
 
   // Real Twilio call
-  const makeTwilioCall = useCallback(async (contact: any) => {
-    if (!device || !isDeviceReady) {
-      setError('Twilio device not ready')
-      return
-    }
+  const makeTwilioCall = useCallback(
+    async (contact: any) => {
+      if (!device || !isDeviceReady) {
+        setError("Twilio device not ready");
+        return;
+      }
 
-    setIsConnecting(true)
-    clearTranscript()
-    
-    try {
-      const call = await device.connect({
-        params: {
-          To: contact.phone,
-        },
-      })
-      
-      call.on('accept', () => {
-        setIsConnecting(false)
-        if (activeCall) {
-          activeCall.status = 'connected'
-        }
-      })
-      
-      call.on('disconnect', () => {
-        endCall('completed', callDuration)
-      })
-      
-      call.on('error', (error) => {
-        console.error('Call error:', error)
-        setError(`Call failed: ${error.message}`)
-        endCall('failed', 0)
-      })
-      
-    } catch (err) {
-      setError(`Failed to connect: ${err instanceof Error ? err.message : 'Unknown error'}`)
-      endCall('failed', 0)
-      setIsConnecting(false)
-    }
-  }, [device, isDeviceReady, activeCall, callDuration, endCall, clearTranscript])
+      setIsConnecting(true);
+      clearTranscript();
+
+      try {
+        const call = await device.connect({
+          params: {
+            To: contact.phone,
+          },
+        });
+
+        call.on("accept", () => {
+          setIsConnecting(false);
+          if (activeCall) {
+            activeCall.status = "connected";
+          }
+        });
+
+        call.on("disconnect", () => {
+          endCall("completed", callDuration);
+        });
+
+        call.on("error", (error) => {
+          console.error("Call error:", error);
+          setError(`Call failed: ${error.message}`);
+          endCall("failed", 0);
+        });
+      } catch (err) {
+        setError(
+          `Failed to connect: ${err instanceof Error ? err.message : "Unknown error"}`,
+        );
+        endCall("failed", 0);
+        setIsConnecting(false);
+      }
+    },
+    [device, isDeviceReady, activeCall, callDuration, endCall, clearTranscript],
+  );
 
   // Auto-dial logic
   useEffect(() => {
     const dial = async () => {
-      if (!isAutoDialing || isPaused || activeCall || isConnecting) return
-      
-      const contact = nextInQueue()
+      if (!isAutoDialing || isPaused || activeCall || isConnecting) return;
+
+      const contact = nextInQueue();
       if (!contact) {
-        toggleAutoDialing() // Stop auto-dialing when queue is empty
-        return
+        toggleAutoDialing(); // Stop auto-dialing when queue is empty
+        return;
       }
-      
-      startCall(contact)
-      
+
+      startCall(contact);
+
       if (mockMode) {
-        await simulateMockCall(contact)
+        await simulateMockCall(contact);
       } else {
-        await makeTwilioCall(contact)
+        await makeTwilioCall(contact);
       }
-    }
-    
-    dial()
+    };
+
+    dial();
   }, [
     isAutoDialing,
     isPaused,
@@ -152,32 +172,32 @@ export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
     toggleAutoDialing,
     simulateMockCall,
     makeTwilioCall,
-  ])
+  ]);
 
   const handleStartStop = () => {
-    setError(null)
+    setError(null);
     if (queue.length === 0) {
-      setError('Please upload contacts first')
-      return
+      setError("Please upload contacts first");
+      return;
     }
-    toggleAutoDialing()
-  }
+    toggleAutoDialing();
+  };
 
   const handleSkip = () => {
     if (activeCall) {
       // If there's an active call, end it
-      endCall('failed', callDuration)
+      endCall("failed", callDuration);
     }
-    skipCurrent()
-  }
+    skipCurrent();
+  };
 
   const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, '0')}`
-  }
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
-  const progress = queue.length > 0 ? (currentIndex / queue.length) * 100 : 0
+  const progress = queue.length > 0 ? (currentIndex / queue.length) * 100 : 0;
 
   return (
     <Card>
@@ -186,7 +206,7 @@ export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
         <CardDescription>
           {queue.length > 0
             ? `${currentIndex} of ${queue.length} contacts called`
-            : 'No contacts in queue'}
+            : "No contacts in queue"}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -207,25 +227,27 @@ export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">{activeCall.contactName}</p>
-                <p className="text-sm text-muted-foreground">{activeCall.contactCompany}</p>
+                <p className="text-sm text-muted-foreground">
+                  {activeCall.contactCompany}
+                </p>
                 <p className="text-xs font-mono">{activeCall.phone}</p>
               </div>
               <div className="text-right">
                 <Badge
                   variant={
-                    activeCall.status === 'connected'
-                      ? 'default'
-                      : activeCall.status === 'ringing'
-                      ? 'secondary'
-                      : 'outline'
+                    activeCall.status === "connected"
+                      ? "default"
+                      : activeCall.status === "ringing"
+                        ? "secondary"
+                        : "outline"
                   }
                   className={cn(
-                    activeCall.status === 'connected' && 'animate-pulse'
+                    activeCall.status === "connected" && "animate-pulse",
                   )}
                 >
                   {activeCall.status}
                 </Badge>
-                {activeCall.status === 'connected' && (
+                {activeCall.status === "connected" && (
                   <p className="text-sm mt-1">{formatDuration(callDuration)}</p>
                 )}
               </div>
@@ -254,7 +276,7 @@ export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
         <div className="flex gap-2">
           <Button
             onClick={handleStartStop}
-            variant={isAutoDialing ? 'destructive' : 'default'}
+            variant={isAutoDialing ? "destructive" : "default"}
             disabled={isConnecting}
             className="flex-1"
           >
@@ -278,7 +300,7 @@ export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
                 variant="outline"
                 disabled={!activeCall}
               >
-                {isPaused ? 'Resume' : 'Pause'}
+                {isPaused ? "Resume" : "Pause"}
               </Button>
 
               <Button
@@ -291,7 +313,7 @@ export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
 
               {activeCall && (
                 <Button
-                  onClick={() => endCall('completed', callDuration)}
+                  onClick={() => endCall("completed", callDuration)}
                   variant="destructive"
                   size="icon"
                 >
@@ -314,5 +336,5 @@ export function AutoDialer({ device, isDeviceReady }: AutoDialerProps) {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

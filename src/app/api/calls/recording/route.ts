@@ -1,12 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { logSecurityEvent } from '@/lib/security';
-import { z } from 'zod';
+import { NextRequest, NextResponse } from "next/server";
+import { logSecurityEvent } from "@/lib/security";
+import { z } from "zod";
 
 // Twilio recording callback schema
 const TwilioRecordingSchema = z.object({
   RecordingSid: z.string(),
   RecordingUrl: z.string(),
-  RecordingStatus: z.enum(['in-progress', 'completed', 'failed']),
+  RecordingStatus: z.enum(["in-progress", "completed", "failed"]),
   RecordingDuration: z.string().optional(),
   RecordingChannels: z.string().optional(),
   RecordingSource: z.string().optional(),
@@ -20,53 +20,54 @@ export async function POST(request: NextRequest) {
     // Parse Twilio webhook data
     const formData = await request.formData();
     const data: Record<string, string> = {};
-    
+
     formData.forEach((value, key) => {
       data[key] = value.toString();
     });
-    
+
     // Validate Twilio signature (in production)
     // const twilioSignature = request.headers.get('x-twilio-signature');
     // if (!validateTwilioSignature(twilioSignature, data)) {
     //   return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
     // }
-    
+
     // Validate data
     const validationResult = TwilioRecordingSchema.safeParse(data);
-    
+
     if (!validationResult.success) {
-      console.error('Invalid Twilio recording data:', validationResult.error);
+      console.error("Invalid Twilio recording data:", validationResult.error);
       return NextResponse.json(
-        { error: 'Invalid recording data' },
-        { status: 400 }
+        { error: "Invalid recording data" },
+        { status: 400 },
       );
     }
-    
+
     const recordingData = validationResult.data;
-    
+
     // Find call by Twilio SID
     const calls = Object.values(global.aiCallsDb || {});
-    const call = calls.find(c => c.twilioCallSid === recordingData.CallSid);
-    
+    const call = calls.find((c) => c.twilioCallSid === recordingData.CallSid);
+
     if (!call) {
-      console.error('Call not found for SID:', recordingData.CallSid);
-      return NextResponse.json(
-        { error: 'Call not found' },
-        { status: 404 }
-      );
+      console.error("Call not found for SID:", recordingData.CallSid);
+      return NextResponse.json({ error: "Call not found" }, { status: 404 });
     }
-    
+
     // Update call with recording information
-    if (recordingData.RecordingStatus === 'completed') {
+    if (recordingData.RecordingStatus === "completed") {
       const recording = {
         id: recordingData.RecordingSid,
         url: recordingData.RecordingUrl,
-        duration: recordingData.RecordingDuration ? parseInt(recordingData.RecordingDuration) : null,
-        channels: recordingData.RecordingChannels ? parseInt(recordingData.RecordingChannels) : 1,
-        status: 'completed',
+        duration: recordingData.RecordingDuration
+          ? parseInt(recordingData.RecordingDuration)
+          : null,
+        channels: recordingData.RecordingChannels
+          ? parseInt(recordingData.RecordingChannels)
+          : 1,
+        status: "completed",
         createdAt: new Date(),
       };
-      
+
       // Update call
       const updatedCall = {
         ...call,
@@ -75,42 +76,41 @@ export async function POST(request: NextRequest) {
         events: [
           ...(call.events || []),
           {
-            type: 'recording_completed',
+            type: "recording_completed",
             timestamp: new Date(),
             data: recording,
           },
         ],
       };
-      
+
       // Update in database
       global.aiCallsDb[call.id] = updatedCall;
-      
+
       // Store recording reference
       global.recordingsDb = global.recordingsDb || {};
       global.recordingsDb[call.id] = recording;
-      
+
       // Send WebSocket notification
       if (global.io) {
-        global.io.emit('call:recording-ready', {
+        global.io.emit("call:recording-ready", {
           callId: call.id,
           recording,
         });
-        
-        global.io.emit('call:updated', updatedCall);
+
+        global.io.emit("call:updated", updatedCall);
       }
-      
+
       // Process recording for insights (async)
       processRecordingForInsights(call.id, recording);
-      
-    } else if (recordingData.RecordingStatus === 'failed') {
+    } else if (recordingData.RecordingStatus === "failed") {
       // Handle recording failure
       const updatedCall = {
         ...call,
-        recordingError: recordingData.ErrorMessage || 'Recording failed',
+        recordingError: recordingData.ErrorMessage || "Recording failed",
         events: [
           ...(call.events || []),
           {
-            type: 'recording_failed',
+            type: "recording_failed",
             timestamp: new Date(),
             data: {
               errorCode: recordingData.ErrorCode,
@@ -119,40 +119,39 @@ export async function POST(request: NextRequest) {
           },
         ],
       };
-      
+
       global.aiCallsDb[call.id] = updatedCall;
-      
+
       if (global.io) {
-        global.io.emit('call:recording-failed', {
+        global.io.emit("call:recording-failed", {
           callId: call.id,
           error: recordingData.ErrorMessage,
         });
       }
     }
-    
+
     // Log event
     logSecurityEvent({
-      ip: request.ip || 'unknown',
-      method: 'POST',
-      path: '/api/calls/recording',
-      userAgent: request.headers.get('user-agent') || 'unknown',
-      action: 'recording_status_update',
-      result: 'success',
+      ip: request.ip || "unknown",
+      method: "POST",
+      path: "/api/calls/recording",
+      userAgent: request.headers.get("user-agent") || "unknown",
+      action: "recording_status_update",
+      result: "success",
       details: {
         callId: call.id,
         recordingStatus: recordingData.RecordingStatus,
         recordingSid: recordingData.RecordingSid,
       },
     });
-    
+
     // Return success response to Twilio
-    return new NextResponse('', { status: 200 });
-    
+    return new NextResponse("", { status: 200 });
   } catch (error) {
-    console.error('Error processing recording callback:', error);
-    
+    console.error("Error processing recording callback:", error);
+
     // Return 200 to prevent Twilio retries
-    return new NextResponse('', { status: 200 });
+    return new NextResponse("", { status: 200 });
   }
 }
 
@@ -164,10 +163,10 @@ async function processRecordingForInsights(callId: string, recording: any) {
     // 2. Process with speech analytics
     // 3. Extract additional insights
     // 4. Update call metrics
-    
+
     const call = global.aiCallsDb?.[callId];
     if (!call) return;
-    
+
     // Mock insights generation
     const insights = {
       emotions: {
@@ -185,9 +184,9 @@ async function processRecordingForInsights(callId: string, recording: any) {
         totalDuration: 24, // seconds
       },
       keywords: [
-        { word: 'pricing', count: 5 },
-        { word: 'features', count: 8 },
-        { word: 'implementation', count: 3 },
+        { word: "pricing", count: 5 },
+        { word: "features", count: 8 },
+        { word: "implementation", count: 3 },
       ],
       compliance: {
         disclosureGiven: true,
@@ -195,30 +194,29 @@ async function processRecordingForInsights(callId: string, recording: any) {
         gdprCompliant: true,
       },
     };
-    
+
     // Update call with insights
     const updatedCall = {
       ...call,
       insights,
       insightsGeneratedAt: new Date(),
     };
-    
+
     global.aiCallsDb[callId] = updatedCall;
-    
+
     // Store insights
     global.insightsDb = global.insightsDb || {};
     global.insightsDb[callId] = insights;
-    
+
     // Notify clients
     if (global.io) {
-      global.io.emit('call:insights-ready', {
+      global.io.emit("call:insights-ready", {
         callId,
         insights,
       });
     }
-    
   } catch (error) {
-    console.error('Error processing recording insights:', error);
+    console.error("Error processing recording insights:", error);
   }
 }
 

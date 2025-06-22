@@ -1,35 +1,44 @@
-import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
-import { getTwilioConfig } from '@/config/twilio';
-import { verifyToken } from '@/lib/jwt';
+import { NextRequest, NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
+import { getTwilioConfig } from "@/config/twilio";
+import { verifyToken } from "@/lib/jwt";
 
 export async function POST(request: NextRequest) {
   try {
     // Verify user authentication
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const token = authHeader.substring(7);
     const payload = verifyToken(token);
-    
+
     if (!payload) {
-      return NextResponse.json({ error: 'Invalid or expired token' }, { status: 401 });
+      return NextResponse.json(
+        { error: "Invalid or expired token" },
+        { status: 401 },
+      );
     }
 
     const body = await request.json();
     const { identity } = body;
 
     if (!identity) {
-      return NextResponse.json({ error: 'Identity is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Identity is required" },
+        { status: 400 },
+      );
     }
 
     // Get Twilio configuration
     const twilioConfig = getTwilioConfig();
-    
+
     if (!twilioConfig || !twilioConfig.isEnabled) {
-      return NextResponse.json({ error: 'Twilio calling is not enabled' }, { status: 503 });
+      return NextResponse.json(
+        { error: "Twilio calling is not enabled" },
+        { status: 503 },
+      );
     }
 
     // For development/demo, return a mock token
@@ -45,7 +54,7 @@ export async function POST(request: NextRequest) {
             },
           },
         },
-        'mock-secret'
+        "mock-secret",
       );
 
       return NextResponse.json({
@@ -61,21 +70,21 @@ export async function POST(request: NextRequest) {
     // npm install twilio
     // const AccessToken = require('twilio').jwt.AccessToken;
     // const VoiceGrant = AccessToken.VoiceGrant;
-    
+
     // const token = new AccessToken(
-    //   twilioConfig.accountSid, 
-    //   twilioConfig.apiKey, 
+    //   twilioConfig.accountSid,
+    //   twilioConfig.apiKey,
     //   twilioConfig.apiSecret,
     //   { identity: identity }
     // );
-    
+
     // const voiceGrant = new VoiceGrant({
     //   outgoingApplicationSid: twilioConfig.twimlAppSid,
     //   incomingAllow: true,
     // });
-    
+
     // token.addGrant(voiceGrant);
-    
+
     // return NextResponse.json({
     //   token: token.toJwt(),
     //   identity,
@@ -94,7 +103,7 @@ export async function POST(request: NextRequest) {
         },
         exp: Math.floor(Date.now() / 1000) + 3600,
       },
-      twilioConfig.apiSecret
+      twilioConfig.apiSecret,
     );
 
     return NextResponse.json({
@@ -104,10 +113,10 @@ export async function POST(request: NextRequest) {
       isDevelopment: false,
     });
   } catch (error) {
-    console.error('Error generating Twilio token:', error);
+    console.error("Error generating Twilio token:", error);
     return NextResponse.json(
-      { error: 'Failed to generate token' },
-      { status: 500 }
+      { error: "Failed to generate token" },
+      { status: 500 },
     );
   }
 }

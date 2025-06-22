@@ -1,55 +1,61 @@
-'use client'
+"use client";
 
-import React, { useEffect, useRef } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Badge } from '@/components/ui/badge'
-import { Mic, User } from 'lucide-react'
-import { useCallQueueStore } from '@/stores/callQueueStore'
-import { cn } from '@/lib/utils'
+import React, { useEffect, useRef } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
+import { Mic, User } from "lucide-react";
+import { useCallQueueStore } from "@/stores/callQueueStore";
+import { cn } from "@/lib/utils";
 
 interface TranscriptLine {
-  speaker: 'AI' | 'Prospect'
-  text: string
-  timestamp: Date
+  speaker: "AI" | "Prospect";
+  text: string;
+  timestamp: Date;
 }
 
 export function LiveTranscript() {
-  const { currentTranscript, activeCall } = useCallQueueStore()
-  const scrollAreaRef = useRef<HTMLDivElement>(null)
-  const [parsedTranscript, setParsedTranscript] = React.useState<TranscriptLine[]>([])
+  const { currentTranscript, activeCall } = useCallQueueStore();
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const [parsedTranscript, setParsedTranscript] = React.useState<
+    TranscriptLine[]
+  >([]);
 
   // Parse transcript lines into structured format
   useEffect(() => {
     const parsed = currentTranscript.map((line) => {
-      const speaker: 'AI' | 'Prospect' = line.startsWith('AI:') ? 'AI' : 'Prospect'
-      const text = line.replace(/^(AI:|Prospect:)\s*/, '')
+      const speaker: "AI" | "Prospect" = line.startsWith("AI:")
+        ? "AI"
+        : "Prospect";
+      const text = line.replace(/^(AI:|Prospect:)\s*/, "");
       return {
         speaker,
         text,
         timestamp: new Date(),
-      }
-    })
-    setParsedTranscript(parsed)
-  }, [currentTranscript])
+      };
+    });
+    setParsedTranscript(parsed);
+  }, [currentTranscript]);
 
   // Auto-scroll to bottom when new lines are added
   useEffect(() => {
     if (scrollAreaRef.current) {
-      const scrollContainer = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]')
+      const scrollContainer = scrollAreaRef.current.querySelector(
+        "[data-radix-scroll-area-viewport]",
+      );
       if (scrollContainer) {
-        scrollContainer.scrollTop = scrollContainer.scrollHeight
+        scrollContainer.scrollTop = scrollContainer.scrollHeight;
       }
     }
-  }, [parsedTranscript])
+  }, [parsedTranscript]);
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      second: '2-digit',
-    })
-  }
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  };
 
   return (
     <Card className="h-full flex flex-col">
@@ -76,7 +82,7 @@ export function LiveTranscript() {
               <p className="text-sm">No active call</p>
             </div>
           )}
-          
+
           {parsedTranscript.length === 0 && activeCall && (
             <div className="flex items-center justify-center h-full text-muted-foreground">
               <div className="text-center">
@@ -92,18 +98,18 @@ export function LiveTranscript() {
                 key={idx}
                 className={cn(
                   "flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300",
-                  line.speaker === 'AI' ? 'flex-row' : 'flex-row-reverse'
+                  line.speaker === "AI" ? "flex-row" : "flex-row-reverse",
                 )}
               >
                 <div
                   className={cn(
                     "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
-                    line.speaker === 'AI'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted'
+                    line.speaker === "AI"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted",
                   )}
                 >
-                  {line.speaker === 'AI' ? (
+                  {line.speaker === "AI" ? (
                     <span className="text-xs font-bold">AI</span>
                   ) : (
                     <User className="h-4 w-4" />
@@ -112,15 +118,15 @@ export function LiveTranscript() {
                 <div
                   className={cn(
                     "flex-1 space-y-1",
-                    line.speaker === 'Prospect' && 'text-right'
+                    line.speaker === "Prospect" && "text-right",
                   )}
                 >
                   <div
                     className={cn(
                       "inline-block px-3 py-2 rounded-lg text-sm",
-                      line.speaker === 'AI'
-                        ? 'bg-primary/10 text-primary-foreground'
-                        : 'bg-muted'
+                      line.speaker === "AI"
+                        ? "bg-primary/10 text-primary-foreground"
+                        : "bg-muted",
                     )}
                   >
                     {line.text}
@@ -135,5 +141,5 @@ export function LiveTranscript() {
         </ScrollArea>
       </CardContent>
     </Card>
-  )
+  );
 }

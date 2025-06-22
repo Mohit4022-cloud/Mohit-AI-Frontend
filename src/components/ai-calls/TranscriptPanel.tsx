@@ -6,10 +6,20 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { 
-  X, Search, Copy, Download, Maximize2, Minimize2,
-  Bot, User, Headphones, Clock, PanelLeftClose, Subtitles,
-  CircleDot
+import {
+  X,
+  Search,
+  Copy,
+  Download,
+  Maximize2,
+  Minimize2,
+  Bot,
+  User,
+  Headphones,
+  Clock,
+  PanelLeftClose,
+  Subtitles,
+  CircleDot,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -22,24 +32,66 @@ interface TranscriptPanelProps {
 
 // Color palette for speaker identification (max 5 speakers)
 const SPEAKER_COLORS = [
-  { bg: "bg-blue-50 dark:bg-blue-950", text: "text-blue-600 dark:text-blue-400", border: "border-blue-200 dark:border-blue-800" },
-  { bg: "bg-green-50 dark:bg-green-950", text: "text-green-600 dark:text-green-400", border: "border-green-200 dark:border-green-800" },
-  { bg: "bg-purple-50 dark:bg-purple-950", text: "text-purple-600 dark:text-purple-400", border: "border-purple-200 dark:border-purple-800" },
-  { bg: "bg-orange-50 dark:bg-orange-950", text: "text-orange-600 dark:text-orange-400", border: "border-orange-200 dark:border-orange-800" },
-  { bg: "bg-pink-50 dark:bg-pink-950", text: "text-pink-600 dark:text-pink-400", border: "border-pink-200 dark:border-pink-800" }
+  {
+    bg: "bg-blue-50 dark:bg-blue-950",
+    text: "text-blue-600 dark:text-blue-400",
+    border: "border-blue-200 dark:border-blue-800",
+  },
+  {
+    bg: "bg-green-50 dark:bg-green-950",
+    text: "text-green-600 dark:text-green-400",
+    border: "border-green-200 dark:border-green-800",
+  },
+  {
+    bg: "bg-purple-50 dark:bg-purple-950",
+    text: "text-purple-600 dark:text-purple-400",
+    border: "border-purple-200 dark:border-purple-800",
+  },
+  {
+    bg: "bg-orange-50 dark:bg-orange-950",
+    text: "text-orange-600 dark:text-orange-400",
+    border: "border-orange-200 dark:border-orange-800",
+  },
+  {
+    bg: "bg-pink-50 dark:bg-pink-950",
+    text: "text-pink-600 dark:text-pink-400",
+    border: "border-pink-200 dark:border-pink-800",
+  },
 ];
 
 // Important keywords to highlight
 const IMPORTANT_KEYWORDS = [
-  "pricing", "price", "cost", "budget", "payment",
-  "competitor", "competition", "alternative",
-  "decision", "decide", "purchase", "buy",
-  "concern", "issue", "problem", "challenge",
-  "timeline", "deadline", "when", "timeframe",
-  "feature", "benefit", "advantage", "capability"
+  "pricing",
+  "price",
+  "cost",
+  "budget",
+  "payment",
+  "competitor",
+  "competition",
+  "alternative",
+  "decision",
+  "decide",
+  "purchase",
+  "buy",
+  "concern",
+  "issue",
+  "problem",
+  "challenge",
+  "timeline",
+  "deadline",
+  "when",
+  "timeframe",
+  "feature",
+  "benefit",
+  "advantage",
+  "capability",
 ];
 
-export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: TranscriptPanelProps) {
+export function TranscriptPanel({
+  callId,
+  onClose,
+  initialMode = "panel",
+}: TranscriptPanelProps) {
   const { transcripts } = useAICallStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [autoScroll, setAutoScroll] = useState(true);
@@ -60,47 +112,57 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
   const callTranscripts = useMemo(() => {
     return transcripts.get(callId) || [];
   }, [transcripts, callId]);
-  
+
   // Map speakers to colors
   const speakerColorMap = useMemo(() => {
-    const map = new Map<string, typeof SPEAKER_COLORS[0]>();
-    const uniqueSpeakers = Array.from(new Set(callTranscripts.map(t => t.speaker)));
-    
+    const map = new Map<string, (typeof SPEAKER_COLORS)[0]>();
+    const uniqueSpeakers = Array.from(
+      new Set(callTranscripts.map((t) => t.speaker)),
+    );
+
     // Pre-assign colors for known speakers
-    if (uniqueSpeakers.includes('AI') && SPEAKER_COLORS[0]) {
-      map.set('AI', SPEAKER_COLORS[0]); // Blue for AI
+    if (uniqueSpeakers.includes("AI") && SPEAKER_COLORS[0]) {
+      map.set("AI", SPEAKER_COLORS[0]); // Blue for AI
     }
-    
+
     // Assign colors to other speakers
     let colorIndex = 1;
-    uniqueSpeakers.forEach(speaker => {
-      if (!map.has(speaker) && colorIndex < SPEAKER_COLORS.length && SPEAKER_COLORS[colorIndex]) {
+    uniqueSpeakers.forEach((speaker) => {
+      if (
+        !map.has(speaker) &&
+        colorIndex < SPEAKER_COLORS.length &&
+        SPEAKER_COLORS[colorIndex]
+      ) {
         map.set(speaker, SPEAKER_COLORS[colorIndex]!);
         colorIndex++;
       }
     });
-    
+
     return map;
   }, [callTranscripts]);
-  
-  const filteredTranscripts = callTranscripts.filter(entry =>
-    entry.text.toLowerCase().includes(searchQuery.toLowerCase())
+
+  const filteredTranscripts = callTranscripts.filter((entry) =>
+    entry.text.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   useEffect(() => {
     if (autoScroll && bottomRef.current && scrollAreaRef.current) {
-      const scrollContainer = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
+      const scrollContainer = scrollAreaRef.current.querySelector(
+        "[data-radix-scroll-area-viewport]",
+      );
       if (scrollContainer) {
         scrollContainer.scrollTop = scrollContainer.scrollHeight;
       }
     }
   }, [callTranscripts, autoScroll]);
-  
+
   // Handle manual scroll detection
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
-    const isAtBottom = Math.abs(target.scrollHeight - target.scrollTop - target.clientHeight) < 10;
-    
+    const isAtBottom =
+      Math.abs(target.scrollHeight - target.scrollTop - target.clientHeight) <
+      10;
+
     // If user scrolled up manually, disable auto-scroll
     if (target.scrollTop < lastScrollPositionRef.current && !isAtBottom) {
       setAutoScroll(false);
@@ -109,7 +171,7 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
     else if (isAtBottom) {
       setAutoScroll(true);
     }
-    
+
     lastScrollPositionRef.current = target.scrollTop;
   };
 
@@ -122,14 +184,20 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
 
   const handleCopy = () => {
     const text = callTranscripts
-      .map(entry => `[${format(entry.timestamp, "HH:mm:ss")}] ${entry.speaker}: ${entry.text}`)
+      .map(
+        (entry) =>
+          `[${format(entry.timestamp, "HH:mm:ss")}] ${entry.speaker}: ${entry.text}`,
+      )
       .join("\n");
     navigator.clipboard.writeText(text);
   };
 
   const handleDownload = () => {
     const text = callTranscripts
-      .map(entry => `[${format(entry.timestamp, "HH:mm:ss")}] ${entry.speaker}: ${entry.text}`)
+      .map(
+        (entry) =>
+          `[${format(entry.timestamp, "HH:mm:ss")}] ${entry.speaker}: ${entry.text}`,
+      )
       .join("\n");
     const blob = new Blob([text], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -184,17 +252,21 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
   }
 
   return (
-    <Card className={cn(
-      "flex flex-col min-w-[400px] animate-in fade-in-0 duration-300",
-      isExpanded ? "fixed inset-4 z-50" : "h-full"
-    )}>
+    <Card
+      className={cn(
+        "flex flex-col min-w-[400px] animate-in fade-in-0 duration-300",
+        isExpanded ? "fixed inset-4 z-50" : "h-full",
+      )}
+    >
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base font-medium flex items-center gap-2">
             <PanelLeftClose className="h-4 w-4" />
             Live Transcript
             {callTranscripts.length > 0 && (
-              <Badge variant="secondary">{callTranscripts.length} messages</Badge>
+              <Badge variant="secondary">
+                {callTranscripts.length} messages
+              </Badge>
             )}
           </CardTitle>
           <div className="flex items-center gap-1">
@@ -208,7 +280,14 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
               <Subtitles className="h-4 w-4" />
             </Button>
             <div className="flex items-center gap-2 px-2">
-              <CircleDot className={cn("h-3 w-3", autoScroll ? "text-green-500 animate-pulse" : "text-muted-foreground")} />
+              <CircleDot
+                className={cn(
+                  "h-3 w-3",
+                  autoScroll
+                    ? "text-green-500 animate-pulse"
+                    : "text-muted-foreground",
+                )}
+              />
               <Switch
                 checked={autoScroll}
                 onCheckedChange={setAutoScroll}
@@ -268,7 +347,7 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
           </div>
         </div>
       </CardHeader>
-      
+
       <div className="px-4 pb-3">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -282,7 +361,7 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
       </div>
 
       <CardContent className="flex-1 px-3 pb-3">
-        <ScrollArea 
+        <ScrollArea
           ref={scrollAreaRef}
           className="h-full pr-3"
           onScroll={handleScroll}
@@ -296,10 +375,14 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
               <>
                 {/* Timestamp markers */}
                 {filteredTranscripts.map((entry, index) => {
-                  const showTimestamp = index === 0 || 
-                    (index > 0 && filteredTranscripts[index - 1] &&
-                     entry.timestamp.getTime() - filteredTranscripts[index - 1]!.timestamp.getTime() > 30000);
-                  
+                  const showTimestamp =
+                    index === 0 ||
+                    (index > 0 &&
+                      filteredTranscripts[index - 1] &&
+                      entry.timestamp.getTime() -
+                        filteredTranscripts[index - 1]!.timestamp.getTime() >
+                        30000);
+
                   return (
                     <div key={entry.id}>
                       {showTimestamp && (
@@ -311,8 +394,8 @@ export function TranscriptPanel({ callId, onClose, initialMode = "panel" }: Tran
                           <div className="flex-1 h-px bg-border" />
                         </div>
                       )}
-                      <TranscriptEntry 
-                        entry={entry} 
+                      <TranscriptEntry
+                        entry={entry}
                         highlight={searchQuery}
                         speakerColor={speakerColorMap.get(entry.speaker)}
                         highlightKeywords={highlightKeywords}
@@ -339,11 +422,16 @@ interface TranscriptEntryProps {
     keywords?: string[];
   };
   highlight?: string;
-  speakerColor?: typeof SPEAKER_COLORS[0];
+  speakerColor?: (typeof SPEAKER_COLORS)[0];
   highlightKeywords?: boolean;
 }
 
-function TranscriptEntry({ entry, highlight, speakerColor, highlightKeywords }: TranscriptEntryProps) {
+function TranscriptEntry({
+  entry,
+  highlight,
+  speakerColor,
+  highlightKeywords,
+}: TranscriptEntryProps) {
   const getSpeakerIcon = () => {
     if (entry.speaker === "AI") {
       return <Bot className="h-4 w-4" />;
@@ -353,48 +441,56 @@ function TranscriptEntry({ entry, highlight, speakerColor, highlightKeywords }: 
     return <User className="h-4 w-4" />;
   };
 
-  const colors = speakerColor || SPEAKER_COLORS[0] || { bg: "bg-gray-50", text: "text-gray-600", border: "border-gray-200" };
+  const colors = speakerColor ||
+    SPEAKER_COLORS[0] || {
+      bg: "bg-gray-50",
+      text: "text-gray-600",
+      border: "border-gray-200",
+    };
 
   const highlightText = (text: string) => {
     let processedText: React.ReactNode[] = [text];
-    
+
     // First highlight search query if present
     if (highlight) {
       processedText = processedText.flatMap((part) => {
-        if (typeof part !== 'string') return part;
-        
+        if (typeof part !== "string") return part;
+
         const parts = part.split(new RegExp(`(${highlight})`, "gi"));
-        return parts.map((p, i) => 
+        return parts.map((p, i) =>
           p.toLowerCase() === highlight.toLowerCase() ? (
-            <mark key={`search-${i}`} className="bg-yellow-200 dark:bg-yellow-800 px-0.5 rounded">
+            <mark
+              key={`search-${i}`}
+              className="bg-yellow-200 dark:bg-yellow-800 px-0.5 rounded"
+            >
               {p}
             </mark>
           ) : (
             p
-          )
+          ),
         );
       });
     }
-    
+
     // Then highlight important keywords if enabled
     if (highlightKeywords && !highlight) {
       processedText = processedText.flatMap((part, partIndex) => {
-        if (typeof part !== 'string') return part;
-        
+        if (typeof part !== "string") return part;
+
         // Create regex pattern for all keywords
-        const keywordPattern = IMPORTANT_KEYWORDS.join('|');
-        const regex = new RegExp(`\\b(${keywordPattern})\\b`, 'gi');
+        const keywordPattern = IMPORTANT_KEYWORDS.join("|");
+        const regex = new RegExp(`\\b(${keywordPattern})\\b`, "gi");
         const parts = part.split(regex);
-        
+
         return parts.map((p, i) => {
-          const isKeyword = IMPORTANT_KEYWORDS.some(k => 
-            k.toLowerCase() === p.toLowerCase()
+          const isKeyword = IMPORTANT_KEYWORDS.some(
+            (k) => k.toLowerCase() === p.toLowerCase(),
           );
-          
+
           if (isKeyword) {
             return (
-              <span 
-                key={`keyword-${partIndex}-${i}`} 
+              <span
+                key={`keyword-${partIndex}-${i}`}
                 className="font-medium text-primary underline decoration-dotted underline-offset-2"
               >
                 {p}
@@ -405,26 +501,31 @@ function TranscriptEntry({ entry, highlight, speakerColor, highlightKeywords }: 
         });
       });
     }
-    
+
     return processedText;
   };
 
   return (
-    <div className={cn(
-      "flex gap-3 p-3 rounded-lg transition-colors",
-      entry.speaker === "AI" && "bg-gradient-to-r from-blue-50/50 to-transparent dark:from-blue-950/30 dark:to-transparent",
-      "hover:bg-muted/20"
-    )}>
-      <div className={cn(
-        "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ring-2 ring-offset-1",
-        colors.bg,
-        colors.text,
-        colors.border,
-        `ring-${colors.border}`
-      )}>
+    <div
+      className={cn(
+        "flex gap-3 p-3 rounded-lg transition-colors",
+        entry.speaker === "AI" &&
+          "bg-gradient-to-r from-blue-50/50 to-transparent dark:from-blue-950/30 dark:to-transparent",
+        "hover:bg-muted/20",
+      )}
+    >
+      <div
+        className={cn(
+          "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ring-2 ring-offset-1",
+          colors.bg,
+          colors.text,
+          colors.border,
+          `ring-${colors.border}`,
+        )}
+      >
         {getSpeakerIcon()}
       </div>
-      
+
       <div className="flex-1 min-w-0">
         <div className="flex items-baseline gap-2 mb-1">
           <span className="text-sm font-medium">{entry.speaker}</span>
@@ -437,15 +538,19 @@ function TranscriptEntry({ entry, highlight, speakerColor, highlightKeywords }: 
             </Badge>
           )}
         </div>
-        
+
         <p className="text-sm text-foreground/90 break-words">
           {highlightText(entry.text)}
         </p>
-        
+
         {entry.keywords && entry.keywords.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-2">
             {entry.keywords.map((keyword, i) => (
-              <Badge key={i} variant="secondary" className="text-xs px-1.5 py-0">
+              <Badge
+                key={i}
+                variant="secondary"
+                className="text-xs px-1.5 py-0"
+              >
                 {keyword}
               </Badge>
             ))}
@@ -459,27 +564,64 @@ function TranscriptEntry({ entry, highlight, speakerColor, highlightKeywords }: 
 function TranscriptSubtitleEntry({ entry }: { entry: any }) {
   // Use the same color mapping logic
   const speakerColors = useMemo(() => {
-    if (entry.speaker === 'AI') return SPEAKER_COLORS[0] || { bg: "bg-blue-50", text: "text-blue-600", border: "border-blue-200" };
-    if (entry.speaker === 'AGENT') return SPEAKER_COLORS[1] || { bg: "bg-green-50", text: "text-green-600", border: "border-green-200" };
-    if (entry.speaker === 'LEAD') return SPEAKER_COLORS[2] || { bg: "bg-purple-50", text: "text-purple-600", border: "border-purple-200" };
-    return SPEAKER_COLORS[3] || { bg: "bg-gray-50", text: "text-gray-600", border: "border-gray-200" };
+    if (entry.speaker === "AI")
+      return (
+        SPEAKER_COLORS[0] || {
+          bg: "bg-blue-50",
+          text: "text-blue-600",
+          border: "border-blue-200",
+        }
+      );
+    if (entry.speaker === "AGENT")
+      return (
+        SPEAKER_COLORS[1] || {
+          bg: "bg-green-50",
+          text: "text-green-600",
+          border: "border-green-200",
+        }
+      );
+    if (entry.speaker === "LEAD")
+      return (
+        SPEAKER_COLORS[2] || {
+          bg: "bg-purple-50",
+          text: "text-purple-600",
+          border: "border-purple-200",
+        }
+      );
+    return (
+      SPEAKER_COLORS[3] || {
+        bg: "bg-gray-50",
+        text: "text-gray-600",
+        border: "border-gray-200",
+      }
+    );
   }, [entry.speaker]);
 
   return (
-    <div className={cn(
-      "flex items-start gap-3 py-1.5 px-2 rounded-md transition-colors",
-      "hover:bg-muted/50",
-      entry.speaker === "AI" && "bg-gradient-to-r from-blue-50/30 to-transparent dark:from-blue-950/20"
-    )}>
+    <div
+      className={cn(
+        "flex items-start gap-3 py-1.5 px-2 rounded-md transition-colors",
+        "hover:bg-muted/50",
+        entry.speaker === "AI" &&
+          "bg-gradient-to-r from-blue-50/30 to-transparent dark:from-blue-950/20",
+      )}
+    >
       <div className="flex items-center gap-2 min-w-0">
-        <div className={cn(
-          "flex items-center gap-1.5 px-2 py-0.5 rounded-full",
-          speakerColors?.bg,
-          speakerColors?.border,
-          "border"
-        )}>
+        <div
+          className={cn(
+            "flex items-center gap-1.5 px-2 py-0.5 rounded-full",
+            speakerColors?.bg,
+            speakerColors?.border,
+            "border",
+          )}
+        >
           {entry.speaker === "AI" && <Bot className="h-3 w-3" />}
-          <span className={cn("text-xs font-semibold uppercase", speakerColors?.text)}>
+          <span
+            className={cn(
+              "text-xs font-semibold uppercase",
+              speakerColors?.text,
+            )}
+          >
             {entry.speaker}
           </span>
         </div>

@@ -1,14 +1,16 @@
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'For SDRs - Mohit AI',
-  description: 'Mohit AI - Your AI SDR That Never Sleeps',
-}
+  title: "For SDRs - Mohit AI",
+  description: "Mohit AI - Your AI SDR That Never Sleeps",
+};
 
 export default function SdrsPage() {
   return (
     <>
-      <div dangerouslySetInnerHTML={{ __html: `&lt;nav className="fixed w-full bg-gray-900/95 backdrop-blur-md border-b border-gray-800 z-50"&gt;
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `&lt;nav className="fixed w-full bg-gray-900/95 backdrop-blur-md border-b border-gray-800 z-50"&gt;
         &lt;div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"&gt;
             &lt;div className="flex justify-between h-20"&gt;
                 &lt;div className="flex items-center"&gt;
@@ -267,7 +269,9 @@ export default function SdrsPage() {
                 &lt;p className="text-gray-300 text-center"&gt;&amp;copy; 2024 Mohit AI. All rights reserved.&lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;
-    &lt;/footer&gt;` }} />
+    &lt;/footer&gt;`,
+        }}
+      />
     </>
-  )
+  );
 }

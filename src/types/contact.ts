@@ -1,17 +1,23 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // Contact status enum
-export const ContactStatus = z.enum(['new', 'contacted', 'qualified', 'converted', 'lost']);
+export const ContactStatus = z.enum([
+  "new",
+  "contacted",
+  "qualified",
+  "converted",
+  "lost",
+]);
 
 // Contact Schema
 export const ContactSchema = z.object({
   id: z.string(),
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(1, 'Phone is required'),
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(1, "Phone is required"),
   company: z.string().optional(),
   title: z.string().optional(),
-  status: ContactStatus.default('new'),
+  status: ContactStatus.default("new"),
   notes: z.string().optional(),
   tags: z.array(z.string()).optional(),
   lastContactedAt: z.string().optional(), // ISO string

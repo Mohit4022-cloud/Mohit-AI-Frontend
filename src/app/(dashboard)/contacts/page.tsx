@@ -1,14 +1,14 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useContactsStore } from '@/stores/contactsStore'
-import { Contact } from '@/types/contact'
-import { AddContactForm } from '@/components/contacts/AddContactForm'
-import { EditContactForm } from '@/components/contacts/EditContactForm'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
+import { useState, useEffect } from "react";
+import { useContactsStore } from "@/stores/contactsStore";
+import { Contact } from "@/types/contact";
+import { AddContactForm } from "@/components/contacts/AddContactForm";
+import { EditContactForm } from "@/components/contacts/EditContactForm";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -16,109 +16,111 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { useToast } from '@/components/ui/use-toast'
-import { 
-  Plus, 
-  Search, 
-  MoreVertical, 
-  Edit, 
-  Trash, 
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  Plus,
+  Search,
+  MoreVertical,
+  Edit,
+  Trash,
   Phone,
   Mail,
   Download,
   RefreshCw,
   Users,
-} from 'lucide-react'
-import { cn } from '@/lib/utils'
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const statusColors = {
-  active: 'bg-green-100 text-green-800',
-  inactive: 'bg-gray-100 text-gray-800',
-  prospect: 'bg-blue-100 text-blue-800',
-  customer: 'bg-purple-100 text-purple-800',
-  churned: 'bg-red-100 text-red-800',
-}
+  active: "bg-green-100 text-green-800",
+  inactive: "bg-gray-100 text-gray-800",
+  prospect: "bg-blue-100 text-blue-800",
+  customer: "bg-purple-100 text-purple-800",
+  churned: "bg-red-100 text-red-800",
+};
 
 export default function ContactsPage() {
-  const { contacts, loading, error, loadContacts, deleteContact } = useContactsStore()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showAddForm, setShowAddForm] = useState(false)
-  const [editingContact, setEditingContact] = useState<Contact | null>(null)
-  const { toast } = useToast()
+  const { contacts, loading, error, loadContacts, deleteContact } =
+    useContactsStore();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editingContact, setEditingContact] = useState<Contact | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
-    loadContacts()
-  }, [loadContacts])
+    loadContacts();
+  }, [loadContacts]);
 
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    contact.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    contact.company?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    contact.phone.includes(searchQuery)
-  )
+  const filteredContacts = contacts.filter(
+    (contact) =>
+      contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      contact.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      contact.company?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      contact.phone.includes(searchQuery),
+  );
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete ${name}?`)) return
-    
+    if (!confirm(`Are you sure you want to delete ${name}?`)) return;
+
     try {
-      await deleteContact(id)
+      await deleteContact(id);
       toast({
-        title: 'Contact deleted',
+        title: "Contact deleted",
         description: `${name} has been removed from your contacts.`,
-      })
+      });
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to delete contact',
-        variant: 'destructive',
-      })
+        title: "Error",
+        description: "Failed to delete contact",
+        variant: "destructive",
+      });
     }
-  }
+  };
 
   const exportContacts = () => {
     const csv = [
-      ['Name', 'Email', 'Phone', 'Company', 'Title', 'Status', 'Lead Score'],
-      ...filteredContacts.map(c => [
+      ["Name", "Email", "Phone", "Company", "Title", "Status", "Lead Score"],
+      ...filteredContacts.map((c) => [
         c.name,
         c.email,
         c.phone,
-        c.company || '',
-        c.title || '',
-        c.status || '',
-        c.leadScore?.toString() || '',
-      ])
-    ].map(row => row.join(',')).join('\n')
+        c.company || "",
+        c.title || "",
+        c.status || "",
+        c.leadScore?.toString() || "",
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
 
-    const blob = new Blob([csv], { type: 'text/csv' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `contacts_${new Date().toISOString().split('T')[0]}.csv`
-    a.click()
-  }
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `contacts_${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+  };
 
   const stats = {
     total: contacts.length,
-    active: contacts.filter(c => c.status === 'active').length,
-    prospects: contacts.filter(c => c.status === 'prospect').length,
-    customers: contacts.filter(c => c.status === 'customer').length,
-  }
+    active: contacts.filter((c) => c.status === "active").length,
+    prospects: contacts.filter((c) => c.status === "prospect").length,
+    customers: contacts.filter((c) => c.status === "customer").length,
+  };
 
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Contacts</h1>
-          <p className="text-gray-600 mt-1">
-            {stats.total} total contacts
-          </p>
+          <p className="text-gray-600 mt-1">{stats.total} total contacts</p>
         </div>
         <div className="flex items-center gap-3">
           <Button
@@ -127,7 +129,7 @@ export default function ContactsPage() {
             onClick={() => loadContacts()}
             disabled={loading}
           >
-            <RefreshCw className={cn('h-4 w-4', loading && 'animate-spin')} />
+            <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
           </Button>
           <Button variant="outline" onClick={exportContacts}>
             <Download className="h-4 w-4 mr-2" />
@@ -210,18 +212,18 @@ export default function ContactsPage() {
         </CardHeader>
         <CardContent>
           {error && (
-            <div className="text-red-600 text-center py-4">
-              Error: {error}
-            </div>
+            <div className="text-red-600 text-center py-4">Error: {error}</div>
           )}
-          
+
           {loading && contacts.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               Loading contacts...
             </div>
           ) : filteredContacts.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
-              {searchQuery ? 'No contacts found matching your search.' : 'No contacts yet. Add your first contact!'}
+              {searchQuery
+                ? "No contacts found matching your search."
+                : "No contacts yet. Add your first contact!"}
             </div>
           ) : (
             <Table>
@@ -238,7 +240,9 @@ export default function ContactsPage() {
               <TableBody>
                 {filteredContacts.map((contact) => (
                   <TableRow key={contact.id}>
-                    <TableCell className="font-medium">{contact.name}</TableCell>
+                    <TableCell className="font-medium">
+                      {contact.name}
+                    </TableCell>
                     <TableCell>
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 text-sm">
@@ -256,14 +260,20 @@ export default function ContactsPage() {
                         <div>
                           <div className="font-medium">{contact.company}</div>
                           {contact.title && (
-                            <div className="text-sm text-gray-500">{contact.title}</div>
+                            <div className="text-sm text-gray-500">
+                              {contact.title}
+                            </div>
                           )}
                         </div>
                       )}
                     </TableCell>
                     <TableCell>
-                      <Badge className={cn(statusColors[contact.status || 'prospect'])}>
-                        {contact.status || 'prospect'}
+                      <Badge
+                        className={cn(
+                          statusColors[contact.status || "prospect"],
+                        )}
+                      >
+                        {contact.status || "prospect"}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -279,12 +289,16 @@ export default function ContactsPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => setEditingContact(contact)}>
+                          <DropdownMenuItem
+                            onClick={() => setEditingContact(contact)}
+                          >
                             <Edit className="h-4 w-4 mr-2" />
                             Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem 
-                            onClick={() => handleDelete(contact.id, contact.name)}
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleDelete(contact.id, contact.name)
+                            }
                             className="text-red-600"
                           >
                             <Trash className="h-4 w-4 mr-2" />
@@ -302,11 +316,11 @@ export default function ContactsPage() {
       </Card>
 
       <AddContactForm open={showAddForm} onOpenChange={setShowAddForm} />
-      <EditContactForm 
-        contact={editingContact} 
-        open={!!editingContact} 
-        onOpenChange={(open) => !open && setEditingContact(null)} 
+      <EditContactForm
+        contact={editingContact}
+        open={!!editingContact}
+        onOpenChange={(open) => !open && setEditingContact(null)}
       />
     </div>
-  )
+  );
 }

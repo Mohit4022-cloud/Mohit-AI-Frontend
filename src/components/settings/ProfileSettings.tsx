@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { Loader2, User, Mail, Lock, Save } from 'lucide-react'
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Loader2, User, Mail, Lock, Save } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -13,48 +13,53 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import { useToast } from '@/components/ui/use-toast'
-import { useSettingsStore } from '@/stores/settingsStore'
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
+import { useSettingsStore } from "@/stores/settingsStore";
 
 // Profile form schema
-const ProfileFormSchema = z.object({
-  fullName: z.string().min(1, 'Full name is required'),
-  email: z.string().email('Invalid email address'),
-  password: z.string().optional(),
-  confirmPassword: z.string().optional(),
-}).refine((data) => {
-  if (data.password || data.confirmPassword) {
-    return data.password === data.confirmPassword
-  }
-  return true
-}, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-})
+const ProfileFormSchema = z
+  .object({
+    fullName: z.string().min(1, "Full name is required"),
+    email: z.string().email("Invalid email address"),
+    password: z.string().optional(),
+    confirmPassword: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.password || data.confirmPassword) {
+        return data.password === data.confirmPassword;
+      }
+      return true;
+    },
+    {
+      message: "Passwords don't match",
+      path: ["confirmPassword"],
+    },
+  );
 
-type ProfileFormData = z.infer<typeof ProfileFormSchema>
+type ProfileFormData = z.infer<typeof ProfileFormSchema>;
 
 export function ProfileSettings() {
-  const { toast } = useToast()
-  const { settings, updateSettings } = useSettingsStore()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast();
+  const { settings, updateSettings } = useSettingsStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
-      fullName: settings.profile.fullName || '',
-      email: settings.profile.email || '',
-      password: '',
-      confirmPassword: '',
+      fullName: settings.profile.fullName || "",
+      email: settings.profile.email || "",
+      password: "",
+      confirmPassword: "",
     },
-  })
+  });
 
   const onSubmit = async (data: ProfileFormData) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
       // Only include password if it was changed
@@ -64,29 +69,29 @@ export function ProfileSettings() {
           email: data.email,
           ...(data.password ? { password: data.password } : {}),
         },
-      }
+      };
 
-      await updateSettings(updates)
+      await updateSettings(updates);
 
       toast({
-        title: 'Profile updated',
-        description: 'Your profile information has been saved.',
-      })
+        title: "Profile updated",
+        description: "Your profile information has been saved.",
+      });
 
       // Clear password fields after successful update
-      form.setValue('password', '')
-      form.setValue('confirmPassword', '')
+      form.setValue("password", "");
+      form.setValue("confirmPassword", "");
     } catch (error) {
-      console.error('Failed to update profile:', error)
+      console.error("Failed to update profile:", error);
       toast({
-        title: 'Update failed',
-        description: 'Failed to update your profile. Please try again.',
-        variant: 'destructive',
-      })
+        title: "Update failed",
+        description: "Failed to update your profile. Please try again.",
+        variant: "destructive",
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <Form {...form}>
@@ -94,7 +99,7 @@ export function ProfileSettings() {
         {/* Basic Information */}
         <div className="space-y-4">
           <h3 className="text-lg font-medium">Basic Information</h3>
-          
+
           <FormField
             control={form.control}
             name="fullName"
@@ -122,7 +127,11 @@ export function ProfileSettings() {
                   Email Address
                 </FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="john@example.com" {...field} />
+                  <Input
+                    type="email"
+                    placeholder="john@example.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   This email will be used for login and notifications
@@ -198,5 +207,5 @@ export function ProfileSettings() {
         </div>
       </form>
     </Form>
-  )
+  );
 }

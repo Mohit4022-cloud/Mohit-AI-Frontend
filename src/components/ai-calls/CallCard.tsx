@@ -2,9 +2,21 @@ import { AICall } from "@/stores/aiCallStore";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Phone, User, Building, Clock, Mic, Cpu, Volume2, 
-  Pause, UserPlus, PhoneOff, MoreVertical, Bot, Users, Sparkles
+import {
+  Phone,
+  User,
+  Building,
+  Clock,
+  Mic,
+  Cpu,
+  Volume2,
+  Pause,
+  UserPlus,
+  PhoneOff,
+  MoreVertical,
+  Bot,
+  Users,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDuration } from "@/lib/utils";
@@ -23,7 +35,12 @@ interface CallCardProps {
   view?: "grid" | "list";
 }
 
-export function CallCard({ call, isSelected, onSelect, view = "grid" }: CallCardProps) {
+export function CallCard({
+  call,
+  isSelected,
+  onSelect,
+  view = "grid",
+}: CallCardProps) {
   const { takeOverCall, pauseAI, endCall } = useAICallStore();
 
   const handleTakeOver = async (e: React.MouseEvent) => {
@@ -43,10 +60,10 @@ export function CallCard({ call, isSelected, onSelect, view = "grid" }: CallCard
 
   if (view === "list") {
     return (
-      <Card 
+      <Card
         className={cn(
           "p-4 cursor-pointer transition-all hover:shadow-md",
-          isSelected && "ring-2 ring-primary"
+          isSelected && "ring-2 ring-primary",
         )}
         onClick={onSelect}
       >
@@ -67,7 +84,7 @@ export function CallCard({ call, isSelected, onSelect, view = "grid" }: CallCard
               </p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2">
             <SentimentIndicator value={call.sentiment} />
             <Button
@@ -78,11 +95,7 @@ export function CallCard({ call, isSelected, onSelect, view = "grid" }: CallCard
             >
               <UserPlus className="h-4 w-4" />
             </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={handleEndCall}
-            >
+            <Button size="sm" variant="ghost" onClick={handleEndCall}>
               <PhoneOff className="h-4 w-4" />
             </Button>
           </div>
@@ -92,10 +105,10 @@ export function CallCard({ call, isSelected, onSelect, view = "grid" }: CallCard
   }
 
   return (
-    <Card 
+    <Card
       className={cn(
         "relative p-4 min-w-call-card h-call-card cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02]",
-        isSelected && "ring-2 ring-ai-blue"
+        isSelected && "ring-2 ring-ai-blue",
       )}
       onClick={onSelect}
     >
@@ -107,12 +120,8 @@ export function CallCard({ call, isSelected, onSelect, view = "grid" }: CallCard
             <Sparkles className="h-3 w-3" />
           </div>
         )}
-        {call.mode === "HUMAN" && (
-          <User className="h-4 w-4 text-ai-green" />
-        )}
-        {call.mode === "HYBRID" && (
-          <Users className="h-4 w-4 text-ai-amber" />
-        )}
+        {call.mode === "HUMAN" && <User className="h-4 w-4 text-ai-green" />}
+        {call.mode === "HYBRID" && <Users className="h-4 w-4 text-ai-amber" />}
       </div>
 
       {/* Header */}
@@ -140,7 +149,7 @@ export function CallCard({ call, isSelected, onSelect, view = "grid" }: CallCard
           <span className="mx-1">•</span>
           <SentimentIndicator value={call.sentiment} size="sm" />
         </div>
-        
+
         {/* Quick Actions */}
         <div className="flex items-center gap-1">
           <Button
@@ -160,7 +169,7 @@ export function CallCard({ call, isSelected, onSelect, view = "grid" }: CallCard
           >
             <PhoneOff className="h-3.5 w-3.5" />
           </Button>
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -222,9 +231,18 @@ function StatusIndicator({ status, mode }: StatusIndicatorProps) {
       <div className="relative w-status-indicator h-status-indicator">
         <div className="w-full h-full rounded-full bg-ai-green border-status border-ai-green flex items-center justify-center overflow-hidden">
           <div className="flex items-end gap-0.5 h-4">
-            <div className="w-1 bg-white rounded-full animate-sound-wave" style={{ height: '60%' }} />
-            <div className="w-1 bg-white rounded-full animate-sound-wave-delayed" style={{ height: '100%' }} />
-            <div className="w-1 bg-white rounded-full animate-sound-wave" style={{ height: '80%' }} />
+            <div
+              className="w-1 bg-white rounded-full animate-sound-wave"
+              style={{ height: "60%" }}
+            />
+            <div
+              className="w-1 bg-white rounded-full animate-sound-wave-delayed"
+              style={{ height: "100%" }}
+            />
+            <div
+              className="w-1 bg-white rounded-full animate-sound-wave"
+              style={{ height: "80%" }}
+            />
           </div>
         </div>
       </div>
@@ -251,11 +269,13 @@ function SentimentIndicator({ value, size = "md" }: SentimentIndicatorProps) {
   };
 
   return (
-    <span className={cn(
-      "font-medium",
-      getColor(),
-      size === "sm" ? "text-xs" : "text-sm"
-    )}>
+    <span
+      className={cn(
+        "font-medium",
+        getColor(),
+        size === "sm" ? "text-xs" : "text-sm",
+      )}
+    >
       {value}%
     </span>
   );
@@ -266,8 +286,11 @@ interface MiniWaveformProps {
 }
 
 function MiniWaveform({ isActive }: MiniWaveformProps) {
-  const heights = [40, 70, 50, 90, 60, 80, 45, 85, 55, 75, 65, 95, 40, 70, 50, 80, 60, 90, 45, 75];
-  
+  const heights = [
+    40, 70, 50, 90, 60, 80, 45, 85, 55, 75, 65, 95, 40, 70, 50, 80, 60, 90, 45,
+    75,
+  ];
+
   return (
     <div className="flex items-center gap-0.5 h-6">
       {heights.map((height, i) => (
@@ -275,13 +298,13 @@ function MiniWaveform({ isActive }: MiniWaveformProps) {
           key={i}
           className={cn(
             "w-1 rounded-full transition-all duration-300",
-            isActive 
-              ? "bg-ai-green" 
-              : "bg-ai-gray/30"
+            isActive ? "bg-ai-green" : "bg-ai-gray/30",
           )}
           style={{
             height: isActive ? `${height}%` : "20%",
-            transform: isActive ? `scaleY(${0.5 + Math.sin(Date.now() / 200 + i) * 0.5})` : 'scaleY(1)',
+            transform: isActive
+              ? `scaleY(${0.5 + Math.sin(Date.now() / 200 + i) * 0.5})`
+              : "scaleY(1)",
           }}
         />
       ))}

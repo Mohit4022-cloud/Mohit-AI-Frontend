@@ -1,30 +1,30 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { 
-  startOfMonth, 
-  endOfMonth, 
-  startOfWeek, 
-  endOfWeek, 
+import { useState } from "react";
+import {
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
   eachDayOfInterval,
   format,
   isSameMonth,
   isSameDay,
   isToday,
-} from 'date-fns'
-import { CalendarEvent, EVENT_TYPE_COLORS } from '@/types/calendar'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Plus } from 'lucide-react'
+} from "date-fns";
+import { CalendarEvent, EVENT_TYPE_COLORS } from "@/types/calendar";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Plus } from "lucide-react";
 
 interface MonthViewProps {
-  currentDate: Date
-  events: CalendarEvent[]
-  onDateClick: (date: Date) => void
-  onEventClick: (event: CalendarEvent) => void
-  onAddEvent: (date: Date) => void
+  currentDate: Date;
+  events: CalendarEvent[];
+  onDateClick: (date: Date) => void;
+  onEventClick: (event: CalendarEvent) => void;
+  onAddEvent: (date: Date) => void;
 }
 
 export function MonthView({
@@ -34,22 +34,22 @@ export function MonthView({
   onEventClick,
   onAddEvent,
 }: MonthViewProps) {
-  const [hoveredDate, setHoveredDate] = useState<Date | null>(null)
+  const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
 
-  const monthStart = startOfMonth(currentDate)
-  const monthEnd = endOfMonth(currentDate)
-  const calendarStart = startOfWeek(monthStart)
-  const calendarEnd = endOfWeek(monthEnd)
+  const monthStart = startOfMonth(currentDate);
+  const monthEnd = endOfMonth(currentDate);
+  const calendarStart = startOfWeek(monthStart);
+  const calendarEnd = endOfWeek(monthEnd);
 
-  const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd })
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
+  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const getEventsForDate = (date: Date) => {
     return events.filter((event) => {
-      const eventDate = new Date(event.startTime)
-      return isSameDay(eventDate, date)
-    })
-  }
+      const eventDate = new Date(event.startTime);
+      return isSameDay(eventDate, date);
+    });
+  };
 
   return (
     <div className="flex-1">
@@ -68,18 +68,18 @@ export function MonthView({
       {/* Calendar grid */}
       <div className="grid grid-cols-7 gap-px bg-gray-200 dark:bg-gray-700 rounded-b-lg overflow-hidden">
         {days.map((day, dayIdx) => {
-          const dayEvents = getEventsForDate(day)
-          const isCurrentMonth = isSameMonth(day, currentDate)
-          const isHovered = hoveredDate && isSameDay(day, hoveredDate)
+          const dayEvents = getEventsForDate(day);
+          const isCurrentMonth = isSameMonth(day, currentDate);
+          const isHovered = hoveredDate && isSameDay(day, hoveredDate);
 
           return (
             <div
               key={day.toISOString()}
               className={cn(
-                'min-h-[120px] bg-white dark:bg-gray-900 p-2 transition-colors',
-                !isCurrentMonth && 'bg-gray-50 dark:bg-gray-800',
-                isToday(day) && 'bg-blue-50 dark:bg-blue-900/20',
-                isHovered && 'bg-gray-100 dark:bg-gray-800'
+                "min-h-[120px] bg-white dark:bg-gray-900 p-2 transition-colors",
+                !isCurrentMonth && "bg-gray-50 dark:bg-gray-800",
+                isToday(day) && "bg-blue-50 dark:bg-blue-900/20",
+                isHovered && "bg-gray-100 dark:bg-gray-800",
               )}
               onMouseEnter={() => setHoveredDate(day)}
               onMouseLeave={() => setHoveredDate(null)}
@@ -88,13 +88,15 @@ export function MonthView({
                 <button
                   onClick={() => onDateClick(day)}
                   className={cn(
-                    'text-sm font-medium rounded-full w-7 h-7 flex items-center justify-center transition-colors',
-                    isToday(day) && 'bg-blue-600 text-white',
-                    !isToday(day) && isCurrentMonth && 'text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800',
-                    !isCurrentMonth && 'text-gray-400 dark:text-gray-600'
+                    "text-sm font-medium rounded-full w-7 h-7 flex items-center justify-center transition-colors",
+                    isToday(day) && "bg-blue-600 text-white",
+                    !isToday(day) &&
+                      isCurrentMonth &&
+                      "text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800",
+                    !isCurrentMonth && "text-gray-400 dark:text-gray-600",
                   )}
                 >
-                  {format(day, 'd')}
+                  {format(day, "d")}
                 </button>
                 {isHovered && (
                   <Button
@@ -115,12 +117,12 @@ export function MonthView({
                     key={event.id}
                     onClick={() => onEventClick(event)}
                     className={cn(
-                      'w-full text-left px-1 py-0.5 rounded text-xs truncate border',
+                      "w-full text-left px-1 py-0.5 rounded text-xs truncate border",
                       EVENT_TYPE_COLORS[event.type],
-                      'hover:opacity-80 transition-opacity'
+                      "hover:opacity-80 transition-opacity",
                     )}
                   >
-                    {format(new Date(event.startTime), 'HH:mm')} {event.title}
+                    {format(new Date(event.startTime), "HH:mm")} {event.title}
                   </button>
                 ))}
                 {dayEvents.length > 3 && (
@@ -133,9 +135,9 @@ export function MonthView({
                 )}
               </div>
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

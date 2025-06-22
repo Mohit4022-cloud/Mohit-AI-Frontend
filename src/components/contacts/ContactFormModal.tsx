@@ -1,68 +1,80 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useAuthStore } from '@/stores/authStore'
-import { useToast } from '@/hooks/use-toast'
+import { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useAuthStore } from "@/stores/authStore";
+import { useToast } from "@/hooks/use-toast";
 
 interface Contact {
-  id: string
-  firstName: string
-  lastName: string
-  email: string
-  phone?: string | null
-  title?: string | null
-  department?: string | null
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string | null;
+  title?: string | null;
+  department?: string | null;
   company?: {
-    id: string
-    name: string
-  } | null
-  leadStatus: 'NEW' | 'CONTACTED' | 'QUALIFIED' | 'LOST' | 'WON'
-  leadScore: number
+    id: string;
+    name: string;
+  } | null;
+  leadStatus: "NEW" | "CONTACTED" | "QUALIFIED" | "LOST" | "WON";
+  leadScore: number;
   assignedTo?: {
-    id: string
-    name: string
-  } | null
-  tags: string[]
-  linkedin?: string | null
-  twitter?: string | null
+    id: string;
+    name: string;
+  } | null;
+  tags: string[];
+  linkedin?: string | null;
+  twitter?: string | null;
 }
 
 interface ContactFormModalProps {
-  contact: Contact | null
-  isOpen: boolean
-  onClose: () => void
-  onSuccess: () => void
+  contact: Contact | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
 }
 
-export default function ContactFormModal({ 
-  contact, 
-  isOpen, 
-  onClose, 
-  onSuccess 
+export default function ContactFormModal({
+  contact,
+  isOpen,
+  onClose,
+  onSuccess,
 }: ContactFormModalProps) {
-  const { token } = useAuthStore()
-  const { toast } = useToast()
-  const [loading, setLoading] = useState(false)
+  const { token } = useAuthStore();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    title: '',
-    department: '',
-    companyName: '',
-    leadStatus: 'NEW' as 'NEW' | 'CONTACTED' | 'QUALIFIED' | 'LOST' | 'WON',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    title: "",
+    department: "",
+    companyName: "",
+    leadStatus: "NEW" as "NEW" | "CONTACTED" | "QUALIFIED" | "LOST" | "WON",
     leadScore: 50,
-    linkedin: '',
-    twitter: '',
-    tags: '',
-  })
+    linkedin: "",
+    twitter: "",
+    tags: "",
+  });
 
   useEffect(() => {
     if (contact) {
@@ -70,40 +82,40 @@ export default function ContactFormModal({
         firstName: contact.firstName,
         lastName: contact.lastName,
         email: contact.email,
-        phone: contact.phone || '',
-        title: contact.title || '',
-        department: contact.department || '',
-        companyName: contact.company?.name || '',
+        phone: contact.phone || "",
+        title: contact.title || "",
+        department: contact.department || "",
+        companyName: contact.company?.name || "",
         leadStatus: contact.leadStatus,
         leadScore: contact.leadScore,
-        linkedin: contact.linkedin || '',
-        twitter: contact.twitter || '',
-        tags: contact.tags.join(', '),
-      })
+        linkedin: contact.linkedin || "",
+        twitter: contact.twitter || "",
+        tags: contact.tags.join(", "),
+      });
     } else {
       setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        title: '',
-        department: '',
-        companyName: '',
-        leadStatus: 'NEW',
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        title: "",
+        department: "",
+        companyName: "",
+        leadStatus: "NEW",
         leadScore: 50,
-        linkedin: '',
-        twitter: '',
-        tags: '',
-      })
+        linkedin: "",
+        twitter: "",
+        tags: "",
+      });
     }
-  }, [contact])
+  }, [contact]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     try {
-      setLoading(true)
-      
+      setLoading(true);
+
       const payload = {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -115,52 +127,58 @@ export default function ContactFormModal({
         leadScore: formData.leadScore,
         linkedin: formData.linkedin || undefined,
         twitter: formData.twitter || undefined,
-        tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
-      }
-      
-      const url = contact 
+        tags: formData.tags
+          ? formData.tags
+              .split(",")
+              .map((t) => t.trim())
+              .filter(Boolean)
+          : [],
+      };
+
+      const url = contact
         ? `/api/contacts/v2/${contact.id}`
-        : '/api/contacts/v2'
-      
+        : "/api/contacts/v2";
+
       const response = await fetch(url, {
-        method: contact ? 'PUT' : 'POST',
+        method: contact ? "PUT" : "POST",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
-      })
-      
+      });
+
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || 'Failed to save contact')
+        const error = await response.json();
+        throw new Error(error.error || "Failed to save contact");
       }
-      
+
       toast({
-        title: 'Success',
-        description: contact ? 'Contact updated successfully' : 'Contact created successfully',
-      })
-      
-      onSuccess()
+        title: "Success",
+        description: contact
+          ? "Contact updated successfully"
+          : "Contact created successfully",
+      });
+
+      onSuccess();
     } catch (error) {
-      console.error('Error saving contact:', error)
+      console.error("Error saving contact:", error);
       toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to save contact',
-        variant: 'destructive',
-      })
+        title: "Error",
+        description:
+          error instanceof Error ? error.message : "Failed to save contact",
+        variant: "destructive",
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>
-            {contact ? 'Edit Contact' : 'New Contact'}
-          </DialogTitle>
+          <DialogTitle>{contact ? "Edit Contact" : "New Contact"}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
@@ -171,7 +189,9 @@ export default function ContactFormModal({
                 <Input
                   id="firstName"
                   value={formData.firstName}
-                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, firstName: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -180,7 +200,9 @@ export default function ContactFormModal({
                 <Input
                   id="lastName"
                   value={formData.lastName}
-                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, lastName: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -193,7 +215,9 @@ export default function ContactFormModal({
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -203,7 +227,9 @@ export default function ContactFormModal({
                   id="phone"
                   type="tel"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -214,7 +240,9 @@ export default function ContactFormModal({
                 <Input
                   id="title"
                   value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -222,7 +250,9 @@ export default function ContactFormModal({
                 <Input
                   id="department"
                   value={formData.department}
-                  onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, department: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -232,7 +262,9 @@ export default function ContactFormModal({
               <Input
                 id="companyName"
                 value={formData.companyName}
-                onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, companyName: e.target.value })
+                }
                 placeholder="Company name"
               />
             </div>
@@ -240,9 +272,11 @@ export default function ContactFormModal({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="leadStatus">Lead Status</Label>
-                <Select 
-                  value={formData.leadStatus} 
-                  onValueChange={(value: any) => setFormData({ ...formData, leadStatus: value })}
+                <Select
+                  value={formData.leadStatus}
+                  onValueChange={(value: any) =>
+                    setFormData({ ...formData, leadStatus: value })
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -264,7 +298,12 @@ export default function ContactFormModal({
                   min="0"
                   max="100"
                   value={formData.leadScore}
-                  onChange={(e) => setFormData({ ...formData, leadScore: parseInt(e.target.value) || 0 })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      leadScore: parseInt(e.target.value) || 0,
+                    })
+                  }
                 />
               </div>
             </div>
@@ -276,7 +315,9 @@ export default function ContactFormModal({
                   id="linkedin"
                   type="url"
                   value={formData.linkedin}
-                  onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, linkedin: e.target.value })
+                  }
                   placeholder="https://linkedin.com/in/..."
                 />
               </div>
@@ -285,7 +326,9 @@ export default function ContactFormModal({
                 <Input
                   id="twitter"
                   value={formData.twitter}
-                  onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, twitter: e.target.value })
+                  }
                   placeholder="@username"
                 />
               </div>
@@ -296,7 +339,9 @@ export default function ContactFormModal({
               <Input
                 id="tags"
                 value={formData.tags}
-                onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, tags: e.target.value })
+                }
                 placeholder="e.g. hot lead, enterprise, decision maker"
               />
             </div>
@@ -307,11 +352,11 @@ export default function ContactFormModal({
               Cancel
             </Button>
             <Button type="submit" disabled={loading}>
-              {loading ? 'Saving...' : (contact ? 'Update' : 'Create')}
+              {loading ? "Saving..." : contact ? "Update" : "Create"}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

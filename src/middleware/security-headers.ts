@@ -1,38 +1,38 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * Security headers configuration
  */
 export const securityHeaders = {
   // Prevent XSS attacks
-  'X-XSS-Protection': '1; mode=block',
-  
+  "X-XSS-Protection": "1; mode=block",
+
   // Prevent clickjacking
-  'X-Frame-Options': 'DENY',
-  
+  "X-Frame-Options": "DENY",
+
   // Prevent MIME type sniffing
-  'X-Content-Type-Options': 'nosniff',
-  
+  "X-Content-Type-Options": "nosniff",
+
   // Control referrer information
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+
   // Permissions Policy (formerly Feature Policy)
-  'Permissions-Policy': [
-    'camera=()',
-    'microphone=()',
-    'geolocation=()',
-    'payment=()',
-    'usb=()',
-    'magnetometer=()',
-    'accelerometer=()',
-    'gyroscope=()'
-  ].join(', '),
-  
+  "Permissions-Policy": [
+    "camera=()",
+    "microphone=()",
+    "geolocation=()",
+    "payment=()",
+    "usb=()",
+    "magnetometer=()",
+    "accelerometer=()",
+    "gyroscope=()",
+  ].join(", "),
+
   // Strict Transport Security
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-  
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+
   // Content Security Policy
-  'Content-Security-Policy': [
+  "Content-Security-Policy": [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
@@ -47,8 +47,8 @@ export const securityHeaders = {
     "form-action 'self'",
     "manifest-src 'self'",
     "worker-src 'self' blob:",
-    "upgrade-insecure-requests"
-  ].join('; ')
+    "upgrade-insecure-requests",
+  ].join("; "),
 };
 
 /**
@@ -59,11 +59,11 @@ export function applySecurityHeaders(response: NextResponse): NextResponse {
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
-  
+
   // Remove potentially sensitive headers
-  response.headers.delete('X-Powered-By');
-  response.headers.delete('Server');
-  
+  response.headers.delete("X-Powered-By");
+  response.headers.delete("Server");
+
   return response;
 }
 
@@ -80,60 +80,70 @@ export interface CorsOptions {
 }
 
 const defaultCorsOptions: CorsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? (process.env.ALLOWED_ORIGINS?.split(',') || ['https://yourdomain.com'])
-    : ['http://localhost:3000', 'http://localhost:3001'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  exposedHeaders: ['X-Total-Count', 'X-Page', 'X-Per-Page'],
+  origin:
+    process.env.NODE_ENV === "production"
+      ? process.env.ALLOWED_ORIGINS?.split(",") || ["https://yourdomain.com"]
+      : ["http://localhost:3000", "http://localhost:3001"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  exposedHeaders: ["X-Total-Count", "X-Page", "X-Per-Page"],
   credentials: true,
-  maxAge: 86400 // 24 hours
+  maxAge: 86400, // 24 hours
 };
 
 /**
  * Apply CORS headers
  */
 export function applyCorsHeaders(
-  request: NextRequest, 
+  request: NextRequest,
   response: NextResponse,
-  options: CorsOptions = defaultCorsOptions
+  options: CorsOptions = defaultCorsOptions,
 ): NextResponse {
-  const origin = request.headers.get('origin') || '';
-  
+  const origin = request.headers.get("origin") || "";
+
   // Check if origin is allowed
   let isAllowed = false;
-  if (typeof options.origin === 'string') {
-    isAllowed = options.origin === origin || options.origin === '*';
+  if (typeof options.origin === "string") {
+    isAllowed = options.origin === origin || options.origin === "*";
   } else if (Array.isArray(options.origin)) {
     isAllowed = options.origin.includes(origin);
-  } else if (typeof options.origin === 'function') {
+  } else if (typeof options.origin === "function") {
     isAllowed = options.origin(origin);
   }
-  
-  if (isAllowed || options.origin === '*') {
-    response.headers.set('Access-Control-Allow-Origin', origin || '*');
+
+  if (isAllowed || options.origin === "*") {
+    response.headers.set("Access-Control-Allow-Origin", origin || "*");
   }
-  
+
   if (options.credentials) {
-    response.headers.set('Access-Control-Allow-Credentials', 'true');
+    response.headers.set("Access-Control-Allow-Credentials", "true");
   }
-  
+
   if (options.methods && options.methods.length > 0) {
-    response.headers.set('Access-Control-Allow-Methods', options.methods.join(', '));
+    response.headers.set(
+      "Access-Control-Allow-Methods",
+      options.methods.join(", "),
+    );
   }
-  
+
   if (options.allowedHeaders && options.allowedHeaders.length > 0) {
-    response.headers.set('Access-Control-Allow-Headers', options.allowedHeaders.join(', '));
+    response.headers.set(
+      "Access-Control-Allow-Headers",
+      options.allowedHeaders.join(", "),
+    );
   }
-  
+
   if (options.exposedHeaders && options.exposedHeaders.length > 0) {
-    response.headers.set('Access-Control-Expose-Headers', options.exposedHeaders.join(', '));
+    response.headers.set(
+      "Access-Control-Expose-Headers",
+      options.exposedHeaders.join(", "),
+    );
   }
-  
+
   if (options.maxAge) {
-    response.headers.set('Access-Control-Max-Age', options.maxAge.toString());
+    response.headers.set("Access-Control-Max-Age", options.maxAge.toString());
   }
-  
+
   return response;
 }
 
@@ -141,7 +151,7 @@ export function applyCorsHeaders(
  * Handle preflight requests
  */
 export function handlePreflight(request: NextRequest): NextResponse | null {
-  if (request.method === 'OPTIONS') {
+  if (request.method === "OPTIONS") {
     const response = new NextResponse(null, { status: 204 });
     return applyCorsHeaders(request, response);
   }
@@ -153,22 +163,22 @@ export function handlePreflight(request: NextRequest): NextResponse | null {
  */
 export async function securityMiddleware(
   request: NextRequest,
-  handler: () => Promise<NextResponse>
+  handler: () => Promise<NextResponse>,
 ): Promise<NextResponse> {
   // Handle preflight requests
   const preflightResponse = handlePreflight(request);
   if (preflightResponse) {
     return preflightResponse;
   }
-  
+
   // Process the request
   const response = await handler();
-  
+
   // Apply security headers
   applySecurityHeaders(response);
-  
+
   // Apply CORS headers
   applyCorsHeaders(request, response);
-  
+
   return response;
 }

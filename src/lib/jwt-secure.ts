@@ -1,6 +1,6 @@
-import * as jwt from 'jsonwebtoken';
-import { z } from 'zod';
-import { getServerEnv, getClientEnv } from './env.validation';
+import * as jwt from "jsonwebtoken";
+import { z } from "zod";
+import { getServerEnv, getClientEnv } from "./env.validation";
 
 // Token payload schema
 const tokenPayloadSchema = z.object({
@@ -27,17 +27,17 @@ interface JWTPayload extends TokenPayload {
 export function generateAccessToken(payload: TokenPayload): string {
   const env = getServerEnv();
   const clientEnv = getClientEnv();
-  
+
   const jwtPayload: JWTPayload = {
     ...payload,
     sub: payload.userId,
-    iss: clientEnv.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
-    aud: 'mohit-ai-sdr-api',
+    iss: clientEnv.NEXT_PUBLIC_APP_URL || "mohit-ai-sdr",
+    aud: "mohit-ai-sdr-api",
   };
-  
+
   return jwt.sign(jwtPayload, env.JWT_SECRET, {
     expiresIn: env.JWT_EXPIRES_IN,
-    algorithm: 'HS256',
+    algorithm: "HS256",
   } as jwt.SignOptions);
 }
 
@@ -47,17 +47,17 @@ export function generateAccessToken(payload: TokenPayload): string {
 export function generateRefreshToken(payload: TokenPayload): string {
   const env = getServerEnv();
   const clientEnv = getClientEnv();
-  
+
   const jwtPayload: JWTPayload = {
     ...payload,
     sub: payload.userId,
-    iss: clientEnv.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
-    aud: 'mohit-ai-sdr-refresh',
+    iss: clientEnv.NEXT_PUBLIC_APP_URL || "mohit-ai-sdr",
+    aud: "mohit-ai-sdr-refresh",
   };
-  
+
   return jwt.sign(jwtPayload, env.JWT_REFRESH_SECRET, {
     expiresIn: env.JWT_REFRESH_EXPIRES_IN,
-    algorithm: 'HS256',
+    algorithm: "HS256",
   } as jwt.SignOptions);
 }
 
@@ -67,14 +67,14 @@ export function generateRefreshToken(payload: TokenPayload): string {
 export async function verifyAccessToken(token: string): Promise<TokenPayload> {
   const env = getServerEnv();
   const clientEnv = getClientEnv();
-  
+
   try {
     const decoded = jwt.verify(token, env.JWT_SECRET, {
-      algorithms: ['HS256'],
-      issuer: clientEnv.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
-      audience: 'mohit-ai-sdr-api',
+      algorithms: ["HS256"],
+      issuer: clientEnv.NEXT_PUBLIC_APP_URL || "mohit-ai-sdr",
+      audience: "mohit-ai-sdr-api",
     }) as JWTPayload;
-    
+
     // Validate payload structure
     const validated = tokenPayloadSchema.parse({
       userId: decoded.userId,
@@ -82,14 +82,14 @@ export async function verifyAccessToken(token: string): Promise<TokenPayload> {
       role: decoded.role,
       organizationId: decoded.organizationId,
     });
-    
+
     return validated;
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      throw new Error('Token expired');
+      throw new Error("Token expired");
     }
     if (error instanceof jwt.JsonWebTokenError) {
-      throw new Error('Invalid token');
+      throw new Error("Invalid token");
     }
     throw error;
   }
@@ -101,14 +101,14 @@ export async function verifyAccessToken(token: string): Promise<TokenPayload> {
 export async function verifyRefreshToken(token: string): Promise<TokenPayload> {
   const env = getServerEnv();
   const clientEnv = getClientEnv();
-  
+
   try {
     const decoded = jwt.verify(token, env.JWT_REFRESH_SECRET, {
-      algorithms: ['HS256'],
-      issuer: clientEnv.NEXT_PUBLIC_APP_URL || 'mohit-ai-sdr',
-      audience: 'mohit-ai-sdr-refresh',
+      algorithms: ["HS256"],
+      issuer: clientEnv.NEXT_PUBLIC_APP_URL || "mohit-ai-sdr",
+      audience: "mohit-ai-sdr-refresh",
     }) as JWTPayload;
-    
+
     // Validate payload structure
     const validated = tokenPayloadSchema.parse({
       userId: decoded.userId,
@@ -116,14 +116,14 @@ export async function verifyRefreshToken(token: string): Promise<TokenPayload> {
       role: decoded.role,
       organizationId: decoded.organizationId,
     });
-    
+
     return validated;
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      throw new Error('Refresh token expired');
+      throw new Error("Refresh token expired");
     }
     if (error instanceof jwt.JsonWebTokenError) {
-      throw new Error('Invalid refresh token');
+      throw new Error("Invalid refresh token");
     }
     throw error;
   }
@@ -136,7 +136,7 @@ export function decodeToken(token: string): TokenPayload | null {
   try {
     const decoded = jwt.decode(token) as JWTPayload;
     if (!decoded) return null;
-    
+
     return {
       userId: decoded.userId,
       email: decoded.email,
@@ -155,7 +155,7 @@ export function isTokenExpired(token: string): boolean {
   try {
     const decoded = jwt.decode(token) as JWTPayload;
     if (!decoded || !decoded.exp) return true;
-    
+
     return decoded.exp * 1000 < Date.now();
   } catch {
     return true;
@@ -169,7 +169,7 @@ export function getTokenExpiration(token: string): Date | null {
   try {
     const decoded = jwt.decode(token) as JWTPayload;
     if (!decoded || !decoded.exp) return null;
-    
+
     return new Date(decoded.exp * 1000);
   } catch {
     return null;
@@ -181,11 +181,11 @@ export function getTokenExpiration(token: string): Date | null {
  */
 export function generateCSRFToken(): string {
   const env = getServerEnv();
-  
+
   return jwt.sign(
     { csrf: true, timestamp: Date.now() },
     env.SESSION_SECRET || env.JWT_SECRET,
-    { expiresIn: '1h', algorithm: 'HS256' }
+    { expiresIn: "1h", algorithm: "HS256" },
   );
 }
 
@@ -194,10 +194,10 @@ export function generateCSRFToken(): string {
  */
 export function verifyCSRFToken(token: string): boolean {
   const env = getServerEnv();
-  
+
   try {
     jwt.verify(token, env.SESSION_SECRET || env.JWT_SECRET, {
-      algorithms: ['HS256'],
+      algorithms: ["HS256"],
     });
     return true;
   } catch {

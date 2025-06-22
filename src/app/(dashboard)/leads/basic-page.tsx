@@ -4,17 +4,43 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 import { Plus, Phone, Mail, Building, User } from "lucide-react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 interface Lead {
   id: string;
@@ -42,21 +68,21 @@ export default function LeadsPage() {
   const [loading, setLoading] = useState(true);
   const [isAddingLead, setIsAddingLead] = useState(false);
   const [newLead, setNewLead] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    company: '',
-    jobTitle: '',
-    source: 'Website',
-    status: 'NEW',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    company: "",
+    jobTitle: "",
+    source: "Website",
+    status: "NEW",
     score: 50,
     qualificationData: {
-      notes: '',
-      budget: '',
-      timeline: '',
-      interest: 'Medium'
-    }
+      notes: "",
+      budget: "",
+      timeline: "",
+      interest: "Medium",
+    },
   });
 
   useEffect(() => {
@@ -67,11 +93,11 @@ export default function LeadsPage() {
   const fetchLeads = async () => {
     try {
       const response = await axios.get(`${API_URL}/leads`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setLeads(response.data.leads || []);
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      console.error("Error fetching leads:", error);
     } finally {
       setLoading(false);
     }
@@ -81,32 +107,32 @@ export default function LeadsPage() {
     setIsAddingLead(true);
     try {
       await axios.post(`${API_URL}/leads`, newLead, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       // Reset form
       setNewLead({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        company: '',
-        jobTitle: '',
-        source: 'Website',
-        status: 'NEW',
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        company: "",
+        jobTitle: "",
+        source: "Website",
+        status: "NEW",
         score: 50,
         qualificationData: {
-          notes: '',
-          budget: '',
-          timeline: '',
-          interest: 'Medium'
-        }
+          notes: "",
+          budget: "",
+          timeline: "",
+          interest: "Medium",
+        },
       });
-      
+
       // Refresh leads
       await fetchLeads();
     } catch (error) {
-      console.error('Error creating lead:', error);
+      console.error("Error creating lead:", error);
     } finally {
       setIsAddingLead(false);
     }
@@ -114,21 +140,21 @@ export default function LeadsPage() {
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
-      NEW: 'bg-blue-500',
-      CONTACTED: 'bg-yellow-500',
-      QUALIFIED: 'bg-green-500',
-      UNQUALIFIED: 'bg-gray-500',
-      OPPORTUNITY: 'bg-purple-500',
-      CUSTOMER: 'bg-emerald-500',
-      LOST: 'bg-red-500'
+      NEW: "bg-blue-500",
+      CONTACTED: "bg-yellow-500",
+      QUALIFIED: "bg-green-500",
+      UNQUALIFIED: "bg-gray-500",
+      OPPORTUNITY: "bg-purple-500",
+      CUSTOMER: "bg-emerald-500",
+      LOST: "bg-red-500",
     };
-    return colors[status] || 'bg-gray-500';
+    return colors[status] || "bg-gray-500";
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 60) return 'text-yellow-600';
-    return 'text-red-600';
+    if (score >= 80) return "text-green-600";
+    if (score >= 60) return "text-yellow-600";
+    return "text-red-600";
   };
 
   return (
@@ -138,7 +164,7 @@ export default function LeadsPage() {
           <h1 className="text-3xl font-bold">Leads</h1>
           <p className="text-muted-foreground">Manage your inbound leads</p>
         </div>
-        
+
         <Dialog>
           <DialogTrigger asChild>
             <Button>
@@ -149,11 +175,9 @@ export default function LeadsPage() {
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Add New Lead</DialogTitle>
-              <DialogDescription>
-                Create a new lead manually
-              </DialogDescription>
+              <DialogDescription>Create a new lead manually</DialogDescription>
             </DialogHeader>
-            
+
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -161,7 +185,9 @@ export default function LeadsPage() {
                   <Input
                     id="firstName"
                     value={newLead.firstName}
-                    onChange={(e) => setNewLead({...newLead, firstName: e.target.value})}
+                    onChange={(e) =>
+                      setNewLead({ ...newLead, firstName: e.target.value })
+                    }
                   />
                 </div>
                 <div>
@@ -169,69 +195,91 @@ export default function LeadsPage() {
                   <Input
                     id="lastName"
                     value={newLead.lastName}
-                    onChange={(e) => setNewLead({...newLead, lastName: e.target.value})}
+                    onChange={(e) =>
+                      setNewLead({ ...newLead, lastName: e.target.value })
+                    }
                   />
                 </div>
               </div>
-              
+
               <div>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   value={newLead.email}
-                  onChange={(e) => setNewLead({...newLead, email: e.target.value})}
+                  onChange={(e) =>
+                    setNewLead({ ...newLead, email: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="phone">Phone</Label>
                 <Input
                   id="phone"
                   value={newLead.phone}
-                  onChange={(e) => setNewLead({...newLead, phone: e.target.value})}
+                  onChange={(e) =>
+                    setNewLead({ ...newLead, phone: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="company">Company</Label>
                 <Input
                   id="company"
                   value={newLead.company}
-                  onChange={(e) => setNewLead({...newLead, company: e.target.value})}
+                  onChange={(e) =>
+                    setNewLead({ ...newLead, company: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="jobTitle">Job Title</Label>
                 <Input
                   id="jobTitle"
                   value={newLead.jobTitle}
-                  onChange={(e) => setNewLead({...newLead, jobTitle: e.target.value})}
+                  onChange={(e) =>
+                    setNewLead({ ...newLead, jobTitle: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="source">Source</Label>
-                  <Select value={newLead.source} onValueChange={(value) => setNewLead({...newLead, source: value})}>
+                  <Select
+                    value={newLead.source}
+                    onValueChange={(value) =>
+                      setNewLead({ ...newLead, source: value })
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="Website">Website</SelectItem>
                       <SelectItem value="LinkedIn">LinkedIn</SelectItem>
-                      <SelectItem value="Email Campaign">Email Campaign</SelectItem>
+                      <SelectItem value="Email Campaign">
+                        Email Campaign
+                      </SelectItem>
                       <SelectItem value="Webinar">Webinar</SelectItem>
                       <SelectItem value="Referral">Referral</SelectItem>
                       <SelectItem value="Trade Show">Trade Show</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div>
                   <Label htmlFor="status">Status</Label>
-                  <Select value={newLead.status} onValueChange={(value) => setNewLead({...newLead, status: value})}>
+                  <Select
+                    value={newLead.status}
+                    onValueChange={(value) =>
+                      setNewLead({ ...newLead, status: value })
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -247,7 +295,7 @@ export default function LeadsPage() {
                   </Select>
                 </div>
               </div>
-              
+
               <div>
                 <Label htmlFor="score">Lead Score: {newLead.score}</Label>
                 <Input
@@ -256,33 +304,45 @@ export default function LeadsPage() {
                   min="0"
                   max="100"
                   value={newLead.score}
-                  onChange={(e) => setNewLead({...newLead, score: parseInt(e.target.value)})}
+                  onChange={(e) =>
+                    setNewLead({ ...newLead, score: parseInt(e.target.value) })
+                  }
                   className="w-full"
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="notes">Notes</Label>
                 <Textarea
                   id="notes"
                   value={newLead.qualificationData.notes}
-                  onChange={(e) => setNewLead({
-                    ...newLead, 
-                    qualificationData: {...newLead.qualificationData, notes: e.target.value}
-                  })}
+                  onChange={(e) =>
+                    setNewLead({
+                      ...newLead,
+                      qualificationData: {
+                        ...newLead.qualificationData,
+                        notes: e.target.value,
+                      },
+                    })
+                  }
                   rows={3}
                 />
               </div>
-              
+
               <div className="grid grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="budget">Budget</Label>
-                  <Select 
-                    value={newLead.qualificationData.budget} 
-                    onValueChange={(value) => setNewLead({
-                      ...newLead,
-                      qualificationData: {...newLead.qualificationData, budget: value}
-                    })}
+                  <Select
+                    value={newLead.qualificationData.budget}
+                    onValueChange={(value) =>
+                      setNewLead({
+                        ...newLead,
+                        qualificationData: {
+                          ...newLead.qualificationData,
+                          budget: value,
+                        },
+                      })
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select budget" />
@@ -295,15 +355,20 @@ export default function LeadsPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div>
                   <Label htmlFor="timeline">Timeline</Label>
-                  <Select 
-                    value={newLead.qualificationData.timeline} 
-                    onValueChange={(value) => setNewLead({
-                      ...newLead,
-                      qualificationData: {...newLead.qualificationData, timeline: value}
-                    })}
+                  <Select
+                    value={newLead.qualificationData.timeline}
+                    onValueChange={(value) =>
+                      setNewLead({
+                        ...newLead,
+                        qualificationData: {
+                          ...newLead.qualificationData,
+                          timeline: value,
+                        },
+                      })
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select timeline" />
@@ -316,15 +381,20 @@ export default function LeadsPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div>
                   <Label htmlFor="interest">Interest Level</Label>
-                  <Select 
-                    value={newLead.qualificationData.interest} 
-                    onValueChange={(value) => setNewLead({
-                      ...newLead,
-                      qualificationData: {...newLead.qualificationData, interest: value}
-                    })}
+                  <Select
+                    value={newLead.qualificationData.interest}
+                    onValueChange={(value) =>
+                      setNewLead({
+                        ...newLead,
+                        qualificationData: {
+                          ...newLead.qualificationData,
+                          interest: value,
+                        },
+                      })
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -337,9 +407,9 @@ export default function LeadsPage() {
                   </Select>
                 </div>
               </div>
-              
+
               <Button onClick={handleCreateLead} disabled={isAddingLead}>
-                {isAddingLead ? 'Creating...' : 'Create Lead'}
+                {isAddingLead ? "Creating..." : "Create Lead"}
               </Button>
             </div>
           </DialogContent>
@@ -358,8 +428,19 @@ export default function LeadsPage() {
             <div className="text-center py-8">Loading leads...</div>
           ) : leads.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-muted-foreground mb-4">No leads yet. Add your first lead to get started!</p>
-              <Button variant="outline" onClick={() => (document.querySelector('[data-dialog-trigger]') as HTMLElement)?.click()}>
+              <p className="text-muted-foreground mb-4">
+                No leads yet. Add your first lead to get started!
+              </p>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  (
+                    document.querySelector(
+                      "[data-dialog-trigger]",
+                    ) as HTMLElement
+                  )?.click()
+                }
+              >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Your First Lead
               </Button>
@@ -422,7 +503,9 @@ export default function LeadsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <span className={`font-semibold ${getScoreColor(lead.score)}`}>
+                      <span
+                        className={`font-semibold ${getScoreColor(lead.score)}`}
+                      >
                         {lead.score}
                       </span>
                     </TableCell>

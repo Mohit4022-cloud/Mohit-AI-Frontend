@@ -4,9 +4,16 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  TrendingUp, Shield, DollarSign, MapPin, Lightbulb, 
-  AlertCircle, ChevronRight, X, Sparkles
+import {
+  TrendingUp,
+  Shield,
+  DollarSign,
+  MapPin,
+  Lightbulb,
+  AlertCircle,
+  ChevronRight,
+  X,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAICallStore } from "@/stores/aiCallStore";
@@ -40,7 +47,7 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
     // Simulate keyword detection from transcript
     const transcript = transcripts.get(callId) || [];
     const lastEntries = transcript.slice(-5);
-    const keywords = lastEntries.map(e => e.text.toLowerCase()).join(" ");
+    const keywords = lastEntries.map((e) => e.text.toLowerCase()).join(" ");
 
     const newCards: ContentCard[] = [];
 
@@ -58,17 +65,21 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
           "We offer 30% better AI accuracy",
           "No per-seat pricing like SalesLoft",
           "24/7 support vs business hours only",
-          "Native CRM integration"
+          "Native CRM integration",
         ],
         action: {
           label: "View Full Comparison",
-          onClick: () => console.log("Show battlecard")
-        }
+          onClick: () => console.log("Show battlecard"),
+        },
       });
     }
 
     // Pricing Guideline Card
-    if (keywords.includes("price") || keywords.includes("cost") || keywords.includes("expensive")) {
+    if (
+      keywords.includes("price") ||
+      keywords.includes("cost") ||
+      keywords.includes("expensive")
+    ) {
       newCards.push({
         id: "pricing-1",
         type: "pricing",
@@ -81,17 +92,21 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
           "10% discount for annual commitment",
           "20% discount for 2+ years",
           "Volume pricing: 50+ seats",
-          "Approved to offer payment terms"
+          "Approved to offer payment terms",
         ],
         action: {
           label: "Calculate Custom Price",
-          onClick: () => console.log("Open pricing calculator")
-        }
+          onClick: () => console.log("Open pricing calculator"),
+        },
       });
     }
 
     // Local Presence (Apollo style)
-    if (keywords.includes("local") || keywords.includes("area") || keywords.includes("region")) {
+    if (
+      keywords.includes("local") ||
+      keywords.includes("area") ||
+      keywords.includes("region")
+    ) {
       newCards.push({
         id: "local-1",
         type: "local",
@@ -103,13 +118,17 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
         details: [
           "415 area code matches lead location",
           "3 customers in 10 mile radius",
-          "Local office: 123 Market St"
-        ]
+          "Local office: 123 Market St",
+        ],
       });
     }
 
     // Objection Insight
-    if (keywords.includes("budget") || keywords.includes("timing") || keywords.includes("think about")) {
+    if (
+      keywords.includes("budget") ||
+      keywords.includes("timing") ||
+      keywords.includes("think about")
+    ) {
       newCards.push({
         id: "objection-1",
         type: "objection",
@@ -121,12 +140,12 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
         details: [
           "80% success with ROI focus",
           "Offer pilot program option",
-          "Share case study: Similar company saved $50k"
+          "Share case study: Similar company saved $50k",
         ],
         action: {
           label: "Use Recommended Response",
-          onClick: () => console.log("Insert response")
-        }
+          onClick: () => console.log("Insert response"),
+        },
       });
     }
 
@@ -143,17 +162,17 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
         details: [
           "Asked 3+ qualifying questions",
           "Positive sentiment trending up",
-          "Mentioned timeline: Q2 2024"
-        ]
+          "Mentioned timeline: Q2 2024",
+        ],
       });
     }
 
     // Filter out dismissed cards
-    setCards(newCards.filter(card => !dismissedCards.has(card.id)));
+    setCards(newCards.filter((card) => !dismissedCards.has(card.id)));
   }, [callId, transcripts, dismissedCards]);
 
   const dismissCard = (cardId: string) => {
-    setDismissedCards(prev => new Set(prev).add(cardId));
+    setDismissedCards((prev) => new Set(prev).add(cardId));
   };
 
   const getPriorityColor = (priority: string) => {
@@ -189,7 +208,7 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
             key={card.id}
             className={cn(
               "relative overflow-hidden transition-all hover:shadow-md",
-              getPriorityColor(card.priority)
+              getPriorityColor(card.priority),
             )}
           >
             <button
@@ -201,10 +220,7 @@ export function ContentCards({ callId, className }: ContentCardsProps) {
 
             <CardHeader className="pb-3">
               <div className="flex items-start gap-3">
-                <div className={cn(
-                  "p-2 rounded-lg bg-white/50",
-                  card.color
-                )}>
+                <div className={cn("p-2 rounded-lg bg-white/50", card.color)}>
                   <card.icon className="h-4 w-4" />
                 </div>
                 <div className="flex-1">

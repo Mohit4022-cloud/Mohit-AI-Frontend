@@ -1,6 +1,6 @@
 export interface TranscriptSegment {
   id: string;
-  speaker: 'AI' | 'LEAD' | 'HUMAN';
+  speaker: "AI" | "LEAD" | "HUMAN";
   text: string;
   timestamp: string;
   confidence?: number;
@@ -15,7 +15,7 @@ export interface Transcript {
 }
 
 export interface TranscriptAnalysis {
-  sentiment: 'positive' | 'neutral' | 'negative';
+  sentiment: "positive" | "neutral" | "negative";
   keyTopics: string[];
   actionItems: string[];
   summary: string;

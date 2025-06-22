@@ -9,11 +9,11 @@ interface CallGridProps {
   view?: "grid" | "list";
 }
 
-export function CallGrid({ 
-  calls, 
-  selectedCallId, 
-  onSelectCall, 
-  view = "grid" 
+export function CallGrid({
+  calls,
+  selectedCallId,
+  onSelectCall,
+  view = "grid",
 }: CallGridProps) {
   if (calls.length === 0) {
     return (
@@ -33,7 +33,8 @@ export function CallGrid({
         </div>
         <h3 className="text-lg font-medium mb-1">No Active Calls</h3>
         <p className="text-sm text-muted-foreground max-w-sm">
-          Start a new AI call from the leads page or wait for scheduled calls to begin.
+          Start a new AI call from the leads page or wait for scheduled calls to
+          begin.
         </p>
       </div>
     );
@@ -56,11 +57,13 @@ export function CallGrid({
   }
 
   return (
-    <div className={cn(
-      "grid gap-4",
-      "grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3",
-      "auto-rows-max"
-    )}>
+    <div
+      className={cn(
+        "grid gap-4",
+        "grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3",
+        "auto-rows-max",
+      )}
+    >
       {calls.map((call) => (
         <CallCard
           key={call.id}

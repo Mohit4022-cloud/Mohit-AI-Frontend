@@ -11,15 +11,16 @@ import { useRouter } from "next/navigation";
 
 export default function ActiveCallsPage() {
   const router = useRouter();
-  const { activeCalls, selectedCallId, selectCall, loadActiveCalls } = useAICallStore();
-  
+  const { activeCalls, selectedCallId, selectCall, loadActiveCalls } =
+    useAICallStore();
+
   useEffect(() => {
     loadActiveCalls();
     const interval = setInterval(loadActiveCalls, 5000);
     return () => clearInterval(interval);
   }, [loadActiveCalls]);
 
-  const selectedCall = activeCalls.find(call => call.id === selectedCallId);
+  const selectedCall = activeCalls.find((call) => call.id === selectedCallId);
 
   return (
     <div className="flex flex-col h-full p-4 lg:p-6">
@@ -48,12 +49,12 @@ export default function ActiveCallsPage() {
             view="list"
           />
         </div>
-        
+
         {selectedCall && (
           <div className="space-y-4">
             <CallControls callId={selectedCall.id} />
-            <TranscriptPanel 
-              callId={selectedCall.id} 
+            <TranscriptPanel
+              callId={selectedCall.id}
               onClose={() => selectCall(null)}
             />
           </div>

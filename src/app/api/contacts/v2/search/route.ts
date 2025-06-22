@@ -1,47 +1,47 @@
 /**
  * Contact Search API
- * 
+ *
  * Advanced search with full-text search capabilities
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { verifyToken } from '@/lib/jwt';
-import { Prisma } from '@prisma/client';
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { verifyToken } from "@/lib/jwt";
+import { Prisma } from "@prisma/client";
 
 /**
  * GET /api/contacts/v2/search
- * 
+ *
  * Full-text search across contacts
  */
 export async function GET(request: NextRequest) {
   try {
     // Verify authentication
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const token = authHeader.substring(7);
     const payload = verifyToken(token);
     if (!payload) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     const searchParams = request.nextUrl.searchParams;
-    const query = searchParams.get('q') || '';
-    const limit = Math.min(50, parseInt(searchParams.get('limit') || '10'));
+    const query = searchParams.get("q") || "";
+    const limit = Math.min(50, parseInt(searchParams.get("limit") || "10"));
 
     if (!query || query.length < 2) {
       return NextResponse.json(
-        { error: 'Query must be at least 2 characters' },
-        { status: 400 }
+        { error: "Query must be at least 2 characters" },
+        { status: 400 },
       );
     }
 
     // Perform search using PostgreSQL full-text search
-    const searchQuery = query.split(' ').join(' & ');
-    
+    const searchQuery = query.split(" ").join(" & ");
+
     const contacts = await prisma.$queryRaw<any[]>`
       SELECT 
         c.id,
@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
     `;
 
     // Get assignees for the results
-    const contactIds = contacts.map(c => c.id);
+    const contactIds = contacts.map((c) => c.id);
     const assignees = await prisma.contact.findMany({
       where: { id: { in: contactIds } },
       select: {
@@ -97,10 +97,10 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const assigneeMap = new Map(assignees.map(a => [a.id, a.assignedTo]));
+    const assigneeMap = new Map(assignees.map((a) => [a.id, a.assignedTo]));
 
     // Format results
-    const results = contacts.map(contact => ({
+    const results = contacts.map((contact) => ({
       ...contact,
       assignedTo: assigneeMap.get(contact.id),
     }));
@@ -111,35 +111,36 @@ export async function GET(request: NextRequest) {
       count: results.length,
     });
   } catch (error) {
-    console.error('Error searching contacts:', error);
-    return NextResponse.json(
-      { error: 'Search failed' },
-      { status: 500 }
-    );
+    console.error("Error searching contacts:", error);
+    return NextResponse.json({ error: "Search failed" }, { status: 500 });
   }
 }
 
 /**
  * POST /api/contacts/v2/search
- * 
+ *
  * Advanced search with complex filters
  */
 export async function POST(request: NextRequest) {
   try {
     // Verify authentication
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const token = authHeader.substring(7);
     const payload = verifyToken(token);
     if (!payload) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     const body = await request.json();
-    const { filters = {}, sort = { field: 'createdAt', order: 'desc' }, pagination = { page: 1, limit: 25 } } = body;
+    const {
+      filters = {},
+      sort = { field: "createdAt", order: "desc" },
+      pagination = { page: 1, limit: 25 },
+    } = body;
 
     // Build complex where clause
     const where: Prisma.ContactWhereInput = {
@@ -149,11 +150,11 @@ export async function POST(request: NextRequest) {
     // Add all filter conditions
     if (filters.query) {
       where.OR = [
-        { firstName: { contains: filters.query, mode: 'insensitive' } },
-        { lastName: { contains: filters.query, mode: 'insensitive' } },
-        { email: { contains: filters.query, mode: 'insensitive' } },
-        { phone: { contains: filters.query, mode: 'insensitive' } },
-        { title: { contains: filters.query, mode: 'insensitive' } },
+        { firstName: { contains: filters.query, mode: "insensitive" } },
+        { lastName: { contains: filters.query, mode: "insensitive" } },
+        { email: { contains: filters.query, mode: "insensitive" } },
+        { phone: { contains: filters.query, mode: "insensitive" } },
+        { title: { contains: filters.query, mode: "insensitive" } },
       ];
     }
 
@@ -177,7 +178,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (filters.tags && filters.tags.length > 0) {
-      if (filters.tagOperator === 'all') {
+      if (filters.tagOperator === "all") {
         where.tags = { hasEvery: filters.tags };
       } else {
         where.tags = { hasSome: filters.tags };
@@ -250,10 +251,7 @@ export async function POST(request: NextRequest) {
       appliedFilters: filters,
     });
   } catch (error) {
-    console.error('Error in advanced search:', error);
-    return NextResponse.json(
-      { error: 'Search failed' },
-      { status: 500 }
-    );
+    console.error("Error in advanced search:", error);
+    return NextResponse.json({ error: "Search failed" }, { status: 500 });
   }
 }

@@ -82,12 +82,8 @@ function MetricCard({
           </div>
           {trend && (
             <div className="flex items-center gap-1 text-xs">
-              {trend === "up" && (
-                <span className="text-ai-green">↑ +5%</span>
-              )}
-              {trend === "down" && (
-                <span className="text-ai-red">↓ -3%</span>
-              )}
+              {trend === "up" && <span className="text-ai-green">↑ +5%</span>}
+              {trend === "down" && <span className="text-ai-red">↓ -3%</span>}
               {trend === "neutral" && (
                 <span className="text-ai-gray">→ 0%</span>
               )}
@@ -95,11 +91,13 @@ function MetricCard({
             </div>
           )}
         </div>
-        <div className={cn(
-          "p-3 rounded-lg",
-          colorClasses[color],
-          pulse && "animate-pulse"
-        )}>
+        <div
+          className={cn(
+            "p-3 rounded-lg",
+            colorClasses[color],
+            pulse && "animate-pulse",
+          )}
+        >
           <Icon className="h-5 w-5" />
         </div>
       </div>

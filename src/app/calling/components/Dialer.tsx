@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Phone, PhoneOff } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Phone, PhoneOff } from "lucide-react";
 
 export function Dialer() {
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isCallActive, setIsCallActive] = useState(false);
 
   const handleCall = () => {
@@ -28,7 +28,7 @@ export function Dialer() {
         />
         <Button
           onClick={handleCall}
-          variant={isCallActive ? 'destructive' : 'default'}
+          variant={isCallActive ? "destructive" : "default"}
           className="w-full"
         >
           {isCallActive ? (

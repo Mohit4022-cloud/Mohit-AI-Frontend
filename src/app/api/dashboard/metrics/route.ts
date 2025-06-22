@@ -1,30 +1,30 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { verifyToken } from '@/lib/jwt'
-import { mockMetrics } from '@/lib/mockData'
+import { NextRequest, NextResponse } from "next/server";
+import { verifyToken } from "@/lib/jwt";
+import { mockMetrics } from "@/lib/mockData";
 
 // Force dynamic rendering since we use request.headers
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   try {
     // Get token from Authorization header
-    const authHeader = request.headers.get('authorization')
-    const token = authHeader?.replace('Bearer ', '')
+    const authHeader = request.headers.get("authorization");
+    const token = authHeader?.replace("Bearer ", "");
 
     if (!token) {
       return NextResponse.json(
-        { success: false, message: 'Authorization token required' },
-        { status: 401 }
-      )
+        { success: false, message: "Authorization token required" },
+        { status: 401 },
+      );
     }
 
     // Verify token
-    const payload = verifyToken(token)
+    const payload = verifyToken(token);
     if (!payload) {
       return NextResponse.json(
-        { success: false, message: 'Invalid or expired token' },
-        { status: 401 }
-      )
+        { success: false, message: "Invalid or expired token" },
+        { status: 401 },
+      );
     }
 
     // In a real app, you'd fetch metrics based on user role and organization
@@ -32,12 +32,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: mockMetrics,
-    })
+    });
   } catch (error) {
-    console.error('Metrics API error:', error)
+    console.error("Metrics API error:", error);
     return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    )
+      { success: false, message: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

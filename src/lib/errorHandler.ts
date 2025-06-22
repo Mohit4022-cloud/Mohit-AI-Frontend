@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 export interface ApiError {
   success: false;
@@ -32,7 +32,7 @@ export class AppError extends Error {
     this.statusCode = statusCode;
     this.isOperational = true;
     this.details = details;
-    
+
     Error.captureStackTrace(this, this.constructor);
   }
 }
@@ -48,12 +48,15 @@ export const ErrorTypes = {
   SERVICE_UNAVAILABLE: 503,
 } as const;
 
-export function handleApiError(error: unknown, request?: Request): NextResponse<ApiError> {
-  console.error('[API Error]', error);
-  
+export function handleApiError(
+  error: unknown,
+  request?: Request,
+): NextResponse<ApiError> {
+  console.error("[API Error]", error);
+
   const timestamp = new Date().toISOString();
   const path = request?.url ? new URL(request.url).pathname : undefined;
-  
+
   // Handle known AppError instances
   if (error instanceof AppError) {
     return NextResponse.json<ApiError>(
@@ -66,62 +69,63 @@ export function handleApiError(error: unknown, request?: Request): NextResponse<
         timestamp,
         path,
       },
-      { status: error.statusCode }
+      { status: error.statusCode },
     );
   }
-  
+
   // Handle validation errors
-  if (error instanceof Error && error.name === 'ValidationError') {
+  if (error instanceof Error && error.name === "ValidationError") {
     return NextResponse.json<ApiError>(
       {
         success: false,
-        message: 'Validation failed',
+        message: "Validation failed",
         statusCode: ErrorTypes.VALIDATION_ERROR,
         error: error.name,
         details: error.message,
         timestamp,
         path,
       },
-      { status: ErrorTypes.VALIDATION_ERROR }
+      { status: ErrorTypes.VALIDATION_ERROR },
     );
   }
-  
+
   // Handle standard errors
   if (error instanceof Error) {
     const statusCode = ErrorTypes.INTERNAL_ERROR;
     return NextResponse.json<ApiError>(
       {
         success: false,
-        message: process.env.NODE_ENV === 'production' 
-          ? 'An unexpected error occurred' 
-          : error.message,
+        message:
+          process.env.NODE_ENV === "production"
+            ? "An unexpected error occurred"
+            : error.message,
         statusCode,
         error: error.name,
         timestamp,
         path,
       },
-      { status: statusCode }
+      { status: statusCode },
     );
   }
-  
+
   // Handle unknown errors
   return NextResponse.json<ApiError>(
     {
       success: false,
-      message: 'An unexpected error occurred',
+      message: "An unexpected error occurred",
       statusCode: ErrorTypes.INTERNAL_ERROR,
-      error: 'UnknownError',
+      error: "UnknownError",
       timestamp,
       path,
     },
-    { status: ErrorTypes.INTERNAL_ERROR }
+    { status: ErrorTypes.INTERNAL_ERROR },
   );
 }
 
 export function createApiResponse<T>(
   data: T,
   message?: string,
-  metadata?: Record<string, any>
+  metadata?: Record<string, any>,
 ): NextResponse<ApiSuccess<T>> {
   return NextResponse.json<ApiSuccess<T>>({
     success: true,
@@ -136,9 +140,15 @@ export function createApiResponse<T>(
 
 // Wrapper for API route handlers with error handling
 export function withErrorHandler<T = any>(
-  handler: (request: Request, context?: any) => Promise<NextResponse<ApiSuccess<T>>>
+  handler: (
+    request: Request,
+    context?: any,
+  ) => Promise<NextResponse<ApiSuccess<T>>>,
 ) {
-  return async (request: Request, context?: any): Promise<NextResponse<ApiResponse<T>>> => {
+  return async (
+    request: Request,
+    context?: any,
+  ): Promise<NextResponse<ApiResponse<T>>> => {
     try {
       return await handler(request, context);
     } catch (error) {
@@ -149,8 +159,8 @@ export function withErrorHandler<T = any>(
 
 // Utility function to simulate delays for mock APIs
 export async function simulateDelay(ms: number = 500): Promise<void> {
-  if (process.env.NODE_ENV === 'development') {
-    await new Promise(resolve => setTimeout(resolve, ms));
+  if (process.env.NODE_ENV === "development") {
+    await new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 
@@ -158,9 +168,9 @@ export async function simulateDelay(ms: number = 500): Promise<void> {
 export function simulateRandomError(errorRate: number = 0.1): void {
   if (Math.random() < errorRate) {
     throw new AppError(
-      'Simulated error for testing',
+      "Simulated error for testing",
       ErrorTypes.SERVICE_UNAVAILABLE,
-      { simulated: true, errorRate }
+      { simulated: true, errorRate },
     );
   }
 }

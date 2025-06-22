@@ -1,20 +1,55 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PerformanceChart } from "@/components/ai-calls/PerformanceChart";
-import { 
-  ArrowLeft, Download, TrendingUp, Users, Phone, 
-  Brain, Target, Clock, DollarSign, AlertTriangle
+import {
+  ArrowLeft,
+  Download,
+  TrendingUp,
+  Users,
+  Phone,
+  Brain,
+  Target,
+  Clock,
+  DollarSign,
+  AlertTriangle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { 
-  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar
+import {
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
 } from "recharts";
 
 export default function AIAnalyticsPage() {
@@ -31,12 +66,48 @@ export default function AIAnalyticsPage() {
   ];
 
   const costSavings = [
-    { month: "Jan", aiCalls: 2500, humanCost: 75000, aiCost: 12500, savings: 62500 },
-    { month: "Feb", aiCalls: 3200, humanCost: 96000, aiCost: 16000, savings: 80000 },
-    { month: "Mar", aiCalls: 3800, humanCost: 114000, aiCost: 19000, savings: 95000 },
-    { month: "Apr", aiCalls: 4200, humanCost: 126000, aiCost: 21000, savings: 105000 },
-    { month: "May", aiCalls: 4800, humanCost: 144000, aiCost: 24000, savings: 120000 },
-    { month: "Jun", aiCalls: 5200, humanCost: 156000, aiCost: 26000, savings: 130000 },
+    {
+      month: "Jan",
+      aiCalls: 2500,
+      humanCost: 75000,
+      aiCost: 12500,
+      savings: 62500,
+    },
+    {
+      month: "Feb",
+      aiCalls: 3200,
+      humanCost: 96000,
+      aiCost: 16000,
+      savings: 80000,
+    },
+    {
+      month: "Mar",
+      aiCalls: 3800,
+      humanCost: 114000,
+      aiCost: 19000,
+      savings: 95000,
+    },
+    {
+      month: "Apr",
+      aiCalls: 4200,
+      humanCost: 126000,
+      aiCost: 21000,
+      savings: 105000,
+    },
+    {
+      month: "May",
+      aiCalls: 4800,
+      humanCost: 144000,
+      aiCost: 24000,
+      savings: 120000,
+    },
+    {
+      month: "Jun",
+      aiCalls: 5200,
+      humanCost: 156000,
+      aiCost: 26000,
+      savings: 130000,
+    },
   ];
 
   const topObjections = [
@@ -121,7 +192,7 @@ export default function AIAnalyticsPage() {
 
         <TabsContent value="performance" className="space-y-6 mt-6">
           <PerformanceChart detailed />
-          
+
           {/* Agent Performance Radar */}
           <Card>
             <CardHeader>
@@ -175,16 +246,29 @@ export default function AIAnalyticsPage() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
+                    <Tooltip
+                      formatter={(value) => `$${value.toLocaleString()}`}
+                    />
                     <Legend />
-                    <Bar dataKey="humanCost" fill="#EF4444" name="Human Cost (projected)" />
-                    <Bar dataKey="aiCost" fill="#10B981" name="AI Cost (actual)" />
+                    <Bar
+                      dataKey="humanCost"
+                      fill="#EF4444"
+                      name="Human Cost (projected)"
+                    />
+                    <Bar
+                      dataKey="aiCost"
+                      fill="#10B981"
+                      name="AI Cost (actual)"
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
               <div className="mt-4 p-4 bg-green-50 dark:bg-green-950 rounded-lg">
                 <p className="text-sm font-medium text-green-800 dark:text-green-200">
-                  Total Savings YTD: ${costSavings.reduce((sum, m) => sum + m.savings, 0).toLocaleString()}
+                  Total Savings YTD: $
+                  {costSavings
+                    .reduce((sum, m) => sum + m.savings, 0)
+                    .toLocaleString()}
                 </p>
               </div>
             </CardContent>
@@ -236,12 +320,16 @@ export default function AIAnalyticsPage() {
                 {topObjections.map((item) => (
                   <div key={item.objection} className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">{item.objection}</span>
+                      <span className="text-sm font-medium">
+                        {item.objection}
+                      </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm text-muted-foreground">
                           {item.count} occurrences
                         </span>
-                        <Badge variant={item.handled > 85 ? "default" : "secondary"}>
+                        <Badge
+                          variant={item.handled > 85 ? "default" : "secondary"}
+                        >
                           {item.handled}% handled
                         </Badge>
                       </div>
@@ -335,8 +423,8 @@ export default function AIAnalyticsPage() {
                 />
                 <ComparisonRow
                   metric="Cost per Call"
-                  ai={4.80}
-                  human={26.50}
+                  ai={4.8}
+                  human={26.5}
                   unit="$"
                   inverse
                 />
@@ -381,7 +469,7 @@ export default function AIAnalyticsPage() {
                 </ul>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardHeader>
                 <CardTitle className="text-base">Best for Human</CardTitle>
@@ -427,9 +515,16 @@ interface MetricCardProps {
   icon: React.ElementType;
 }
 
-function MetricCard({ title, value, change, trend, subtitle, icon: Icon }: MetricCardProps) {
+function MetricCard({
+  title,
+  value,
+  change,
+  trend,
+  subtitle,
+  icon: Icon,
+}: MetricCardProps) {
   const isPositive = trend === "up";
-  
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -440,9 +535,11 @@ function MetricCard({ title, value, change, trend, subtitle, icon: Icon }: Metri
         <div className="space-y-1">
           <div className="flex items-baseline gap-2">
             <p className="text-2xl font-bold">{value}</p>
-            <span className={`text-sm font-medium ${
-              isPositive ? "text-green-600" : "text-red-600"
-            }`}>
+            <span
+              className={`text-sm font-medium ${
+                isPositive ? "text-green-600" : "text-red-600"
+              }`}
+            >
               {change}
             </span>
           </div>
@@ -460,9 +557,14 @@ interface LearningMetricProps {
   target: number;
 }
 
-function LearningMetric({ metric, baseline, current, target }: LearningMetricProps) {
-  const improvement = ((current - baseline) / baseline * 100).toFixed(0);
-  
+function LearningMetric({
+  metric,
+  baseline,
+  current,
+  target,
+}: LearningMetricProps) {
+  const improvement = (((current - baseline) / baseline) * 100).toFixed(0);
+
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-sm">
@@ -470,8 +572,7 @@ function LearningMetric({ metric, baseline, current, target }: LearningMetricPro
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground">{current}%</span>
           <Badge variant="outline" className="text-xs">
-            <TrendingUp className="h-3 w-3 mr-1" />
-            +{improvement}%
+            <TrendingUp className="h-3 w-3 mr-1" />+{improvement}%
           </Badge>
         </div>
       </div>
@@ -505,10 +606,16 @@ interface ComparisonRowProps {
   inverse?: boolean;
 }
 
-function ComparisonRow({ metric, ai, human, unit, inverse }: ComparisonRowProps) {
+function ComparisonRow({
+  metric,
+  ai,
+  human,
+  unit,
+  inverse,
+}: ComparisonRowProps) {
   const aiWins = inverse ? ai < human : ai > human;
-  const difference = Math.abs(((ai - human) / human * 100)).toFixed(0);
-  
+  const difference = Math.abs(((ai - human) / human) * 100).toFixed(0);
+
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
@@ -523,14 +630,20 @@ function ComparisonRow({ metric, ai, human, unit, inverse }: ComparisonRowProps)
             <Brain className="h-3 w-3" />
             AI
           </span>
-          <span className="font-medium">{ai}{unit}</span>
+          <span className="font-medium">
+            {ai}
+            {unit}
+          </span>
         </div>
         <div className="flex items-center justify-between p-2 bg-green-50 dark:bg-green-950 rounded">
           <span className="flex items-center gap-1">
             <Users className="h-3 w-3" />
             Human
           </span>
-          <span className="font-medium">{human}{unit}</span>
+          <span className="font-medium">
+            {human}
+            {unit}
+          </span>
         </div>
       </div>
     </div>

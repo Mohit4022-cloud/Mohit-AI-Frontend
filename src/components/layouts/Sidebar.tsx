@@ -3,16 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { 
-  LayoutDashboard, 
-  Users, 
-  Phone, 
-  BarChart3, 
+import {
+  LayoutDashboard,
+  Users,
+  Phone,
+  BarChart3,
   Settings,
   Zap,
   MessageSquare,
   Clock,
-  Target
+  Target,
 } from "lucide-react";
 
 const navigation = [
@@ -34,7 +34,7 @@ export function Sidebar() {
         <Zap className="h-8 w-8 text-primary mr-2" />
         <span className="text-xl font-bold">Mohit AI</span>
       </div>
-      
+
       <nav className="flex-1 space-y-1 p-4">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
@@ -46,7 +46,7 @@ export function Sidebar() {
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground",
               )}
             >
               <item.icon className="h-5 w-5" />
@@ -55,13 +55,15 @@ export function Sidebar() {
           );
         })}
       </nav>
-      
+
       <div className="p-4 border-t">
         <div className="rounded-lg bg-primary/10 p-4">
           <h3 className="font-semibold mb-1">Response Status</h3>
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-green-500 pulse-dot" />
-            <span className="text-sm text-muted-foreground">All systems active</span>
+            <span className="text-sm text-muted-foreground">
+              All systems active
+            </span>
           </div>
           <p className="text-xs text-muted-foreground mt-2">
             Avg response time: 47 seconds

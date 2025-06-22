@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { CreateContactSchema, CreateContact } from '@/types/contact'
-import { useContactsStore } from '@/stores/contactsStore'
-import { useToast } from '@/components/ui/use-toast'
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CreateContactSchema, CreateContact } from "@/types/contact";
+import { useContactsStore } from "@/stores/contactsStore";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -21,65 +21,66 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Loader2, Plus } from 'lucide-react'
+} from "@/components/ui/select";
+import { Loader2, Plus } from "lucide-react";
 
 interface AddContactFormProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function AddContactForm({ open, onOpenChange }: AddContactFormProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { addContact } = useContactsStore()
-  const { toast } = useToast()
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { addContact } = useContactsStore();
+  const { toast } = useToast();
 
   const form = useForm<CreateContact>({
     resolver: zodResolver(CreateContactSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      title: '',
-      industry: '',
+      name: "",
+      email: "",
+      phone: "",
+      company: "",
+      title: "",
+      industry: "",
       leadScore: 50,
-      status: 'prospect',
+      status: "prospect",
       tags: [],
-      notes: '',
+      notes: "",
     },
-  })
+  });
 
   const onSubmit = async (data: CreateContact) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
     try {
-      await addContact(data)
+      await addContact(data);
       toast({
-        title: 'Contact added',
+        title: "Contact added",
         description: `${data.name} has been added to your contacts.`,
-      })
-      form.reset()
-      onOpenChange(false)
+      });
+      form.reset();
+      onOpenChange(false);
     } catch (error) {
       toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to add contact',
-        variant: 'destructive',
-      })
+        title: "Error",
+        description:
+          error instanceof Error ? error.message : "Failed to add contact",
+        variant: "destructive",
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -170,7 +171,10 @@ export function AddContactForm({ open, onOpenChange }: AddContactFormProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Status</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue />
@@ -205,7 +209,11 @@ export function AddContactForm({ open, onOpenChange }: AddContactFormProps) {
             />
 
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+              >
                 Cancel
               </Button>
               <Button type="submit" disabled={isSubmitting}>
@@ -226,5 +234,5 @@ export function AddContactForm({ open, onOpenChange }: AddContactFormProps) {
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

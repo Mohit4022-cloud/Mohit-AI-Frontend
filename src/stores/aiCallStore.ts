@@ -1,10 +1,15 @@
-import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
-import { io, Socket } from 'socket.io-client';
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+import { io, Socket } from "socket.io-client";
 
-export type CallStatus = 'QUEUED' | 'CONNECTING' | 'ACTIVE' | 'COMPLETED' | 'FAILED';
-export type CallMode = 'AI' | 'HUMAN' | 'HYBRID';
-export type AgentStatus = 'LISTENING' | 'PROCESSING' | 'SPEAKING' | 'IDLE';
+export type CallStatus =
+  | "QUEUED"
+  | "CONNECTING"
+  | "ACTIVE"
+  | "COMPLETED"
+  | "FAILED";
+export type CallMode = "AI" | "HUMAN" | "HYBRID";
+export type AgentStatus = "LISTENING" | "PROCESSING" | "SPEAKING" | "IDLE";
 
 export interface AICall {
   id: string;
@@ -26,7 +31,7 @@ export interface AICall {
 export interface TranscriptEntry {
   id: string;
   callId: string;
-  speaker: 'AI' | 'LEAD' | 'AGENT';
+  speaker: "AI" | "LEAD" | "AGENT";
   text: string;
   timestamp: Date;
   sentiment?: number;
@@ -43,7 +48,7 @@ export interface CallMetrics {
 export interface AIInsight {
   id: string;
   callId: string;
-  type: 'SENTIMENT' | 'TOPIC' | 'COMPETITOR' | 'PRICING' | 'ACTION';
+  type: "SENTIMENT" | "TOPIC" | "COMPETITOR" | "PRICING" | "ACTION";
   title: string;
   content: string;
   confidence: number;
@@ -56,7 +61,7 @@ export interface QueuedCall {
   leadName: string;
   company: string;
   phone: string;
-  priority: 'HIGH' | 'MEDIUM' | 'LOW';
+  priority: "HIGH" | "MEDIUM" | "LOW";
   scheduledTime?: Date;
   attempts: number;
   lastAttempt?: Date;
@@ -91,11 +96,14 @@ interface AICallStore {
   updateMetrics: (metrics: Partial<CallMetrics>) => void;
   addToQueue: (call: QueuedCall) => void;
   removeFromQueue: (id: string) => void;
-  updateQueuePriority: (id: string, priority: 'HIGH' | 'MEDIUM' | 'LOW') => void;
+  updateQueuePriority: (
+    id: string,
+    priority: "HIGH" | "MEDIUM" | "LOW",
+  ) => void;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:3000";
 
 export const useAICallStore = create<AICallStore>()(
   devtools(
@@ -119,42 +127,48 @@ export const useAICallStore = create<AICallStore>()(
         // Initialize WebSocket connection
         initializeSocket: () => {
           const socket = io(WS_URL, {
-            path: '/socket.io',
-            transports: ['websocket'],
+            path: "/socket.io",
+            transports: ["websocket"],
           });
 
-          socket.on('connect', () => {
-            console.log('Connected to AI Calls WebSocket');
+          socket.on("connect", () => {
+            console.log("Connected to AI Calls WebSocket");
             set({ isConnected: true });
           });
 
-          socket.on('disconnect', () => {
-            console.log('Disconnected from AI Calls WebSocket');
+          socket.on("disconnect", () => {
+            console.log("Disconnected from AI Calls WebSocket");
             set({ isConnected: false });
           });
 
           // Real-time event handlers
-          socket.on('call:started', (call: AICall) => {
+          socket.on("call:started", (call: AICall) => {
             get().addCall(call);
           });
 
-          socket.on('call:status', ({ callId, status }: { callId: string; status: CallStatus }) => {
-            get().updateCallStatus(callId, status);
-          });
+          socket.on(
+            "call:status",
+            ({ callId, status }: { callId: string; status: CallStatus }) => {
+              get().updateCallStatus(callId, status);
+            },
+          );
 
-          socket.on('transcript:update', (entry: TranscriptEntry) => {
+          socket.on("transcript:update", (entry: TranscriptEntry) => {
             get().appendTranscript(entry.callId, entry);
           });
 
-          socket.on('ai:status', ({ callId, status }: { callId: string; status: AgentStatus }) => {
-            get().updateAgentStatus(callId, status);
-          });
+          socket.on(
+            "ai:status",
+            ({ callId, status }: { callId: string; status: AgentStatus }) => {
+              get().updateAgentStatus(callId, status);
+            },
+          );
 
-          socket.on('insight:new', (insight: AIInsight) => {
+          socket.on("insight:new", (insight: AIInsight) => {
             get().addInsight(insight.callId, insight);
           });
 
-          socket.on('metrics:update', (metrics: Partial<CallMetrics>) => {
+          socket.on("metrics:update", (metrics: Partial<CallMetrics>) => {
             get().updateMetrics(metrics);
           });
 
@@ -165,20 +179,21 @@ export const useAICallStore = create<AICallStore>()(
         loadActiveCalls: async () => {
           try {
             const response = await fetch(`${API_URL}/calls/active`);
-            if (!response.ok) throw new Error('Failed to load active calls');
-            
+            if (!response.ok) throw new Error("Failed to load active calls");
+
             const data = await response.json();
             set({ activeCalls: data.calls });
-            
+
             // Update metrics
             set((state) => ({
               callMetrics: {
                 ...state.callMetrics,
-                activeAICalls: data.calls.filter((c: AICall) => c.mode === 'AI').length,
+                activeAICalls: data.calls.filter((c: AICall) => c.mode === "AI")
+                  .length,
               },
             }));
           } catch (error) {
-            console.error('Error loading active calls:', error);
+            console.error("Error loading active calls:", error);
           }
         },
 
@@ -186,12 +201,12 @@ export const useAICallStore = create<AICallStore>()(
         loadQueuedCalls: async () => {
           try {
             const response = await fetch(`${API_URL}/calls/queue`);
-            if (!response.ok) throw new Error('Failed to load call queue');
-            
+            if (!response.ok) throw new Error("Failed to load call queue");
+
             const data = await response.json();
             set({ queuedCalls: data.queue });
           } catch (error) {
-            console.error('Error loading call queue:', error);
+            console.error("Error loading call queue:", error);
           }
         },
 
@@ -201,7 +216,8 @@ export const useAICallStore = create<AICallStore>()(
             activeCalls: [...state.activeCalls, call],
             callMetrics: {
               ...state.callMetrics,
-              activeAICalls: state.callMetrics.activeAICalls + (call.mode === 'AI' ? 1 : 0),
+              activeAICalls:
+                state.callMetrics.activeAICalls + (call.mode === "AI" ? 1 : 0),
             },
           }));
         },
@@ -210,11 +226,11 @@ export const useAICallStore = create<AICallStore>()(
         updateCallStatus: (id, status) => {
           set((state) => {
             const calls = state.activeCalls.map((call) =>
-              call.id === id ? { ...call, status } : call
+              call.id === id ? { ...call, status } : call,
             );
 
             // Remove completed/failed calls after a delay
-            if (status === 'COMPLETED' || status === 'FAILED') {
+            if (status === "COMPLETED" || status === "FAILED") {
               setTimeout(() => {
                 set((state) => ({
                   activeCalls: state.activeCalls.filter((c) => c.id !== id),
@@ -230,7 +246,7 @@ export const useAICallStore = create<AICallStore>()(
         updateAgentStatus: (id, agentStatus) => {
           set((state) => ({
             activeCalls: state.activeCalls.map((call) =>
-              call.id === id ? { ...call, agentStatus } : call
+              call.id === id ? { ...call, agentStatus } : call,
             ),
           }));
         },
@@ -264,18 +280,18 @@ export const useAICallStore = create<AICallStore>()(
         takeOverCall: async (id) => {
           try {
             const response = await fetch(`${API_URL}/calls/${id}/takeover`, {
-              method: 'POST',
+              method: "POST",
             });
-            
-            if (!response.ok) throw new Error('Failed to take over call');
-            
+
+            if (!response.ok) throw new Error("Failed to take over call");
+
             set((state) => ({
               activeCalls: state.activeCalls.map((call) =>
-                call.id === id ? { ...call, mode: 'HUMAN' } : call
+                call.id === id ? { ...call, mode: "HUMAN" } : call,
               ),
             }));
           } catch (error) {
-            console.error('Error taking over call:', error);
+            console.error("Error taking over call:", error);
           }
         },
 
@@ -283,18 +299,18 @@ export const useAICallStore = create<AICallStore>()(
         pauseAI: async (id) => {
           try {
             const response = await fetch(`${API_URL}/calls/${id}/pause-ai`, {
-              method: 'POST',
+              method: "POST",
             });
-            
-            if (!response.ok) throw new Error('Failed to pause AI');
-            
+
+            if (!response.ok) throw new Error("Failed to pause AI");
+
             set((state) => ({
               activeCalls: state.activeCalls.map((call) =>
-                call.id === id ? { ...call, mode: 'HYBRID' } : call
+                call.id === id ? { ...call, mode: "HYBRID" } : call,
               ),
             }));
           } catch (error) {
-            console.error('Error pausing AI:', error);
+            console.error("Error pausing AI:", error);
           }
         },
 
@@ -302,18 +318,18 @@ export const useAICallStore = create<AICallStore>()(
         resumeAI: async (id) => {
           try {
             const response = await fetch(`${API_URL}/calls/${id}/resume-ai`, {
-              method: 'POST',
+              method: "POST",
             });
-            
-            if (!response.ok) throw new Error('Failed to resume AI');
-            
+
+            if (!response.ok) throw new Error("Failed to resume AI");
+
             set((state) => ({
               activeCalls: state.activeCalls.map((call) =>
-                call.id === id ? { ...call, mode: 'AI' } : call
+                call.id === id ? { ...call, mode: "AI" } : call,
               ),
             }));
           } catch (error) {
-            console.error('Error resuming AI:', error);
+            console.error("Error resuming AI:", error);
           }
         },
 
@@ -321,14 +337,14 @@ export const useAICallStore = create<AICallStore>()(
         endCall: async (id) => {
           try {
             const response = await fetch(`${API_URL}/calls/${id}/end`, {
-              method: 'POST',
+              method: "POST",
             });
-            
-            if (!response.ok) throw new Error('Failed to end call');
-            
-            get().updateCallStatus(id, 'COMPLETED');
+
+            if (!response.ok) throw new Error("Failed to end call");
+
+            get().updateCallStatus(id, "COMPLETED");
           } catch (error) {
-            console.error('Error ending call:', error);
+            console.error("Error ending call:", error);
           }
         },
 
@@ -336,19 +352,19 @@ export const useAICallStore = create<AICallStore>()(
         initiateCall: async (leadId) => {
           try {
             const response = await fetch(`${API_URL}/calls/initiate`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ leadId }),
             });
-            
-            if (!response.ok) throw new Error('Failed to initiate call');
-            
+
+            if (!response.ok) throw new Error("Failed to initiate call");
+
             const data = await response.json();
             get().addCall(data.call);
-            
+
             return data.call;
           } catch (error) {
-            console.error('Error initiating call:', error);
+            console.error("Error initiating call:", error);
             throw error;
           }
         },
@@ -388,11 +404,11 @@ export const useAICallStore = create<AICallStore>()(
         },
       }),
       {
-        name: 'ai-call-store',
+        name: "ai-call-store",
         partialize: (state) => ({
           selectedCallId: state.selectedCallId,
         }),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );

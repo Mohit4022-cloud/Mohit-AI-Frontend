@@ -1,76 +1,82 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Loader2, Bell, Mail, Calendar, Save } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Switch } from '@/components/ui/switch'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { useToast } from '@/components/ui/use-toast'
-import { useSettingsStore } from '@/stores/settingsStore'
+import { useState } from "react";
+import { Loader2, Bell, Mail, Calendar, Save } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
+import { useSettingsStore } from "@/stores/settingsStore";
 
 export function NotificationSettings() {
-  const { toast } = useToast()
-  const { settings, updateSettings } = useSettingsStore()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [localSettings, setLocalSettings] = useState(settings.notifications)
+  const { toast } = useToast();
+  const { settings, updateSettings } = useSettingsStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [localSettings, setLocalSettings] = useState(settings.notifications);
 
   const handleToggle = (key: keyof typeof settings.notifications) => {
     setLocalSettings((prev) => ({
       ...prev,
       [key]: !prev[key],
-    }))
-  }
+    }));
+  };
 
   const handleSave = async () => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
       await updateSettings({
         notifications: localSettings,
-      })
+      });
 
       toast({
-        title: 'Notifications updated',
-        description: 'Your notification preferences have been saved.',
-      })
+        title: "Notifications updated",
+        description: "Your notification preferences have been saved.",
+      });
     } catch (error) {
-      console.error('Failed to update notifications:', error)
+      console.error("Failed to update notifications:", error);
       toast({
-        title: 'Update failed',
-        description: 'Failed to update notification settings. Please try again.',
-        variant: 'destructive',
-      })
+        title: "Update failed",
+        description:
+          "Failed to update notification settings. Please try again.",
+        variant: "destructive",
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const notificationOptions = [
     {
-      key: 'callTranscripts' as const,
+      key: "callTranscripts" as const,
       icon: Bell,
-      title: 'Call Transcripts',
-      description: 'Receive notifications when call transcripts are ready',
+      title: "Call Transcripts",
+      description: "Receive notifications when call transcripts are ready",
     },
     {
-      key: 'emailCampaigns' as const,
+      key: "emailCampaigns" as const,
       icon: Mail,
-      title: 'Email Campaigns',
-      description: 'Get updates on email campaign performance and responses',
+      title: "Email Campaigns",
+      description: "Get updates on email campaign performance and responses",
     },
     {
-      key: 'followUpReminders' as const,
+      key: "followUpReminders" as const,
       icon: Calendar,
-      title: 'Follow-up Reminders',
-      description: 'Receive reminders for scheduled follow-ups and meetings',
+      title: "Follow-up Reminders",
+      description: "Receive reminders for scheduled follow-ups and meetings",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-6">
       <div className="space-y-4">
         {notificationOptions.map((option) => {
-          const Icon = option.icon
+          const Icon = option.icon;
           return (
             <Card key={option.key} className="p-4">
               <div className="flex items-center justify-between">
@@ -78,7 +84,9 @@ export function NotificationSettings() {
                   <Icon className="h-5 w-5 text-gray-600 mt-0.5" />
                   <div className="space-y-1">
                     <p className="font-medium text-gray-900">{option.title}</p>
-                    <p className="text-sm text-gray-600">{option.description}</p>
+                    <p className="text-sm text-gray-600">
+                      {option.description}
+                    </p>
                   </div>
                 </div>
                 <Switch
@@ -87,7 +95,7 @@ export function NotificationSettings() {
                 />
               </div>
             </Card>
-          )
+          );
         })}
       </div>
 
@@ -151,5 +159,5 @@ export function NotificationSettings() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

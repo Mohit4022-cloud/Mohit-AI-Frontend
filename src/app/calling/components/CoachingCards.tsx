@@ -1,33 +1,33 @@
-'use client';
+"use client";
 
-import { Card } from '@/components/ui/card';
-import { TrendingUp, Users, Target, Activity } from 'lucide-react';
+import { Card } from "@/components/ui/card";
+import { TrendingUp, Users, Target, Activity } from "lucide-react";
 
 const coachingTips = [
   {
     icon: TrendingUp,
-    title: 'Build Rapport',
-    tip: 'Start with a warm greeting and find common ground',
-    color: 'text-green-500'
+    title: "Build Rapport",
+    tip: "Start with a warm greeting and find common ground",
+    color: "text-green-500",
   },
   {
     icon: Users,
-    title: 'Active Listening',
-    tip: 'Let the prospect speak 70% of the time',
-    color: 'text-blue-500'
+    title: "Active Listening",
+    tip: "Let the prospect speak 70% of the time",
+    color: "text-blue-500",
   },
   {
     icon: Target,
-    title: 'Ask Open Questions',
+    title: "Ask Open Questions",
     tip: 'Use "What" and "How" to uncover pain points',
-    color: 'text-purple-500'
+    color: "text-purple-500",
   },
   {
     icon: Activity,
-    title: 'Handle Objections',
-    tip: 'Acknowledge, empathize, then provide value',
-    color: 'text-orange-500'
-  }
+    title: "Handle Objections",
+    tip: "Acknowledge, empathize, then provide value",
+    color: "text-orange-500",
+  },
 ];
 
 export function CoachingCards() {

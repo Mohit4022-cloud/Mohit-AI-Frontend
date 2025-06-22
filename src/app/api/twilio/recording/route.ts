@@ -1,23 +1,28 @@
 /**
  * Twilio Recording Callback Handler
- * 
+ *
  * Handles recording status updates and stores recording URLs
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { TWILIO_RECORDING_STATUS, type TwilioRecordingStatus } from '@/config/twilio';
+import { NextRequest, NextResponse } from "next/server";
+import {
+  TWILIO_RECORDING_STATUS,
+  type TwilioRecordingStatus,
+} from "@/config/twilio";
 
 export async function POST(request: NextRequest) {
   try {
     // Get form data from Twilio webhook
     const formData = await request.formData();
-    const recordingSid = formData.get('RecordingSid') as string;
-    const recordingUrl = formData.get('RecordingUrl') as string;
-    const recordingStatus = formData.get('RecordingStatus') as TwilioRecordingStatus;
-    const recordingDuration = formData.get('RecordingDuration') as string;
-    const callSid = formData.get('CallSid') as string;
+    const recordingSid = formData.get("RecordingSid") as string;
+    const recordingUrl = formData.get("RecordingUrl") as string;
+    const recordingStatus = formData.get(
+      "RecordingStatus",
+    ) as TwilioRecordingStatus;
+    const recordingDuration = formData.get("RecordingDuration") as string;
+    const callSid = formData.get("CallSid") as string;
 
-    console.log('[Twilio Recording Callback] Recording update:', {
+    console.log("[Twilio Recording Callback] Recording update:", {
       recordingSid,
       recordingUrl,
       recordingStatus,
@@ -42,19 +47,25 @@ export async function POST(request: NextRequest) {
       };
 
       // Log for demo purposes
-      console.log('[Twilio Recording Callback] Recording completed:', recordingData);
+      console.log(
+        "[Twilio Recording Callback] Recording completed:",
+        recordingData,
+      );
 
       // You could trigger transcription here
       // await triggerTranscription(recordingUrl, callSid);
     } else if (recordingStatus === TWILIO_RECORDING_STATUS.FAILED) {
-      console.error('[Twilio Recording Callback] Recording failed for call:', callSid);
+      console.error(
+        "[Twilio Recording Callback] Recording failed for call:",
+        callSid,
+      );
     }
 
     // Send success response to Twilio
-    return new NextResponse('', { status: 200 });
+    return new NextResponse("", { status: 200 });
   } catch (error) {
-    console.error('[Twilio Recording Callback] Error:', error);
-    return new NextResponse('Internal server error', { status: 500 });
+    console.error("[Twilio Recording Callback] Error:", error);
+    return new NextResponse("Internal server error", { status: 500 });
   }
 }
 
@@ -63,9 +74,9 @@ export async function POST(request: NextRequest) {
  */
 export async function GET(request: NextRequest) {
   return NextResponse.json({
-    message: 'Twilio Recording Callback is ready',
-    endpoint: '/api/twilio/recording',
-    method: 'POST',
+    message: "Twilio Recording Callback is ready",
+    endpoint: "/api/twilio/recording",
+    method: "POST",
     statuses: Object.values(TWILIO_RECORDING_STATUS),
   });
 }

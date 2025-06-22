@@ -27,15 +27,15 @@ export interface AIInsight {
   id: string;
   title: string;
   description: string;
-  type: 'improvement' | 'achievement' | 'warning';
-  impact: 'high' | 'medium' | 'low';
+  type: "improvement" | "achievement" | "warning";
+  impact: "high" | "medium" | "low";
   suggestions?: string[];
 }
 
 export interface Report {
   id: string;
   name: string;
-  type: 'daily' | 'weekly' | 'monthly' | 'custom';
+  type: "daily" | "weekly" | "monthly" | "custom";
   metrics: ReportMetrics;
   performance: PerformanceData;
   activities: ActivityData[];

@@ -1,72 +1,85 @@
-'use client'
+"use client";
 
-import { format, isToday, isTomorrow, isThisWeek, parseISO } from 'date-fns'
-import { CalendarEvent, EVENT_TYPE_COLORS } from '@/types/calendar'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Phone, Video, Users, Bell, MapPin, Clock, Calendar } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { format, isToday, isTomorrow, isThisWeek, parseISO } from "date-fns";
+import { CalendarEvent, EVENT_TYPE_COLORS } from "@/types/calendar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Phone,
+  Video,
+  Users,
+  Bell,
+  MapPin,
+  Clock,
+  Calendar,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ListViewProps {
-  events: CalendarEvent[]
-  onEventClick: (event: CalendarEvent) => void
+  events: CalendarEvent[];
+  onEventClick: (event: CalendarEvent) => void;
 }
 
 export function ListView({ events, onEventClick }: ListViewProps) {
   // Group events by date
-  const groupedEvents = events.reduce((groups, event) => {
-    const date = format(parseISO(event.startTime), 'yyyy-MM-dd')
-    if (!groups[date]) {
-      groups[date] = []
-    }
-    groups[date].push(event)
-    return groups
-  }, {} as Record<string, CalendarEvent[]>)
+  const groupedEvents = events.reduce(
+    (groups, event) => {
+      const date = format(parseISO(event.startTime), "yyyy-MM-dd");
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(event);
+      return groups;
+    },
+    {} as Record<string, CalendarEvent[]>,
+  );
 
   const getDateLabel = (dateStr: string) => {
-    const date = new Date(dateStr)
-    if (isToday(date)) return 'Today'
-    if (isTomorrow(date)) return 'Tomorrow'
-    if (isThisWeek(date)) return format(date, 'EEEE')
-    return format(date, 'MMMM d, yyyy')
-  }
+    const date = new Date(dateStr);
+    if (isToday(date)) return "Today";
+    if (isTomorrow(date)) return "Tomorrow";
+    if (isThisWeek(date)) return format(date, "EEEE");
+    return format(date, "MMMM d, yyyy");
+  };
 
-  const getEventIcon = (type: CalendarEvent['type']) => {
+  const getEventIcon = (type: CalendarEvent["type"]) => {
     switch (type) {
-      case 'call':
-        return Phone
-      case 'meeting':
-        return Video
-      case 'follow_up':
-        return Users
-      case 'reminder':
-        return Bell
+      case "call":
+        return Phone;
+      case "meeting":
+        return Video;
+      case "follow_up":
+        return Users;
+      case "reminder":
+        return Bell;
       default:
-        return Calendar
+        return Calendar;
     }
-  }
+  };
 
-  const sortedDates = Object.keys(groupedEvents).sort()
+  const sortedDates = Object.keys(groupedEvents).sort();
 
   if (sortedDates.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
           <Calendar className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-1">No upcoming events</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-1">
+            No upcoming events
+          </h3>
           <p className="text-gray-500">Your calendar is clear!</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <ScrollArea className="flex-1">
       <div className="space-y-6 p-4">
         {sortedDates.map((dateStr) => {
-          const dateEvents = groupedEvents[dateStr]
-          const date = new Date(dateStr)
+          const dateEvents = groupedEvents[dateStr];
+          const date = new Date(dateStr);
 
           return (
             <div key={dateStr}>
@@ -74,14 +87,16 @@ export function ListView({ events, onEventClick }: ListViewProps) {
                 <h3 className="text-lg font-semibold text-gray-900">
                   {getDateLabel(dateStr)}
                 </h3>
-                <p className="text-sm text-gray-500">{format(date, 'EEEE, MMMM d')}</p>
+                <p className="text-sm text-gray-500">
+                  {format(date, "EEEE, MMMM d")}
+                </p>
               </div>
 
               <div className="space-y-3">
                 {dateEvents.map((event) => {
-                  const Icon = getEventIcon(event.type)
-                  const startTime = parseISO(event.startTime)
-                  const endTime = parseISO(event.endTime)
+                  const Icon = getEventIcon(event.type);
+                  const startTime = parseISO(event.startTime);
+                  const endTime = parseISO(event.endTime);
 
                   return (
                     <button
@@ -91,17 +106,17 @@ export function ListView({ events, onEventClick }: ListViewProps) {
                     >
                       <div
                         className={cn(
-                          'p-4 rounded-lg border-2 transition-all',
-                          'hover:shadow-md hover:border-gray-300',
-                          event.isCompleted && 'opacity-60'
+                          "p-4 rounded-lg border-2 transition-all",
+                          "hover:shadow-md hover:border-gray-300",
+                          event.isCompleted && "opacity-60",
                         )}
                       >
                         <div className="flex items-start gap-4">
                           <div className="flex-shrink-0">
                             <div
                               className={cn(
-                                'w-12 h-12 rounded-full flex items-center justify-center',
-                                EVENT_TYPE_COLORS[event.type]
+                                "w-12 h-12 rounded-full flex items-center justify-center",
+                                EVENT_TYPE_COLORS[event.type],
                               )}
                             >
                               <Icon className="h-5 w-5" />
@@ -115,20 +130,26 @@ export function ListView({ events, onEventClick }: ListViewProps) {
                               </h4>
                               <Badge
                                 variant="secondary"
-                                className={cn('ml-2', EVENT_TYPE_COLORS[event.type])}
+                                className={cn(
+                                  "ml-2",
+                                  EVENT_TYPE_COLORS[event.type],
+                                )}
                               >
-                                {event.type.replace('_', ' ')}
+                                {event.type.replace("_", " ")}
                               </Badge>
                             </div>
 
                             {event.description && (
-                              <p className="text-sm text-gray-600 mb-2">{event.description}</p>
+                              <p className="text-sm text-gray-600 mb-2">
+                                {event.description}
+                              </p>
                             )}
 
                             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
                               <div className="flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
-                                {format(startTime, 'h:mm a')} - {format(endTime, 'h:mm a')}
+                                {format(startTime, "h:mm a")} -{" "}
+                                {format(endTime, "h:mm a")}
                               </div>
 
                               {event.contactName && (
@@ -155,13 +176,13 @@ export function ListView({ events, onEventClick }: ListViewProps) {
                         </div>
                       </div>
                     </button>
-                  )
+                  );
                 })}
               </div>
             </div>
-          )
+          );
         })}
       </div>
     </ScrollArea>
-  )
+  );
 }

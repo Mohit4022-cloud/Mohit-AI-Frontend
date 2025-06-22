@@ -6,7 +6,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useAuthStore } from "@/stores/authStore";
 import { Zap } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
@@ -16,12 +23,12 @@ export default function RegisterPage() {
   const login = useAuthStore((state) => state.login);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    organizationName: ""
+    organizationName: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,19 +37,19 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      const response = await fetch(getApiUrl('/auth/register'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+      const response = await fetch(getApiUrl("/auth/register"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error?.message || 'Registration failed');
+        throw new Error(errorData.error?.message || "Registration failed");
       }
 
       await response.json(); // Registration successful
-      
+
       // Auto-login after registration
       await login(formData.email, formData.password);
       router.push("/dashboard");
@@ -65,7 +72,7 @@ export default function RegisterPage() {
             Start your 14-day free trial of Mohit AI
           </CardDescription>
         </CardHeader>
-        
+
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             {error && (
@@ -73,18 +80,20 @@ export default function RegisterPage() {
                 {error}
               </div>
             )}
-            
+
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
               <Input
                 id="name"
                 placeholder="John Doe"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -92,22 +101,26 @@ export default function RegisterPage() {
                 type="email"
                 placeholder="you@company.com"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="organizationName">Organization Name</Label>
               <Input
                 id="organizationName"
                 placeholder="Acme Inc"
                 value={formData.organizationName}
-                onChange={(e) => setFormData({ ...formData, organizationName: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, organizationName: e.target.value })
+                }
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
@@ -115,18 +128,20 @@ export default function RegisterPage() {
                 type="password"
                 placeholder="••••••••"
                 value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 required
                 minLength={6}
               />
             </div>
           </CardContent>
-          
+
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Creating account..." : "Create account"}
             </Button>
-            
+
             <p className="text-sm text-center text-muted-foreground">
               Already have an account?{" "}
               <Link href="/login" className="text-primary hover:underline">

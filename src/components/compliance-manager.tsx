@@ -1,23 +1,47 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Table,
   TableBody,
@@ -26,14 +50,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { 
-  Shield, FileCheck, Lock, AlertTriangle, CheckCircle,
-  User, Calendar as CalendarIcon, Clock, Download,
-  Trash2, Edit, Eye, EyeOff, RefreshCw, Settings,
-  Info, XCircle, UserCheck, UserX, FileText, History,
-  Database, Search, Filter, MoreVertical, Plus,
-  ShieldCheck, ShieldAlert, Key, Globe, Mail,
-  Phone, Building, CreditCard, Flag, Archive, Play
+import {
+  Shield,
+  FileCheck,
+  Lock,
+  AlertTriangle,
+  CheckCircle,
+  User,
+  Calendar as CalendarIcon,
+  Clock,
+  Download,
+  Trash2,
+  Edit,
+  Eye,
+  EyeOff,
+  RefreshCw,
+  Settings,
+  Info,
+  XCircle,
+  UserCheck,
+  UserX,
+  FileText,
+  History,
+  Database,
+  Search,
+  Filter,
+  MoreVertical,
+  Plus,
+  ShieldCheck,
+  ShieldAlert,
+  Key,
+  Globe,
+  Mail,
+  Phone,
+  Building,
+  CreditCard,
+  Flag,
+  Archive,
+  Play,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format, formatDistanceToNow, addDays } from "date-fns";
@@ -43,7 +97,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-  DropdownMenuLabel
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 
 interface ConsentRecord {
@@ -51,11 +105,11 @@ interface ConsentRecord {
   leadId: string;
   leadName: string;
   email: string;
-  type: 'marketing' | 'analytics' | 'functional' | 'necessary';
-  status: 'granted' | 'denied' | 'pending';
+  type: "marketing" | "analytics" | "functional" | "necessary";
+  status: "granted" | "denied" | "pending";
   timestamp: string;
   ipAddress: string;
-  method: 'explicit' | 'implicit' | 'imported';
+  method: "explicit" | "implicit" | "imported";
   expiresAt?: string;
   source: string;
   version: string;
@@ -66,8 +120,8 @@ interface DataRetentionPolicy {
   dataType: string;
   description: string;
   retentionPeriod: number;
-  unit: 'days' | 'months' | 'years';
-  action: 'delete' | 'anonymize' | 'archive';
+  unit: "days" | "months" | "years";
+  action: "delete" | "anonymize" | "archive";
   lastRun?: string;
   nextRun: string;
   affectedRecords: number;
@@ -76,11 +130,11 @@ interface DataRetentionPolicy {
 
 interface DataRequest {
   id: string;
-  type: 'access' | 'deletion' | 'portability' | 'rectification';
+  type: "access" | "deletion" | "portability" | "rectification";
   requesterId: string;
   requesterName: string;
   requesterEmail: string;
-  status: 'pending' | 'in_progress' | 'completed' | 'rejected';
+  status: "pending" | "in_progress" | "completed" | "rejected";
   submittedAt: string;
   completedAt?: string;
   deadline: string;
@@ -94,7 +148,7 @@ interface PrivacyPolicy {
   version: string;
   effectiveDate: string;
   changes: string[];
-  status: 'draft' | 'active' | 'archived';
+  status: "draft" | "active" | "archived";
   publishedBy?: string;
   approvedBy?: string;
 }
@@ -113,7 +167,7 @@ interface ComplianceScore {
 
 interface ComplianceIssue {
   id: string;
-  severity: 'critical' | 'high' | 'medium' | 'low';
+  severity: "critical" | "high" | "medium" | "low";
   category: string;
   description: string;
   recommendation: string;
@@ -126,7 +180,9 @@ interface ComplianceManagerProps {
 
 export function ComplianceManager({ className }: ComplianceManagerProps) {
   const [consentRecords, setConsentRecords] = useState<ConsentRecord[]>([]);
-  const [retentionPolicies, setRetentionPolicies] = useState<DataRetentionPolicy[]>([]);
+  const [retentionPolicies, setRetentionPolicies] = useState<
+    DataRetentionPolicy[]
+  >([]);
   const [dataRequests, setDataRequests] = useState<DataRequest[]>([]);
   const [complianceScore, setComplianceScore] = useState<ComplianceScore>({
     overall: 85,
@@ -135,225 +191,241 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
       dataRetention: 88,
       requests: 78,
       documentation: 85,
-      security: 82
+      security: 82,
     },
-    issues: []
+    issues: [],
   });
   const [showConsentDialog, setShowConsentDialog] = useState(false);
   const [showPolicyDialog, setShowPolicyDialog] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState<DataRequest | null>(null);
-  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
+  const [selectedRequest, setSelectedRequest] = useState<DataRequest | null>(
+    null,
+  );
+  const [dateRange, setDateRange] = useState<{
+    from: Date | undefined;
+    to: Date | undefined;
+  }>({
     from: undefined,
-    to: undefined
+    to: undefined,
   });
 
   // Mock data
   useState(() => {
     const mockConsents: ConsentRecord[] = [
       {
-        id: '1',
-        leadId: 'lead-1',
-        leadName: 'John Smith',
-        email: 'john.smith@example.com',
-        type: 'marketing',
-        status: 'granted',
+        id: "1",
+        leadId: "lead-1",
+        leadName: "John Smith",
+        email: "john.smith@example.com",
+        type: "marketing",
+        status: "granted",
         timestamp: new Date(Date.now() - 86400000).toISOString(),
-        ipAddress: '192.168.1.100',
-        method: 'explicit',
+        ipAddress: "192.168.1.100",
+        method: "explicit",
         expiresAt: addDays(new Date(), 365).toISOString(),
-        source: 'Website Form',
-        version: '2.0'
+        source: "Website Form",
+        version: "2.0",
       },
       {
-        id: '2',
-        leadId: 'lead-2',
-        leadName: 'Sarah Johnson',
-        email: 'sarah.j@company.com',
-        type: 'analytics',
-        status: 'granted',
+        id: "2",
+        leadId: "lead-2",
+        leadName: "Sarah Johnson",
+        email: "sarah.j@company.com",
+        type: "analytics",
+        status: "granted",
         timestamp: new Date(Date.now() - 172800000).toISOString(),
-        ipAddress: '192.168.1.101',
-        method: 'explicit',
-        source: 'Cookie Banner',
-        version: '2.0'
+        ipAddress: "192.168.1.101",
+        method: "explicit",
+        source: "Cookie Banner",
+        version: "2.0",
       },
       {
-        id: '3',
-        leadId: 'lead-3',
-        leadName: 'Mike Chen',
-        email: 'mike.chen@startup.io',
-        type: 'marketing',
-        status: 'denied',
+        id: "3",
+        leadId: "lead-3",
+        leadName: "Mike Chen",
+        email: "mike.chen@startup.io",
+        type: "marketing",
+        status: "denied",
         timestamp: new Date(Date.now() - 259200000).toISOString(),
-        ipAddress: '192.168.1.102',
-        method: 'explicit',
-        source: 'Email Preferences',
-        version: '2.0'
-      }
+        ipAddress: "192.168.1.102",
+        method: "explicit",
+        source: "Email Preferences",
+        version: "2.0",
+      },
     ];
 
     const mockPolicies: DataRetentionPolicy[] = [
       {
-        id: '1',
-        dataType: 'Lead Contact Information',
-        description: 'Personal contact details including name, email, phone',
+        id: "1",
+        dataType: "Lead Contact Information",
+        description: "Personal contact details including name, email, phone",
         retentionPeriod: 3,
-        unit: 'years',
-        action: 'anonymize',
+        unit: "years",
+        action: "anonymize",
         lastRun: new Date(Date.now() - 86400000 * 30).toISOString(),
         nextRun: addDays(new Date(), 30).toISOString(),
         affectedRecords: 1250,
-        enabled: true
+        enabled: true,
       },
       {
-        id: '2',
-        dataType: 'Conversation Transcripts',
-        description: 'Call recordings and chat transcripts',
+        id: "2",
+        dataType: "Conversation Transcripts",
+        description: "Call recordings and chat transcripts",
         retentionPeriod: 1,
-        unit: 'years',
-        action: 'delete',
+        unit: "years",
+        action: "delete",
         lastRun: new Date(Date.now() - 86400000 * 15).toISOString(),
         nextRun: addDays(new Date(), 15).toISOString(),
         affectedRecords: 3420,
-        enabled: true
+        enabled: true,
       },
       {
-        id: '3',
-        dataType: 'Analytics Data',
-        description: 'Website behavior and engagement metrics',
+        id: "3",
+        dataType: "Analytics Data",
+        description: "Website behavior and engagement metrics",
         retentionPeriod: 6,
-        unit: 'months',
-        action: 'anonymize',
+        unit: "months",
+        action: "anonymize",
         nextRun: addDays(new Date(), 7).toISOString(),
         affectedRecords: 8900,
-        enabled: true
+        enabled: true,
       },
       {
-        id: '4',
-        dataType: 'System Logs',
-        description: 'Application logs and audit trails',
+        id: "4",
+        dataType: "System Logs",
+        description: "Application logs and audit trails",
         retentionPeriod: 90,
-        unit: 'days',
-        action: 'archive',
+        unit: "days",
+        action: "archive",
         lastRun: new Date(Date.now() - 86400000).toISOString(),
         nextRun: addDays(new Date(), 1).toISOString(),
         affectedRecords: 125000,
-        enabled: true
-      }
+        enabled: true,
+      },
     ];
 
     const mockRequests: DataRequest[] = [
       {
-        id: '1',
-        type: 'access',
-        requesterId: 'user-1',
-        requesterName: 'Alice Cooper',
-        requesterEmail: 'alice.cooper@email.com',
-        status: 'pending',
+        id: "1",
+        type: "access",
+        requesterId: "user-1",
+        requesterName: "Alice Cooper",
+        requesterEmail: "alice.cooper@email.com",
+        status: "pending",
         submittedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
         deadline: addDays(new Date(), 28).toISOString(),
-        notes: 'Requesting all personal data collected'
+        notes: "Requesting all personal data collected",
       },
       {
-        id: '2',
-        type: 'deletion',
-        requesterId: 'user-2',
-        requesterName: 'Bob Wilson',
-        requesterEmail: 'bob.w@company.com',
-        status: 'in_progress',
+        id: "2",
+        type: "deletion",
+        requesterId: "user-2",
+        requesterName: "Bob Wilson",
+        requesterEmail: "bob.w@company.com",
+        status: "in_progress",
         submittedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
         deadline: addDays(new Date(), 25).toISOString(),
-        assignedTo: 'compliance@company.com',
-        notes: 'Delete all data except billing records'
+        assignedTo: "compliance@company.com",
+        notes: "Delete all data except billing records",
       },
       {
-        id: '3',
-        type: 'portability',
-        requesterId: 'user-3',
-        requesterName: 'Carol Davis',
-        requesterEmail: 'carol.d@email.com',
-        status: 'completed',
+        id: "3",
+        type: "portability",
+        requesterId: "user-3",
+        requesterName: "Carol Davis",
+        requesterEmail: "carol.d@email.com",
+        status: "completed",
         submittedAt: new Date(Date.now() - 86400000 * 10).toISOString(),
         completedAt: new Date(Date.now() - 86400000 * 3).toISOString(),
         deadline: addDays(new Date(), 20).toISOString(),
-        assignedTo: 'data-team@company.com'
-      }
+        assignedTo: "data-team@company.com",
+      },
     ];
 
     const mockIssues: ComplianceIssue[] = [
       {
-        id: '1',
-        severity: 'high',
-        category: 'Consent',
-        description: '15% of active leads have expired consent records',
-        recommendation: 'Send consent renewal requests to affected leads',
-        affectedRecords: 342
+        id: "1",
+        severity: "high",
+        category: "Consent",
+        description: "15% of active leads have expired consent records",
+        recommendation: "Send consent renewal requests to affected leads",
+        affectedRecords: 342,
       },
       {
-        id: '2',
-        severity: 'medium',
-        category: 'Data Retention',
-        description: 'Conversation transcripts older than retention period not yet processed',
-        recommendation: 'Run data retention job for conversation data',
-        affectedRecords: 1250
+        id: "2",
+        severity: "medium",
+        category: "Data Retention",
+        description:
+          "Conversation transcripts older than retention period not yet processed",
+        recommendation: "Run data retention job for conversation data",
+        affectedRecords: 1250,
       },
       {
-        id: '3',
-        severity: 'low',
-        category: 'Documentation',
-        description: 'Privacy policy last updated 6 months ago',
-        recommendation: 'Review and update privacy policy for recent changes'
-      }
+        id: "3",
+        severity: "low",
+        category: "Documentation",
+        description: "Privacy policy last updated 6 months ago",
+        recommendation: "Review and update privacy policy for recent changes",
+      },
     ];
 
     setConsentRecords(mockConsents);
     setRetentionPolicies(mockPolicies);
     setDataRequests(mockRequests);
-    setComplianceScore(prev => ({ ...prev, issues: mockIssues }));
+    setComplianceScore((prev) => ({ ...prev, issues: mockIssues }));
   });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'granted':
-      case 'completed':
-        return 'text-green-600 bg-green-50';
-      case 'denied':
-      case 'rejected':
-        return 'text-red-600 bg-red-50';
-      case 'pending':
-        return 'text-yellow-600 bg-yellow-50';
-      case 'in_progress':
-        return 'text-blue-600 bg-blue-50';
+      case "granted":
+      case "completed":
+        return "text-green-600 bg-green-50";
+      case "denied":
+      case "rejected":
+        return "text-red-600 bg-red-50";
+      case "pending":
+        return "text-yellow-600 bg-yellow-50";
+      case "in_progress":
+        return "text-blue-600 bg-blue-50";
       default:
-        return 'text-gray-600 bg-gray-50';
+        return "text-gray-600 bg-gray-50";
     }
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'text-red-600 bg-red-50';
-      case 'high': return 'text-orange-600 bg-orange-50';
-      case 'medium': return 'text-yellow-600 bg-yellow-50';
-      case 'low': return 'text-green-600 bg-green-50';
-      default: return 'text-gray-600 bg-gray-50';
+      case "critical":
+        return "text-red-600 bg-red-50";
+      case "high":
+        return "text-orange-600 bg-orange-50";
+      case "medium":
+        return "text-yellow-600 bg-yellow-50";
+      case "low":
+        return "text-green-600 bg-green-50";
+      default:
+        return "text-gray-600 bg-gray-50";
     }
   };
 
   const getRequestTypeIcon = (type: string) => {
     switch (type) {
-      case 'access': return <Eye className="h-4 w-4" />;
-      case 'deletion': return <Trash2 className="h-4 w-4" />;
-      case 'portability': return <Download className="h-4 w-4" />;
-      case 'rectification': return <Edit className="h-4 w-4" />;
-      default: return <FileText className="h-4 w-4" />;
+      case "access":
+        return <Eye className="h-4 w-4" />;
+      case "deletion":
+        return <Trash2 className="h-4 w-4" />;
+      case "portability":
+        return <Download className="h-4 w-4" />;
+      case "rectification":
+        return <Edit className="h-4 w-4" />;
+      default:
+        return <FileText className="h-4 w-4" />;
     }
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return 'text-green-600';
-    if (score >= 70) return 'text-yellow-600';
-    if (score >= 50) return 'text-orange-600';
-    return 'text-red-600';
+    if (score >= 90) return "text-green-600";
+    if (score >= 70) return "text-yellow-600";
+    if (score >= 50) return "text-orange-600";
+    return "text-red-600";
   };
 
   return (
@@ -366,7 +438,13 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
               <Shield className="h-5 w-5" />
               <CardTitle>Compliance Management</CardTitle>
             </div>
-            <Badge variant="outline" className={cn("text-lg px-3 py-1", getScoreColor(complianceScore.overall))}>
+            <Badge
+              variant="outline"
+              className={cn(
+                "text-lg px-3 py-1",
+                getScoreColor(complianceScore.overall),
+              )}
+            >
               {complianceScore.overall}% Compliant
             </Badge>
           </div>
@@ -376,24 +454,31 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-5 mb-6">
-            {Object.entries(complianceScore.categories).map(([category, score]) => (
-              <div key={category} className="text-center">
-                <div className="text-sm text-muted-foreground capitalize mb-1">
-                  {category.replace(/([A-Z])/g, ' $1').trim()}
+            {Object.entries(complianceScore.categories).map(
+              ([category, score]) => (
+                <div key={category} className="text-center">
+                  <div className="text-sm text-muted-foreground capitalize mb-1">
+                    {category.replace(/([A-Z])/g, " $1").trim()}
+                  </div>
+                  <div
+                    className={cn("text-2xl font-bold", getScoreColor(score))}
+                  >
+                    {score}%
+                  </div>
+                  <Progress value={score} className="h-2 mt-2" />
                 </div>
-                <div className={cn("text-2xl font-bold", getScoreColor(score))}>
-                  {score}%
-                </div>
-                <Progress value={score} className="h-2 mt-2" />
-              </div>
-            ))}
+              ),
+            )}
           </div>
 
           {complianceScore.issues.length > 0 && (
             <Alert className="border-orange-200 bg-orange-50">
               <AlertTriangle className="h-4 w-4 text-orange-600" />
               <AlertDescription>
-                <strong>{complianceScore.issues.length} compliance issues</strong> require attention
+                <strong>
+                  {complianceScore.issues.length} compliance issues
+                </strong>{" "}
+                require attention
               </AlertDescription>
             </Alert>
           )}
@@ -453,7 +538,9 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                   <Calendar
                     mode="range"
                     selected={dateRange}
-                    onSelect={(range: any) => setDateRange(range || { from: undefined, to: undefined })}
+                    onSelect={(range: any) =>
+                      setDateRange(range || { from: undefined, to: undefined })
+                    }
                     numberOfMonths={2}
                   />
                 </PopoverContent>
@@ -464,7 +551,10 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
-              <Dialog open={showConsentDialog} onOpenChange={setShowConsentDialog}>
+              <Dialog
+                open={showConsentDialog}
+                onOpenChange={setShowConsentDialog}
+              >
                 <DialogTrigger asChild>
                   <Button>
                     <Plus className="h-4 w-4 mr-2" />
@@ -490,10 +580,18 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="marketing">Marketing Communications</SelectItem>
-                          <SelectItem value="analytics">Analytics & Tracking</SelectItem>
-                          <SelectItem value="functional">Functional Cookies</SelectItem>
-                          <SelectItem value="necessary">Necessary Cookies</SelectItem>
+                          <SelectItem value="marketing">
+                            Marketing Communications
+                          </SelectItem>
+                          <SelectItem value="analytics">
+                            Analytics & Tracking
+                          </SelectItem>
+                          <SelectItem value="functional">
+                            Functional Cookies
+                          </SelectItem>
+                          <SelectItem value="necessary">
+                            Necessary Cookies
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -516,9 +614,15 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                           <SelectValue placeholder="Select method" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="explicit">Explicit (Form/Checkbox)</SelectItem>
-                          <SelectItem value="implicit">Implicit (Continued Use)</SelectItem>
-                          <SelectItem value="imported">Imported from External Source</SelectItem>
+                          <SelectItem value="explicit">
+                            Explicit (Form/Checkbox)
+                          </SelectItem>
+                          <SelectItem value="implicit">
+                            Implicit (Continued Use)
+                          </SelectItem>
+                          <SelectItem value="imported">
+                            Imported from External Source
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -532,7 +636,10 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setShowConsentDialog(false)}>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowConsentDialog(false)}
+                    >
                       Cancel
                     </Button>
                     <Button onClick={() => setShowConsentDialog(false)}>
@@ -564,7 +671,9 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                     <TableCell>
                       <div>
                         <div className="font-medium">{record.leadName}</div>
-                        <div className="text-sm text-muted-foreground">{record.email}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {record.email}
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -573,29 +682,37 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge className={cn("text-xs", getStatusColor(record.status))}>
+                      <Badge
+                        className={cn("text-xs", getStatusColor(record.status))}
+                      >
                         {record.status}
                       </Badge>
                     </TableCell>
-                    <TableCell className="capitalize">{record.method}</TableCell>
+                    <TableCell className="capitalize">
+                      {record.method}
+                    </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        {format(new Date(record.timestamp), 'MMM d, yyyy')}
+                        {format(new Date(record.timestamp), "MMM d, yyyy")}
                         <div className="text-xs text-muted-foreground">
-                          {format(new Date(record.timestamp), 'h:mm a')}
+                          {format(new Date(record.timestamp), "h:mm a")}
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       {record.expiresAt ? (
                         <div className="text-sm">
-                          {format(new Date(record.expiresAt), 'MMM d, yyyy')}
+                          {format(new Date(record.expiresAt), "MMM d, yyyy")}
                           <div className="text-xs text-muted-foreground">
-                            {formatDistanceToNow(new Date(record.expiresAt), { addSuffix: true })}
+                            {formatDistanceToNow(new Date(record.expiresAt), {
+                              addSuffix: true,
+                            })}
                           </div>
                         </div>
                       ) : (
-                        <span className="text-sm text-muted-foreground">No expiry</span>
+                        <span className="text-sm text-muted-foreground">
+                          No expiry
+                        </span>
                       )}
                     </TableCell>
                     <TableCell>{record.source}</TableCell>
@@ -646,7 +763,10 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Run All Policies
               </Button>
-              <Dialog open={showPolicyDialog} onOpenChange={setShowPolicyDialog}>
+              <Dialog
+                open={showPolicyDialog}
+                onOpenChange={setShowPolicyDialog}
+              >
                 <DialogTrigger asChild>
                   <Button>
                     <Plus className="h-4 w-4 mr-2" />
@@ -667,7 +787,10 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                     </div>
                     <div className="space-y-2">
                       <Label>Description</Label>
-                      <Textarea placeholder="Describe what data this policy covers..." rows={2} />
+                      <Textarea
+                        placeholder="Describe what data this policy covers..."
+                        rows={2}
+                      />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
@@ -695,9 +818,15 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                           <SelectValue placeholder="Select action" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="delete">Delete Permanently</SelectItem>
-                          <SelectItem value="anonymize">Anonymize Data</SelectItem>
-                          <SelectItem value="archive">Archive to Cold Storage</SelectItem>
+                          <SelectItem value="delete">
+                            Delete Permanently
+                          </SelectItem>
+                          <SelectItem value="anonymize">
+                            Anonymize Data
+                          </SelectItem>
+                          <SelectItem value="archive">
+                            Archive to Cold Storage
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -709,7 +838,10 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setShowPolicyDialog(false)}>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowPolicyDialog(false)}
+                    >
                       Cancel
                     </Button>
                     <Button onClick={() => setShowPolicyDialog(false)}>
@@ -735,7 +867,10 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                             Active
                           </Badge>
                         ) : (
-                          <Badge variant="outline" className="text-xs text-muted-foreground">
+                          <Badge
+                            variant="outline"
+                            className="text-xs text-muted-foreground"
+                          >
                             <XCircle className="h-3 w-3 mr-1" />
                             Inactive
                           </Badge>
@@ -748,28 +883,48 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4 text-muted-foreground" />
                           <span>
-                            Retain for <strong>{policy.retentionPeriod} {policy.unit}</strong>
+                            Retain for{" "}
+                            <strong>
+                              {policy.retentionPeriod} {policy.unit}
+                            </strong>
                           </span>
                         </div>
                         <div className="flex items-center gap-1">
-                          {policy.action === 'delete' && <Trash2 className="h-4 w-4 text-red-500" />}
-                          {policy.action === 'anonymize' && <EyeOff className="h-4 w-4 text-blue-500" />}
-                          {policy.action === 'archive' && <Archive className="h-4 w-4 text-gray-500" />}
-                          <span className="capitalize">Then {policy.action}</span>
+                          {policy.action === "delete" && (
+                            <Trash2 className="h-4 w-4 text-red-500" />
+                          )}
+                          {policy.action === "anonymize" && (
+                            <EyeOff className="h-4 w-4 text-blue-500" />
+                          )}
+                          {policy.action === "archive" && (
+                            <Archive className="h-4 w-4 text-gray-500" />
+                          )}
+                          <span className="capitalize">
+                            Then {policy.action}
+                          </span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Database className="h-4 w-4 text-muted-foreground" />
-                          <span>{policy.affectedRecords.toLocaleString()} records</span>
+                          <span>
+                            {policy.affectedRecords.toLocaleString()} records
+                          </span>
                         </div>
                       </div>
                       <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
                         {policy.lastRun && (
                           <span>
-                            Last run: {formatDistanceToNow(new Date(policy.lastRun), { addSuffix: true })}
+                            Last run:{" "}
+                            {formatDistanceToNow(new Date(policy.lastRun), {
+                              addSuffix: true,
+                            })}
                           </span>
                         )}
                         <span>
-                          Next run: {format(new Date(policy.nextRun), 'MMM d, yyyy h:mm a')}
+                          Next run:{" "}
+                          {format(
+                            new Date(policy.nextRun),
+                            "MMM d, yyyy h:mm a",
+                          )}
                         </span>
                       </div>
                     </div>
@@ -818,7 +973,8 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
           <Alert>
             <Info className="h-4 w-4" />
             <AlertDescription>
-              All data subject requests must be processed within 30 days of receipt per GDPR requirements.
+              All data subject requests must be processed within 30 days of
+              receipt per GDPR requirements.
             </AlertDescription>
           </Alert>
 
@@ -827,7 +983,8 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">Data Subject Requests</CardTitle>
                 <Badge variant="outline">
-                  {dataRequests.filter(r => r.status === 'pending').length} pending
+                  {dataRequests.filter((r) => r.status === "pending").length}{" "}
+                  pending
                 </Badge>
               </div>
             </CardHeader>
@@ -855,29 +1012,42 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                       </TableCell>
                       <TableCell>
                         <div>
-                          <div className="font-medium">{request.requesterName}</div>
-                          <div className="text-sm text-muted-foreground">{request.requesterEmail}</div>
+                          <div className="font-medium">
+                            {request.requesterName}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {request.requesterEmail}
+                          </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge className={cn("text-xs", getStatusColor(request.status))}>
-                          {request.status.replace('_', ' ')}
+                        <Badge
+                          className={cn(
+                            "text-xs",
+                            getStatusColor(request.status),
+                          )}
+                        >
+                          {request.status.replace("_", " ")}
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {format(new Date(request.submittedAt), 'MMM d, yyyy')}
+                        {format(new Date(request.submittedAt), "MMM d, yyyy")}
                       </TableCell>
                       <TableCell>
                         <div className="text-sm">
-                          {format(new Date(request.deadline), 'MMM d, yyyy')}
+                          {format(new Date(request.deadline), "MMM d, yyyy")}
                           <div className="text-xs text-muted-foreground">
-                            {formatDistanceToNow(new Date(request.deadline), { addSuffix: true })}
+                            {formatDistanceToNow(new Date(request.deadline), {
+                              addSuffix: true,
+                            })}
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
                         {request.assignedTo || (
-                          <span className="text-sm text-muted-foreground">Unassigned</span>
+                          <span className="text-sm text-muted-foreground">
+                            Unassigned
+                          </span>
                         )}
                       </TableCell>
                       <TableCell className="text-right">
@@ -888,7 +1058,9 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => setSelectedRequest(request)}>
+                            <DropdownMenuItem
+                              onClick={() => setSelectedRequest(request)}
+                            >
                               <Eye className="mr-2 h-4 w-4" />
                               View Details
                             </DropdownMenuItem>
@@ -901,13 +1073,13 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                               Add Note
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            {request.status === 'pending' && (
+                            {request.status === "pending" && (
                               <DropdownMenuItem className="text-green-600">
                                 <CheckCircle className="mr-2 h-4 w-4" />
                                 Mark In Progress
                               </DropdownMenuItem>
                             )}
-                            {request.status === 'in_progress' && (
+                            {request.status === "in_progress" && (
                               <DropdownMenuItem className="text-green-600">
                                 <CheckCircle className="mr-2 h-4 w-4" />
                                 Mark Complete
@@ -935,7 +1107,9 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
             <CardContent>
               <div className="text-center py-8">
                 <FileText className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Privacy Policy Editor</h3>
+                <h3 className="text-lg font-semibold mb-2">
+                  Privacy Policy Editor
+                </h3>
                 <p className="text-muted-foreground mb-4">
                   Create and manage privacy policy versions with change tracking
                 </p>
@@ -954,16 +1128,23 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
               <Card key={issue.id}>
                 <CardContent className="p-4">
                   <div className="flex items-start gap-4">
-                    <div className={cn(
-                      "p-2 rounded-lg",
-                      getSeverityColor(issue.severity)
-                    )}>
+                    <div
+                      className={cn(
+                        "p-2 rounded-lg",
+                        getSeverityColor(issue.severity),
+                      )}
+                    >
                       <AlertTriangle className="h-4 w-4" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h4 className="font-semibold">{issue.category}</h4>
-                        <Badge className={cn("text-xs", getSeverityColor(issue.severity))}>
+                        <Badge
+                          className={cn(
+                            "text-xs",
+                            getSeverityColor(issue.severity),
+                          )}
+                        >
                           {issue.severity}
                         </Badge>
                       </div>
@@ -981,9 +1162,7 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                         </div>
                       )}
                     </div>
-                    <Button size="sm">
-                      Resolve
-                    </Button>
+                    <Button size="sm">Resolve</Button>
                   </div>
                 </CardContent>
               </Card>
@@ -994,7 +1173,10 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
 
       {/* Request Details Dialog */}
       {selectedRequest && (
-        <Dialog open={!!selectedRequest} onOpenChange={() => setSelectedRequest(null)}>
+        <Dialog
+          open={!!selectedRequest}
+          onOpenChange={() => setSelectedRequest(null)}
+        >
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle>Data Request Details</DialogTitle>
@@ -1005,25 +1187,35 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
                   <Label className="text-muted-foreground">Request Type</Label>
                   <div className="flex items-center gap-2 mt-1">
                     {getRequestTypeIcon(selectedRequest.type)}
-                    <span className="font-medium capitalize">{selectedRequest.type}</span>
+                    <span className="font-medium capitalize">
+                      {selectedRequest.type}
+                    </span>
                   </div>
                 </div>
                 <div>
                   <Label className="text-muted-foreground">Status</Label>
-                  <Badge className={cn("mt-1", getStatusColor(selectedRequest.status))}>
-                    {selectedRequest.status.replace('_', ' ')}
+                  <Badge
+                    className={cn(
+                      "mt-1",
+                      getStatusColor(selectedRequest.status),
+                    )}
+                  >
+                    {selectedRequest.status.replace("_", " ")}
                   </Badge>
                 </div>
                 <div>
                   <Label className="text-muted-foreground">Submitted</Label>
                   <p className="font-medium">
-                    {format(new Date(selectedRequest.submittedAt), 'MMM d, yyyy h:mm a')}
+                    {format(
+                      new Date(selectedRequest.submittedAt),
+                      "MMM d, yyyy h:mm a",
+                    )}
                   </p>
                 </div>
                 <div>
                   <Label className="text-muted-foreground">Deadline</Label>
                   <p className="font-medium">
-                    {format(new Date(selectedRequest.deadline), 'MMM d, yyyy')}
+                    {format(new Date(selectedRequest.deadline), "MMM d, yyyy")}
                   </p>
                 </div>
               </div>
@@ -1031,10 +1223,14 @@ export function ComplianceManager({ className }: ComplianceManagerProps) {
               <Separator />
 
               <div>
-                <Label className="text-muted-foreground">Requester Information</Label>
+                <Label className="text-muted-foreground">
+                  Requester Information
+                </Label>
                 <div className="mt-2 space-y-1">
                   <p className="font-medium">{selectedRequest.requesterName}</p>
-                  <p className="text-sm text-muted-foreground">{selectedRequest.requesterEmail}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {selectedRequest.requesterEmail}
+                  </p>
                 </div>
               </div>
 

@@ -15,7 +15,7 @@ export class CallRelayService {
   startCall(callId: string, phoneNumber: string) {
     // Mock implementation
     console.log(`Starting call ${callId} to ${phoneNumber}`);
-    this.connections.set(callId, { phoneNumber, status: 'active' });
+    this.connections.set(callId, { phoneNumber, status: "active" });
     return { success: true, callId };
   }
 
@@ -31,9 +31,9 @@ export class CallRelayService {
     return {
       success: true,
       transcript: [
-        { speaker: 'agent', text: 'Hello, this is Mohit AI', timestamp: 0 },
-        { speaker: 'customer', text: 'Hi, I received a call', timestamp: 2000 }
-      ]
+        { speaker: "agent", text: "Hello, this is Mohit AI", timestamp: 0 },
+        { speaker: "customer", text: "Hi, I received a call", timestamp: 2000 },
+      ],
     };
   }
 
@@ -55,7 +55,7 @@ export class CallRelayService {
 
   async startAutoDial(config: any) {
     // Mock implementation - start auto dialer
-    return { success: true, sessionId: 'mock-session-id' };
+    return { success: true, sessionId: "mock-session-id" };
   }
 
   async terminateCall(callId: string) {
@@ -69,9 +69,9 @@ export class CallRelayService {
     return {
       success: true,
       transcript: [
-        { speaker: 'agent', text: 'Hello, this is Mohit AI', timestamp: 0 },
-        { speaker: 'customer', text: 'Hi, I received a call', timestamp: 2000 }
-      ]
+        { speaker: "agent", text: "Hello, this is Mohit AI", timestamp: 0 },
+        { speaker: "customer", text: "Hi, I received a call", timestamp: 2000 },
+      ],
     };
   }
 

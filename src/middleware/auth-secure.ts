@@ -1,13 +1,23 @@
-import { NextRequest, NextResponse } from 'next/server';
-import * as jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from "next/server";
+import * as jwt from "jsonwebtoken";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 // Ensure environment variables are set
-const JWT_SECRET = process.env.JWT_SECRET || (process.env.NODE_ENV === 'production' ? undefined : 'dev-jwt-secret-min-32-characters-long');
-if (typeof window === 'undefined' && process.env.NODE_ENV === 'production' && (!JWT_SECRET || JWT_SECRET.length < 32)) {
-  console.warn('WARNING: JWT_SECRET must be set and at least 32 characters long in production');
+const JWT_SECRET =
+  process.env.JWT_SECRET ||
+  (process.env.NODE_ENV === "production"
+    ? undefined
+    : "dev-jwt-secret-min-32-characters-long");
+if (
+  typeof window === "undefined" &&
+  process.env.NODE_ENV === "production" &&
+  (!JWT_SECRET || JWT_SECRET.length < 32)
+) {
+  console.warn(
+    "WARNING: JWT_SECRET must be set and at least 32 characters long in production",
+  );
 }
 
 export interface AuthUser {
@@ -21,10 +31,10 @@ export class AuthError extends Error {
   constructor(
     message: string,
     public statusCode: number = 401,
-    public code: string = 'UNAUTHORIZED'
+    public code: string = "UNAUTHORIZED",
   ) {
     super(message);
-    this.name = 'AuthError';
+    this.name = "AuthError";
   }
 }
 
@@ -34,7 +44,7 @@ export class AuthError extends Error {
 export async function verifyToken(token: string): Promise<AuthUser> {
   try {
     const decoded = jwt.verify(token, JWT_SECRET as string) as any;
-    
+
     // Verify user still exists and is active
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
@@ -42,26 +52,26 @@ export async function verifyToken(token: string): Promise<AuthUser> {
         id: true,
         email: true,
         role: true,
-        organizationId: true
-      }
+        organizationId: true,
+      },
     });
-    
+
     if (!user) {
-      throw new AuthError('User not found');
+      throw new AuthError("User not found");
     }
-    
+
     return {
       id: user.id,
       email: user.email,
       role: user.role,
-      organizationId: user.organizationId || undefined
+      organizationId: user.organizationId || undefined,
     };
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      throw new AuthError('Token expired', 401, 'TOKEN_EXPIRED');
+      throw new AuthError("Token expired", 401, "TOKEN_EXPIRED");
     }
     if (error instanceof jwt.JsonWebTokenError) {
-      throw new AuthError('Invalid token', 401, 'INVALID_TOKEN');
+      throw new AuthError("Invalid token", 401, "INVALID_TOKEN");
     }
     throw error;
   }
@@ -70,13 +80,15 @@ export async function verifyToken(token: string): Promise<AuthUser> {
 /**
  * Authenticate request and extract user
  */
-export async function authenticateRequest(request: NextRequest): Promise<AuthUser> {
+export async function authenticateRequest(
+  request: NextRequest,
+): Promise<AuthUser> {
   // Check for token in Authorization header
-  const authHeader = request.headers.get('authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    throw new AuthError('No token provided', 401, 'NO_TOKEN');
+  const authHeader = request.headers.get("authorization");
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    throw new AuthError("No token provided", 401, "NO_TOKEN");
   }
-  
+
   const token = authHeader.substring(7);
   return verifyToken(token);
 }
@@ -87,9 +99,9 @@ export async function authenticateRequest(request: NextRequest): Promise<AuthUse
 export function requireRole(user: AuthUser, allowedRoles: string[]): void {
   if (!allowedRoles.includes(user.role)) {
     throw new AuthError(
-      `Insufficient permissions. Required role: ${allowedRoles.join(' or ')}`,
+      `Insufficient permissions. Required role: ${allowedRoles.join(" or ")}`,
       403,
-      'INSUFFICIENT_PERMISSIONS'
+      "INSUFFICIENT_PERMISSIONS",
     );
   }
 }
@@ -97,46 +109,48 @@ export function requireRole(user: AuthUser, allowedRoles: string[]): void {
 /**
  * Main authentication middleware
  */
-export async function authMiddleware(request: NextRequest): Promise<NextResponse> {
+export async function authMiddleware(
+  request: NextRequest,
+): Promise<NextResponse> {
   const pathname = request.nextUrl.pathname;
-  
+
   // Public routes that don't require authentication
   const publicRoutes = [
-    '/api/auth/login',
-    '/api/auth/register',
-    '/api/auth/refresh',
-    '/api/auth/forgot-password',
-    '/api/health',
-    '/api/status'
+    "/api/auth/login",
+    "/api/auth/register",
+    "/api/auth/refresh",
+    "/api/auth/forgot-password",
+    "/api/health",
+    "/api/status",
   ];
-  
+
   // Skip auth for public routes
-  if (publicRoutes.some(route => pathname.startsWith(route))) {
+  if (publicRoutes.some((route) => pathname.startsWith(route))) {
     return NextResponse.next();
   }
-  
+
   try {
     // Authenticate the request
     const user = await authenticateRequest(request);
-    
+
     // Add user context to request headers
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set('x-user-id', user.id);
-    requestHeaders.set('x-user-email', user.email);
-    requestHeaders.set('x-user-role', user.role);
+    requestHeaders.set("x-user-id", user.id);
+    requestHeaders.set("x-user-email", user.email);
+    requestHeaders.set("x-user-role", user.role);
     if (user.organizationId) {
-      requestHeaders.set('x-user-org', user.organizationId);
+      requestHeaders.set("x-user-org", user.organizationId);
     }
-    
+
     // Check role-based access
-    if (pathname.startsWith('/api/admin')) {
-      requireRole(user, ['ADMIN', 'SUPER_ADMIN']);
+    if (pathname.startsWith("/api/admin")) {
+      requireRole(user, ["ADMIN", "SUPER_ADMIN"]);
     }
-    
-    if (pathname.startsWith('/api/manager')) {
-      requireRole(user, ['MANAGER', 'ADMIN', 'SUPER_ADMIN']);
+
+    if (pathname.startsWith("/api/manager")) {
+      requireRole(user, ["MANAGER", "ADMIN", "SUPER_ADMIN"]);
     }
-    
+
     // TODO: Add audit logging when AuditLog model is added to Prisma schema
     // await prisma.auditLog.create({
     //   data: {
@@ -147,7 +161,7 @@ export async function authMiddleware(request: NextRequest): Promise<NextResponse
     //     userAgent: request.headers.get('user-agent') || 'unknown'
     //   }
     // });
-    
+
     return NextResponse.next({
       request: {
         headers: requestHeaders,
@@ -166,17 +180,17 @@ export async function authMiddleware(request: NextRequest): Promise<NextResponse
     //     }
     //   }
     // });
-    
+
     if (error instanceof AuthError) {
       return NextResponse.json(
         { error: error.message, code: error.code },
-        { status: error.statusCode }
+        { status: error.statusCode },
       );
     }
-    
+
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   } finally {
     await prisma.$disconnect();
@@ -188,9 +202,9 @@ export async function authMiddleware(request: NextRequest): Promise<NextResponse
  */
 export function getUserFromRequest(request: NextRequest): AuthUser {
   return {
-    id: request.headers.get('x-user-id') || '',
-    email: request.headers.get('x-user-email') || '',
-    role: request.headers.get('x-user-role') || '',
-    organizationId: request.headers.get('x-user-org') || undefined
+    id: request.headers.get("x-user-id") || "",
+    email: request.headers.get("x-user-email") || "",
+    role: request.headers.get("x-user-role") || "",
+    organizationId: request.headers.get("x-user-org") || undefined,
   };
 }

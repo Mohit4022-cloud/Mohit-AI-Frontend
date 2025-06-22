@@ -1,31 +1,88 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { 
-  MessageSquare, Facebook, Twitter, Instagram, Linkedin,
-  Youtube, Globe, Mail, Phone, Smartphone, Users,
-  Settings, Eye, EyeOff, Copy, Check, X, Plus,
-  Trash2, Edit, Save, RefreshCw, Download, Upload,
-  Zap, Bot, Sparkles, Palette, Code, Monitor,
-  Clock, Calendar, Filter, Search, Send, ExternalLink,
-  AlertCircle, CheckCircle, Info, Shield, Key,
-  BarChart3, TrendingUp, MessageCircle, Hash, AtSign
+import {
+  MessageSquare,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Youtube,
+  Globe,
+  Mail,
+  Phone,
+  Smartphone,
+  Users,
+  Settings,
+  Eye,
+  EyeOff,
+  Copy,
+  Check,
+  X,
+  Plus,
+  Trash2,
+  Edit,
+  Save,
+  RefreshCw,
+  Download,
+  Upload,
+  Zap,
+  Bot,
+  Sparkles,
+  Palette,
+  Code,
+  Monitor,
+  Clock,
+  Calendar,
+  Filter,
+  Search,
+  Send,
+  ExternalLink,
+  AlertCircle,
+  CheckCircle,
+  Info,
+  Shield,
+  Key,
+  BarChart3,
+  TrendingUp,
+  MessageCircle,
+  Hash,
+  AtSign,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format, formatDistanceToNow } from "date-fns";
@@ -34,12 +91,19 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
 interface Channel {
   id: string;
-  type: 'live_chat' | 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'whatsapp' | 'telegram';
+  type:
+    | "live_chat"
+    | "facebook"
+    | "twitter"
+    | "instagram"
+    | "linkedin"
+    | "whatsapp"
+    | "telegram";
   name: string;
   icon: any;
   enabled: boolean;
@@ -55,7 +119,7 @@ interface Channel {
 
 interface LiveChatConfig {
   widgetColor: string;
-  position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
+  position: "bottom-right" | "bottom-left" | "top-right" | "top-left";
   welcomeMessage: string;
   offlineMessage: string;
   businessHours: {
@@ -78,7 +142,7 @@ interface LiveChatConfig {
     emojiPicker: boolean;
   };
   routing: {
-    strategy: 'round-robin' | 'least-busy' | 'skill-based';
+    strategy: "round-robin" | "least-busy" | "skill-based";
     defaultTeam: string;
     priorityRules: Array<{
       condition: string;
@@ -126,9 +190,9 @@ interface ConversationChannelsProps {
 export function ConversationChannels({ className }: ConversationChannelsProps) {
   const [channels, setChannels] = useState<Channel[]>([
     {
-      id: 'live_chat',
-      type: 'live_chat',
-      name: 'Live Chat Widget',
+      id: "live_chat",
+      type: "live_chat",
+      name: "Live Chat Widget",
       icon: MessageSquare,
       enabled: true,
       configured: true,
@@ -136,13 +200,13 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
         conversations: 847,
         activeNow: 23,
         avgResponseTime: 45,
-        satisfaction: 94.3
-      }
+        satisfaction: 94.3,
+      },
     },
     {
-      id: 'facebook',
-      type: 'facebook',
-      name: 'Facebook Messenger',
+      id: "facebook",
+      type: "facebook",
+      name: "Facebook Messenger",
       icon: Facebook,
       enabled: true,
       configured: true,
@@ -150,13 +214,13 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
         conversations: 412,
         activeNow: 8,
         avgResponseTime: 120,
-        satisfaction: 91.2
-      }
+        satisfaction: 91.2,
+      },
     },
     {
-      id: 'twitter',
-      type: 'twitter',
-      name: 'Twitter/X',
+      id: "twitter",
+      type: "twitter",
+      name: "Twitter/X",
       icon: Twitter,
       enabled: false,
       configured: false,
@@ -164,13 +228,13 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
         conversations: 0,
         activeNow: 0,
         avgResponseTime: 0,
-        satisfaction: 0
-      }
+        satisfaction: 0,
+      },
     },
     {
-      id: 'instagram',
-      type: 'instagram',
-      name: 'Instagram DMs',
+      id: "instagram",
+      type: "instagram",
+      name: "Instagram DMs",
       icon: Instagram,
       enabled: false,
       configured: false,
@@ -178,13 +242,13 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
         conversations: 0,
         activeNow: 0,
         avgResponseTime: 0,
-        satisfaction: 0
-      }
+        satisfaction: 0,
+      },
     },
     {
-      id: 'linkedin',
-      type: 'linkedin',
-      name: 'LinkedIn Messages',
+      id: "linkedin",
+      type: "linkedin",
+      name: "LinkedIn Messages",
       icon: Linkedin,
       enabled: true,
       configured: true,
@@ -192,13 +256,13 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
         conversations: 234,
         activeNow: 5,
         avgResponseTime: 180,
-        satisfaction: 88.7
-      }
+        satisfaction: 88.7,
+      },
     },
     {
-      id: 'whatsapp',
-      type: 'whatsapp',
-      name: 'WhatsApp Business',
+      id: "whatsapp",
+      type: "whatsapp",
+      name: "WhatsApp Business",
       icon: Phone,
       enabled: false,
       configured: false,
@@ -206,52 +270,53 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
         conversations: 0,
         activeNow: 0,
         avgResponseTime: 0,
-        satisfaction: 0
-      }
-    }
+        satisfaction: 0,
+      },
+    },
   ]);
 
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const [showSetupDialog, setShowSetupDialog] = useState(false);
   const [showCodeDialog, setShowCodeDialog] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState("overview");
 
   // Live chat configuration
   const [liveChatConfig, setLiveChatConfig] = useState<LiveChatConfig>({
-    widgetColor: '#3b82f6',
-    position: 'bottom-right',
-    welcomeMessage: 'Hi! How can we help you today?',
-    offlineMessage: 'We\'re currently offline. Please leave a message and we\'ll get back to you soon.',
+    widgetColor: "#3b82f6",
+    position: "bottom-right",
+    welcomeMessage: "Hi! How can we help you today?",
+    offlineMessage:
+      "We're currently offline. Please leave a message and we'll get back to you soon.",
     businessHours: {
       enabled: true,
-      timezone: 'America/New_York',
+      timezone: "America/New_York",
       schedule: {
-        monday: { start: '09:00', end: '17:00', enabled: true },
-        tuesday: { start: '09:00', end: '17:00', enabled: true },
-        wednesday: { start: '09:00', end: '17:00', enabled: true },
-        thursday: { start: '09:00', end: '17:00', enabled: true },
-        friday: { start: '09:00', end: '17:00', enabled: true },
-        saturday: { start: '10:00', end: '14:00', enabled: false },
-        sunday: { start: '10:00', end: '14:00', enabled: false }
-      }
+        monday: { start: "09:00", end: "17:00", enabled: true },
+        tuesday: { start: "09:00", end: "17:00", enabled: true },
+        wednesday: { start: "09:00", end: "17:00", enabled: true },
+        thursday: { start: "09:00", end: "17:00", enabled: true },
+        friday: { start: "09:00", end: "17:00", enabled: true },
+        saturday: { start: "10:00", end: "14:00", enabled: false },
+        sunday: { start: "10:00", end: "14:00", enabled: false },
+      },
     },
     autoReply: {
       enabled: true,
       delay: 30,
-      message: 'Thanks for waiting! An agent will be with you shortly.'
+      message: "Thanks for waiting! An agent will be with you shortly.",
     },
     customization: {
-      logo: '',
+      logo: "",
       agentAvatars: true,
       soundNotifications: true,
       fileUploads: true,
-      emojiPicker: true
+      emojiPicker: true,
     },
     routing: {
-      strategy: 'round-robin',
-      defaultTeam: 'support',
-      priorityRules: []
-    }
+      strategy: "round-robin",
+      defaultTeam: "support",
+      priorityRules: [],
+    },
   });
 
   const generateEmbedCode = () => {
@@ -275,21 +340,21 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
   };
 
   const handleChannelToggle = (channelId: string, enabled: boolean) => {
-    setChannels(channels.map(ch => 
-      ch.id === channelId ? { ...ch, enabled } : ch
-    ));
+    setChannels(
+      channels.map((ch) => (ch.id === channelId ? { ...ch, enabled } : ch)),
+    );
   };
 
   const getChannelStatusColor = (channel: Channel) => {
-    if (!channel.configured) return 'text-gray-500';
-    if (!channel.enabled) return 'text-yellow-500';
-    return 'text-green-500';
+    if (!channel.configured) return "text-gray-500";
+    if (!channel.enabled) return "text-yellow-500";
+    return "text-green-500";
   };
 
   const getChannelStatusText = (channel: Channel) => {
-    if (!channel.configured) return 'Not Configured';
-    if (!channel.enabled) return 'Disabled';
-    return 'Active';
+    if (!channel.configured) return "Not Configured";
+    if (!channel.enabled) return "Disabled";
+    return "Active";
   };
 
   return (
@@ -307,7 +372,11 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
         </Button>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-4"
+      >
         <TabsList className="grid grid-cols-4 w-full max-w-lg">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="live-chat">Live Chat</TabsTrigger>
@@ -319,36 +388,49 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
           {/* Channel Overview Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {channels.map((channel) => (
-              <Card 
+              <Card
                 key={channel.id}
                 className={cn(
                   "cursor-pointer transition-all hover:shadow-lg",
-                  selectedChannel?.id === channel.id && "ring-2 ring-primary"
+                  selectedChannel?.id === channel.id && "ring-2 ring-primary",
                 )}
                 onClick={() => setSelectedChannel(channel)}
               >
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className={cn(
-                        "h-10 w-10 rounded-lg flex items-center justify-center",
-                        channel.enabled ? "bg-primary/10" : "bg-muted"
-                      )}>
-                        <channel.icon className={cn(
-                          "h-5 w-5",
-                          channel.enabled ? "text-primary" : "text-muted-foreground"
-                        )} />
+                      <div
+                        className={cn(
+                          "h-10 w-10 rounded-lg flex items-center justify-center",
+                          channel.enabled ? "bg-primary/10" : "bg-muted",
+                        )}
+                      >
+                        <channel.icon
+                          className={cn(
+                            "h-5 w-5",
+                            channel.enabled
+                              ? "text-primary"
+                              : "text-muted-foreground",
+                          )}
+                        />
                       </div>
                       <div>
                         <h3 className="font-semibold">{channel.name}</h3>
-                        <p className={cn("text-sm", getChannelStatusColor(channel))}>
+                        <p
+                          className={cn(
+                            "text-sm",
+                            getChannelStatusColor(channel),
+                          )}
+                        >
                           {getChannelStatusText(channel)}
                         </p>
                       </div>
                     </div>
                     <Switch
                       checked={channel.enabled}
-                      onCheckedChange={(checked) => handleChannelToggle(channel.id, checked)}
+                      onCheckedChange={(checked) =>
+                        handleChannelToggle(channel.id, checked)
+                      }
                       disabled={!channel.configured}
                     />
                   </div>
@@ -357,26 +439,34 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
                         <p className="text-muted-foreground">Conversations</p>
-                        <p className="font-semibold">{channel.stats.conversations}</p>
+                        <p className="font-semibold">
+                          {channel.stats.conversations}
+                        </p>
                       </div>
                       <div>
                         <p className="text-muted-foreground">Active Now</p>
-                        <p className="font-semibold">{channel.stats.activeNow}</p>
+                        <p className="font-semibold">
+                          {channel.stats.activeNow}
+                        </p>
                       </div>
                       <div>
                         <p className="text-muted-foreground">Avg Response</p>
-                        <p className="font-semibold">{channel.stats.avgResponseTime}s</p>
+                        <p className="font-semibold">
+                          {channel.stats.avgResponseTime}s
+                        </p>
                       </div>
                       <div>
                         <p className="text-muted-foreground">Satisfaction</p>
-                        <p className="font-semibold">{channel.stats.satisfaction}%</p>
+                        <p className="font-semibold">
+                          {channel.stats.satisfaction}%
+                        </p>
                       </div>
                     </div>
                   )}
 
                   {!channel.configured && (
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="w-full mt-4"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -396,14 +486,18 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
           <Card>
             <CardHeader>
               <CardTitle>Channel Performance</CardTitle>
-              <CardDescription>Aggregated metrics across all active channels</CardDescription>
+              <CardDescription>
+                Aggregated metrics across all active channels
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="text-center p-4 border rounded-lg">
                   <MessageCircle className="h-8 w-8 mx-auto mb-2 text-blue-600" />
                   <h3 className="text-2xl font-bold">1,493</h3>
-                  <p className="text-sm text-muted-foreground">Total Conversations</p>
+                  <p className="text-sm text-muted-foreground">
+                    Total Conversations
+                  </p>
                 </div>
                 <div className="text-center p-4 border rounded-lg">
                   <Users className="h-8 w-8 mx-auto mb-2 text-green-600" />
@@ -413,12 +507,16 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                 <div className="text-center p-4 border rounded-lg">
                   <Clock className="h-8 w-8 mx-auto mb-2 text-purple-600" />
                   <h3 className="text-2xl font-bold">87s</h3>
-                  <p className="text-sm text-muted-foreground">Avg Response Time</p>
+                  <p className="text-sm text-muted-foreground">
+                    Avg Response Time
+                  </p>
                 </div>
                 <div className="text-center p-4 border rounded-lg">
                   <TrendingUp className="h-8 w-8 mx-auto mb-2 text-orange-600" />
                   <h3 className="text-2xl font-bold">92.4%</h3>
-                  <p className="text-sm text-muted-foreground">Avg Satisfaction</p>
+                  <p className="text-sm text-muted-foreground">
+                    Avg Satisfaction
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -431,9 +529,14 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Live Chat Widget</CardTitle>
-                  <CardDescription>Customize your website chat experience</CardDescription>
+                  <CardDescription>
+                    Customize your website chat experience
+                  </CardDescription>
                 </div>
-                <Button variant="outline" onClick={() => setShowCodeDialog(true)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowCodeDialog(true)}
+                >
                   <Code className="h-4 w-4 mr-2" />
                   Get Embed Code
                 </Button>
@@ -445,32 +548,41 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                 <Label>Widget Preview</Label>
                 <div className="mt-2 relative bg-gray-100 rounded-lg p-8 h-96">
                   <div className="absolute bottom-4 right-4">
-                    <div 
+                    <div
                       className="w-80 bg-white rounded-lg shadow-2xl overflow-hidden"
                       style={{ borderColor: liveChatConfig.widgetColor }}
                     >
-                      <div 
+                      <div
                         className="p-4 text-white"
                         style={{ backgroundColor: liveChatConfig.widgetColor }}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <MessageSquare className="h-5 w-5" />
-                            <span className="font-semibold">Mohit AI Support</span>
+                            <span className="font-semibold">
+                              Mohit AI Support
+                            </span>
                           </div>
                           <X className="h-4 w-4 cursor-pointer" />
                         </div>
                       </div>
                       <div className="p-4">
                         <div className="bg-gray-100 rounded-lg p-3 mb-3">
-                          <p className="text-sm">{liveChatConfig.welcomeMessage}</p>
+                          <p className="text-sm">
+                            {liveChatConfig.welcomeMessage}
+                          </p>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Input 
-                            placeholder="Type your message..." 
+                          <Input
+                            placeholder="Type your message..."
                             className="flex-1"
                           />
-                          <Button size="icon" style={{ backgroundColor: liveChatConfig.widgetColor }}>
+                          <Button
+                            size="icon"
+                            style={{
+                              backgroundColor: liveChatConfig.widgetColor,
+                            }}
+                          >
                             <Send className="h-4 w-4" />
                           </Button>
                         </div>
@@ -490,36 +602,44 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                       <Input
                         type="color"
                         value={liveChatConfig.widgetColor}
-                        onChange={(e) => setLiveChatConfig({
-                          ...liveChatConfig,
-                          widgetColor: e.target.value
-                        })}
+                        onChange={(e) =>
+                          setLiveChatConfig({
+                            ...liveChatConfig,
+                            widgetColor: e.target.value,
+                          })
+                        }
                         className="w-16 h-10"
                       />
                       <Input
                         value={liveChatConfig.widgetColor}
-                        onChange={(e) => setLiveChatConfig({
-                          ...liveChatConfig,
-                          widgetColor: e.target.value
-                        })}
+                        onChange={(e) =>
+                          setLiveChatConfig({
+                            ...liveChatConfig,
+                            widgetColor: e.target.value,
+                          })
+                        }
                         className="font-mono"
                       />
                     </div>
                   </div>
                   <div>
                     <Label>Position</Label>
-                    <Select 
+                    <Select
                       value={liveChatConfig.position}
-                      onValueChange={(value: any) => setLiveChatConfig({
-                        ...liveChatConfig,
-                        position: value
-                      })}
+                      onValueChange={(value: any) =>
+                        setLiveChatConfig({
+                          ...liveChatConfig,
+                          position: value,
+                        })
+                      }
                     >
                       <SelectTrigger className="mt-2">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="bottom-right">Bottom Right</SelectItem>
+                        <SelectItem value="bottom-right">
+                          Bottom Right
+                        </SelectItem>
                         <SelectItem value="bottom-left">Bottom Left</SelectItem>
                         <SelectItem value="top-right">Top Right</SelectItem>
                         <SelectItem value="top-left">Top Left</SelectItem>
@@ -538,10 +658,12 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                   <Label>Welcome Message</Label>
                   <Textarea
                     value={liveChatConfig.welcomeMessage}
-                    onChange={(e) => setLiveChatConfig({
-                      ...liveChatConfig,
-                      welcomeMessage: e.target.value
-                    })}
+                    onChange={(e) =>
+                      setLiveChatConfig({
+                        ...liveChatConfig,
+                        welcomeMessage: e.target.value,
+                      })
+                    }
                     className="mt-2"
                     placeholder="Hi! How can we help you today?"
                   />
@@ -550,10 +672,12 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                   <Label>Offline Message</Label>
                   <Textarea
                     value={liveChatConfig.offlineMessage}
-                    onChange={(e) => setLiveChatConfig({
-                      ...liveChatConfig,
-                      offlineMessage: e.target.value
-                    })}
+                    onChange={(e) =>
+                      setLiveChatConfig({
+                        ...liveChatConfig,
+                        offlineMessage: e.target.value,
+                      })
+                    }
                     className="mt-2"
                     placeholder="We're currently offline..."
                   />
@@ -568,39 +692,40 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                   <h3 className="font-semibold">Business Hours</h3>
                   <Switch
                     checked={liveChatConfig.businessHours.enabled}
-                    onCheckedChange={(checked) => setLiveChatConfig({
-                      ...liveChatConfig,
-                      businessHours: {
-                        ...liveChatConfig.businessHours,
-                        enabled: checked
-                      }
-                    })}
+                    onCheckedChange={(checked) =>
+                      setLiveChatConfig({
+                        ...liveChatConfig,
+                        businessHours: {
+                          ...liveChatConfig.businessHours,
+                          enabled: checked,
+                        },
+                      })
+                    }
                   />
                 </div>
                 {liveChatConfig.businessHours.enabled && (
                   <div className="space-y-2">
-                    {Object.entries(liveChatConfig.businessHours.schedule).map(([day, hours]) => (
-                      <div key={day} className="flex items-center gap-4">
-                        <Switch
-                          checked={hours.enabled}
-                          className="w-12"
-                        />
-                        <span className="w-24 capitalize">{day}</span>
-                        <Input
-                          type="time"
-                          value={hours.start}
-                          className="w-32"
-                          disabled={!hours.enabled}
-                        />
-                        <span>to</span>
-                        <Input
-                          type="time"
-                          value={hours.end}
-                          className="w-32"
-                          disabled={!hours.enabled}
-                        />
-                      </div>
-                    ))}
+                    {Object.entries(liveChatConfig.businessHours.schedule).map(
+                      ([day, hours]) => (
+                        <div key={day} className="flex items-center gap-4">
+                          <Switch checked={hours.enabled} className="w-12" />
+                          <span className="w-24 capitalize">{day}</span>
+                          <Input
+                            type="time"
+                            value={hours.start}
+                            className="w-32"
+                            disabled={!hours.enabled}
+                          />
+                          <span>to</span>
+                          <Input
+                            type="time"
+                            value={hours.end}
+                            className="w-32"
+                            disabled={!hours.enabled}
+                          />
+                        </div>
+                      ),
+                    )}
                   </div>
                 )}
               </div>
@@ -614,30 +739,46 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium">Agent Avatars</p>
-                      <p className="text-sm text-muted-foreground">Show agent profile pictures</p>
+                      <p className="text-sm text-muted-foreground">
+                        Show agent profile pictures
+                      </p>
                     </div>
-                    <Switch checked={liveChatConfig.customization.agentAvatars} />
+                    <Switch
+                      checked={liveChatConfig.customization.agentAvatars}
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium">Sound Notifications</p>
-                      <p className="text-sm text-muted-foreground">Play sound for new messages</p>
+                      <p className="text-sm text-muted-foreground">
+                        Play sound for new messages
+                      </p>
                     </div>
-                    <Switch checked={liveChatConfig.customization.soundNotifications} />
+                    <Switch
+                      checked={liveChatConfig.customization.soundNotifications}
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium">File Uploads</p>
-                      <p className="text-sm text-muted-foreground">Allow visitors to send files</p>
+                      <p className="text-sm text-muted-foreground">
+                        Allow visitors to send files
+                      </p>
                     </div>
-                    <Switch checked={liveChatConfig.customization.fileUploads} />
+                    <Switch
+                      checked={liveChatConfig.customization.fileUploads}
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium">Emoji Picker</p>
-                      <p className="text-sm text-muted-foreground">Enable emoji selection</p>
+                      <p className="text-sm text-muted-foreground">
+                        Enable emoji selection
+                      </p>
                     </div>
-                    <Switch checked={liveChatConfig.customization.emojiPicker} />
+                    <Switch
+                      checked={liveChatConfig.customization.emojiPicker}
+                    />
                   </div>
                 </div>
               </div>
@@ -655,91 +796,103 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {channels.filter(ch => ch.type !== 'live_chat').map((channel) => (
-                  <div key={channel.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className={cn(
-                          "h-10 w-10 rounded-lg flex items-center justify-center",
-                          channel.configured ? "bg-primary/10" : "bg-muted"
-                        )}>
-                          <channel.icon className={cn(
-                            "h-5 w-5",
-                            channel.configured ? "text-primary" : "text-muted-foreground"
-                          )} />
+                {channels
+                  .filter((ch) => ch.type !== "live_chat")
+                  .map((channel) => (
+                    <div key={channel.id} className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={cn(
+                              "h-10 w-10 rounded-lg flex items-center justify-center",
+                              channel.configured ? "bg-primary/10" : "bg-muted",
+                            )}
+                          >
+                            <channel.icon
+                              className={cn(
+                                "h-5 w-5",
+                                channel.configured
+                                  ? "text-primary"
+                                  : "text-muted-foreground",
+                              )}
+                            />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold">{channel.name}</h4>
+                            <p className="text-sm text-muted-foreground">
+                              {channel.configured
+                                ? "Connected"
+                                : "Not connected"}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h4 className="font-semibold">{channel.name}</h4>
-                          <p className="text-sm text-muted-foreground">
-                            {channel.configured ? 'Connected' : 'Not connected'}
-                          </p>
-                        </div>
+                        {channel.configured ? (
+                          <div className="flex items-center gap-2">
+                            <Button variant="outline" size="sm">
+                              <Settings className="h-4 w-4 mr-2" />
+                              Configure
+                            </Button>
+                            <Button variant="outline" size="sm">
+                              <RefreshCw className="h-4 w-4 mr-2" />
+                              Reconnect
+                            </Button>
+                          </div>
+                        ) : (
+                          <Button>
+                            <Plus className="h-4 w-4 mr-2" />
+                            Connect
+                          </Button>
+                        )}
                       </div>
-                      {channel.configured ? (
-                        <div className="flex items-center gap-2">
-                          <Button variant="outline" size="sm">
-                            <Settings className="h-4 w-4 mr-2" />
-                            Configure
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            <RefreshCw className="h-4 w-4 mr-2" />
-                            Reconnect
-                          </Button>
+
+                      {channel.configured && (
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-3 gap-4 text-sm">
+                            <div>
+                              <p className="text-muted-foreground">Account</p>
+                              <p className="font-medium">@mohitai_official</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">Followers</p>
+                              <p className="font-medium">12.4K</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">Last Sync</p>
+                              <p className="font-medium">2 min ago</p>
+                            </div>
+                          </div>
+
+                          <Separator />
+
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <MessageCircle className="h-4 w-4 text-muted-foreground" />
+                                <span className="text-sm">Direct Messages</span>
+                              </div>
+                              <Switch defaultChecked />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <AtSign className="h-4 w-4 text-muted-foreground" />
+                                <span className="text-sm">Mentions</span>
+                              </div>
+                              <Switch defaultChecked />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Hash className="h-4 w-4 text-muted-foreground" />
+                                <span className="text-sm">
+                                  Hashtag Monitoring
+                                </span>
+                              </div>
+                              <Switch />
+                            </div>
+                          </div>
                         </div>
-                      ) : (
-                        <Button>
-                          <Plus className="h-4 w-4 mr-2" />
-                          Connect
-                        </Button>
                       )}
                     </div>
-
-                    {channel.configured && (
-                      <div className="space-y-3">
-                        <div className="grid grid-cols-3 gap-4 text-sm">
-                          <div>
-                            <p className="text-muted-foreground">Account</p>
-                            <p className="font-medium">@mohitai_official</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Followers</p>
-                            <p className="font-medium">12.4K</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Last Sync</p>
-                            <p className="font-medium">2 min ago</p>
-                          </div>
-                        </div>
-
-                        <Separator />
-
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <MessageCircle className="h-4 w-4 text-muted-foreground" />
-                              <span className="text-sm">Direct Messages</span>
-                            </div>
-                            <Switch defaultChecked />
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <AtSign className="h-4 w-4 text-muted-foreground" />
-                              <span className="text-sm">Mentions</span>
-                            </div>
-                            <Switch defaultChecked />
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <Hash className="h-4 w-4 text-muted-foreground" />
-                              <span className="text-sm">Hashtag Monitoring</span>
-                            </div>
-                            <Switch />
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  ))}
               </div>
             </CardContent>
           </Card>
@@ -748,14 +901,17 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
           <Card>
             <CardHeader>
               <CardTitle>Automation Rules</CardTitle>
-              <CardDescription>Set up automated responses and actions</CardDescription>
+              <CardDescription>
+                Set up automated responses and actions
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <Alert>
                   <Bot className="h-4 w-4" />
                   <AlertDescription>
-                    Automation helps you respond faster and maintain consistent engagement across channels
+                    Automation helps you respond faster and maintain consistent
+                    engagement across channels
                   </AlertDescription>
                 </Alert>
 
@@ -821,7 +977,9 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
           <Card>
             <CardHeader>
               <CardTitle>Channel Settings</CardTitle>
-              <CardDescription>Configure global channel preferences</CardDescription>
+              <CardDescription>
+                Configure global channel preferences
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -835,9 +993,13 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="round-robin">Round Robin</SelectItem>
-                        <SelectItem value="least-busy">Least Busy Agent</SelectItem>
+                        <SelectItem value="least-busy">
+                          Least Busy Agent
+                        </SelectItem>
                         <SelectItem value="skill-based">Skill Based</SelectItem>
-                        <SelectItem value="manual">Manual Assignment</SelectItem>
+                        <SelectItem value="manual">
+                          Manual Assignment
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -941,7 +1103,9 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>
-              {selectedChannel ? `Configure ${selectedChannel.name}` : 'Add New Channel'}
+              {selectedChannel
+                ? `Configure ${selectedChannel.name}`
+                : "Add New Channel"}
             </DialogTitle>
             <DialogDescription>
               Connect your communication channel to start receiving messages
@@ -952,11 +1116,12 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
               <Alert>
                 <Info className="h-4 w-4" />
                 <AlertDescription>
-                  You&apos;ll need admin access to your {selectedChannel.name} account to complete setup
+                  You&apos;ll need admin access to your {selectedChannel.name}{" "}
+                  account to complete setup
                 </AlertDescription>
               </Alert>
 
-              {selectedChannel.type === 'facebook' && (
+              {selectedChannel.type === "facebook" && (
                 <div className="space-y-4">
                   <Button className="w-full" variant="outline">
                     <Facebook className="h-4 w-4 mr-2" />
@@ -973,7 +1138,7 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                 </div>
               )}
 
-              {selectedChannel.type === 'twitter' && (
+              {selectedChannel.type === "twitter" && (
                 <div className="space-y-4">
                   <Button className="w-full" variant="outline">
                     <Twitter className="h-4 w-4 mr-2" />
@@ -990,7 +1155,7 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                 </div>
               )}
 
-              {selectedChannel.type === 'instagram' && (
+              {selectedChannel.type === "instagram" && (
                 <div className="space-y-4">
                   <Button className="w-full" variant="outline">
                     <Instagram className="h-4 w-4 mr-2" />
@@ -1005,7 +1170,7 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                 </div>
               )}
 
-              {selectedChannel.type === 'linkedin' && (
+              {selectedChannel.type === "linkedin" && (
                 <div className="space-y-4">
                   <Button className="w-full" variant="outline">
                     <Linkedin className="h-4 w-4 mr-2" />
@@ -1022,7 +1187,7 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
                 </div>
               )}
 
-              {selectedChannel.type === 'whatsapp' && (
+              {selectedChannel.type === "whatsapp" && (
                 <div className="space-y-4">
                   <div>
                     <Label>WhatsApp Business API Token</Label>
@@ -1051,10 +1216,12 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
             <Button variant="outline" onClick={() => setShowSetupDialog(false)}>
               Cancel
             </Button>
-            <Button onClick={() => {
-              // Handle setup completion
-              setShowSetupDialog(false);
-            }}>
+            <Button
+              onClick={() => {
+                // Handle setup completion
+                setShowSetupDialog(false);
+              }}
+            >
               Complete Setup
             </Button>
           </DialogFooter>
@@ -1092,7 +1259,8 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
             <Alert>
               <Info className="h-4 w-4" />
               <AlertDescription>
-                Place this code just before the closing &lt;/body&gt; tag on every page where you want the chat widget to appear
+                Place this code just before the closing &lt;/body&gt; tag on
+                every page where you want the chat widget to appear
               </AlertDescription>
             </Alert>
             <div className="space-y-2">
@@ -1110,10 +1278,12 @@ export function ConversationChannels({ className }: ConversationChannelsProps) {
             <Button variant="outline" onClick={() => setShowCodeDialog(false)}>
               Close
             </Button>
-            <Button onClick={() => {
-              navigator.clipboard.writeText(generateEmbedCode());
-              setShowCodeDialog(false);
-            }}>
+            <Button
+              onClick={() => {
+                navigator.clipboard.writeText(generateEmbedCode());
+                setShowCodeDialog(false);
+              }}
+            >
               <Copy className="h-4 w-4 mr-2" />
               Copy Code
             </Button>

@@ -1,6 +1,6 @@
 /**
  * CSV Parser Utility
- * 
+ *
  * Handles CSV parsing and mapping for contact imports
  * Features:
  * - Parse CSV string to objects
@@ -9,7 +9,7 @@
  * - Error handling
  */
 
-import { parse } from 'csv-parse/sync';
+import { parse } from "csv-parse/sync";
 
 interface CSVContact {
   email: string;
@@ -44,7 +44,7 @@ interface CSVMapping {
  */
 export async function parseCSV(
   csvData: string,
-  mapping?: Record<string, string>
+  mapping?: Record<string, string>,
 ): Promise<CSVContact[]> {
   try {
     // Parse CSV
@@ -54,7 +54,7 @@ export async function parseCSV(
       trim: true,
       cast: (value, context) => {
         // Try to parse JSON values for custom fields
-        if (value && value.startsWith('{') && value.endsWith('}')) {
+        if (value && value.startsWith("{") && value.endsWith("}")) {
           try {
             return JSON.parse(value);
           } catch {
@@ -66,29 +66,29 @@ export async function parseCSV(
     });
 
     if (!records || records.length === 0) {
-      throw new Error('No data found in CSV');
+      throw new Error("No data found in CSV");
     }
 
     // Get column names from first record
     const columns = Object.keys(records[0]);
-    
+
     // Default mapping if not provided
-    const fieldMapping: CSVMapping = mapping as CSVMapping || {
-      email: findColumn(columns, ['email', 'email_address', 'e-mail']),
-      firstName: findColumn(columns, ['first_name', 'firstname', 'fname']),
-      lastName: findColumn(columns, ['last_name', 'lastname', 'lname']),
-      phone: findColumn(columns, ['phone', 'phone_number', 'mobile']),
-      title: findColumn(columns, ['title', 'job_title', 'position']),
-      company: findColumn(columns, ['company', 'company_name', 'organization']),
-      department: findColumn(columns, ['department', 'dept']),
-      linkedin: findColumn(columns, ['linkedin', 'linkedin_url']),
-      twitter: findColumn(columns, ['twitter', 'twitter_handle']),
-      leadSource: findColumn(columns, ['lead_source', 'source']),
+    const fieldMapping: CSVMapping = (mapping as CSVMapping) || {
+      email: findColumn(columns, ["email", "email_address", "e-mail"]),
+      firstName: findColumn(columns, ["first_name", "firstname", "fname"]),
+      lastName: findColumn(columns, ["last_name", "lastname", "lname"]),
+      phone: findColumn(columns, ["phone", "phone_number", "mobile"]),
+      title: findColumn(columns, ["title", "job_title", "position"]),
+      company: findColumn(columns, ["company", "company_name", "organization"]),
+      department: findColumn(columns, ["department", "dept"]),
+      linkedin: findColumn(columns, ["linkedin", "linkedin_url"]),
+      twitter: findColumn(columns, ["twitter", "twitter_handle"]),
+      leadSource: findColumn(columns, ["lead_source", "source"]),
     };
 
     // Validate required fields
     if (!fieldMapping.email) {
-      throw new Error('Email column is required in CSV');
+      throw new Error("Email column is required in CSV");
     }
 
     // Map records to contacts
@@ -98,7 +98,7 @@ export async function parseCSV(
     records.forEach((record: any, index: number) => {
       try {
         const email = record[fieldMapping.email];
-        
+
         if (!email || !isValidEmail(email)) {
           errors.push(`Row ${index + 2}: Invalid or missing email`);
           return;
@@ -114,38 +114,42 @@ export async function parseCSV(
           department: record[fieldMapping.department!] || undefined,
           linkedin: record[fieldMapping.linkedin!] || undefined,
           twitter: record[fieldMapping.twitter!] || undefined,
-          leadSource: record[fieldMapping.leadSource!] || 'CSV Import',
+          leadSource: record[fieldMapping.leadSource!] || "CSV Import",
           customFields: {},
         };
 
         // Add any unmapped fields to customFields
-        Object.keys(record).forEach(key => {
+        Object.keys(record).forEach((key) => {
           if (!Object.values(fieldMapping).includes(key)) {
             contact.customFields![key] = record[key];
           }
         });
 
         // Clean up empty values
-        Object.keys(contact).forEach(key => {
-          if (contact[key as keyof CSVContact] === '' || 
-              contact[key as keyof CSVContact] === null) {
+        Object.keys(contact).forEach((key) => {
+          if (
+            contact[key as keyof CSVContact] === "" ||
+            contact[key as keyof CSVContact] === null
+          ) {
             delete contact[key as keyof CSVContact];
           }
         });
 
         contacts.push(contact);
       } catch (error) {
-        errors.push(`Row ${index + 2}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        errors.push(
+          `Row ${index + 2}: ${error instanceof Error ? error.message : "Unknown error"}`,
+        );
       }
     });
 
     if (errors.length > 0 && contacts.length === 0) {
-      throw new Error(`CSV parsing failed:\n${errors.join('\n')}`);
+      throw new Error(`CSV parsing failed:\n${errors.join("\n")}`);
     }
 
     return contacts;
   } catch (error) {
-    console.error('CSV parsing error:', error);
+    console.error("CSV parsing error:", error);
     throw error;
   }
 }
@@ -154,18 +158,24 @@ export async function parseCSV(
  * Find column name from possible variations
  */
 function findColumn(columns: string[], variations: string[]): string {
-  const normalizedColumns = columns.map(col => col.toLowerCase().replace(/[^a-z0-9]/g, ''));
-  
+  const normalizedColumns = columns.map((col) =>
+    col.toLowerCase().replace(/[^a-z0-9]/g, ""),
+  );
+
   for (const variation of variations) {
-    const normalizedVariation = variation.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const index = normalizedColumns.findIndex(col => col === normalizedVariation);
-    
+    const normalizedVariation = variation
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "");
+    const index = normalizedColumns.findIndex(
+      (col) => col === normalizedVariation,
+    );
+
     if (index !== -1) {
       return columns[index];
     }
   }
-  
-  return '';
+
+  return "";
 }
 
 /**
@@ -181,21 +191,21 @@ function isValidEmail(email: string): boolean {
  */
 export function generateCSV(contacts: any[]): string {
   if (!contacts || contacts.length === 0) {
-    return '';
+    return "";
   }
 
   // Get all unique keys from contacts
   const allKeys = new Set<string>();
-  contacts.forEach(contact => {
-    Object.keys(contact).forEach(key => {
-      if (key !== 'customFields') {
+  contacts.forEach((contact) => {
+    Object.keys(contact).forEach((key) => {
+      if (key !== "customFields") {
         allKeys.add(key);
       }
     });
-    
+
     // Add custom field keys
-    if (contact.customFields && typeof contact.customFields === 'object') {
-      Object.keys(contact.customFields).forEach(key => {
+    if (contact.customFields && typeof contact.customFields === "object") {
+      Object.keys(contact.customFields).forEach((key) => {
         allKeys.add(`custom_${key}`);
       });
     }
@@ -203,32 +213,35 @@ export function generateCSV(contacts: any[]): string {
 
   // Create header
   const headers = Array.from(allKeys);
-  const csvRows = [headers.join(',')];
+  const csvRows = [headers.join(",")];
 
   // Add data rows
-  contacts.forEach(contact => {
-    const row = headers.map(header => {
+  contacts.forEach((contact) => {
+    const row = headers.map((header) => {
       let value;
-      
-      if (header.startsWith('custom_')) {
+
+      if (header.startsWith("custom_")) {
         const customKey = header.substring(7);
-        value = contact.customFields?.[customKey] || '';
+        value = contact.customFields?.[customKey] || "";
       } else {
-        value = contact[header] || '';
+        value = contact[header] || "";
       }
 
       // Escape values containing commas or quotes
-      if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+      if (
+        typeof value === "string" &&
+        (value.includes(",") || value.includes('"'))
+      ) {
         value = `"${value.replace(/"/g, '""')}"`;
       }
 
       return value;
     });
-    
-    csvRows.push(row.join(','));
+
+    csvRows.push(row.join(","));
   });
 
-  return csvRows.join('\n');
+  return csvRows.join("\n");
 }
 
 /**
@@ -249,19 +262,18 @@ export function validateCSVStructure(csvData: string): {
     });
 
     const headers = records.length > 0 ? Object.keys(records[0]) : [];
-    const hasEmail = headers.some(h => 
-      h.toLowerCase().includes('email') || 
-      h.toLowerCase() === 'e-mail'
+    const hasEmail = headers.some(
+      (h) => h.toLowerCase().includes("email") || h.toLowerCase() === "e-mail",
     );
 
     const errors: string[] = [];
-    
+
     if (!hasEmail) {
-      errors.push('CSV must contain an email column');
+      errors.push("CSV must contain an email column");
     }
 
     if (records.length === 0) {
-      errors.push('CSV contains no data rows');
+      errors.push("CSV contains no data rows");
     }
 
     return {
@@ -275,7 +287,7 @@ export function validateCSVStructure(csvData: string): {
       isValid: false,
       headers: [],
       rowCount: 0,
-      errors: [error instanceof Error ? error.message : 'Invalid CSV format'],
+      errors: [error instanceof Error ? error.message : "Invalid CSV format"],
     };
   }
 }

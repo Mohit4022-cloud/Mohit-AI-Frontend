@@ -1,6 +1,6 @@
-import { isDevelopment, isProduction } from './config';
+import { isDevelopment, isProduction } from "./config";
 
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+type LogLevel = "debug" | "info" | "warn" | "error";
 
 interface LogEntry {
   level: LogLevel;
@@ -16,9 +16,9 @@ class Logger {
 
   private shouldLog(level: LogLevel): boolean {
     if (isDevelopment) return true;
-    
+
     // In production, only log warnings and errors
-    return level === 'warn' || level === 'error';
+    return level === "warn" || level === "error";
   }
 
   private formatMessage(level: LogLevel, message: string, data?: any): void {
@@ -37,10 +37,10 @@ class Logger {
     const style = this.getStyle(level);
 
     if (isDevelopment) {
-      console.log(`%c${prefix} ${message}`, style, data || '');
+      console.log(`%c${prefix} ${message}`, style, data || "");
     } else {
       // In production, send to error tracking service
-      if (level === 'error' && typeof window !== 'undefined') {
+      if (level === "error" && typeof window !== "undefined") {
         // Send to Sentry or your error tracking service
         this.sendToErrorTracking(entry);
       }
@@ -49,10 +49,10 @@ class Logger {
 
   private getStyle(level: LogLevel): string {
     const styles = {
-      debug: 'color: #6B7280',
-      info: 'color: #3B82F6',
-      warn: 'color: #F59E0B',
-      error: 'color: #EF4444; font-weight: bold',
+      debug: "color: #6B7280",
+      info: "color: #3B82F6",
+      warn: "color: #F59E0B",
+      error: "color: #EF4444; font-weight: bold",
     };
     return styles[level];
   }
@@ -69,15 +69,15 @@ class Logger {
   }
 
   debug(message: string, data?: any): void {
-    this.formatMessage('debug', message, data);
+    this.formatMessage("debug", message, data);
   }
 
   info(message: string, data?: any): void {
-    this.formatMessage('info', message, data);
+    this.formatMessage("info", message, data);
   }
 
   warn(message: string, data?: any): void {
-    this.formatMessage('warn', message, data);
+    this.formatMessage("warn", message, data);
   }
 
   error(message: string, error?: Error | any, data?: any): void {
@@ -85,7 +85,7 @@ class Logger {
       ...data,
       error: error?.stack || error?.message || error,
     };
-    this.formatMessage('error', message, errorData);
+    this.formatMessage("error", message, errorData);
   }
 
   getLogs(): LogEntry[] {
@@ -101,13 +101,13 @@ class Logger {
 export const logger = new Logger();
 
 // Global window error handler
-if (typeof window !== 'undefined') {
-  window.addEventListener('unhandledrejection', (event) => {
-    logger.error('Unhandled Promise Rejection', event.reason);
+if (typeof window !== "undefined") {
+  window.addEventListener("unhandledrejection", (event) => {
+    logger.error("Unhandled Promise Rejection", event.reason);
   });
 
-  window.addEventListener('error', (event) => {
-    logger.error('Global Error', event.error, {
+  window.addEventListener("error", (event) => {
+    logger.error("Global Error", event.error, {
       message: event.message,
       filename: event.filename,
       lineno: event.lineno,

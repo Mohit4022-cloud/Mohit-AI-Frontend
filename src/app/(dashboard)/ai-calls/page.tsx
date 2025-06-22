@@ -12,7 +12,14 @@ import { ContentCards } from "@/components/ai-calls/ContentCards";
 import { ProgressiveSettings } from "@/components/ai-calls/ProgressiveSettings";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Phone, Plus, Settings, Activity, History, ListOrdered } from "lucide-react";
+import {
+  Phone,
+  Plus,
+  Settings,
+  Activity,
+  History,
+  ListOrdered,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +28,7 @@ export default function AICallsPage() {
   const [activeTab, setActiveTab] = useState("overview");
   const [showTranscript, setShowTranscript] = useState(false);
   const [selectedView, setSelectedView] = useState<"grid" | "list">("grid");
-  
+
   const {
     activeCalls,
     selectedCallId,
@@ -33,7 +40,7 @@ export default function AICallsPage() {
   useEffect(() => {
     // Load initial data
     loadActiveCalls();
-    
+
     // Set up real-time updates
     const interval = setInterval(() => {
       loadActiveCalls();
@@ -42,7 +49,7 @@ export default function AICallsPage() {
     return () => clearInterval(interval);
   }, [loadActiveCalls]);
 
-  const selectedCall = activeCalls.find(call => call.id === selectedCallId);
+  const selectedCall = activeCalls.find((call) => call.id === selectedCallId);
 
   return (
     <div className="flex flex-col h-full space-y-4 p-4 lg:p-6">
@@ -57,7 +64,7 @@ export default function AICallsPage() {
             Manage AI-powered calls with real-time insights
           </p>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
@@ -83,9 +90,7 @@ export default function AICallsPage() {
             <Settings className="h-4 w-4 mr-2" />
             Settings
           </Button>
-          <Button
-            onClick={() => router.push("/ai-calls/new")}
-          >
+          <Button onClick={() => router.push("/ai-calls/new")}>
             <Plus className="h-4 w-4 mr-2" />
             New Call
           </Button>
@@ -108,7 +113,9 @@ export default function AICallsPage() {
             {/* Left Panel - Active Calls Grid (60%) */}
             <div className="space-y-4">
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-lg font-semibold">Active Calls ({activeCalls.length})</h2>
+                <h2 className="text-lg font-semibold">
+                  Active Calls ({activeCalls.length})
+                </h2>
                 <div className="flex items-center gap-2">
                   <Button
                     variant={selectedView === "grid" ? "default" : "ghost"}
@@ -126,7 +133,7 @@ export default function AICallsPage() {
                   </Button>
                 </div>
               </div>
-              
+
               <CallGrid
                 calls={activeCalls}
                 selectedCallId={selectedCallId}
@@ -141,19 +148,19 @@ export default function AICallsPage() {
               <div className="h-[300px]">
                 <CallQueue limit={5} />
               </div>
-              
+
               {/* AI Insights */}
               {selectedCall && (
                 <div className="space-y-4">
                   <div className="h-[300px]">
                     <AIInsights callId={selectedCall.id} />
                   </div>
-                  
+
                   {/* Content Cards - Competitor-inspired features */}
                   <ContentCards callId={selectedCall.id} />
                 </div>
               )}
-              
+
               {/* Progressive Disclosure Settings */}
               <ProgressiveSettings />
             </div>
@@ -178,7 +185,7 @@ export default function AICallsPage() {
                 view="list"
               />
             </div>
-            
+
             {showTranscript && selectedCall && (
               <div className="lg:col-span-1">
                 <TranscriptPanel
@@ -218,7 +225,7 @@ export default function AICallsPage() {
                 trend="up"
               />
             </div>
-            
+
             <PerformanceChart detailed />
           </div>
         </TabsContent>
@@ -226,12 +233,14 @@ export default function AICallsPage() {
 
       {/* Floating Transcript Panel for Mobile */}
       {showTranscript && selectedCall && (
-        <div className={cn(
-          "fixed inset-x-0 bottom-0 z-50 lg:hidden",
-          "bg-background border-t shadow-lg",
-          "transform transition-transform duration-300",
-          showTranscript ? "translate-y-0" : "translate-y-full"
-        )}>
+        <div
+          className={cn(
+            "fixed inset-x-0 bottom-0 z-50 lg:hidden",
+            "bg-background border-t shadow-lg",
+            "transform transition-transform duration-300",
+            showTranscript ? "translate-y-0" : "translate-y-full",
+          )}
+        >
           <TranscriptPanel
             callId={selectedCall.id}
             onClose={() => setShowTranscript(false)}
@@ -258,10 +267,16 @@ function AnalyticsCard({ title, value, change, trend }: AnalyticsCardProps) {
       </div>
       <div className="mt-2">
         <div className="text-2xl font-bold">{value}</div>
-        <p className={cn(
-          "text-xs mt-1",
-          trend === "up" ? "text-green-600" : trend === "down" ? "text-red-600" : "text-gray-600"
-        )}>
+        <p
+          className={cn(
+            "text-xs mt-1",
+            trend === "up"
+              ? "text-green-600"
+              : trend === "down"
+                ? "text-red-600"
+                : "text-gray-600",
+          )}
+        >
           {change} from last week
         </p>
       </div>

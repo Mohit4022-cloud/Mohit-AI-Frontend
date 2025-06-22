@@ -4,9 +4,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <PublicNavigation />
-      <main className="pt-20">
-        {children}
-      </main>
+      <main className="pt-20">{children}</main>
     </>
   );
 }

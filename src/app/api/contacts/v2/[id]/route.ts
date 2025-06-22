@@ -1,14 +1,14 @@
 /**
  * Individual Contact API Route Handler
- * 
+ *
  * Handles operations on specific contacts
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { prisma } from '@/lib/prisma';
-import { verifyToken } from '@/lib/jwt';
-import { LeadStatus } from '@prisma/client';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { prisma } from "@/lib/prisma";
+import { verifyToken } from "@/lib/jwt";
+import { LeadStatus } from "@prisma/client";
 
 const updateContactSchema = z.object({
   firstName: z.string().min(1).optional(),
@@ -17,7 +17,7 @@ const updateContactSchema = z.object({
   phone: z.string().optional(),
   title: z.string().optional(),
   department: z.string().optional(),
-  linkedin: z.string().url().optional().or(z.literal('')),
+  linkedin: z.string().url().optional().or(z.literal("")),
   twitter: z.string().optional(),
   companyId: z.string().nullable().optional(),
   leadStatus: z.nativeEnum(LeadStatus).optional(),
@@ -31,36 +31,36 @@ const updateContactSchema = z.object({
 
 /**
  * GET /api/contacts/v2/[id]
- * 
+ *
  * Get a single contact with full details
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
 
     // Verify authentication
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const token = authHeader.substring(7);
     const payload = verifyToken(token);
     if (!payload) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     // Parse query params
     const searchParams = request.nextUrl.searchParams;
-    const includeActivities = searchParams.get('includeActivities') === 'true';
-    const includeEmails = searchParams.get('includeEmails') === 'true';
-    const includeCalls = searchParams.get('includeCalls') === 'true';
-    const includeNotes = searchParams.get('includeNotes') === 'true';
-    const includeTasks = searchParams.get('includeTasks') === 'true';
-    const includeDeals = searchParams.get('includeDeals') === 'true';
+    const includeActivities = searchParams.get("includeActivities") === "true";
+    const includeEmails = searchParams.get("includeEmails") === "true";
+    const includeCalls = searchParams.get("includeCalls") === "true";
+    const includeNotes = searchParams.get("includeNotes") === "true";
+    const includeTasks = searchParams.get("includeTasks") === "true";
+    const includeDeals = searchParams.get("includeDeals") === "true";
 
     // Fetch contact
     const contact = await prisma.contact.findFirst({
@@ -88,26 +88,12 @@ export async function GET(
         },
         leadScoreHistory: {
           take: 10,
-          orderBy: { createdAt: 'desc' },
+          orderBy: { createdAt: "desc" },
         },
-        activities: includeActivities ? {
-          take: 20,
-          orderBy: { createdAt: 'desc' },
-          include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                avatar: true,
-              },
-            },
-          },
-        } : false,
-        emails: includeEmails ? {
-          take: 10,
-          orderBy: { email: { sentAt: 'desc' } },
-          include: {
-            email: {
+        activities: includeActivities
+          ? {
+              take: 20,
+              orderBy: { createdAt: "desc" },
               include: {
                 user: {
                   select: {
@@ -117,58 +103,84 @@ export async function GET(
                   },
                 },
               },
-            },
-          },
-        } : false,
-        calls: includeCalls ? {
-          take: 10,
-          orderBy: { startedAt: 'desc' },
-          include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                avatar: true,
-              },
-            },
-          },
-        } : false,
-        notes: includeNotes ? {
-          take: 10,
-          orderBy: { createdAt: 'desc' },
-        } : false,
-        tasks: includeTasks ? {
-          take: 10,
-          orderBy: { dueDate: 'asc' },
-          where: {
-            status: { not: 'COMPLETED' },
-          },
-          include: {
-            assignedTo: {
-              select: {
-                id: true,
-                name: true,
-                avatar: true,
-              },
-            },
-          },
-        } : false,
-        deals: includeDeals ? {
-          include: {
-            deal: {
+            }
+          : false,
+        emails: includeEmails
+          ? {
+              take: 10,
+              orderBy: { email: { sentAt: "desc" } },
               include: {
-                owner: {
+                email: {
+                  include: {
+                    user: {
+                      select: {
+                        id: true,
+                        name: true,
+                        avatar: true,
+                      },
+                    },
+                  },
+                },
+              },
+            }
+          : false,
+        calls: includeCalls
+          ? {
+              take: 10,
+              orderBy: { startedAt: "desc" },
+              include: {
+                user: {
                   select: {
                     id: true,
                     name: true,
                     avatar: true,
                   },
                 },
-                company: true,
               },
-            },
-          },
-        } : false,
+            }
+          : false,
+        notes: includeNotes
+          ? {
+              take: 10,
+              orderBy: { createdAt: "desc" },
+            }
+          : false,
+        tasks: includeTasks
+          ? {
+              take: 10,
+              orderBy: { dueDate: "asc" },
+              where: {
+                status: { not: "COMPLETED" },
+              },
+              include: {
+                assignedTo: {
+                  select: {
+                    id: true,
+                    name: true,
+                    avatar: true,
+                  },
+                },
+              },
+            }
+          : false,
+        deals: includeDeals
+          ? {
+              include: {
+                deal: {
+                  include: {
+                    owner: {
+                      select: {
+                        id: true,
+                        name: true,
+                        avatar: true,
+                      },
+                    },
+                    company: true,
+                  },
+                },
+              },
+            }
+          : false,
         _count: {
           select: {
             activities: true,
@@ -183,23 +195,22 @@ export async function GET(
     });
 
     if (!contact) {
-      return NextResponse.json(
-        { error: 'Contact not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
     }
 
     // Calculate engagement metrics
     const engagement = {
       lastActivity: await prisma.activity.findFirst({
         where: { contactId: id },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
         select: { createdAt: true, type: true },
       }),
-      totalTouchpoints: contact._count.activities + contact._count.emails + contact._count.calls,
-      responseRate: contact._count.emails > 0 
-        ? await calculateResponseRate(id) 
-        : 0,
+      totalTouchpoints:
+        contact._count.activities +
+        contact._count.emails +
+        contact._count.calls,
+      responseRate:
+        contact._count.emails > 0 ? await calculateResponseRate(id) : 0,
     };
 
     return NextResponse.json({
@@ -207,36 +218,36 @@ export async function GET(
       engagement,
     });
   } catch (error) {
-    console.error('Error fetching contact:', error);
+    console.error("Error fetching contact:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
 
 /**
  * PUT /api/contacts/v2/[id]
- * 
+ *
  * Update a contact
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
 
     // Verify authentication
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const token = authHeader.substring(7);
     const payload = verifyToken(token);
     if (!payload) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     // Parse and validate body
@@ -244,8 +255,8 @@ export async function PUT(
     const validationResult = updateContactSchema.safeParse(body);
     if (!validationResult.success) {
       return NextResponse.json(
-        { error: 'Validation failed', details: validationResult.error.errors },
-        { status: 400 }
+        { error: "Validation failed", details: validationResult.error.errors },
+        { status: 400 },
       );
     }
 
@@ -260,20 +271,20 @@ export async function PUT(
     });
 
     if (!existingContact) {
-      return NextResponse.json(
-        { error: 'Contact not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
     }
 
     // Track lead score changes
-    if (data.leadScore !== undefined && data.leadScore !== existingContact.leadScore) {
+    if (
+      data.leadScore !== undefined &&
+      data.leadScore !== existingContact.leadScore
+    ) {
       await prisma.leadScoreHistory.create({
         data: {
           contactId: id,
           score: data.leadScore,
           previousScore: existingContact.leadScore,
-          reason: 'Manual update',
+          reason: "Manual update",
           factors: {
             updatedBy: payload.userId,
             timestamp: new Date(),
@@ -287,7 +298,9 @@ export async function PUT(
       where: { id },
       data: {
         ...data,
-        lastContactedAt: data.lastContactedAt ? new Date(data.lastContactedAt) : undefined,
+        lastContactedAt: data.lastContactedAt
+          ? new Date(data.lastContactedAt)
+          : undefined,
       },
       include: {
         company: true,
@@ -303,16 +316,18 @@ export async function PUT(
     });
 
     // Track activity
-    const changes = Object.keys(data).filter(key => 
-      data[key as keyof typeof data] !== existingContact[key as keyof typeof existingContact]
+    const changes = Object.keys(data).filter(
+      (key) =>
+        data[key as keyof typeof data] !==
+        existingContact[key as keyof typeof existingContact],
     );
-    
+
     if (changes.length > 0) {
       await prisma.activity.create({
         data: {
-          type: 'NOTE_ADDED',
-          subject: 'Contact updated',
-          description: `Updated fields: ${changes.join(', ')}`,
+          type: "NOTE_ADDED",
+          subject: "Contact updated",
+          description: `Updated fields: ${changes.join(", ")}`,
           contactId: id,
           userId: payload.userId,
           metadata: { changes: data },
@@ -322,42 +337,42 @@ export async function PUT(
 
     return NextResponse.json(updatedContact);
   } catch (error) {
-    console.error('Error updating contact:', error);
+    console.error("Error updating contact:", error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Validation failed', details: error.errors },
-        { status: 400 }
+        { error: "Validation failed", details: error.errors },
+        { status: 400 },
       );
     }
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
 
 /**
  * DELETE /api/contacts/v2/[id]
- * 
+ *
  * Delete a contact (soft delete)
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
 
     // Verify authentication
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const token = authHeader.substring(7);
     const payload = verifyToken(token);
     if (!payload) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     // Check if contact exists
@@ -369,19 +384,16 @@ export async function DELETE(
     });
 
     if (!contact) {
-      return NextResponse.json(
-        { error: 'Contact not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
     }
 
     // Soft delete by moving to a different status
     await prisma.contact.update({
       where: { id },
       data: {
-        leadStatus: 'LOST',
+        leadStatus: "LOST",
         customFields: {
-          ...(contact.customFields as any || {}),
+          ...((contact.customFields as any) || {}),
           deletedAt: new Date().toISOString(),
           deletedBy: payload.userId,
         },
@@ -391,8 +403,8 @@ export async function DELETE(
     // Track activity
     await prisma.activity.create({
       data: {
-        type: 'NOTE_ADDED',
-        subject: 'Contact deleted',
+        type: "NOTE_ADDED",
+        subject: "Contact deleted",
         description: `${contact.firstName} ${contact.lastName} was deleted`,
         contactId: id,
         userId: payload.userId,
@@ -401,10 +413,10 @@ export async function DELETE(
 
     return new NextResponse(null, { status: 204 });
   } catch (error) {
-    console.error('Error deleting contact:', error);
+    console.error("Error deleting contact:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }

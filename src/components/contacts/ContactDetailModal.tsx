@@ -1,19 +1,24 @@
-'use client'
+"use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Separator } from '@/components/ui/separator'
-import { 
-  Mail, 
-  Phone, 
-  Building, 
-  Linkedin, 
-  Twitter, 
-  Calendar, 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import {
+  Mail,
+  Phone,
+  Building,
+  Linkedin,
+  Twitter,
+  Calendar,
   MapPin,
   Edit,
   Activity,
@@ -26,77 +31,89 @@ import {
   CheckCircle,
   XCircle,
   AlertCircle,
-} from 'lucide-react'
-import { format } from 'date-fns'
-import { cn } from '@/lib/utils'
+} from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface Contact {
-  id: string
-  firstName: string
-  lastName: string
-  email: string
-  phone?: string | null
-  title?: string | null
-  department?: string | null
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string | null;
+  title?: string | null;
+  department?: string | null;
   company?: {
-    id: string
-    name: string
-    domain?: string | null
-    industry?: string | null
-  } | null
-  leadStatus: 'NEW' | 'CONTACTED' | 'QUALIFIED' | 'LOST' | 'WON'
-  leadScore: number
+    id: string;
+    name: string;
+    domain?: string | null;
+    industry?: string | null;
+  } | null;
+  leadStatus: "NEW" | "CONTACTED" | "QUALIFIED" | "LOST" | "WON";
+  leadScore: number;
   assignedTo?: {
-    id: string
-    name: string
-    email: string
-    avatar?: string | null
-  } | null
-  tags: string[]
-  createdAt: string
-  lastContactedAt?: string | null
-  linkedin?: string | null
-  twitter?: string | null
+    id: string;
+    name: string;
+    email: string;
+    avatar?: string | null;
+  } | null;
+  tags: string[];
+  createdAt: string;
+  lastContactedAt?: string | null;
+  linkedin?: string | null;
+  twitter?: string | null;
   _count: {
-    activities: number
-    emails: number
-    calls: number
-    tasks: number
-    notes: number
-  }
+    activities: number;
+    emails: number;
+    calls: number;
+    tasks: number;
+    notes: number;
+  };
 }
 
 interface ContactDetailModalProps {
-  contact: Contact | null
-  isOpen: boolean
-  onClose: () => void
-  onEdit: (contact: Contact) => void
+  contact: Contact | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onEdit: (contact: Contact) => void;
 }
 
 const leadStatusConfig = {
-  NEW: { label: 'New', color: 'bg-blue-100 text-blue-800', icon: AlertCircle },
-  CONTACTED: { label: 'Contacted', color: 'bg-yellow-100 text-yellow-800', icon: Activity },
-  QUALIFIED: { label: 'Qualified', color: 'bg-green-100 text-green-800', icon: CheckCircle },
-  LOST: { label: 'Lost', color: 'bg-red-100 text-red-800', icon: XCircle },
-  WON: { label: 'Won', color: 'bg-purple-100 text-purple-800', icon: CheckCircle },
-}
+  NEW: { label: "New", color: "bg-blue-100 text-blue-800", icon: AlertCircle },
+  CONTACTED: {
+    label: "Contacted",
+    color: "bg-yellow-100 text-yellow-800",
+    icon: Activity,
+  },
+  QUALIFIED: {
+    label: "Qualified",
+    color: "bg-green-100 text-green-800",
+    icon: CheckCircle,
+  },
+  LOST: { label: "Lost", color: "bg-red-100 text-red-800", icon: XCircle },
+  WON: {
+    label: "Won",
+    color: "bg-purple-100 text-purple-800",
+    icon: CheckCircle,
+  },
+};
 
 const getLeadScoreColor = (score: number) => {
-  if (score >= 80) return 'text-green-600 bg-green-50'
-  if (score >= 60) return 'text-yellow-600 bg-yellow-50'
-  if (score >= 40) return 'text-orange-600 bg-orange-50'
-  return 'text-red-600 bg-red-50'
-}
+  if (score >= 80) return "text-green-600 bg-green-50";
+  if (score >= 60) return "text-yellow-600 bg-yellow-50";
+  if (score >= 40) return "text-orange-600 bg-orange-50";
+  return "text-red-600 bg-red-50";
+};
 
-export default function ContactDetailModal({ 
-  contact, 
-  isOpen, 
-  onClose, 
-  onEdit 
+export default function ContactDetailModal({
+  contact,
+  isOpen,
+  onClose,
+  onEdit,
 }: ContactDetailModalProps) {
-  if (!contact) return null
+  if (!contact) return null;
 
-  const StatusIcon = leadStatusConfig[contact.leadStatus].icon
+  const StatusIcon = leadStatusConfig[contact.leadStatus].icon;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -106,7 +123,8 @@ export default function ContactDetailModal({
             <div className="flex items-center gap-4">
               <Avatar className="h-16 w-16">
                 <AvatarFallback className="text-lg">
-                  {contact.firstName[0]}{contact.lastName[0]}
+                  {contact.firstName[0]}
+                  {contact.lastName[0]}
                 </AvatarFallback>
               </Avatar>
               <div>
@@ -145,11 +163,11 @@ export default function ContactDetailModal({
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-600 mb-1">Lead Status</p>
-                      <Badge 
-                        variant="secondary" 
+                      <Badge
+                        variant="secondary"
                         className={cn(
                           "font-medium text-sm px-3 py-1",
-                          leadStatusConfig[contact.leadStatus].color
+                          leadStatusConfig[contact.leadStatus].color,
                         )}
                       >
                         <StatusIcon className="h-4 w-4 mr-1" />
@@ -165,12 +183,16 @@ export default function ContactDetailModal({
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-600 mb-1">Lead Score</p>
-                      <div className={cn(
-                        "inline-flex items-center gap-2 px-3 py-1 rounded-md",
-                        getLeadScoreColor(contact.leadScore)
-                      )}>
+                      <div
+                        className={cn(
+                          "inline-flex items-center gap-2 px-3 py-1 rounded-md",
+                          getLeadScoreColor(contact.leadScore),
+                        )}
+                      >
                         <Target className="h-4 w-4" />
-                        <span className="text-2xl font-bold">{contact.leadScore}</span>
+                        <span className="text-2xl font-bold">
+                          {contact.leadScore}
+                        </span>
                         <span className="text-sm">/100</span>
                       </div>
                     </div>
@@ -195,7 +217,7 @@ export default function ContactDetailModal({
                       </div>
                     </div>
                   )}
-                  
+
                   <div className="flex items-center gap-3">
                     <Mail className="h-4 w-4 text-gray-400" />
                     <div>
@@ -209,9 +231,9 @@ export default function ContactDetailModal({
                       <Linkedin className="h-4 w-4 text-gray-400" />
                       <div>
                         <p className="text-sm text-gray-600">LinkedIn</p>
-                        <a 
-                          href={contact.linkedin} 
-                          target="_blank" 
+                        <a
+                          href={contact.linkedin}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="font-medium text-blue-600 hover:underline"
                         >
@@ -255,9 +277,9 @@ export default function ContactDetailModal({
                         <MapPin className="h-4 w-4 text-gray-400" />
                         <div>
                           <p className="text-sm text-gray-600">Domain</p>
-                          <a 
-                            href={`https://${contact.company.domain}`} 
-                            target="_blank" 
+                          <a
+                            href={`https://${contact.company.domain}`}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="font-medium text-blue-600 hover:underline"
                           >
@@ -272,7 +294,9 @@ export default function ContactDetailModal({
                         <TrendingUp className="h-4 w-4 text-gray-400" />
                         <div>
                           <p className="text-sm text-gray-600">Industry</p>
-                          <p className="font-medium">{contact.company.industry}</p>
+                          <p className="font-medium">
+                            {contact.company.industry}
+                          </p>
                         </div>
                       </div>
                     )}
@@ -295,12 +319,16 @@ export default function ContactDetailModal({
                         <p className="text-sm text-gray-600">Assigned To</p>
                         <div className="flex items-center gap-2 mt-1">
                           <Avatar className="h-6 w-6">
-                            <AvatarImage src={contact.assignedTo.avatar || undefined} />
+                            <AvatarImage
+                              src={contact.assignedTo.avatar || undefined}
+                            />
                             <AvatarFallback className="text-xs">
                               {contact.assignedTo.name.charAt(0)}
                             </AvatarFallback>
                           </Avatar>
-                          <p className="font-medium">{contact.assignedTo.name}</p>
+                          <p className="font-medium">
+                            {contact.assignedTo.name}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -311,7 +339,7 @@ export default function ContactDetailModal({
                     <div>
                       <p className="text-sm text-gray-600">Created</p>
                       <p className="font-medium">
-                        {format(new Date(contact.createdAt), 'MMM d, yyyy')}
+                        {format(new Date(contact.createdAt), "MMM d, yyyy")}
                       </p>
                     </div>
                   </div>
@@ -322,7 +350,10 @@ export default function ContactDetailModal({
                       <div>
                         <p className="text-sm text-gray-600">Last Contacted</p>
                         <p className="font-medium">
-                          {format(new Date(contact.lastContactedAt), 'MMM d, yyyy')}
+                          {format(
+                            new Date(contact.lastContactedAt),
+                            "MMM d, yyyy",
+                          )}
                         </p>
                       </div>
                     </div>
@@ -353,12 +384,16 @@ export default function ContactDetailModal({
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <Activity className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-2xl font-bold">{contact._count.activities}</p>
+                    <p className="text-2xl font-bold">
+                      {contact._count.activities}
+                    </p>
                     <p className="text-sm text-gray-600">Activities</p>
                   </div>
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <Mail className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-2xl font-bold">{contact._count.emails}</p>
+                    <p className="text-2xl font-bold">
+                      {contact._count.emails}
+                    </p>
                     <p className="text-sm text-gray-600">Emails</p>
                   </div>
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
@@ -408,5 +443,5 @@ export default function ContactDetailModal({
         </Tabs>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

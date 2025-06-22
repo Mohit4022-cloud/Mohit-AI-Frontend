@@ -16,9 +16,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { 
-  ArrowLeft, Plus, Upload, Filter, Search, Calendar,
-  Clock, Users, AlertCircle, Play, Settings
+import {
+  ArrowLeft,
+  Plus,
+  Upload,
+  Filter,
+  Search,
+  Calendar,
+  Clock,
+  Users,
+  AlertCircle,
+  Play,
+  Settings,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -34,19 +43,20 @@ export default function CallQueuePage() {
     return () => clearInterval(interval);
   }, [loadQueuedCalls]);
 
-  const filteredCalls = queuedCalls.filter(call => {
-    const matchesSearch = 
+  const filteredCalls = queuedCalls.filter((call) => {
+    const matchesSearch =
       call.leadName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       call.company.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesPriority = filterPriority === "all" || call.priority === filterPriority;
+    const matchesPriority =
+      filterPriority === "all" || call.priority === filterPriority;
     return matchesSearch && matchesPriority;
   });
 
   const stats = {
     total: queuedCalls.length,
-    high: queuedCalls.filter(c => c.priority === "HIGH").length,
-    medium: queuedCalls.filter(c => c.priority === "MEDIUM").length,
-    low: queuedCalls.filter(c => c.priority === "LOW").length,
+    high: queuedCalls.filter((c) => c.priority === "HIGH").length,
+    medium: queuedCalls.filter((c) => c.priority === "MEDIUM").length,
+    low: queuedCalls.filter((c) => c.priority === "LOW").length,
   };
 
   return (
@@ -143,7 +153,9 @@ export default function CallQueuePage() {
       {/* Queue Tabs */}
       <Tabs defaultValue="all" className="flex-1">
         <TabsList>
-          <TabsTrigger value="all">All Calls ({filteredCalls.length})</TabsTrigger>
+          <TabsTrigger value="all">
+            All Calls ({filteredCalls.length})
+          </TabsTrigger>
           <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
           <TabsTrigger value="retry">Retry Queue</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -284,14 +296,18 @@ function QueueSettings() {
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <div>
                 <p className="font-medium">Enterprise Accounts</p>
-                <p className="text-sm text-muted-foreground">Auto-assign high priority</p>
+                <p className="text-sm text-muted-foreground">
+                  Auto-assign high priority
+                </p>
               </div>
               <Badge>Active</Badge>
             </div>
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <div>
                 <p className="font-medium">Follow-up Calls</p>
-                <p className="text-sm text-muted-foreground">Medium priority after 24h</p>
+                <p className="text-sm text-muted-foreground">
+                  Medium priority after 24h
+                </p>
               </div>
               <Badge>Active</Badge>
             </div>

@@ -1,9 +1,9 @@
 // Force dynamic rendering since we use request.headers
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-import { NextRequest } from 'next/server';
-import { authenticateWebSocket } from '@/middleware/auth';
-import { logSecurityEvent } from '@/lib/security-edge';
+import { NextRequest } from "next/server";
+import { authenticateWebSocket } from "@/middleware/auth";
+import { logSecurityEvent } from "@/lib/security-edge";
 
 // This is a placeholder for WebSocket handling
 // In a real implementation, you would use a WebSocket server like Socket.io
@@ -13,48 +13,46 @@ export async function GET(request: NextRequest) {
   try {
     // For WebSocket upgrade, we need to handle this differently
     // This is just a placeholder endpoint that returns WebSocket connection info
-    
-    const token = request.headers.get('authorization')?.replace('Bearer ', '');
-    
+
+    const token = request.headers.get("authorization")?.replace("Bearer ", "");
+
     if (!token) {
-      return new Response('Unauthorized', { status: 401 });
+      return new Response("Unauthorized", { status: 401 });
     }
-    
+
     // In a real implementation, this would upgrade to WebSocket
     // For now, return connection information
-    return new Response(JSON.stringify({
-      message: 'WebSocket endpoint',
-      url: `wss://${request.headers.get('host')}/api/calls/websocket`,
-      protocol: 'twilio-conversation-relay',
-      instructions: 'Use a WebSocket client to connect with proper authentication',
-      requiredHeaders: {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'X-Call-ID': 'CALL_ID',
+    return new Response(
+      JSON.stringify({
+        message: "WebSocket endpoint",
+        url: `wss://${request.headers.get("host")}/api/calls/websocket`,
+        protocol: "twilio-conversation-relay",
+        instructions:
+          "Use a WebSocket client to connect with proper authentication",
+        requiredHeaders: {
+          Authorization: "Bearer YOUR_TOKEN",
+          "X-Call-ID": "CALL_ID",
+        },
+        events: {
+          inbound: [
+            "audio:chunk",
+            "dtmf:received",
+            "speech:interim",
+            "speech:final",
+          ],
+          outbound: ["tts:request", "tts:audio", "call:update", "ai:response"],
+        },
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-      events: {
-        inbound: [
-          'audio:chunk',
-          'dtmf:received',
-          'speech:interim',
-          'speech:final',
-        ],
-        outbound: [
-          'tts:request',
-          'tts:audio',
-          'call:update',
-          'ai:response',
-        ],
-      },
-    }), {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    
+    );
   } catch (error) {
-    console.error('WebSocket error:', error);
-    
-    return new Response('Internal Server Error', { status: 500 });
+    console.error("WebSocket error:", error);
+
+    return new Response("Internal Server Error", { status: 500 });
   }
 }
 
@@ -73,24 +71,20 @@ const websocketHandlers = {
     // Send to speech-to-text service
     // Update transcript in real-time
   },
-  
+
   // Handle DTMF tones
-  async handleDTMF(data: {
-    callId: string;
-    digit: string;
-    timestamp: number;
-  }) {
+  async handleDTMF(data: { callId: string; digit: string; timestamp: number }) {
     // Process DTMF input
     // Could be used for menu navigation
   },
-  
+
   // Handle speech recognition results
   async handleSpeechResult(data: {
     callId: string;
     text: string;
     isFinal: boolean;
     confidence: number;
-    speaker: 'LEAD' | 'AI' | 'HUMAN';
+    speaker: "LEAD" | "AI" | "HUMAN";
   }) {
     // Update transcript
     const transcriptEntry = {
@@ -100,7 +94,7 @@ const websocketHandlers = {
       timestamp: new Date().toISOString(),
       confidence: data.confidence,
     };
-    
+
     // Add to transcript database
     if (!global.transcriptsDb) {
       global.transcriptsDb = {};
@@ -109,62 +103,65 @@ const websocketHandlers = {
       global.transcriptsDb[data.callId] = [];
     }
     global.transcriptsDb[data.callId]!.push(transcriptEntry);
-    
+
     // Emit to listeners
     if (global.transcriptListeners) {
-      global.transcriptListeners.forEach(listener => {
+      global.transcriptListeners.forEach((listener) => {
         listener({ callId: data.callId, entry: transcriptEntry });
       });
     }
-    
+
     // If final, process with AI
-    if (data.isFinal && data.speaker === 'LEAD') {
+    if (data.isFinal && data.speaker === "LEAD") {
       // Generate AI response
-      const aiResponse = await websocketHandlers.generateAIResponse(data.callId, data.text);
+      const aiResponse = await websocketHandlers.generateAIResponse(
+        data.callId,
+        data.text,
+      );
       return aiResponse;
     }
-    
+
     return null;
   },
-  
+
   // Generate AI response
   async generateAIResponse(callId: string, userInput: string) {
     // In a real implementation, this would use your AI service
     // For now, return a mock response
-    
+
     const call = global.aiCallsDb?.[callId];
     if (!call) return null;
-    
+
     // Mock AI processing
     const response = {
       text: "I understand your concern. Let me address that for you.",
-      emotion: 'professional',
-      intent: 'address_objection',
+      emotion: "professional",
+      intent: "address_objection",
       confidence: 0.95,
     };
-    
+
     // Add AI response to transcript
     const aiTranscriptEntry = {
       id: `transcript_${Date.now()}`,
-      speaker: 'AI',
+      speaker: "AI",
       text: response.text,
       timestamp: new Date().toISOString(),
       confidence: response.confidence,
     };
-    
+
     global.transcriptsDb[callId]!.push(aiTranscriptEntry);
-    
+
     // Return TTS request
     return {
-      type: 'tts:request',
+      type: "tts:request",
       callId,
       text: response.text,
-      voice: call.agentSettings?.voice || 'professional',
+      voice: call.agentSettings?.voice || "professional",
       speed: call.agentSettings?.speed || 1.0,
       emotion: response.emotion,
     };
   },
-  
+
   // Handle call state updates
   async handleCallUpdate(data: {
     callId: string;
@@ -173,11 +170,11 @@ const websocketHandlers = {
   }) {
     const call = global.aiCallsDb?.[data.callId];
     if (!call) return;
-    
+
     // Update call status
     call.status = data.status;
     call.lastUpdate = new Date();
-    
+
     // Add event to history
     if (!call.events) call.events = [];
     call.events.push({
@@ -185,10 +182,10 @@ const websocketHandlers = {
       timestamp: new Date(),
       data: data,
     });
-    
+
     // Emit update to all clients
     if (global.io) {
-      global.io.emit('call:updated', call);
+      global.io.emit("call:updated", call);
     }
   },
 };

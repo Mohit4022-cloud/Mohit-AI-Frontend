@@ -1,4 +1,4 @@
-import { toast as sonnerToast } from 'sonner';
+import { toast as sonnerToast } from "sonner";
 
 export interface Toast {
   id: string;
@@ -10,7 +10,7 @@ export interface Toast {
 
 export function useToast() {
   return {
-    toast: (props: Omit<Toast, 'id'>) => {
+    toast: (props: Omit<Toast, "id">) => {
       if (props.title) {
         sonnerToast(props.title, {
           description: props.description,

@@ -4,9 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Phone, Clock, AlertCircle, ArrowUp, ArrowDown, 
-  MoreVertical, Play, X, Calendar
+import {
+  Phone,
+  Clock,
+  AlertCircle,
+  ArrowUp,
+  ArrowDown,
+  MoreVertical,
+  Play,
+  X,
+  Calendar,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -22,7 +29,13 @@ interface CallQueueProps {
 }
 
 export function CallQueue({ limit }: CallQueueProps) {
-  const { queuedCalls, loadQueuedCalls, removeFromQueue, updateQueuePriority, initiateCall } = useAICallStore();
+  const {
+    queuedCalls,
+    loadQueuedCalls,
+    removeFromQueue,
+    updateQueuePriority,
+    initiateCall,
+  } = useAICallStore();
 
   useEffect(() => {
     loadQueuedCalls();
@@ -57,12 +70,14 @@ export function CallQueue({ limit }: CallQueueProps) {
           ) : (
             <div className="space-y-2">
               {displayCalls.map((call) => (
-                <QueueItem 
-                  key={call.id} 
-                  call={call} 
+                <QueueItem
+                  key={call.id}
+                  call={call}
                   onCallNow={() => handleCallNow(call)}
                   onRemove={() => removeFromQueue(call.id)}
-                  onUpdatePriority={(priority) => updateQueuePriority(call.id, priority)}
+                  onUpdatePriority={(priority) =>
+                    updateQueuePriority(call.id, priority)
+                  }
                 />
               ))}
               {limit && queuedCalls.length > limit && (
@@ -87,7 +102,12 @@ interface QueueItemProps {
   onUpdatePriority: (priority: "HIGH" | "MEDIUM" | "LOW") => void;
 }
 
-function QueueItem({ call, onCallNow, onRemove, onUpdatePriority }: QueueItemProps) {
+function QueueItem({
+  call,
+  onCallNow,
+  onRemove,
+  onUpdatePriority,
+}: QueueItemProps) {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "HIGH":
@@ -104,26 +124,36 @@ function QueueItem({ call, onCallNow, onRemove, onUpdatePriority }: QueueItemPro
   return (
     <div className="group relative p-3 rounded-lg border bg-card hover:shadow-sm transition-all">
       <div className="flex items-start gap-3">
-        <div className={cn(
-          "w-2 h-2 rounded-full mt-1.5 flex-shrink-0",
-          call.priority === "HIGH" ? "bg-red-500" : 
-          call.priority === "MEDIUM" ? "bg-amber-500" : "bg-gray-400"
-        )} />
-        
+        <div
+          className={cn(
+            "w-2 h-2 rounded-full mt-1.5 flex-shrink-0",
+            call.priority === "HIGH"
+              ? "bg-red-500"
+              : call.priority === "MEDIUM"
+                ? "bg-amber-500"
+                : "bg-gray-400",
+          )}
+        />
+
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
               <h4 className="text-sm font-medium truncate">{call.leadName}</h4>
-              <p className="text-xs text-muted-foreground truncate">{call.company}</p>
+              <p className="text-xs text-muted-foreground truncate">
+                {call.company}
+              </p>
             </div>
-            <Badge 
-              variant="secondary" 
-              className={cn("text-xs px-1.5 py-0", getPriorityColor(call.priority))}
+            <Badge
+              variant="secondary"
+              className={cn(
+                "text-xs px-1.5 py-0",
+                getPriorityColor(call.priority),
+              )}
             >
               {call.priority}
             </Badge>
           </div>
-          
+
           <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
             {call.scheduledTime && (
               <span className="flex items-center gap-1">
@@ -149,14 +179,10 @@ function QueueItem({ call, onCallNow, onRemove, onUpdatePriority }: QueueItemPro
           >
             <Play className="h-3.5 w-3.5" />
           </Button>
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="h-7 w-7"
-              >
+              <Button size="icon" variant="ghost" className="h-7 w-7">
                 <MoreVertical className="h-3.5 w-3.5" />
               </Button>
             </DropdownMenuTrigger>

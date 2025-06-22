@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { authenticateRequest } from '@/lib/auth-helpers';
-import { logSecurityEvent } from '@/lib/security';
+import { NextRequest, NextResponse } from "next/server";
+import { authenticateRequest } from "@/lib/auth-helpers";
+import { logSecurityEvent } from "@/lib/security";
 
 // Mock transcript database
 const getTranscriptForCall = (callId: string) => {
@@ -10,68 +10,73 @@ const getTranscriptForCall = (callId: string) => {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     // Authenticate request
     const user = await authenticateRequest(request);
     const { id: callId } = params;
-    
+
     // Get query parameters
     const searchParams = request.nextUrl.searchParams;
-    const format = searchParams.get('format') || 'json';
-    const realtime = searchParams.get('realtime') === 'true';
-    
+    const format = searchParams.get("format") || "json";
+    const realtime = searchParams.get("realtime") === "true";
+
     // Get call from database
     const call = global.aiCallsDb?.[callId];
-    
+
     if (!call) {
-      return NextResponse.json(
-        { error: 'Call not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Call not found" }, { status: 404 });
     }
-    
+
     // Get transcript entries
     const transcript = getTranscriptForCall(callId);
-    
+
     // If realtime is requested and call is active, set up SSE
-    if (realtime && (call.status === 'IN_PROGRESS' || call.status === 'CONNECTING')) {
+    if (
+      realtime &&
+      (call.status === "IN_PROGRESS" || call.status === "CONNECTING")
+    ) {
       // Set up Server-Sent Events for real-time transcript
       const encoder = new TextEncoder();
       const stream = new ReadableStream({
         start(controller) {
           // Send initial transcript
           controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify({
-              type: 'initial',
-              transcript,
-              callId,
-            })}\n\n`)
+            encoder.encode(
+              `data: ${JSON.stringify({
+                type: "initial",
+                transcript,
+                callId,
+              })}\n\n`,
+            ),
           );
-          
+
           // Set up listener for new transcript entries
           const transcriptListener = (data: any) => {
             if (data.callId === callId) {
               controller.enqueue(
-                encoder.encode(`data: ${JSON.stringify({
-                  type: 'update',
-                  entry: data.entry,
-                })}\n\n`)
+                encoder.encode(
+                  `data: ${JSON.stringify({
+                    type: "update",
+                    entry: data.entry,
+                  })}\n\n`,
+                ),
               );
             }
           };
-          
+
           // Register listener (in real implementation, this would use your event system)
           if (global.transcriptListeners) {
             global.transcriptListeners.push(transcriptListener);
           } else {
             global.transcriptListeners = [transcriptListener];
           }
-          
+
           // Clean up on close
-          request.signal.addEventListener('abort', () => {
-            const index = global.transcriptListeners?.indexOf(transcriptListener);
+          request.signal.addEventListener("abort", () => {
+            const index =
+              global.transcriptListeners?.indexOf(transcriptListener);
             if (index > -1) {
               global.transcriptListeners.splice(index, 1);
             }
@@ -79,30 +84,30 @@ export async function GET(
           });
         },
       });
-      
+
       return new NextResponse(stream, {
         headers: {
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive',
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          Connection: "keep-alive",
         },
       });
     }
-    
+
     // Format transcript based on requested format
-    if (format === 'text') {
+    if (format === "text") {
       const textTranscript = transcript
-        .map(entry => `[${entry.timestamp}] ${entry.speaker}: ${entry.text}`)
-        .join('\n');
-      
+        .map((entry) => `[${entry.timestamp}] ${entry.speaker}: ${entry.text}`)
+        .join("\n");
+
       return new NextResponse(textTranscript, {
         headers: {
-          'Content-Type': 'text/plain',
+          "Content-Type": "text/plain",
         },
       });
-    } else if (format === 'vtt') {
+    } else if (format === "vtt") {
       // WebVTT format for video players
-      let vttContent = 'WEBVTT\n\n';
+      let vttContent = "WEBVTT\n\n";
       transcript.forEach((entry, index) => {
         const startTime = formatVTTTime(entry.startTime || index * 2);
         const endTime = formatVTTTime(entry.endTime || (index + 1) * 2);
@@ -110,14 +115,14 @@ export async function GET(
         vttContent += `${startTime} --> ${endTime}\n`;
         vttContent += `<v ${entry.speaker}>${entry.text}\n\n`;
       });
-      
+
       return new NextResponse(vttContent, {
         headers: {
-          'Content-Type': 'text/vtt',
+          "Content-Type": "text/vtt",
         },
       });
     }
-    
+
     // Default JSON format
     const response = {
       callId,
@@ -128,31 +133,30 @@ export async function GET(
       transcript,
       metadata: {
         totalEntries: transcript.length,
-        speakers: [...new Set(transcript.map(e => e.speaker))],
+        speakers: [...new Set(transcript.map((e) => e.speaker))],
         lastUpdated: transcript[transcript.length - 1]?.timestamp || null,
       },
     };
-    
+
     // Log security event
     logSecurityEvent({
-      ip: request.ip || 'unknown',
-      method: 'GET',
+      ip: request.ip || "unknown",
+      method: "GET",
       path: `/api/calls/${callId}/transcript`,
-      userAgent: request.headers.get('user-agent') || 'unknown',
+      userAgent: request.headers.get("user-agent") || "unknown",
       userId: user.userId,
-      action: 'view_transcript',
-      result: 'success',
+      action: "view_transcript",
+      result: "success",
       details: { callId, format },
     });
-    
+
     return NextResponse.json(response);
-    
   } catch (error) {
-    console.error('Error fetching transcript:', error);
-    
+    console.error("Error fetching transcript:", error);
+
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
@@ -163,18 +167,18 @@ function formatVTTTime(seconds: number): string {
   const minutes = Math.floor((seconds % 3600) / 60);
   const secs = seconds % 60;
   const milliseconds = Math.floor((secs % 1) * 1000);
-  
-  return `${hours.toString().padStart(2, '0')}:${minutes
+
+  return `${hours.toString().padStart(2, "0")}:${minutes
     .toString()
-    .padStart(2, '0')}:${Math.floor(secs)
+    .padStart(2, "0")}:${Math.floor(secs)
     .toString()
-    .padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+    .padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
 }
 
 // Mock transcript entry type
 interface TranscriptEntry {
   id: string;
-  speaker: 'AI' | 'LEAD' | 'HUMAN';
+  speaker: "AI" | "LEAD" | "HUMAN";
   text: string;
   timestamp: string;
   startTime?: number;

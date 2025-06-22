@@ -5,9 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { 
-  ChevronRight, Lock, Unlock, Eye, EyeOff, 
-  Zap, Settings, Brain, Rocket
+import {
+  ChevronRight,
+  Lock,
+  Unlock,
+  Eye,
+  EyeOff,
+  Zap,
+  Settings,
+  Brain,
+  Rocket,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -32,11 +39,7 @@ const LEVELS: {
     description: "Essential controls only",
     icon: Eye,
     color: "text-ai-blue",
-    features: [
-      "Start/End calls",
-      "View active calls",
-      "Basic metrics"
-    ]
+    features: ["Start/End calls", "View active calls", "Basic metrics"],
   },
   {
     id: "basic",
@@ -48,8 +51,8 @@ const LEVELS: {
       "Human takeover",
       "Call transcripts",
       "Queue management",
-      "Basic AI controls"
-    ]
+      "Basic AI controls",
+    ],
   },
   {
     id: "detailed",
@@ -62,8 +65,8 @@ const LEVELS: {
       "Coach mode",
       "Live insights",
       "Custom scripts",
-      "Analytics"
-    ]
+      "Analytics",
+    ],
   },
   {
     id: "advanced",
@@ -76,34 +79,36 @@ const LEVELS: {
       "Voice cloning",
       "Custom AI models",
       "Webhook management",
-      "Debug mode"
+      "Debug mode",
     ],
-    locked: true
-  }
+    locked: true,
+  },
 ];
 
-export function ProgressiveSettings({ onLevelChange }: ProgressiveSettingsProps) {
+export function ProgressiveSettings({
+  onLevelChange,
+}: ProgressiveSettingsProps) {
   const [currentLevel, setCurrentLevel] = useState<DisclosureLevel>("basic");
   const [expandedView, setExpandedView] = useState(false);
 
-  const currentLevelIndex = LEVELS.findIndex(l => l.id === currentLevel);
+  const currentLevelIndex = LEVELS.findIndex((l) => l.id === currentLevel);
   const progress = ((currentLevelIndex + 1) / LEVELS.length) * 100;
 
   const handleLevelChange = (level: DisclosureLevel) => {
-    const targetLevel = LEVELS.find(l => l.id === level);
+    const targetLevel = LEVELS.find((l) => l.id === level);
     if (targetLevel?.locked) {
       // Show unlock prompt
       console.log("Feature locked - require admin access");
       return;
     }
-    
+
     setCurrentLevel(level);
     onLevelChange?.(level);
   };
 
   const getVisibleFeatures = () => {
-    const levelIndex = LEVELS.findIndex(l => l.id === currentLevel);
-    return LEVELS.slice(0, levelIndex + 1).flatMap(l => l.features);
+    const levelIndex = LEVELS.findIndex((l) => l.id === currentLevel);
+    return LEVELS.slice(0, levelIndex + 1).flatMap((l) => l.features);
   };
 
   return (
@@ -126,7 +131,11 @@ export function ProgressiveSettings({ onLevelChange }: ProgressiveSettingsProps)
             size="sm"
             onClick={() => setExpandedView(!expandedView)}
           >
-            {expandedView ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {expandedView ? (
+              <EyeOff className="h-4 w-4" />
+            ) : (
+              <Eye className="h-4 w-4" />
+            )}
           </Button>
         </div>
 
@@ -145,11 +154,13 @@ export function ProgressiveSettings({ onLevelChange }: ProgressiveSettingsProps)
               return (
                 <Button
                   key={level.id}
-                  variant={isActive ? "default" : isPast ? "secondary" : "ghost"}
+                  variant={
+                    isActive ? "default" : isPast ? "secondary" : "ghost"
+                  }
                   size="sm"
                   className={cn(
                     "flex-1 relative",
-                    level.locked && "opacity-50"
+                    level.locked && "opacity-50",
                   )}
                   onClick={() => handleLevelChange(level.id)}
                   disabled={level.locked}
@@ -180,15 +191,12 @@ export function ProgressiveSettings({ onLevelChange }: ProgressiveSettingsProps)
                     isActive && "border-primary bg-primary/5",
                     isPast && "border-muted bg-muted/30",
                     isFuture && "opacity-60",
-                    level.locked && "opacity-50 cursor-not-allowed"
+                    level.locked && "opacity-50 cursor-not-allowed",
                   )}
                   onClick={() => !level.locked && handleLevelChange(level.id)}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={cn(
-                      "p-2 rounded-lg bg-white",
-                      level.color
-                    )}>
+                    <div className={cn("p-2 rounded-lg bg-white", level.color)}>
                       <Icon className="h-4 w-4" />
                     </div>
                     <div className="flex-1">

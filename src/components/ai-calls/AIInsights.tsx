@@ -5,10 +5,20 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Brain, TrendingUp, Users, DollarSign, Zap, 
-  AlertCircle, Target, Lightbulb, ChevronRight,
-  Sparkles, MessageSquare, Building, ShoppingCart
+import {
+  Brain,
+  TrendingUp,
+  Users,
+  DollarSign,
+  Zap,
+  AlertCircle,
+  Target,
+  Lightbulb,
+  ChevronRight,
+  Sparkles,
+  MessageSquare,
+  Building,
+  ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -19,15 +29,18 @@ interface AIInsightsProps {
 export function AIInsights({ callId }: AIInsightsProps) {
   const { insights } = useAICallStore();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  
+
   const callInsights = insights.get(callId) || [];
-  
+
   // Group insights by type
-  const groupedInsights = callInsights.reduce((acc, insight) => {
-    if (!acc[insight.type]) acc[insight.type] = [];
-    acc[insight.type]!.push(insight);
-    return acc;
-  }, {} as Record<string, AIInsight[]>);
+  const groupedInsights = callInsights.reduce(
+    (acc, insight) => {
+      if (!acc[insight.type]) acc[insight.type] = [];
+      acc[insight.type]!.push(insight);
+      return acc;
+    },
+    {} as Record<string, AIInsight[]>,
+  );
 
   // Mock real-time insights for demo
   useEffect(() => {
@@ -56,17 +69,21 @@ export function AIInsights({ callId }: AIInsightsProps) {
         callId,
         type: "ACTION",
         title: "Next Best Action",
-        content: "Offer product demo - lead expressed interest in seeing features",
+        content:
+          "Offer product demo - lead expressed interest in seeing features",
         confidence: 95,
         timestamp: new Date(),
       },
     ];
-    
+
     // Simulate adding insights over time
     mockInsights.forEach((insight, index) => {
-      setTimeout(() => {
-        useAICallStore.getState().addInsight(callId, insight);
-      }, (index + 1) * 2000);
+      setTimeout(
+        () => {
+          useAICallStore.getState().addInsight(callId, insight);
+        },
+        (index + 1) * 2000,
+      );
     });
   }, [callId]);
 
@@ -79,7 +96,7 @@ export function AIInsights({ callId }: AIInsightsProps) {
           <Badge variant="secondary">{callInsights.length}</Badge>
         </CardTitle>
       </CardHeader>
-      
+
       <CardContent className="flex-1 px-3">
         <ScrollArea className="h-full pr-3">
           {/* Real-time Sentiment Gauge */}
@@ -110,9 +127,9 @@ export function AIInsights({ callId }: AIInsightsProps) {
                 type={type}
                 insights={insights}
                 isExpanded={selectedCategory === type}
-                onToggle={() => setSelectedCategory(
-                  selectedCategory === type ? null : type
-                )}
+                onToggle={() =>
+                  setSelectedCategory(selectedCategory === type ? null : type)
+                }
               />
             ))}
           </div>
@@ -183,7 +200,11 @@ function SentimentGauge({ value }: SentimentGaugeProps) {
           <span className="font-medium">{value}%</span>
         </span>
         <span className="text-muted-foreground">
-          {value >= 80 ? "Very Positive" : value >= 60 ? "Neutral" : "Needs Attention"}
+          {value >= 80
+            ? "Very Positive"
+            : value >= 60
+              ? "Neutral"
+              : "Needs Attention"}
         </span>
       </div>
       <Progress value={value} className="h-2" />
@@ -198,15 +219,28 @@ interface InsightCategoryProps {
   onToggle: () => void;
 }
 
-function InsightCategory({ type, insights, isExpanded, onToggle }: InsightCategoryProps) {
+function InsightCategory({
+  type,
+  insights,
+  isExpanded,
+  onToggle,
+}: InsightCategoryProps) {
   const getTypeConfig = () => {
     switch (type) {
       case "SENTIMENT":
-        return { icon: TrendingUp, color: "text-green-600", label: "Sentiment" };
+        return {
+          icon: TrendingUp,
+          color: "text-green-600",
+          label: "Sentiment",
+        };
       case "TOPIC":
         return { icon: MessageSquare, color: "text-blue-600", label: "Topics" };
       case "COMPETITOR":
-        return { icon: Building, color: "text-purple-600", label: "Competitors" };
+        return {
+          icon: Building,
+          color: "text-purple-600",
+          label: "Competitors",
+        };
       case "PRICING":
         return { icon: DollarSign, color: "text-amber-600", label: "Pricing" };
       case "ACTION":
@@ -232,12 +266,14 @@ function InsightCategory({ type, insights, isExpanded, onToggle }: InsightCatego
             {insights.length}
           </Badge>
         </div>
-        <ChevronRight className={cn(
-          "h-4 w-4 transition-transform",
-          isExpanded && "rotate-90"
-        )} />
+        <ChevronRight
+          className={cn(
+            "h-4 w-4 transition-transform",
+            isExpanded && "rotate-90",
+          )}
+        />
       </button>
-      
+
       {isExpanded && (
         <div className="px-3 pb-3 space-y-2">
           {insights.map((insight) => (
@@ -284,7 +320,10 @@ function TalkingPoint({ icon: Icon, text, confidence }: TalkingPointProps) {
       <div className="flex-1">
         <p className="text-sm">{text}</p>
       </div>
-      <Badge variant="outline" className="text-xs opacity-0 group-hover:opacity-100">
+      <Badge
+        variant="outline"
+        className="text-xs opacity-0 group-hover:opacity-100"
+      >
         {confidence}%
       </Badge>
     </div>
@@ -302,12 +341,16 @@ function ContentCard({ type, title, content, icon: Icon }: ContentCardProps) {
   return (
     <div className="p-3 border rounded-lg bg-card hover:shadow-sm transition-all cursor-pointer">
       <div className="flex items-start gap-3">
-        <div className={cn(
-          "w-8 h-8 rounded-lg flex items-center justify-center",
-          type === "pricing" ? "bg-amber-100 text-amber-600 dark:bg-amber-950" :
-          type === "competitor" ? "bg-purple-100 text-purple-600 dark:bg-purple-950" :
-          "bg-gray-100 text-gray-600 dark:bg-gray-800"
-        )}>
+        <div
+          className={cn(
+            "w-8 h-8 rounded-lg flex items-center justify-center",
+            type === "pricing"
+              ? "bg-amber-100 text-amber-600 dark:bg-amber-950"
+              : type === "competitor"
+                ? "bg-purple-100 text-purple-600 dark:bg-purple-950"
+                : "bg-gray-100 text-gray-600 dark:bg-gray-800",
+          )}
+        >
           <Icon className="h-4 w-4" />
         </div>
         <div className="flex-1">

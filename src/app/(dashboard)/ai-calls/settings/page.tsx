@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,9 +23,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { 
-  ArrowLeft, Save, RotateCw, Mic, Volume2, Brain, 
-  Zap, Shield, Globe, FileText, AlertCircle
+import {
+  ArrowLeft,
+  Save,
+  RotateCw,
+  Mic,
+  Volume2,
+  Brain,
+  Zap,
+  Shield,
+  Globe,
+  FileText,
+  AlertCircle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -113,8 +128,8 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
         <CardContent className="space-y-4">
           <div>
             <Label>Agent Name</Label>
-            <Input 
-              defaultValue="Mohit AI Sales Assistant" 
+            <Input
+              defaultValue="Mohit AI Sales Assistant"
               onChange={onChange}
               className="mt-1"
             />
@@ -190,7 +205,9 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
                 <FileText className="h-5 w-5 text-muted-foreground" />
                 <div>
                   <p className="font-medium">Product Knowledge</p>
-                  <p className="text-sm text-muted-foreground">Features, pricing, competitors</p>
+                  <p className="text-sm text-muted-foreground">
+                    Features, pricing, competitors
+                  </p>
                 </div>
               </div>
               <Badge>Active</Badge>
@@ -200,7 +217,9 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
                 <FileText className="h-5 w-5 text-muted-foreground" />
                 <div>
                   <p className="font-medium">Sales Scripts</p>
-                  <p className="text-sm text-muted-foreground">Opening, objection handling, closing</p>
+                  <p className="text-sm text-muted-foreground">
+                    Opening, objection handling, closing
+                  </p>
                 </div>
               </div>
               <Badge>Active</Badge>
@@ -210,7 +229,9 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
                 <FileText className="h-5 w-5 text-muted-foreground" />
                 <div>
                   <p className="font-medium">Company Information</p>
-                  <p className="text-sm text-muted-foreground">About us, case studies, testimonials</p>
+                  <p className="text-sm text-muted-foreground">
+                    About us, case studies, testimonials
+                  </p>
                 </div>
               </div>
               <Badge>Active</Badge>
@@ -246,10 +267,16 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="professional">Professional Sales (Rachel)</SelectItem>
-                <SelectItem value="friendly">Friendly Consultant (James)</SelectItem>
+                <SelectItem value="professional">
+                  Professional Sales (Rachel)
+                </SelectItem>
+                <SelectItem value="friendly">
+                  Friendly Consultant (James)
+                </SelectItem>
                 <SelectItem value="executive">Executive (Victoria)</SelectItem>
-                <SelectItem value="technical">Technical Expert (David)</SelectItem>
+                <SelectItem value="technical">
+                  Technical Expert (David)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -260,7 +287,12 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
                 <Label className="text-sm">Speaking Speed</Label>
                 <span className="text-sm text-muted-foreground">1.0x</span>
               </div>
-              <Slider defaultValue={[100]} min={75} max={125} onChange={onChange} />
+              <Slider
+                defaultValue={[100]}
+                min={75}
+                max={125}
+                onChange={onChange}
+              />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -290,7 +322,8 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
             <div>
               <Label>Filler Words</Label>
               <p className="text-sm text-muted-foreground">
-                Use natural speech patterns like &quot;um&quot; and &quot;uh&quot;
+                Use natural speech patterns like &quot;um&quot; and
+                &quot;uh&quot;
               </p>
             </div>
             <Switch onChange={onChange} />
@@ -300,7 +333,8 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
             <div>
               <Label>Active Listening Sounds</Label>
               <p className="text-sm text-muted-foreground">
-                &quot;Mm-hmm&quot;, &quot;I see&quot;, &quot;Right&quot; during listening
+                &quot;Mm-hmm&quot;, &quot;I see&quot;, &quot;Right&quot; during
+                listening
               </p>
             </div>
             <Switch defaultChecked onChange={onChange} />
@@ -316,7 +350,11 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
           <div className="space-y-3">
             <div className="p-4 bg-muted rounded-lg">
               <p className="text-sm mb-2">Sample greeting:</p>
-              <p className="italic">&quot;Hi, this is Rachel from Mohit AI. I&apos;m calling to follow up on your interest in our sales automation platform. Do you have a few minutes to chat?&quot;</p>
+              <p className="italic">
+                &quot;Hi, this is Rachel from Mohit AI. I&apos;m calling to
+                follow up on your interest in our sales automation platform. Do
+                you have a few minutes to chat?&quot;
+              </p>
             </div>
             <Button className="w-full">
               <Mic className="h-4 w-4 mr-2" />
@@ -350,10 +388,16 @@ function BehaviorSettings({ onChange }: { onChange: () => void }) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="direct">Direct - Get to the point quickly</SelectItem>
+                <SelectItem value="direct">
+                  Direct - Get to the point quickly
+                </SelectItem>
                 <SelectItem value="warm">Warm - Build rapport first</SelectItem>
-                <SelectItem value="permission">Permission-based - Ask if it&apos;s a good time</SelectItem>
-                <SelectItem value="value">Value-first - Lead with benefit</SelectItem>
+                <SelectItem value="permission">
+                  Permission-based - Ask if it&apos;s a good time
+                </SelectItem>
+                <SelectItem value="value">
+                  Value-first - Lead with benefit
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -365,8 +409,12 @@ function BehaviorSettings({ onChange }: { onChange: () => void }) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="acknowledge">Acknowledge & Redirect</SelectItem>
-                <SelectItem value="question">Ask Clarifying Questions</SelectItem>
+                <SelectItem value="acknowledge">
+                  Acknowledge & Redirect
+                </SelectItem>
+                <SelectItem value="question">
+                  Ask Clarifying Questions
+                </SelectItem>
                 <SelectItem value="empathize">Empathize & Educate</SelectItem>
                 <SelectItem value="defer">Defer to Human Agent</SelectItem>
               </SelectContent>
@@ -432,9 +480,7 @@ function BehaviorSettings({ onChange }: { onChange: () => void }) {
       <Card>
         <CardHeader>
           <CardTitle>Escalation Rules</CardTitle>
-          <CardDescription>
-            When to involve human agents
-          </CardDescription>
+          <CardDescription>When to involve human agents</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between p-3 border rounded-lg">
@@ -442,7 +488,9 @@ function BehaviorSettings({ onChange }: { onChange: () => void }) {
               <AlertCircle className="h-5 w-5 text-amber-500" />
               <div>
                 <p className="font-medium">Pricing Negotiations</p>
-                <p className="text-sm text-muted-foreground">Transfer when discussing custom pricing</p>
+                <p className="text-sm text-muted-foreground">
+                  Transfer when discussing custom pricing
+                </p>
               </div>
             </div>
             <Switch defaultChecked onChange={onChange} />
@@ -452,7 +500,9 @@ function BehaviorSettings({ onChange }: { onChange: () => void }) {
               <AlertCircle className="h-5 w-5 text-amber-500" />
               <div>
                 <p className="font-medium">Technical Questions</p>
-                <p className="text-sm text-muted-foreground">Escalate complex technical inquiries</p>
+                <p className="text-sm text-muted-foreground">
+                  Escalate complex technical inquiries
+                </p>
               </div>
             </div>
             <Switch defaultChecked onChange={onChange} />
@@ -462,7 +512,9 @@ function BehaviorSettings({ onChange }: { onChange: () => void }) {
               <AlertCircle className="h-5 w-5 text-red-500" />
               <div>
                 <p className="font-medium">Angry Customers</p>
-                <p className="text-sm text-muted-foreground">Immediate transfer on negative sentiment</p>
+                <p className="text-sm text-muted-foreground">
+                  Immediate transfer on negative sentiment
+                </p>
               </div>
             </div>
             <Switch defaultChecked onChange={onChange} />
@@ -568,9 +620,7 @@ function ComplianceSettings({ onChange }: { onChange: () => void }) {
       <Card>
         <CardHeader>
           <CardTitle>Regional Settings</CardTitle>
-          <CardDescription>
-            Configure compliance by region
-          </CardDescription>
+          <CardDescription>Configure compliance by region</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between p-3 border rounded-lg">
@@ -627,9 +677,15 @@ function AdvancedSettings({ onChange }: { onChange: () => void }) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="fastest">Fastest (~75ms) - Lower quality</SelectItem>
-                <SelectItem value="balanced">Balanced (~150ms) - Good quality</SelectItem>
-                <SelectItem value="quality">Quality (~250ms) - Best quality</SelectItem>
+                <SelectItem value="fastest">
+                  Fastest (~75ms) - Lower quality
+                </SelectItem>
+                <SelectItem value="balanced">
+                  Balanced (~150ms) - Good quality
+                </SelectItem>
+                <SelectItem value="quality">
+                  Quality (~250ms) - Best quality
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>

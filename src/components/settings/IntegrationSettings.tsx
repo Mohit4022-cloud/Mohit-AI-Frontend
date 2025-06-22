@@ -1,25 +1,25 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { 
-  Loader2, 
-  Key, 
-  Phone, 
-  Globe, 
-  Webhook, 
-  Save, 
-  Eye, 
-  EyeOff, 
-  CheckCircle, 
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Loader2,
+  Key,
+  Phone,
+  Globe,
+  Webhook,
+  Save,
+  Eye,
+  EyeOff,
+  CheckCircle,
   XCircle,
   Volume2,
   Link2,
   TestTube,
-  RefreshCw
-} from 'lucide-react'
+  RefreshCw,
+} from "lucide-react";
 import {
   Form,
   FormControl,
@@ -28,172 +28,202 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-import { useToast } from '@/components/ui/use-toast'
-import { useSettingsStore } from '@/stores/settingsStore'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { api } from '@/lib/api-client'
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
+import { useSettingsStore } from "@/stores/settingsStore";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { api } from "@/lib/api-client";
 
 // Integration form schema
 const IntegrationFormSchema = z.object({
   // Twilio
-  twilioAccountSid: z.string().optional().refine(
-    (val) => !val || (val.length >= 34 && val.startsWith('AC')),
-    'Invalid Account SID - must start with AC'
-  ),
-  twilioAuthToken: z.string().optional().refine(
-    (val) => !val || val.length >= 32,
-    'Invalid Auth Token - must be at least 32 characters'
-  ),
-  twilioCallerNumber: z.string().optional().refine(
-    (val) => !val || /^\+[1-9]\d{1,14}$/.test(val),
-    'Must be E.164 format (+1234567890)'
-  ),
-  
+  twilioAccountSid: z
+    .string()
+    .optional()
+    .refine(
+      (val) => !val || (val.length >= 34 && val.startsWith("AC")),
+      "Invalid Account SID - must start with AC",
+    ),
+  twilioAuthToken: z
+    .string()
+    .optional()
+    .refine(
+      (val) => !val || val.length >= 32,
+      "Invalid Auth Token - must be at least 32 characters",
+    ),
+  twilioCallerNumber: z
+    .string()
+    .optional()
+    .refine(
+      (val) => !val || /^\+[1-9]\d{1,14}$/.test(val),
+      "Must be E.164 format (+1234567890)",
+    ),
+
   // ElevenLabs
   elevenLabsKey: z.string().optional(),
   elevenLabsVoiceId: z.string().optional(),
   elevenLabsAgentId: z.string().optional(),
-  elevenLabsAudioUrl: z.string().url('Invalid URL').optional().or(z.literal('')),
-  
-  // General
-  webhookUrl: z.string().url('Invalid URL').optional().or(z.literal('')),
-  baseUrl: z.string().url('Invalid URL').optional().or(z.literal('')),
-})
+  elevenLabsAudioUrl: z
+    .string()
+    .url("Invalid URL")
+    .optional()
+    .or(z.literal("")),
 
-type IntegrationFormData = z.infer<typeof IntegrationFormSchema>
+  // General
+  webhookUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
+  baseUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
+});
+
+type IntegrationFormData = z.infer<typeof IntegrationFormSchema>;
 
 export function IntegrationSettings() {
-  const { toast } = useToast()
-  const { settings, updateSettings, fetchSettings } = useSettingsStore()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isTesting, setIsTesting] = useState(false)
+  const { toast } = useToast();
+  const { settings, updateSettings, fetchSettings } = useSettingsStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTesting, setIsTesting] = useState(false);
   const [showKeys, setShowKeys] = useState<Record<string, boolean>>({
     twilioAuthToken: false,
     elevenLabsKey: false,
-  })
+  });
 
   // Load settings on mount
   useEffect(() => {
-    fetchSettings()
-  }, [fetchSettings])
+    fetchSettings();
+  }, [fetchSettings]);
 
   const form = useForm<IntegrationFormData>({
     resolver: zodResolver(IntegrationFormSchema),
     defaultValues: {
-      twilioAccountSid: settings.integrations.twilioAccountSid || '',
-      twilioAuthToken: settings.integrations.twilioAuthToken || '',
-      twilioCallerNumber: settings.integrations.twilioCallerNumber || '',
-      elevenLabsKey: settings.integrations.elevenLabsKey || '',
-      elevenLabsVoiceId: settings.integrations.elevenLabsVoiceId || '21m00Tcm4TlvDq8ikWAM',
-      elevenLabsAgentId: settings.integrations.elevenLabsAgentId || '',
-      elevenLabsAudioUrl: settings.integrations.elevenLabsAudioUrl || '',
-      webhookUrl: settings.integrations.webhookUrl || '',
-      baseUrl: settings.integrations.baseUrl || process.env.NEXT_PUBLIC_API_URL || '',
+      twilioAccountSid: settings.integrations.twilioAccountSid || "",
+      twilioAuthToken: settings.integrations.twilioAuthToken || "",
+      twilioCallerNumber: settings.integrations.twilioCallerNumber || "",
+      elevenLabsKey: settings.integrations.elevenLabsKey || "",
+      elevenLabsVoiceId:
+        settings.integrations.elevenLabsVoiceId || "21m00Tcm4TlvDq8ikWAM",
+      elevenLabsAgentId: settings.integrations.elevenLabsAgentId || "",
+      elevenLabsAudioUrl: settings.integrations.elevenLabsAudioUrl || "",
+      webhookUrl: settings.integrations.webhookUrl || "",
+      baseUrl:
+        settings.integrations.baseUrl || process.env.NEXT_PUBLIC_API_URL || "",
     },
-  })
+  });
 
   // Update form when settings change
   useEffect(() => {
     form.reset({
-      twilioAccountSid: settings.integrations.twilioAccountSid || '',
-      twilioAuthToken: settings.integrations.twilioAuthToken || '',
-      twilioCallerNumber: settings.integrations.twilioCallerNumber || '',
-      elevenLabsKey: settings.integrations.elevenLabsKey || '',
-      elevenLabsVoiceId: settings.integrations.elevenLabsVoiceId || '21m00Tcm4TlvDq8ikWAM',
-      elevenLabsAgentId: settings.integrations.elevenLabsAgentId || '',
-      elevenLabsAudioUrl: settings.integrations.elevenLabsAudioUrl || '',
-      webhookUrl: settings.integrations.webhookUrl || '',
-      baseUrl: settings.integrations.baseUrl || process.env.NEXT_PUBLIC_API_URL || '',
-    })
-  }, [settings, form])
+      twilioAccountSid: settings.integrations.twilioAccountSid || "",
+      twilioAuthToken: settings.integrations.twilioAuthToken || "",
+      twilioCallerNumber: settings.integrations.twilioCallerNumber || "",
+      elevenLabsKey: settings.integrations.elevenLabsKey || "",
+      elevenLabsVoiceId:
+        settings.integrations.elevenLabsVoiceId || "21m00Tcm4TlvDq8ikWAM",
+      elevenLabsAgentId: settings.integrations.elevenLabsAgentId || "",
+      elevenLabsAudioUrl: settings.integrations.elevenLabsAudioUrl || "",
+      webhookUrl: settings.integrations.webhookUrl || "",
+      baseUrl:
+        settings.integrations.baseUrl || process.env.NEXT_PUBLIC_API_URL || "",
+    });
+  }, [settings, form]);
 
   const onSubmit = async (data: IntegrationFormData) => {
-    console.log('Submitting integration settings:', data)
-    setIsSubmitting(true)
+    console.log("Submitting integration settings:", data);
+    setIsSubmitting(true);
 
     try {
       // Log the data being saved
-      console.log('Updating settings with:', {
+      console.log("Updating settings with:", {
         integrations: {
           ...settings.integrations,
           ...data,
         },
-      })
+      });
 
       await updateSettings({
         integrations: {
           ...settings.integrations,
           ...data,
         },
-      })
+      });
 
       toast({
-        title: 'Integrations updated',
-        description: 'Your integration settings have been saved and are ready to use.',
-      })
-      
+        title: "Integrations updated",
+        description:
+          "Your integration settings have been saved and are ready to use.",
+      });
+
       // Log success
-      console.log('Settings saved successfully')
+      console.log("Settings saved successfully");
     } catch (error) {
-      console.error('Failed to update integrations:', error)
-      
+      console.error("Failed to update integrations:", error);
+
       // More detailed error message
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
-      
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error occurred";
+
       toast({
-        title: 'Update failed',
+        title: "Update failed",
         description: `Failed to save settings: ${errorMessage}`,
-        variant: 'destructive',
-      })
+        variant: "destructive",
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const toggleShowKey = (key: string) => {
     setShowKeys((prev) => ({
       ...prev,
       [key]: !prev[key],
-    }))
-  }
+    }));
+  };
 
-  const testConnection = async (service: 'twilio' | 'elevenlabs') => {
-    setIsTesting(true)
-    
+  const testConnection = async (service: "twilio" | "elevenlabs") => {
+    setIsTesting(true);
+
     try {
-      const endpoint = service === 'twilio' ? '/api/test/twilio' : '/api/test/elevenlabs'
-      const result = await api.post(endpoint, form.getValues())
-      
+      const endpoint =
+        service === "twilio" ? "/api/test/twilio" : "/api/test/elevenlabs";
+      const result = await api.post(endpoint, form.getValues());
+
       if (result.success) {
         toast({
-          title: `${service === 'twilio' ? 'Twilio' : 'ElevenLabs'} connected!`,
-          description: result.message || 'Connection test successful.',
-        })
+          title: `${service === "twilio" ? "Twilio" : "ElevenLabs"} connected!`,
+          description: result.message || "Connection test successful.",
+        });
       } else {
-        throw new Error(result.error || 'Connection failed')
+        throw new Error(result.error || "Connection failed");
       }
     } catch (error: any) {
       toast({
-        title: 'Connection failed',
-        description: error.message || 'Unable to connect to service. Please check your credentials.',
-        variant: 'destructive',
-      })
+        title: "Connection failed",
+        description:
+          error.message ||
+          "Unable to connect to service. Please check your credentials.",
+        variant: "destructive",
+      });
     } finally {
-      setIsTesting(false)
+      setIsTesting(false);
     }
-  }
+  };
 
   const isConfigured = {
-    twilio: !!(settings.integrations.twilioAccountSid && settings.integrations.twilioAuthToken && settings.integrations.twilioCallerNumber),
-    elevenLabs: !!(settings.integrations.elevenLabsKey && settings.integrations.elevenLabsVoiceId && settings.integrations.elevenLabsAgentId),
-  }
+    twilio: !!(
+      settings.integrations.twilioAccountSid &&
+      settings.integrations.twilioAuthToken &&
+      settings.integrations.twilioCallerNumber
+    ),
+    elevenLabs: !!(
+      settings.integrations.elevenLabsKey &&
+      settings.integrations.elevenLabsVoiceId &&
+      settings.integrations.elevenLabsAgentId
+    ),
+  };
 
   return (
     <Form {...form}>
@@ -222,7 +252,7 @@ export function IntegrationSettings() {
                     Connect your Twilio account for voice calling capabilities
                   </p>
                 </div>
-                <Badge variant={isConfigured.twilio ? 'default' : 'secondary'}>
+                <Badge variant={isConfigured.twilio ? "default" : "secondary"}>
                   {isConfigured.twilio ? (
                     <>
                       <CheckCircle className="h-3 w-3 mr-1" />
@@ -245,10 +275,7 @@ export function IntegrationSettings() {
                     <FormItem>
                       <FormLabel>Account SID</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="AC..."
-                          {...field}
-                        />
+                        <Input placeholder="AC..." {...field} />
                       </FormControl>
                       <FormDescription>
                         Found in your Twilio Console dashboard
@@ -267,7 +294,9 @@ export function IntegrationSettings() {
                       <FormControl>
                         <div className="relative">
                           <Input
-                            type={showKeys.twilioAuthToken ? 'text' : 'password'}
+                            type={
+                              showKeys.twilioAuthToken ? "text" : "password"
+                            }
                             placeholder="Enter your Auth Token"
                             {...field}
                           />
@@ -276,7 +305,7 @@ export function IntegrationSettings() {
                             variant="ghost"
                             size="sm"
                             className="absolute right-0 top-0 h-full px-3"
-                            onClick={() => toggleShowKey('twilioAuthToken')}
+                            onClick={() => toggleShowKey("twilioAuthToken")}
                           >
                             {showKeys.twilioAuthToken ? (
                               <EyeOff className="h-4 w-4" />
@@ -287,7 +316,8 @@ export function IntegrationSettings() {
                         </div>
                       </FormControl>
                       <FormDescription>
-                        Keep this secret - it provides full access to your account
+                        Keep this secret - it provides full access to your
+                        account
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -301,10 +331,7 @@ export function IntegrationSettings() {
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="+14155551234"
-                          {...field}
-                        />
+                        <Input placeholder="+14155551234" {...field} />
                       </FormControl>
                       <FormDescription>
                         Your Twilio phone number in E.164 format
@@ -341,8 +368,9 @@ export function IntegrationSettings() {
                       <div className="space-y-2">
                         <p>Twilio is configured! Your webhook URLs:</p>
                         <code className="block text-xs bg-muted p-2 rounded">
-                          Voice: {form.watch('baseUrl')}/api/call/voice<br />
-                          Status: {form.watch('baseUrl')}/api/call/status
+                          Voice: {form.watch("baseUrl")}/api/call/voice
+                          <br />
+                          Status: {form.watch("baseUrl")}/api/call/status
                         </code>
                       </div>
                     </AlertDescription>
@@ -353,7 +381,7 @@ export function IntegrationSettings() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => testConnection('twilio')}
+                    onClick={() => testConnection("twilio")}
                     disabled={!isConfigured.twilio || isTesting}
                   >
                     {isTesting ? (
@@ -385,7 +413,9 @@ export function IntegrationSettings() {
                     AI-powered voice synthesis for natural conversations
                   </p>
                 </div>
-                <Badge variant={isConfigured.elevenLabs ? 'default' : 'secondary'}>
+                <Badge
+                  variant={isConfigured.elevenLabs ? "default" : "secondary"}
+                >
                   {isConfigured.elevenLabs ? (
                     <>
                       <CheckCircle className="h-3 w-3 mr-1" />
@@ -410,7 +440,7 @@ export function IntegrationSettings() {
                       <FormControl>
                         <div className="relative">
                           <Input
-                            type={showKeys.elevenLabsKey ? 'text' : 'password'}
+                            type={showKeys.elevenLabsKey ? "text" : "password"}
                             placeholder="sk_..."
                             {...field}
                           />
@@ -419,7 +449,7 @@ export function IntegrationSettings() {
                             variant="ghost"
                             size="sm"
                             className="absolute right-0 top-0 h-full px-3"
-                            onClick={() => toggleShowKey('elevenLabsKey')}
+                            onClick={() => toggleShowKey("elevenLabsKey")}
                           >
                             {showKeys.elevenLabsKey ? (
                               <EyeOff className="h-4 w-4" />
@@ -444,13 +474,11 @@ export function IntegrationSettings() {
                     <FormItem>
                       <FormLabel>Voice ID</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="21m00Tcm4TlvDq8ikWAM"
-                          {...field}
-                        />
+                        <Input placeholder="21m00Tcm4TlvDq8ikWAM" {...field} />
                       </FormControl>
                       <FormDescription>
-                        Default: Rachel voice. Find more in your ElevenLabs voice library
+                        Default: Rachel voice. Find more in your ElevenLabs
+                        voice library
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -502,7 +530,7 @@ export function IntegrationSettings() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => testConnection('elevenlabs')}
+                    onClick={() => testConnection("elevenlabs")}
                     disabled={!isConfigured.elevenLabs || isTesting}
                   >
                     {isTesting ? (
@@ -586,5 +614,5 @@ export function IntegrationSettings() {
         </div>
       </form>
     </Form>
-  )
+  );
 }

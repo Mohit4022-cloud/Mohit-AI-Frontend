@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Phone, Loader2, CheckCircle2, XCircle, Volume2 } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { Phone, Loader2, CheckCircle2, XCircle, Volume2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,161 +10,171 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { useToast } from '@/components/ui/use-toast'
-import { Badge } from '@/components/ui/badge'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { api } from '@/lib/api-client'
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useToast } from "@/components/ui/use-toast";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { api } from "@/lib/api-client";
 
 interface CallResponse {
-  success: boolean
-  callSid?: string
-  status?: string
-  error?: string
-  details?: string
+  success: boolean;
+  callSid?: string;
+  status?: string;
+  error?: string;
+  details?: string;
 }
 
 interface TranscriptEntry {
-  role: 'user' | 'agent'
-  text: string
-  timestamp: string
+  role: "user" | "agent";
+  text: string;
+  timestamp: string;
 }
 
 export function TestCallDialog() {
-  const [open, setOpen] = useState(false)
-  const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
-  const [currentCallSid, setCurrentCallSid] = useState<string | null>(null)
-  const [isPollingTranscript, setIsPollingTranscript] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [callStatus, setCallStatus] = useState<'idle' | 'calling' | 'success' | 'error'>('idle')
-  const [callDetails, setCallDetails] = useState<CallResponse | null>(null)
-  const { toast } = useToast()
+  const [open, setOpen] = useState(false);
+  const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
+  const [currentCallSid, setCurrentCallSid] = useState<string | null>(null);
+  const [isPollingTranscript, setIsPollingTranscript] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [callStatus, setCallStatus] = useState<
+    "idle" | "calling" | "success" | "error"
+  >("idle");
+  const [callDetails, setCallDetails] = useState<CallResponse | null>(null);
+  const { toast } = useToast();
 
   const formatPhoneNumber = (value: string) => {
     // Remove all non-digits
-    const digits = value.replace(/\D/g, '')
-    
+    const digits = value.replace(/\D/g, "");
+
     // Format as US phone number
-    if (digits.length <= 3) return digits
-    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`
-  }
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+  };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhoneNumber(e.target.value)
-    setPhoneNumber(formatted)
-  }
+    const formatted = formatPhoneNumber(e.target.value);
+    setPhoneNumber(formatted);
+  };
 
   const handleTestCall = async () => {
     // Convert formatted number to E.164 format
-    const digits = phoneNumber.replace(/\D/g, '')
+    const digits = phoneNumber.replace(/\D/g, "");
     if (digits.length !== 10) {
       toast({
-        title: 'Invalid phone number',
-        description: 'Please enter a valid 10-digit US phone number',
-        variant: 'destructive',
-      })
-      return
+        title: "Invalid phone number",
+        description: "Please enter a valid 10-digit US phone number",
+        variant: "destructive",
+      });
+      return;
     }
 
-    const e164Phone = `+1${digits}`
-    
-    setIsLoading(true)
-    setCallStatus('calling')
-    setCallDetails(null)
+    const e164Phone = `+1${digits}`;
+
+    setIsLoading(true);
+    setCallStatus("calling");
+    setCallDetails(null);
 
     try {
-      const data = await api.post<CallResponse>('/api/call/start', { phone: e164Phone })
+      const data = await api.post<CallResponse>("/api/call/start", {
+        phone: e164Phone,
+      });
 
       if (data.success) {
-        setCallStatus('success')
-        setCallDetails(data)
-        setCurrentCallSid(data.callSid || null)
-        setIsPollingTranscript(true)
+        setCallStatus("success");
+        setCallDetails(data);
+        setCurrentCallSid(data.callSid || null);
+        setIsPollingTranscript(true);
         toast({
-          title: 'Call initiated!',
-          description: 'You should receive a call shortly.',
-        })
+          title: "Call initiated!",
+          description: "You should receive a call shortly.",
+        });
       } else {
-        setCallStatus('error')
-        setCallDetails(data)
+        setCallStatus("error");
+        setCallDetails(data);
         toast({
-          title: 'Call failed',
-          description: data.error || 'Failed to initiate call',
-          variant: 'destructive',
-        })
+          title: "Call failed",
+          description: data.error || "Failed to initiate call",
+          variant: "destructive",
+        });
       }
     } catch (error: any) {
-      setCallStatus('error')
+      setCallStatus("error");
       setCallDetails({
         success: false,
-        error: error.message || 'Network error',
-        details: error.details || 'Unable to connect to the server',
-      })
+        error: error.message || "Network error",
+        details: error.details || "Unable to connect to the server",
+      });
       toast({
-        title: 'Unable to start call',
-        description: 'Please check your network connection or Twilio credentials.',
-        variant: 'destructive',
-      })
+        title: "Unable to start call",
+        description:
+          "Please check your network connection or Twilio credentials.",
+        variant: "destructive",
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const resetDialog = () => {
-    setPhoneNumber('')
-    setCallStatus('idle')
-    setCallDetails(null)
-    setTranscript([])
-    setCurrentCallSid(null)
-    setIsPollingTranscript(false)
-  }
+    setPhoneNumber("");
+    setCallStatus("idle");
+    setCallDetails(null);
+    setTranscript([]);
+    setCurrentCallSid(null);
+    setIsPollingTranscript(false);
+  };
 
   // Poll for transcript updates
   useEffect(() => {
-    if (!currentCallSid || !isPollingTranscript) return
+    if (!currentCallSid || !isPollingTranscript) return;
 
     const pollTranscript = async () => {
       try {
-        const data = await api.get(`/api/call/transcript?callSid=${currentCallSid}`)
+        const data = await api.get(
+          `/api/call/transcript?callSid=${currentCallSid}`,
+        );
         if (data.transcript && data.transcript.length > 0) {
-          setTranscript(data.transcript)
+          setTranscript(data.transcript);
         }
       } catch (error) {
-        console.error('Error fetching transcript:', error)
+        console.error("Error fetching transcript:", error);
       }
-    }
+    };
 
     // Initial poll
-    pollTranscript()
+    pollTranscript();
 
     // Set up polling interval
-    const interval = setInterval(pollTranscript, 2000)
+    const interval = setInterval(pollTranscript, 2000);
 
-    return () => clearInterval(interval)
-  }, [currentCallSid, isPollingTranscript])
+    return () => clearInterval(interval);
+  }, [currentCallSid, isPollingTranscript]);
 
   // Stop polling after 60 seconds
   useEffect(() => {
     if (isPollingTranscript) {
       const timeout = setTimeout(() => {
-        setIsPollingTranscript(false)
-      }, 60000)
+        setIsPollingTranscript(false);
+      }, 60000);
 
-      return () => clearTimeout(timeout)
+      return () => clearTimeout(timeout);
     }
-  }, [isPollingTranscript])
+  }, [isPollingTranscript]);
 
   return (
-    <Dialog open={open} onOpenChange={(isOpen) => {
-      setOpen(isOpen)
-      if (!isOpen) resetDialog()
-    }}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) resetDialog();
+      }}
+    >
       <DialogTrigger asChild>
         <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white">
           <Phone className="h-4 w-4 mr-2" />
@@ -178,12 +188,13 @@ export function TestCallDialog() {
             Test Twilio Integration
           </DialogTitle>
           <DialogDescription>
-            Enter your phone number to receive a test call from Mohit AI powered by Twilio and ElevenLabs.
+            Enter your phone number to receive a test call from Mohit AI powered
+            by Twilio and ElevenLabs.
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="grid gap-4 py-4">
-          {callStatus === 'idle' && (
+          {callStatus === "idle" && (
             <div className="grid gap-2">
               <Label htmlFor="phone">Phone Number</Label>
               <Input
@@ -200,7 +211,7 @@ export function TestCallDialog() {
             </div>
           )}
 
-          {callStatus === 'calling' && (
+          {callStatus === "calling" && (
             <div className="flex flex-col items-center gap-4 py-8">
               <div className="relative">
                 <Phone className="h-16 w-16 text-purple-600 animate-pulse" />
@@ -214,15 +225,16 @@ export function TestCallDialog() {
             </div>
           )}
 
-          {callStatus === 'success' && callDetails && (
+          {callStatus === "success" && callDetails && (
             <div className="space-y-4">
               <Alert className="border-green-200 bg-green-50 dark:bg-green-900/20">
                 <CheckCircle2 className="h-4 w-4 text-green-600" />
                 <AlertDescription className="text-green-800 dark:text-green-200">
-                  Call initiated successfully! You should receive a call within seconds.
+                  Call initiated successfully! You should receive a call within
+                  seconds.
                 </AlertDescription>
               </Alert>
-              
+
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Call SID:</span>
@@ -252,15 +264,15 @@ export function TestCallDialog() {
             </div>
           )}
 
-          {callStatus === 'error' && callDetails && (
+          {callStatus === "error" && callDetails && (
             <div className="space-y-4">
               <Alert variant="destructive">
                 <XCircle className="h-4 w-4" />
                 <AlertDescription>
-                  {callDetails.error || 'Failed to initiate call'}
+                  {callDetails.error || "Failed to initiate call"}
                 </AlertDescription>
               </Alert>
-              
+
               {callDetails.details && (
                 <div className="text-xs text-muted-foreground bg-muted p-3 rounded">
                   <p className="font-medium mb-1">Error details:</p>
@@ -291,18 +303,18 @@ export function TestCallDialog() {
                   <div
                     key={index}
                     className={`flex gap-2 ${
-                      entry.role === 'agent' ? 'justify-start' : 'justify-end'
+                      entry.role === "agent" ? "justify-start" : "justify-end"
                     }`}
                   >
                     <div
                       className={`max-w-[80%] rounded-lg px-3 py-2 ${
-                        entry.role === 'agent'
-                          ? 'bg-white dark:bg-gray-800 border'
-                          : 'bg-purple-600 text-white'
+                        entry.role === "agent"
+                          ? "bg-white dark:bg-gray-800 border"
+                          : "bg-purple-600 text-white"
                       }`}
                     >
                       <p className="text-xs font-medium mb-1 opacity-70">
-                        {entry.role === 'agent' ? 'AI Agent' : 'Caller'}
+                        {entry.role === "agent" ? "AI Agent" : "Caller"}
                       </p>
                       <p className="text-sm">{entry.text}</p>
                       <p className="text-xs opacity-50 mt-1">
@@ -317,13 +329,13 @@ export function TestCallDialog() {
         )}
 
         <DialogFooter>
-          {callStatus === 'idle' && (
+          {callStatus === "idle" && (
             <>
               <Button variant="outline" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button 
-                onClick={handleTestCall} 
+              <Button
+                onClick={handleTestCall}
                 disabled={!phoneNumber || isLoading}
               >
                 {isLoading ? (
@@ -340,22 +352,17 @@ export function TestCallDialog() {
               </Button>
             </>
           )}
-          
-          {(callStatus === 'success' || callStatus === 'error') && (
+
+          {(callStatus === "success" || callStatus === "error") && (
             <>
-              <Button 
-                variant="outline" 
-                onClick={resetDialog}
-              >
+              <Button variant="outline" onClick={resetDialog}>
                 Try Another Number
               </Button>
-              <Button onClick={() => setOpen(false)}>
-                Close
-              </Button>
+              <Button onClick={() => setOpen(false)}>Close</Button>
             </>
           )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

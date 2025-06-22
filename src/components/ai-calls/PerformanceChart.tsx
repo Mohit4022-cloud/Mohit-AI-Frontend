@@ -1,9 +1,28 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { 
-  LineChart, Line, BarChart, Bar, AreaChart, Area, PieChart, Pie,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Cell,
 } from "recharts";
 import { useState } from "react";
 
@@ -56,7 +75,9 @@ export function PerformanceChart({ detailed = false }: PerformanceChartProps) {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-base font-medium">Call Performance</CardTitle>
+            <CardTitle className="text-base font-medium">
+              Call Performance
+            </CardTitle>
             <Select value={timeRange} onValueChange={setTimeRange}>
               <SelectTrigger className="w-24 h-8">
                 <SelectValue />
@@ -152,7 +173,10 @@ export function PerformanceChart({ detailed = false }: PerformanceChartProps) {
             <TabsContent value="volume" className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={callVolumeData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-muted"
+                  />
                   <XAxis dataKey="date" />
                   <YAxis />
                   <Tooltip />
@@ -167,7 +191,10 @@ export function PerformanceChart({ detailed = false }: PerformanceChartProps) {
             <TabsContent value="sentiment" className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={sentimentData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-muted"
+                  />
                   <XAxis dataKey="date" />
                   <YAxis domain={[0, 100]} />
                   <Tooltip />
@@ -204,7 +231,10 @@ export function PerformanceChart({ detailed = false }: PerformanceChartProps) {
                 </ResponsiveContainer>
                 <div className="flex flex-col justify-center space-y-2">
                   {outcomeData.map((item) => (
-                    <div key={item.name} className="flex items-center justify-between">
+                    <div
+                      key={item.name}
+                      className="flex items-center justify-between"
+                    >
                       <div className="flex items-center gap-2">
                         <div
                           className="w-3 h-3 rounded-full"
@@ -222,7 +252,10 @@ export function PerformanceChart({ detailed = false }: PerformanceChartProps) {
             <TabsContent value="duration" className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={durationData} layout="horizontal">
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-muted"
+                  />
                   <XAxis dataKey="range" />
                   <YAxis />
                   <Tooltip />
@@ -268,7 +301,7 @@ interface MetricCardProps {
 
 function MetricCard({ title, value, subtitle, trend }: MetricCardProps) {
   const isPositive = trend.startsWith("+");
-  
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -276,9 +309,11 @@ function MetricCard({ title, value, subtitle, trend }: MetricCardProps) {
           <p className="text-sm font-medium text-muted-foreground">{title}</p>
           <div className="flex items-baseline gap-2">
             <p className="text-2xl font-bold">{value}</p>
-            <span className={`text-sm font-medium ${
-              isPositive ? "text-green-600" : "text-red-600"
-            }`}>
+            <span
+              className={`text-sm font-medium ${
+                isPositive ? "text-green-600" : "text-red-600"
+              }`}
+            >
               {trend}
             </span>
           </div>
