@@ -42,6 +42,43 @@ export class CallRelayService {
     console.log(`Processing voice input for call ${callId}`);
     return { success: true, processed: true };
   }
+
+  async health() {
+    // Mock implementation - check service health
+    return true;
+  }
+
+  async start() {
+    // Mock implementation - start service
+    return { success: true };
+  }
+
+  async startAutoDial(config: any) {
+    // Mock implementation - start auto dialer
+    return { success: true, sessionId: 'mock-session-id' };
+  }
+
+  async terminateCall(callId: string) {
+    // Mock implementation - terminate call
+    this.connections.delete(callId);
+    return { success: true };
+  }
+
+  async streamTranscript(callId: string) {
+    // Mock implementation - stream transcript
+    return {
+      success: true,
+      transcript: [
+        { speaker: 'agent', text: 'Hello, this is Mohit AI', timestamp: 0 },
+        { speaker: 'customer', text: 'Hi, I received a call', timestamp: 2000 }
+      ]
+    };
+  }
+
+  async getMediaStreamUrl(callId: string) {
+    // Mock implementation - get media stream URL
+    return `wss://mock.relay.service/streams/${callId}`;
+  }
 }
 
 export const callRelayService = CallRelayService.getInstance();

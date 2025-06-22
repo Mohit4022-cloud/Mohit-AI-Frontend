@@ -15,6 +15,8 @@ export const ContactSchema = z.object({
   notes: z.string().optional(),
   tags: z.array(z.string()).optional(),
   lastContactedAt: z.string().optional(), // ISO string
+  leadScore: z.number().min(0).max(100).optional(),
+  industry: z.string().optional(),
   createdAt: z.string(), // ISO string
   updatedAt: z.string(), // ISO string
 });
