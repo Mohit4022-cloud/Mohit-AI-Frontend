@@ -1,0 +1,222 @@
+// This is your updated Prisma schema file
+// Copy this content to your schema.prisma file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  AGENT
+  MANAGER
+  SUPER_ADMIN
+}
+
+enum ContactStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  UNQUALIFIED
+  CONVERTED
+  ARCHIVED
+}
+
+enum CallStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  password          String
+  name              String?
+  role              UserRole  @default(USER)
+  isActive          Boolean   @default(true)
+  twoFactorEnabled  Boolean   @default(false)
+  twoFactorSecret   String?
+  emailVerified     Boolean   @default(false)
+  emailVerifyToken  String?
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+  lastLogin         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  organization      Organization? @relation(fields: [organizationId], references: [id])
+  organizationId    String?
+  sessions          Session[]
+  auditLogs         AuditLog[]
+  calls             Call[]
+  contacts          Contact[]
+  
+  @@index([email])
+  @@index([organizationId])
+}
+
+model Organization {
+  id               String    @id @default(cuid())
+  name             String
+  slug             String    @unique
+  domain           String?
+  isActive         Boolean   @default(true)
+  maxUsers         Int       @default(5)
+  maxContacts      Int       @default(1000)
+  maxCallsPerMonth Int       @default(1000)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  
+  // Relations
+  users            User[]
+  contacts         Contact[]
+  calls            Call[]
+  settings         OrganizationSettings?
+  
+  @@index([slug])
+}
+
+model OrganizationSettings {
+  id                  String    @id @default(cuid())
+  organization        Organization @relation(fields: [organizationId], references: [id])
+  organizationId      String    @unique
+  
+  // Twilio Settings
+  twilioAccountSid    String?
+  twilioAuthToken     String?   @db.Text // Encrypted
+  twilioPhoneNumber   String?
+  
+  // AI Settings
+  openaiApiKey        String?   @db.Text // Encrypted
+  aiVoiceId           String?
+  aiGreeting          String?   @db.Text
+  aiPersonality       Json?
+  
+  // Call Settings
+  callRecordingEnabled Boolean  @default(true)
+  callTranscriptionEnabled Boolean @default(true)
+  maxCallDuration     Int       @default(900) // seconds
+  
+  // Security Settings
+  allowedIpRanges     String[]
+  webhookSecret       String?
+  
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token        String   @unique
+  refreshToken String?  @unique
+  ipAddress    String?
+  userAgent    String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  
+  @@index([userId])
+  @@index([token])
+}
+
+model Contact {
+  id              String        @id @default(cuid())
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  company         String?
+  jobTitle        String?
+  source          String?
+  status          ContactStatus @default(NEW)
+  score           Int           @default(0)
+  notes           String?       @db.Text
+  lastContactedAt DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  // Relations
+  organization    Organization  @relation(fields: [organizationId], references: [id])
+  organizationId  String
+  assignedTo      User?         @relation(fields: [assignedToId], references: [id])
+  assignedToId    String?
+  calls           Call[]
+  tags            Tag[]
+  customFields    Json?
+  
+  @@unique([email, organizationId])
+  @@index([organizationId])
+  @@index([assignedToId])
+  @@index([status])
+}
+
+model Call {
+  id               String     @id @default(cuid())
+  callSid          String?    @unique
+  direction        String     // inbound/outbound
+  from             String
+  to               String
+  status           CallStatus
+  duration         Int?       // seconds
+  recordingUrl     String?
+  transcriptUrl    String?
+  transcript       Json?
+  sentiment        Float?
+  summary          String?    @db.Text
+  aiNotes          String?    @db.Text
+  scheduledAt      DateTime?
+  startedAt        DateTime?
+  endedAt          DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  
+  // Relations
+  organization     Organization @relation(fields: [organizationId], references: [id])
+  organizationId   String
+  contact          Contact?     @relation(fields: [contactId], references: [id])
+  contactId        String?
+  agent            User?        @relation(fields: [agentId], references: [id])
+  agentId          String?
+  metadata         Json?
+  
+  @@index([organizationId])
+  @@index([contactId])
+  @@index([agentId])
+  @@index([status])
+  @@index([callSid])
+}
+
+model Tag {
+  id          String    @id @default(cuid())
+  name        String
+  color       String?
+  contacts    Contact[]
+  createdAt   DateTime  @default(now())
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  action      String
+  resource    String
+  resourceId  String?
+  ipAddress   String?
+  userAgent   String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([resource])
+  @@index([createdAt])
+}

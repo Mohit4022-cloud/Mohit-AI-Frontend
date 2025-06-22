@@ -1,36 +1,121 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useAuthStore } from "@/stores/authStore";
-import { 
-  BarChart, Bar, PieChart, Pie, Cell, 
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
-  ComposedChart, FunnelChart, Funnel, LabelList
+import {
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  ComposedChart,
+  FunnelChart,
+  Funnel,
+  LabelList,
 } from "recharts";
-import { 
-  TrendingUp, TrendingDown, Clock, DollarSign, Users, 
-  Activity, Target, Zap, Calendar as CalendarIcon, Download, Filter,
-  Phone, Mail, MessageSquare, CheckCircle, XCircle, AlertTriangle,
-  Plus, Save, Play, Pause, Settings, Eye, EyeOff, RefreshCw,
-  FileText, Send, BarChart3, PieChart as PieChart3, Share2,
-  Table, Layout, Palette, Database, ArrowRight, Sparkles,
-  Brain, Bot, Layers, Grid, List, ChevronDown, MoreVertical,
-  Copy, Trash2, Edit, Star, Lock, Unlock, BookOpen, HelpCircle
+import {
+  TrendingUp,
+  TrendingDown,
+  Clock,
+  DollarSign,
+  Users,
+  Activity,
+  Target,
+  Zap,
+  Calendar as CalendarIcon,
+  Download,
+  Filter,
+  Phone,
+  Mail,
+  MessageSquare,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Plus,
+  Save,
+  Play,
+  Pause,
+  Settings,
+  Eye,
+  EyeOff,
+  RefreshCw,
+  FileText,
+  Send,
+  BarChart3,
+  PieChart as PieChart3,
+  Share2,
+  Table,
+  Layout,
+  Palette,
+  Database,
+  ArrowRight,
+  Sparkles,
+  Brain,
+  Bot,
+  Layers,
+  Grid,
+  List,
+  ChevronDown,
+  MoreVertical,
+  Copy,
+  Trash2,
+  Edit,
+  Star,
+  Lock,
+  Unlock,
+  BookOpen,
+  HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -38,18 +123,18 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { PipelineAnalytics } from "@/components/pipeline-analytics";
 import { PredictiveAnalytics } from "@/components/predictive-analytics";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 interface MetricCard {
   title: string;
   value: string | number;
   change: number;
-  changeType: 'positive' | 'negative' | 'neutral';
+  changeType: "positive" | "negative" | "neutral";
   icon: any;
   subtitle?: string;
 }
@@ -72,7 +157,15 @@ interface ReportTemplate {
 
 interface ChartConfig {
   id: string;
-  type: 'line' | 'bar' | 'pie' | 'area' | 'radar' | 'scatter' | 'funnel' | 'composed';
+  type:
+    | "line"
+    | "bar"
+    | "pie"
+    | "area"
+    | "radar"
+    | "scatter"
+    | "funnel"
+    | "composed";
   title: string;
   dataKey: string;
   xAxis?: string;
@@ -85,13 +178,13 @@ interface ChartConfig {
 interface FilterConfig {
   id: string;
   field: string;
-  operator: 'equals' | 'contains' | 'greater' | 'less' | 'between' | 'in';
+  operator: "equals" | "contains" | "greater" | "less" | "between" | "in";
   value: any;
   label: string;
 }
 
 interface ScheduleConfig {
-  frequency: 'daily' | 'weekly' | 'monthly' | 'custom';
+  frequency: "daily" | "weekly" | "monthly" | "custom";
   time: string;
   timezone: string;
   daysOfWeek?: number[];
@@ -105,13 +198,13 @@ interface CustomReport {
   description: string;
   widgets: ReportWidget[];
   filters: FilterConfig[];
-  layout: 'grid' | 'list';
-  theme: 'light' | 'dark' | 'auto';
+  layout: "grid" | "list";
+  theme: "light" | "dark" | "auto";
   schedule?: ScheduleConfig;
   sharing: {
     isPublic: boolean;
     sharedWith: string[];
-    permissions: 'view' | 'edit';
+    permissions: "view" | "edit";
   };
   lastModified: string;
   createdBy: string;
@@ -119,7 +212,7 @@ interface CustomReport {
 
 interface ReportWidget {
   id: string;
-  type: 'metric' | 'chart' | 'table' | 'text' | 'image';
+  type: "metric" | "chart" | "table" | "text" | "image";
   config: any;
   position: { x: number; y: number; w: number; h: number };
 }
@@ -131,17 +224,23 @@ export default function EnhancedAnalyticsPage() {
   const [showReportBuilder, setShowReportBuilder] = useState(false);
   const [customReports, setCustomReports] = useState<CustomReport[]>([]);
   const [reportTemplates, setReportTemplates] = useState<ReportTemplate[]>([]);
-  const [selectedTemplate, setSelectedTemplate] = useState<ReportTemplate | null>(null);
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<ReportTemplate | null>(null);
   const [automatedReports, setAutomatedReports] = useState<any[]>([]);
-  const [reportBuilderMode, setReportBuilderMode] = useState<'create' | 'edit'>('create');
+  const [reportBuilderMode, setReportBuilderMode] = useState<"create" | "edit">(
+    "create",
+  );
   const [editingReport, setEditingReport] = useState<CustomReport | null>(null);
   const [selectedWidgets, setSelectedWidgets] = useState<string[]>([]);
-  const [reportLayout, setReportLayout] = useState<'grid' | 'list'>('grid');
-  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
+  const [reportLayout, setReportLayout] = useState<"grid" | "list">("grid");
+  const [dateRange, setDateRange] = useState<{
+    from: Date | undefined;
+    to: Date | undefined;
+  }>({
     from: undefined,
-    to: undefined
+    to: undefined,
   });
-  
+
   // Key Performance Metrics
   const [keyMetrics, setKeyMetrics] = useState<MetricCard[]>([
     {
@@ -150,7 +249,7 @@ export default function EnhancedAnalyticsPage() {
       change: -23,
       changeType: "positive",
       icon: Clock,
-      subtitle: "vs. 61 seconds last period"
+      subtitle: "vs. 61 seconds last period",
     },
     {
       title: "Lead Conversion Rate",
@@ -158,7 +257,7 @@ export default function EnhancedAnalyticsPage() {
       change: 5.2,
       changeType: "positive",
       icon: TrendingUp,
-      subtitle: "1,247 of 5,132 leads"
+      subtitle: "1,247 of 5,132 leads",
     },
     {
       title: "Revenue Generated",
@@ -166,7 +265,7 @@ export default function EnhancedAnalyticsPage() {
       change: 18.5,
       changeType: "positive",
       icon: DollarSign,
-      subtitle: "From converted leads"
+      subtitle: "From converted leads",
     },
     {
       title: "Active Leads",
@@ -174,7 +273,7 @@ export default function EnhancedAnalyticsPage() {
       change: 12,
       changeType: "positive",
       icon: Users,
-      subtitle: "In pipeline"
+      subtitle: "In pipeline",
     },
     {
       title: "SLA Compliance",
@@ -182,7 +281,7 @@ export default function EnhancedAnalyticsPage() {
       change: 2.1,
       changeType: "positive",
       icon: CheckCircle,
-      subtitle: "5-min target"
+      subtitle: "5-min target",
     },
     {
       title: "Cost per Lead",
@@ -190,8 +289,8 @@ export default function EnhancedAnalyticsPage() {
       change: -8.3,
       changeType: "positive",
       icon: Target,
-      subtitle: "Efficiency improved"
-    }
+      subtitle: "Efficiency improved",
+    },
   ]);
 
   // Chart Data (existing data from original file)
@@ -201,7 +300,7 @@ export default function EnhancedAnalyticsPage() {
     { time: "08:00", value: 52 },
     { time: "12:00", value: 48 },
     { time: "16:00", value: 55 },
-    { time: "20:00", value: 42 }
+    { time: "20:00", value: 42 },
   ]);
 
   const [conversionFunnelData, setConversionFunnelData] = useState([
@@ -209,37 +308,115 @@ export default function EnhancedAnalyticsPage() {
     { stage: "Contacted", value: 4876, percentage: 95 },
     { stage: "Qualified", value: 2841, percentage: 55.3 },
     { stage: "Opportunity", value: 1832, percentage: 35.7 },
-    { stage: "Customer", value: 1247, percentage: 24.3 }
+    { stage: "Customer", value: 1247, percentage: 24.3 },
   ]);
 
   const [channelPerformanceData, setChannelPerformanceData] = useState([
     { channel: "Website", leads: 2341, conversion: 28, avgResponseTime: 32 },
     { channel: "Email", leads: 1523, conversion: 22, avgResponseTime: 45 },
     { channel: "LinkedIn", leads: 876, conversion: 31, avgResponseTime: 38 },
-    { channel: "Phone", leads: 392, conversion: 42, avgResponseTime: 15 }
+    { channel: "Phone", leads: 392, conversion: 42, avgResponseTime: 15 },
   ]);
 
   const [leadSourceROI, setLeadSourceROI] = useState([
     { name: "Organic Search", value: 35, roi: 4.2 },
     { name: "Paid Ads", value: 28, roi: 2.8 },
     { name: "Social Media", value: 20, roi: 3.5 },
-    { name: "Referrals", value: 17, roi: 6.1 }
+    { name: "Referrals", value: 17, roi: 6.1 },
   ]);
 
   const [teamPerformanceData, setTeamPerformanceData] = useState([
-    { name: "Sarah Johnson", leads: 342, converted: 98, avgResponseTime: 38, score: 92 },
-    { name: "Michael Chen", leads: 298, converted: 78, avgResponseTime: 42, score: 88 },
-    { name: "Emily Davis", leads: 276, converted: 71, avgResponseTime: 45, score: 85 },
-    { name: "Robert Wilson", leads: 251, converted: 65, avgResponseTime: 51, score: 82 }
+    {
+      name: "Sarah Johnson",
+      leads: 342,
+      converted: 98,
+      avgResponseTime: 38,
+      score: 92,
+    },
+    {
+      name: "Michael Chen",
+      leads: 298,
+      converted: 78,
+      avgResponseTime: 42,
+      score: 88,
+    },
+    {
+      name: "Emily Davis",
+      leads: 276,
+      converted: 71,
+      avgResponseTime: 45,
+      score: 85,
+    },
+    {
+      name: "Robert Wilson",
+      leads: 251,
+      converted: 65,
+      avgResponseTime: 51,
+      score: 82,
+    },
   ]);
 
   const [activityHeatmapData, setActivityHeatmapData] = useState([
-    { hour: "9AM", Mon: 85, Tue: 92, Wed: 78, Thu: 88, Fri: 95, Sat: 45, Sun: 32 },
-    { hour: "10AM", Mon: 92, Tue: 98, Wed: 88, Thu: 95, Fri: 102, Sat: 52, Sun: 38 },
-    { hour: "11AM", Mon: 88, Tue: 95, Wed: 92, Thu: 98, Fri: 98, Sat: 48, Sun: 35 },
-    { hour: "2PM", Mon: 78, Tue: 85, Wed: 82, Thu: 88, Fri: 85, Sat: 38, Sun: 28 },
-    { hour: "3PM", Mon: 82, Tue: 88, Wed: 85, Thu: 92, Fri: 88, Sat: 42, Sun: 32 },
-    { hour: "4PM", Mon: 75, Tue: 82, Wed: 78, Thu: 85, Fri: 82, Sat: 35, Sun: 25 }
+    {
+      hour: "9AM",
+      Mon: 85,
+      Tue: 92,
+      Wed: 78,
+      Thu: 88,
+      Fri: 95,
+      Sat: 45,
+      Sun: 32,
+    },
+    {
+      hour: "10AM",
+      Mon: 92,
+      Tue: 98,
+      Wed: 88,
+      Thu: 95,
+      Fri: 102,
+      Sat: 52,
+      Sun: 38,
+    },
+    {
+      hour: "11AM",
+      Mon: 88,
+      Tue: 95,
+      Wed: 92,
+      Thu: 98,
+      Fri: 98,
+      Sat: 48,
+      Sun: 35,
+    },
+    {
+      hour: "2PM",
+      Mon: 78,
+      Tue: 85,
+      Wed: 82,
+      Thu: 88,
+      Fri: 85,
+      Sat: 38,
+      Sun: 28,
+    },
+    {
+      hour: "3PM",
+      Mon: 82,
+      Tue: 88,
+      Wed: 85,
+      Thu: 92,
+      Fri: 88,
+      Sat: 42,
+      Sun: 32,
+    },
+    {
+      hour: "4PM",
+      Mon: 75,
+      Tue: 82,
+      Wed: 78,
+      Thu: 85,
+      Fri: 82,
+      Sat: 35,
+      Sun: 25,
+    },
   ]);
 
   useEffect(() => {
@@ -252,10 +429,10 @@ export default function EnhancedAnalyticsPage() {
 
   const fetchAnalyticsData = async () => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching analytics:', error);
+      console.error("Error fetching analytics:", error);
       setLoading(false);
     }
   };
@@ -264,101 +441,117 @@ export default function EnhancedAnalyticsPage() {
     // Mock report templates
     const templates: ReportTemplate[] = [
       {
-        id: 'rt1',
-        name: 'Executive Dashboard',
-        description: 'High-level KPIs and performance metrics for leadership',
-        category: 'executive',
-        metrics: ['conversion_rate', 'revenue', 'response_time', 'sla_compliance'],
+        id: "rt1",
+        name: "Executive Dashboard",
+        description: "High-level KPIs and performance metrics for leadership",
+        category: "executive",
+        metrics: [
+          "conversion_rate",
+          "revenue",
+          "response_time",
+          "sla_compliance",
+        ],
         charts: [
           {
-            id: 'c1',
-            type: 'line',
-            title: 'Revenue Trend',
-            dataKey: 'revenue',
-            metrics: ['revenue'],
-            colors: ['#0088FE']
+            id: "c1",
+            type: "line",
+            title: "Revenue Trend",
+            dataKey: "revenue",
+            metrics: ["revenue"],
+            colors: ["#0088FE"],
           },
           {
-            id: 'c2',
-            type: 'funnel',
-            title: 'Conversion Funnel',
-            dataKey: 'conversions',
-            metrics: ['leads', 'qualified', 'opportunities', 'customers']
-          }
+            id: "c2",
+            type: "funnel",
+            title: "Conversion Funnel",
+            dataKey: "conversions",
+            metrics: ["leads", "qualified", "opportunities", "customers"],
+          },
         ],
         filters: [],
         isPublic: true,
-        createdBy: 'System',
-        usage: 245
+        createdBy: "System",
+        usage: 245,
       },
       {
-        id: 'rt2',
-        name: 'Sales Performance Report',
-        description: 'Detailed analysis of sales team performance and lead conversion',
-        category: 'sales',
-        metrics: ['leads_handled', 'conversion_rate', 'avg_deal_size', 'win_rate'],
+        id: "rt2",
+        name: "Sales Performance Report",
+        description:
+          "Detailed analysis of sales team performance and lead conversion",
+        category: "sales",
+        metrics: [
+          "leads_handled",
+          "conversion_rate",
+          "avg_deal_size",
+          "win_rate",
+        ],
         charts: [
           {
-            id: 'c3',
-            type: 'bar',
-            title: 'Team Performance',
-            dataKey: 'performance',
-            metrics: ['leads', 'converted', 'revenue']
-          }
+            id: "c3",
+            type: "bar",
+            title: "Team Performance",
+            dataKey: "performance",
+            metrics: ["leads", "converted", "revenue"],
+          },
         ],
         filters: [
           {
-            id: 'f1',
-            field: 'team',
-            operator: 'in',
-            value: ['sales'],
-            label: 'Sales Team Only'
-          }
+            id: "f1",
+            field: "team",
+            operator: "in",
+            value: ["sales"],
+            label: "Sales Team Only",
+          },
         ],
         schedule: {
-          frequency: 'weekly',
-          time: '09:00',
-          timezone: 'America/New_York',
+          frequency: "weekly",
+          time: "09:00",
+          timezone: "America/New_York",
           daysOfWeek: [1],
-          enabled: true
+          enabled: true,
         },
-        recipients: ['sales-manager@company.com'],
+        recipients: ["sales-manager@company.com"],
         lastRun: new Date(Date.now() - 86400000).toISOString(),
         isPublic: false,
-        createdBy: 'Sales Manager',
-        usage: 89
+        createdBy: "Sales Manager",
+        usage: 89,
       },
       {
-        id: 'rt3',
-        name: 'Marketing Attribution Report',
-        description: 'Track ROI and performance across marketing channels',
-        category: 'marketing',
-        metrics: ['leads_by_source', 'cost_per_lead', 'channel_roi', 'attribution'],
+        id: "rt3",
+        name: "Marketing Attribution Report",
+        description: "Track ROI and performance across marketing channels",
+        category: "marketing",
+        metrics: [
+          "leads_by_source",
+          "cost_per_lead",
+          "channel_roi",
+          "attribution",
+        ],
         charts: [
           {
-            id: 'c4',
-            type: 'pie',
-            title: 'Lead Sources',
-            dataKey: 'sources',
-            metrics: ['organic', 'paid', 'social', 'referral']
+            id: "c4",
+            type: "pie",
+            title: "Lead Sources",
+            dataKey: "sources",
+            metrics: ["organic", "paid", "social", "referral"],
           },
           {
-            id: 'c5',
-            type: 'scatter',
-            title: 'Cost vs Conversion',
-            dataKey: 'efficiency',
-            xAxis: 'cost',
-            yAxis: 'conversion',
-            metrics: ['cost', 'conversion']
-          }
+            id: "c5",
+            type: "scatter",
+            title: "Cost vs Conversion",
+            dataKey: "efficiency",
+            xAxis: "cost",
+            yAxis: "conversion",
+            metrics: ["cost", "conversion"],
+          },
         ],
         filters: [],
         isPublic: true,
-        createdBy: 'Marketing Team',
-        usage: 156
-      }
+        createdBy: "Marketing Team",
+        usage: 156,
+      },
     ];
-    
+
     setReportTemplates(templates);
   };
 
@@ -366,45 +559,45 @@ export default function EnhancedAnalyticsPage() {
     // Mock custom reports
     const reports: CustomReport[] = [
       {
-        id: 'cr1',
-        name: 'Q4 Board Presentation',
-        description: 'Quarterly results and projections for board meeting',
+        id: "cr1",
+        name: "Q4 Board Presentation",
+        description: "Quarterly results and projections for board meeting",
         widgets: [
           {
-            id: 'w1',
-            type: 'metric',
+            id: "w1",
+            type: "metric",
             config: {
-              title: 'Total Revenue',
-              value: '$2.4M',
+              title: "Total Revenue",
+              value: "$2.4M",
               change: 23.5,
-              icon: 'dollar'
+              icon: "dollar",
             },
-            position: { x: 0, y: 0, w: 3, h: 2 }
+            position: { x: 0, y: 0, w: 3, h: 2 },
           },
           {
-            id: 'w2',
-            type: 'chart',
+            id: "w2",
+            type: "chart",
             config: {
-              type: 'line',
-              title: 'Monthly Revenue Trend',
-              data: 'revenue_trend'
+              type: "line",
+              title: "Monthly Revenue Trend",
+              data: "revenue_trend",
             },
-            position: { x: 3, y: 0, w: 6, h: 4 }
-          }
+            position: { x: 3, y: 0, w: 6, h: 4 },
+          },
         ],
         filters: [],
-        layout: 'grid',
-        theme: 'light',
+        layout: "grid",
+        theme: "light",
         sharing: {
           isPublic: false,
-          sharedWith: ['board@company.com'],
-          permissions: 'view'
+          sharedWith: ["board@company.com"],
+          permissions: "view",
         },
         lastModified: new Date(Date.now() - 172800000).toISOString(),
-        createdBy: user?.name || 'Admin'
-      }
+        createdBy: user?.name || "Admin",
+      },
     ];
-    
+
     setCustomReports(reports);
   };
 
@@ -412,38 +605,38 @@ export default function EnhancedAnalyticsPage() {
     // Mock automated reports
     const automated = [
       {
-        id: 'ar1',
-        name: 'Daily Performance Summary',
-        template: 'Executive Dashboard',
+        id: "ar1",
+        name: "Daily Performance Summary",
+        template: "Executive Dashboard",
         schedule: {
-          frequency: 'daily',
-          time: '08:00',
-          timezone: 'America/New_York',
-          enabled: true
+          frequency: "daily",
+          time: "08:00",
+          timezone: "America/New_York",
+          enabled: true,
         },
-        recipients: ['team@company.com'],
+        recipients: ["team@company.com"],
         lastSent: new Date(Date.now() - 86400000).toISOString(),
         nextRun: new Date(Date.now() + 86400000).toISOString(),
-        status: 'active'
+        status: "active",
       },
       {
-        id: 'ar2',
-        name: 'Weekly Sales Report',
-        template: 'Sales Performance Report',
+        id: "ar2",
+        name: "Weekly Sales Report",
+        template: "Sales Performance Report",
         schedule: {
-          frequency: 'weekly',
-          time: '09:00',
-          timezone: 'America/New_York',
+          frequency: "weekly",
+          time: "09:00",
+          timezone: "America/New_York",
           daysOfWeek: [1],
-          enabled: true
+          enabled: true,
         },
-        recipients: ['sales@company.com', 'management@company.com'],
+        recipients: ["sales@company.com", "management@company.com"],
         lastSent: new Date(Date.now() - 604800000).toISOString(),
         nextRun: new Date(Date.now() + 259200000).toISOString(),
-        status: 'active'
-      }
+        status: "active",
+      },
     ];
-    
+
     setAutomatedReports(automated);
   };
 
@@ -451,21 +644,21 @@ export default function EnhancedAnalyticsPage() {
     // Simulate API call
     const newReport: CustomReport = {
       id: `cr${Date.now()}`,
-      name: report.name || 'Untitled Report',
-      description: report.description || '',
+      name: report.name || "Untitled Report",
+      description: report.description || "",
       widgets: report.widgets || [],
       filters: report.filters || [],
-      layout: report.layout || 'grid',
-      theme: report.theme || 'light',
+      layout: report.layout || "grid",
+      theme: report.theme || "light",
       sharing: {
         isPublic: false,
         sharedWith: [],
-        permissions: 'view'
+        permissions: "view",
       },
       lastModified: new Date().toISOString(),
-      createdBy: user?.name || 'User'
+      createdBy: user?.name || "User",
     };
-    
+
     setCustomReports([...customReports, newReport]);
     setShowReportBuilder(false);
   };
@@ -479,20 +672,20 @@ export default function EnhancedAnalyticsPage() {
       recipients: config.recipients,
       lastSent: null,
       nextRun: calculateNextRun(config.schedule),
-      status: 'active'
+      status: "active",
     };
-    
+
     setAutomatedReports([...automatedReports, newAutomated]);
   };
 
   const calculateNextRun = (schedule: ScheduleConfig) => {
     // Simple calculation for demo
     const now = new Date();
-    if (schedule.frequency === 'daily') {
+    if (schedule.frequency === "daily") {
       now.setDate(now.getDate() + 1);
-    } else if (schedule.frequency === 'weekly') {
+    } else if (schedule.frequency === "weekly") {
       now.setDate(now.getDate() + 7);
-    } else if (schedule.frequency === 'monthly') {
+    } else if (schedule.frequency === "monthly") {
       now.setMonth(now.getMonth() + 1);
     }
     return now.toISOString();
@@ -503,37 +696,57 @@ export default function EnhancedAnalyticsPage() {
     return <Icon className="h-5 w-5" />;
   };
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 
   // Report Builder Component
   const ReportBuilder = () => {
-    const [reportName, setReportName] = useState(editingReport?.name || '');
-    const [reportDescription, setReportDescription] = useState(editingReport?.description || '');
-    const [selectedChartType, setSelectedChartType] = useState<string>('line');
+    const [reportName, setReportName] = useState(editingReport?.name || "");
+    const [reportDescription, setReportDescription] = useState(
+      editingReport?.description || "",
+    );
+    const [selectedChartType, setSelectedChartType] = useState<string>("line");
     const [selectedMetrics, setSelectedMetrics] = useState<string[]>([]);
-    const [reportWidgets, setReportWidgets] = useState<ReportWidget[]>(editingReport?.widgets || []);
+    const [reportWidgets, setReportWidgets] = useState<ReportWidget[]>(
+      editingReport?.widgets || [],
+    );
 
     const availableMetrics = [
-      { id: 'leads', label: 'Total Leads', category: 'acquisition' },
-      { id: 'conversion_rate', label: 'Conversion Rate', category: 'performance' },
-      { id: 'revenue', label: 'Revenue', category: 'financial' },
-      { id: 'response_time', label: 'Avg Response Time', category: 'efficiency' },
-      { id: 'sla_compliance', label: 'SLA Compliance', category: 'quality' },
-      { id: 'cost_per_lead', label: 'Cost per Lead', category: 'financial' },
-      { id: 'customer_lifetime_value', label: 'Customer LTV', category: 'financial' },
-      { id: 'churn_rate', label: 'Churn Rate', category: 'retention' },
-      { id: 'nps_score', label: 'NPS Score', category: 'satisfaction' },
-      { id: 'agent_utilization', label: 'Agent Utilization', category: 'efficiency' }
+      { id: "leads", label: "Total Leads", category: "acquisition" },
+      {
+        id: "conversion_rate",
+        label: "Conversion Rate",
+        category: "performance",
+      },
+      { id: "revenue", label: "Revenue", category: "financial" },
+      {
+        id: "response_time",
+        label: "Avg Response Time",
+        category: "efficiency",
+      },
+      { id: "sla_compliance", label: "SLA Compliance", category: "quality" },
+      { id: "cost_per_lead", label: "Cost per Lead", category: "financial" },
+      {
+        id: "customer_lifetime_value",
+        label: "Customer LTV",
+        category: "financial",
+      },
+      { id: "churn_rate", label: "Churn Rate", category: "retention" },
+      { id: "nps_score", label: "NPS Score", category: "satisfaction" },
+      {
+        id: "agent_utilization",
+        label: "Agent Utilization",
+        category: "efficiency",
+      },
     ];
 
     const chartTypes = [
-      { id: 'line', label: 'Line Chart', icon: Activity },
-      { id: 'bar', label: 'Bar Chart', icon: BarChart3 },
-      { id: 'pie', label: 'Pie Chart', icon: PieChart3 },
-      { id: 'area', label: 'Area Chart', icon: Activity },
-      { id: 'scatter', label: 'Scatter Plot', icon: Sparkles },
-      { id: 'funnel', label: 'Funnel Chart', icon: Filter },
-      { id: 'radar', label: 'Radar Chart', icon: Target }
+      { id: "line", label: "Line Chart", icon: Activity },
+      { id: "bar", label: "Bar Chart", icon: BarChart3 },
+      { id: "pie", label: "Pie Chart", icon: PieChart3 },
+      { id: "area", label: "Area Chart", icon: Activity },
+      { id: "scatter", label: "Scatter Plot", icon: Sparkles },
+      { id: "funnel", label: "Funnel Chart", icon: Filter },
+      { id: "radar", label: "Radar Chart", icon: Target },
     ];
 
     const addWidget = (type: string) => {
@@ -541,17 +754,17 @@ export default function EnhancedAnalyticsPage() {
         id: `w${Date.now()}`,
         type: type as any,
         config: {
-          title: 'New Widget',
-          data: selectedMetrics
+          title: "New Widget",
+          data: selectedMetrics,
         },
-        position: { 
-          x: reportWidgets.length % 4 * 3, 
-          y: Math.floor(reportWidgets.length / 4) * 3, 
-          w: 3, 
-          h: 3 
-        }
+        position: {
+          x: (reportWidgets.length % 4) * 3,
+          y: Math.floor(reportWidgets.length / 4) * 3,
+          w: 3,
+          h: 3,
+        },
       };
-      
+
       setReportWidgets([...reportWidgets, newWidget]);
     };
 
@@ -567,7 +780,7 @@ export default function EnhancedAnalyticsPage() {
               placeholder="Enter report name..."
             />
           </div>
-          
+
           <div>
             <Label htmlFor="report-description">Description</Label>
             <Input
@@ -585,22 +798,41 @@ export default function EnhancedAnalyticsPage() {
           <h4 className="font-semibold mb-4">Select Metrics</h4>
           <ScrollArea className="h-48 border rounded-lg p-4">
             <div className="space-y-4">
-              {['acquisition', 'performance', 'financial', 'efficiency', 'quality', 'satisfaction'].map(category => (
+              {[
+                "acquisition",
+                "performance",
+                "financial",
+                "efficiency",
+                "quality",
+                "satisfaction",
+              ].map((category) => (
                 <div key={category}>
-                  <h5 className="text-sm font-medium text-muted-foreground capitalize mb-2">{category}</h5>
+                  <h5 className="text-sm font-medium text-muted-foreground capitalize mb-2">
+                    {category}
+                  </h5>
                   <div className="space-y-2">
                     {availableMetrics
-                      .filter(m => m.category === category)
-                      .map(metric => (
-                        <div key={metric.id} className="flex items-center space-x-2">
+                      .filter((m) => m.category === category)
+                      .map((metric) => (
+                        <div
+                          key={metric.id}
+                          className="flex items-center space-x-2"
+                        >
                           <Checkbox
                             id={metric.id}
                             checked={selectedMetrics.includes(metric.id)}
                             onCheckedChange={(checked) => {
                               if (checked) {
-                                setSelectedMetrics([...selectedMetrics, metric.id]);
+                                setSelectedMetrics([
+                                  ...selectedMetrics,
+                                  metric.id,
+                                ]);
                               } else {
-                                setSelectedMetrics(selectedMetrics.filter(m => m !== metric.id));
+                                setSelectedMetrics(
+                                  selectedMetrics.filter(
+                                    (m) => m !== metric.id,
+                                  ),
+                                );
                               }
                             }}
                           />
@@ -622,11 +854,11 @@ export default function EnhancedAnalyticsPage() {
         <div>
           <h4 className="font-semibold mb-4">Add Visualizations</h4>
           <div className="grid grid-cols-4 gap-3">
-            {chartTypes.map(chart => (
+            {chartTypes.map((chart) => (
               <Button
                 key={chart.id}
                 variant="outline"
-                onClick={() => addWidget('chart')}
+                onClick={() => addWidget("chart")}
                 className="h-24 flex flex-col gap-2"
               >
                 <chart.icon className="h-6 w-6" />
@@ -635,7 +867,7 @@ export default function EnhancedAnalyticsPage() {
             ))}
             <Button
               variant="outline"
-              onClick={() => addWidget('metric')}
+              onClick={() => addWidget("metric")}
               className="h-24 flex flex-col gap-2"
             >
               <BarChart3 className="h-6 w-6" />
@@ -651,13 +883,19 @@ export default function EnhancedAnalyticsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setReportLayout(reportLayout === 'grid' ? 'list' : 'grid')}
+                onClick={() =>
+                  setReportLayout(reportLayout === "grid" ? "list" : "grid")
+                }
               >
-                {reportLayout === 'grid' ? <Grid className="h-4 w-4" /> : <List className="h-4 w-4" />}
+                {reportLayout === "grid" ? (
+                  <Grid className="h-4 w-4" />
+                ) : (
+                  <List className="h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>
-          
+
           <div className="border rounded-lg p-4 min-h-[300px] bg-muted/30">
             {reportWidgets.length === 0 ? (
               <div className="flex items-center justify-center h-[250px] text-muted-foreground">
@@ -667,24 +905,32 @@ export default function EnhancedAnalyticsPage() {
                 </div>
               </div>
             ) : (
-              <div className={cn(
-                reportLayout === 'grid' ? "grid grid-cols-12 gap-4" : "space-y-4"
-              )}>
-                {reportWidgets.map(widget => (
+              <div
+                className={cn(
+                  reportLayout === "grid"
+                    ? "grid grid-cols-12 gap-4"
+                    : "space-y-4",
+                )}
+              >
+                {reportWidgets.map((widget) => (
                   <div
                     key={widget.id}
                     className={cn(
                       "border rounded-lg p-4 bg-background",
-                      reportLayout === 'grid' 
+                      reportLayout === "grid"
                         ? `col-span-${widget.position.w} row-span-${widget.position.h}`
-                        : ""
+                        : "",
                     )}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <h5 className="font-medium">{widget.config.title}</h5>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6"
+                          >
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -704,8 +950,8 @@ export default function EnhancedAnalyticsPage() {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
-                    
-                    {widget.type === 'metric' ? (
+
+                    {widget.type === "metric" ? (
                       <div className="text-2xl font-bold">--</div>
                     ) : (
                       <div className="h-32 bg-muted/50 rounded flex items-center justify-center text-muted-foreground">
@@ -723,13 +969,15 @@ export default function EnhancedAnalyticsPage() {
           <Button variant="outline" onClick={() => setShowReportBuilder(false)}>
             Cancel
           </Button>
-          <Button 
-            onClick={() => createCustomReport({
-              name: reportName,
-              description: reportDescription,
-              widgets: reportWidgets,
-              layout: reportLayout
-            })}
+          <Button
+            onClick={() =>
+              createCustomReport({
+                name: reportName,
+                description: reportDescription,
+                widgets: reportWidgets,
+                layout: reportLayout,
+              })
+            }
             disabled={!reportName || reportWidgets.length === 0}
           >
             <Save className="mr-2 h-4 w-4" />
@@ -746,9 +994,11 @@ export default function EnhancedAnalyticsPage() {
       <div className="flex justify-between items-start">
         <div>
           <h1 className="text-3xl font-bold">Analytics</h1>
-          <p className="text-muted-foreground">Comprehensive performance insights and custom reporting</p>
+          <p className="text-muted-foreground">
+            Comprehensive performance insights and custom reporting
+          </p>
         </div>
-        
+
         <div className="flex gap-2">
           <Popover>
             <PopoverTrigger asChild>
@@ -776,7 +1026,10 @@ export default function EnhancedAnalyticsPage() {
                 selected={dateRange}
                 onSelect={(range) => {
                   if (range) {
-                    setDateRange({ from: range.from, to: range.to || undefined });
+                    setDateRange({
+                      from: range.from,
+                      to: range.to || undefined,
+                    });
                   } else {
                     setDateRange({ from: undefined, to: undefined });
                   }
@@ -785,7 +1038,7 @@ export default function EnhancedAnalyticsPage() {
               />
             </PopoverContent>
           </Popover>
-          
+
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue />
@@ -798,12 +1051,12 @@ export default function EnhancedAnalyticsPage() {
               <SelectItem value="custom">Custom range</SelectItem>
             </SelectContent>
           </Select>
-          
+
           <Button variant="outline" onClick={() => setShowReportBuilder(true)}>
             <Plus className="mr-2 h-4 w-4" />
             Create Report
           </Button>
-          
+
           <Button variant="outline">
             <Download className="mr-2 h-4 w-4" />
             Export
@@ -816,13 +1069,15 @@ export default function EnhancedAnalyticsPage() {
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {reportBuilderMode === 'create' ? 'Create Custom Report' : 'Edit Report'}
+              {reportBuilderMode === "create"
+                ? "Create Custom Report"
+                : "Edit Report"}
             </DialogTitle>
             <DialogDescription>
               Build custom reports with drag-and-drop widgets and real-time data
             </DialogDescription>
           </DialogHeader>
-          
+
           <ReportBuilder />
         </DialogContent>
       </Dialog>
@@ -842,20 +1097,27 @@ export default function EnhancedAnalyticsPage() {
             <CardContent>
               <div className="text-2xl font-bold">{metric.value}</div>
               <div className="flex items-center gap-1 mt-1">
-                {metric.changeType === 'positive' ? (
+                {metric.changeType === "positive" ? (
                   <TrendingUp className="h-4 w-4 text-green-600" />
-                ) : metric.changeType === 'negative' ? (
+                ) : metric.changeType === "negative" ? (
                   <TrendingDown className="h-4 w-4 text-red-600" />
                 ) : null}
-                <span className={cn(
-                  "text-xs font-medium",
-                  metric.changeType === 'positive' ? "text-green-600" : "text-red-600"
-                )}>
-                  {metric.change > 0 ? '+' : ''}{metric.change}%
+                <span
+                  className={cn(
+                    "text-xs font-medium",
+                    metric.changeType === "positive"
+                      ? "text-green-600"
+                      : "text-red-600",
+                  )}
+                >
+                  {metric.change > 0 ? "+" : ""}
+                  {metric.change}%
                 </span>
               </div>
               {metric.subtitle && (
-                <p className="text-xs text-muted-foreground mt-1">{metric.subtitle}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {metric.subtitle}
+                </p>
               )}
             </CardContent>
           </Card>
@@ -880,7 +1142,9 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Response Time Trend</CardTitle>
-              <CardDescription>Average first response time throughout the day</CardDescription>
+              <CardDescription>
+                Average first response time throughout the day
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -889,11 +1153,11 @@ export default function EnhancedAnalyticsPage() {
                   <XAxis dataKey="time" />
                   <YAxis />
                   <Tooltip />
-                  <Area 
-                    type="monotone" 
-                    dataKey="value" 
-                    stroke="#0088FE" 
-                    fill="#0088FE" 
+                  <Area
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#0088FE"
+                    fill="#0088FE"
                     fillOpacity={0.6}
                     name="Response Time (seconds)"
                   />
@@ -905,7 +1169,9 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Lead Activity Heatmap</CardTitle>
-              <CardDescription>Identify peak hours for inbound leads</CardDescription>
+              <CardDescription>
+                Identify peak hours for inbound leads
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -928,9 +1194,9 @@ export default function EnhancedAnalyticsPage() {
 
         {/* Pipeline Analytics Tab */}
         <TabsContent value="pipeline" className="space-y-4">
-          <PipelineAnalytics 
+          <PipelineAnalytics
             onBottleneckSelect={(bottleneck) => {
-              console.log('Selected bottleneck:', bottleneck);
+              console.log("Selected bottleneck:", bottleneck);
               // Handle bottleneck selection - could open a modal or navigate to a detailed view
             }}
           />
@@ -941,7 +1207,9 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Conversion Funnel</CardTitle>
-              <CardDescription>Lead progression through sales stages</CardDescription>
+              <CardDescription>
+                Lead progression through sales stages
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -963,7 +1231,9 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Lead Source ROI</CardTitle>
-              <CardDescription>Return on investment by lead source</CardDescription>
+              <CardDescription>
+                Return on investment by lead source
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -978,7 +1248,10 @@ export default function EnhancedAnalyticsPage() {
                     dataKey="value"
                   >
                     {leadSourceROI.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -986,11 +1259,16 @@ export default function EnhancedAnalyticsPage() {
               </ResponsiveContainer>
               <div className="mt-4 space-y-2">
                 {leadSourceROI.map((source, index) => (
-                  <div key={index} className="flex items-center justify-between">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex items-center gap-2">
-                      <div 
-                        className="h-3 w-3 rounded-full" 
-                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                      <div
+                        className="h-3 w-3 rounded-full"
+                        style={{
+                          backgroundColor: COLORS[index % COLORS.length],
+                        }}
                       />
                       <span className="text-sm">{source.name}</span>
                     </div>
@@ -1016,15 +1294,22 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Report Templates</CardTitle>
-              <CardDescription>Pre-built templates to get started quickly</CardDescription>
+              <CardDescription>
+                Pre-built templates to get started quickly
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {reportTemplates.map(template => (
-                  <Card key={template.id} className="cursor-pointer hover:bg-muted/50">
+                {reportTemplates.map((template) => (
+                  <Card
+                    key={template.id}
+                    className="cursor-pointer hover:bg-muted/50"
+                  >
                     <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-sm">{template.name}</CardTitle>
+                        <CardTitle className="text-sm">
+                          {template.name}
+                        </CardTitle>
                         <Badge variant="outline" className="text-xs">
                           {template.usage} uses
                         </Badge>
@@ -1035,8 +1320,12 @@ export default function EnhancedAnalyticsPage() {
                     </CardHeader>
                     <CardContent>
                       <div className="flex flex-wrap gap-1 mb-3">
-                        {template.metrics.slice(0, 3).map(metric => (
-                          <Badge key={metric} variant="secondary" className="text-xs">
+                        {template.metrics.slice(0, 3).map((metric) => (
+                          <Badge
+                            key={metric}
+                            variant="secondary"
+                            className="text-xs"
+                          >
                             {metric}
                           </Badge>
                         ))}
@@ -1077,33 +1366,53 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>My Reports</CardTitle>
-              <CardDescription>Custom reports you&apos;ve created</CardDescription>
+              <CardDescription>
+                Custom reports you&apos;ve created
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {customReports.length === 0 ? (
                 <div className="text-center py-8">
                   <FileText className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground mb-4">No custom reports yet</p>
-                  <Button variant="outline" onClick={() => setShowReportBuilder(true)}>
+                  <p className="text-muted-foreground mb-4">
+                    No custom reports yet
+                  </p>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowReportBuilder(true)}
+                  >
                     Create Your First Report
                   </Button>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {customReports.map(report => (
-                    <div key={report.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  {customReports.map((report) => (
+                    <div
+                      key={report.id}
+                      className="flex items-center justify-between p-4 border rounded-lg"
+                    >
                       <div className="flex items-center gap-4">
                         <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
                           <FileText className="h-5 w-5 text-primary" />
                         </div>
                         <div>
                           <h4 className="font-semibold">{report.name}</h4>
-                          <p className="text-sm text-muted-foreground">{report.description}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {report.description}
+                          </p>
                           <div className="flex items-center gap-4 mt-1 text-xs text-muted-foreground">
-                            <span>Modified {format(new Date(report.lastModified), 'MMM d, yyyy')}</span>
+                            <span>
+                              Modified{" "}
+                              {format(
+                                new Date(report.lastModified),
+                                "MMM d, yyyy",
+                              )}
+                            </span>
                             <span>{report.widgets.length} widgets</span>
                             {report.sharing.isPublic && (
-                              <Badge variant="outline" className="text-xs">Public</Badge>
+                              <Badge variant="outline" className="text-xs">
+                                Public
+                              </Badge>
                             )}
                           </div>
                         </div>
@@ -1120,7 +1429,7 @@ export default function EnhancedAnalyticsPage() {
                           size="icon"
                           onClick={() => {
                             setEditingReport(report);
-                            setReportBuilderMode('edit');
+                            setReportBuilderMode("edit");
                             setShowReportBuilder(true);
                           }}
                         >
@@ -1174,7 +1483,7 @@ export default function EnhancedAnalyticsPage() {
                     Set up recurring reports to be sent automatically
                   </DialogDescription>
                 </DialogHeader>
-                
+
                 <div className="space-y-4 py-4">
                   <div>
                     <Label>Report Template</Label>
@@ -1183,7 +1492,7 @@ export default function EnhancedAnalyticsPage() {
                         <SelectValue placeholder="Select a template" />
                       </SelectTrigger>
                       <SelectContent>
-                        {reportTemplates.map(template => (
+                        {reportTemplates.map((template) => (
                           <SelectItem key={template.id} value={template.id}>
                             {template.name}
                           </SelectItem>
@@ -1191,7 +1500,7 @@ export default function EnhancedAnalyticsPage() {
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div>
                     <Label>Frequency</Label>
                     <Select>
@@ -1206,18 +1515,18 @@ export default function EnhancedAnalyticsPage() {
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div>
                     <Label>Recipients</Label>
                     <Input placeholder="email1@company.com, email2@company.com" />
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <Label>Send immediately after creation</Label>
                     <Switch />
                   </div>
                 </div>
-                
+
                 <DialogFooter>
                   <Button variant="outline">Cancel</Button>
                   <Button>
@@ -1232,32 +1541,55 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Scheduled Reports</CardTitle>
-              <CardDescription>Manage your automated report deliveries</CardDescription>
+              <CardDescription>
+                Manage your automated report deliveries
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {automatedReports.map(report => (
-                  <div key={report.id} className="flex items-center justify-between p-4 border rounded-lg">
+                {automatedReports.map((report) => (
+                  <div
+                    key={report.id}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div className="flex items-center gap-4">
-                      <div className={cn(
-                        "h-10 w-10 rounded-lg flex items-center justify-center",
-                        report.status === 'active' ? "bg-green-100" : "bg-gray-100"
-                      )}>
-                        <Send className={cn(
-                          "h-5 w-5",
-                          report.status === 'active' ? "text-green-600" : "text-gray-600"
-                        )} />
+                      <div
+                        className={cn(
+                          "h-10 w-10 rounded-lg flex items-center justify-center",
+                          report.status === "active"
+                            ? "bg-green-100"
+                            : "bg-gray-100",
+                        )}
+                      >
+                        <Send
+                          className={cn(
+                            "h-5 w-5",
+                            report.status === "active"
+                              ? "text-green-600"
+                              : "text-gray-600",
+                          )}
+                        />
                       </div>
                       <div>
                         <h4 className="font-semibold">{report.name}</h4>
                         <p className="text-sm text-muted-foreground">
-                          {report.schedule.frequency} at {report.schedule.time} • {report.recipients.length} recipients
+                          {report.schedule.frequency} at {report.schedule.time}{" "}
+                          • {report.recipients.length} recipients
                         </p>
                         <div className="flex items-center gap-4 mt-1 text-xs text-muted-foreground">
                           {report.lastSent && (
-                            <span>Last sent: {format(new Date(report.lastSent), 'MMM d, h:mm a')}</span>
+                            <span>
+                              Last sent:{" "}
+                              {format(
+                                new Date(report.lastSent),
+                                "MMM d, h:mm a",
+                              )}
+                            </span>
                           )}
-                          <span>Next run: {format(new Date(report.nextRun), 'MMM d, h:mm a')}</span>
+                          <span>
+                            Next run:{" "}
+                            {format(new Date(report.nextRun), "MMM d, h:mm a")}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1266,15 +1598,19 @@ export default function EnhancedAnalyticsPage() {
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          const updated = automatedReports.map(r => 
-                            r.id === report.id 
-                              ? { ...r, status: r.status === 'active' ? 'paused' : 'active' }
-                              : r
+                          const updated = automatedReports.map((r) =>
+                            r.id === report.id
+                              ? {
+                                  ...r,
+                                  status:
+                                    r.status === "active" ? "paused" : "active",
+                                }
+                              : r,
                           );
                           setAutomatedReports(updated);
                         }}
                       >
-                        {report.status === 'active' ? (
+                        {report.status === "active" ? (
                           <>
                             <Pause className="mr-2 h-4 w-4" />
                             Pause
@@ -1303,7 +1639,9 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Delivery History</CardTitle>
-              <CardDescription>Track report delivery status and performance</CardDescription>
+              <CardDescription>
+                Track report delivery status and performance
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
@@ -1318,8 +1656,10 @@ export default function EnhancedAnalyticsPage() {
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                    <TableCell className="font-medium">Daily Performance Summary</TableCell>
-                    <TableCell>{format(new Date(), 'MMM d, h:mm a')}</TableCell>
+                    <TableCell className="font-medium">
+                      Daily Performance Summary
+                    </TableCell>
+                    <TableCell>{format(new Date(), "MMM d, h:mm a")}</TableCell>
                     <TableCell>12 recipients</TableCell>
                     <TableCell>
                       <Badge variant="outline" className="gap-1">
@@ -1330,8 +1670,12 @@ export default function EnhancedAnalyticsPage() {
                     <TableCell>83%</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className="font-medium">Weekly Sales Report</TableCell>
-                    <TableCell>{format(new Date(Date.now() - 86400000), 'MMM d, h:mm a')}</TableCell>
+                    <TableCell className="font-medium">
+                      Weekly Sales Report
+                    </TableCell>
+                    <TableCell>
+                      {format(new Date(Date.now() - 86400000), "MMM d, h:mm a")}
+                    </TableCell>
                     <TableCell>8 recipients</TableCell>
                     <TableCell>
                       <Badge variant="outline" className="gap-1">
@@ -1352,7 +1696,9 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Channel Performance Comparison</CardTitle>
-              <CardDescription>Effectiveness across communication channels</CardDescription>
+              <CardDescription>
+                Effectiveness across communication channels
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={400}>
@@ -1360,19 +1706,19 @@ export default function EnhancedAnalyticsPage() {
                   <PolarGrid />
                   <PolarAngleAxis dataKey="channel" />
                   <PolarRadiusAxis />
-                  <Radar 
-                    name="Leads" 
-                    dataKey="leads" 
-                    stroke="#8884d8" 
-                    fill="#8884d8" 
-                    fillOpacity={0.6} 
+                  <Radar
+                    name="Leads"
+                    dataKey="leads"
+                    stroke="#8884d8"
+                    fill="#8884d8"
+                    fillOpacity={0.6}
                   />
-                  <Radar 
-                    name="Conversion %" 
-                    dataKey="conversion" 
-                    stroke="#82ca9d" 
-                    fill="#82ca9d" 
-                    fillOpacity={0.6} 
+                  <Radar
+                    name="Conversion %"
+                    dataKey="conversion"
+                    stroke="#82ca9d"
+                    fill="#82ca9d"
+                    fillOpacity={0.6}
                   />
                   <Legend />
                 </RadarChart>
@@ -1385,17 +1731,25 @@ export default function EnhancedAnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Team Performance Leaderboard</CardTitle>
-              <CardDescription>Individual SDR performance metrics</CardDescription>
+              <CardDescription>
+                Individual SDR performance metrics
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {teamPerformanceData.map((member, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div className="flex items-center gap-4">
                       <div className="relative">
                         <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
                           <span className="text-lg font-semibold">
-                            {member.name.split(' ').map(n => n[0]).join('')}
+                            {member.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
                           </span>
                         </div>
                         {index === 0 && (
@@ -1422,12 +1776,15 @@ export default function EnhancedAnalyticsPage() {
                       </div>
                       <div className="text-center">
                         <p className="font-semibold">
-                          {((member.converted / member.leads) * 100).toFixed(1)}%
+                          {((member.converted / member.leads) * 100).toFixed(1)}
+                          %
                         </p>
                         <p className="text-muted-foreground">Rate</p>
                       </div>
                       <div className="text-center">
-                        <p className="font-semibold">{member.avgResponseTime}s</p>
+                        <p className="font-semibold">
+                          {member.avgResponseTime}s
+                        </p>
                         <p className="text-muted-foreground">Avg Response</p>
                       </div>
                     </div>
@@ -1445,11 +1802,15 @@ export default function EnhancedAnalyticsPage() {
     </div>
   );
 
-  function Alert({ children, className }: { children: React.ReactNode; className?: string }) {
+  function Alert({
+    children,
+    className,
+  }: {
+    children: React.ReactNode;
+    className?: string;
+  }) {
     return (
-      <div className={cn("p-3 border rounded-lg", className)}>
-        {children}
-      </div>
+      <div className={cn("p-3 border rounded-lg", className)}>{children}</div>
     );
   }
 
@@ -1470,10 +1831,20 @@ export default function EnhancedAnalyticsPage() {
   }
 
   function TableHead({ children }: { children: React.ReactNode }) {
-    return <th className="text-left p-2 font-medium text-muted-foreground">{children}</th>;
+    return (
+      <th className="text-left p-2 font-medium text-muted-foreground">
+        {children}
+      </th>
+    );
   }
 
-  function TableCell({ children, className }: { children: React.ReactNode; className?: string }) {
+  function TableCell({
+    children,
+    className,
+  }: {
+    children: React.ReactNode;
+    className?: string;
+  }) {
     return <td className={cn("p-2", className)}>{children}</td>;
   }
 

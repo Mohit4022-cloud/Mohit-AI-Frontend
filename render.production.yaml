@@ -1,0 +1,125 @@
+services:
+  # Web service for the Next.js application
+  - type: web
+    name: mohit-ai-sdr
+    runtime: node
+    region: oregon # Change to your preferred region
+    plan: standard # Upgrade from free tier for production
+    
+    # Build configuration
+    buildCommand: |
+      npm ci --production=false
+      npx prisma generate
+      npm run build
+      npm prune --production
+    
+    # Start command
+    startCommand: npm start
+    
+    # Health check configuration
+    healthCheckPath: /api/health
+    
+    # Environment variables (set these in Render dashboard)
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=1024
+      
+      # Database
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mohit-ai-sdr-db
+          property: connectionString
+      
+      # Add other environment variables in Render dashboard
+      # JWT_SECRET, JWT_REFRESH_SECRET, etc.
+    
+    # Scaling configuration
+    numInstances: 1 # Increase for high availability
+    
+    # Resource limits
+    # Standard plan includes:
+    # - 2 GB RAM
+    # - 1 CPU
+    # - 100 GB bandwidth
+    
+    # Auto-deploy configuration
+    autoDeploy: true # Auto-deploy on push to branch
+    branch: main # or your production branch
+    
+    # Docker configuration (if using Docker)
+    # dockerfilePath: ./Dockerfile
+    # dockerContext: .
+    
+  # Database service
+  - type: postgres
+    name: mohit-ai-sdr-db
+    region: oregon # Same region as web service
+    plan: standard # Upgrade from free tier for production
+    
+    # Database configuration
+    databaseName: mohit_ai_sdr
+    user: mohit_ai_admin
+    
+    # High availability (for standard plan and above)
+    highAvailability: true
+    
+    # IP allow list (add your IPs)
+    ipAllowList:
+      - source: 0.0.0.0/0 # Allow all (configure properly for production)
+        description: Allow all connections
+    
+    # Backup configuration (automatic with standard plan)
+    # Daily backups retained for 7 days
+    
+  # Redis service (optional, for caching/sessions)
+  - type: redis
+    name: mohit-ai-sdr-redis
+    region: oregon
+    plan: standard # or starter for lower cost
+    
+    # Redis configuration
+    maxmemoryPolicy: allkeys-lru
+    
+# Preview environments configuration
+previewsEnabled: true
+previewsExpireAfterDays: 3
+
+# Headers configuration
+headers:
+  - path: /*
+    name: X-Frame-Options
+    value: SAMEORIGIN
+  - path: /*
+    name: X-Content-Type-Options
+    value: nosniff
+  - path: /*
+    name: X-XSS-Protection
+    value: 1; mode=block
+  - path: /*
+    name: Referrer-Policy
+    value: strict-origin-when-cross-origin
+  - path: /*
+    name: Permissions-Policy
+    value: camera=(), microphone=(), geolocation=()
+  - path: /api/*
+    name: Cache-Control
+    value: no-store, no-cache, must-revalidate
+
+# Routes configuration
+routes:
+  - type: rewrite
+    source: /api/v1/*
+    destination: /api/*
+  - type: redirect
+    source: /home
+    destination: /
+    statusCode: 301
+
+# Custom domains (configure in Render dashboard)
+# customDomains:
+#   - domain: your-domain.com
+#   - domain: www.your-domain.com

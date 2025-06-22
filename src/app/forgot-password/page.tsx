@@ -27,8 +27,8 @@ export default function ForgotPasswordPage() {
           <h1 className="text-4xl font-bold mb-6">Forgot Password</h1>
           <div className="bg-secondary/20 rounded-lg p-12">
             <p className="text-xl text-muted-foreground mb-8">
-              Password recovery functionality is coming soon. Please contact support 
-              if you need immediate assistance accessing your account.
+              Password recovery functionality is coming soon. Please contact
+              support if you need immediate assistance accessing your account.
             </p>
             <div className="space-y-4">
               <Link href="/login">

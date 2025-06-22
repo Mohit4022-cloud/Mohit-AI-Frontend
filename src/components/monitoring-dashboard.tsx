@@ -1,9 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
@@ -14,31 +26,86 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { 
-  Activity, AlertTriangle, CheckCircle, Clock, 
-  Database, Download, Filter, Globe, Info,
-  RefreshCw, Search, Server, Shield, Zap,
-  Cpu, HardDrive, Gauge, TrendingUp, TrendingDown,
-  AlertCircle, Play, Pause, Terminal, FileText,
-  BarChart3, Settings, Eye, Bell, Mail,
-  XCircle, Timer, Cloud, Lock, Users,
-  Wifi, WifiOff, Monitor, Smartphone, LogOut,
-  Plus, MoreVertical, Edit, Copy, Trash2, MessageSquare
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Activity,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  Database,
+  Download,
+  Filter,
+  Globe,
+  Info,
+  RefreshCw,
+  Search,
+  Server,
+  Shield,
+  Zap,
+  Cpu,
+  HardDrive,
+  Gauge,
+  TrendingUp,
+  TrendingDown,
+  AlertCircle,
+  Play,
+  Pause,
+  Terminal,
+  FileText,
+  BarChart3,
+  Settings,
+  Eye,
+  Bell,
+  Mail,
+  XCircle,
+  Timer,
+  Cloud,
+  Lock,
+  Users,
+  Wifi,
+  WifiOff,
+  Monitor,
+  Smartphone,
+  LogOut,
+  Plus,
+  MoreVertical,
+  Edit,
+  Copy,
+  Trash2,
+  MessageSquare,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format, formatDistanceToNow, subHours, subMinutes } from "date-fns";
 import {
-  LineChart, Line, AreaChart, Area, BarChart, Bar,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ResponsiveContainer, PieChart, Pie, Cell
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
 interface SystemMetric {
@@ -46,8 +113,8 @@ interface SystemMetric {
   name: string;
   value: number;
   unit: string;
-  status: 'healthy' | 'warning' | 'critical';
-  trend: 'up' | 'down' | 'stable';
+  status: "healthy" | "warning" | "critical";
+  trend: "up" | "down" | "stable";
   change: number;
   threshold?: {
     warning: number;
@@ -58,7 +125,7 @@ interface SystemMetric {
 interface LogEntry {
   id: string;
   timestamp: string;
-  level: 'debug' | 'info' | 'warning' | 'error' | 'critical';
+  level: "debug" | "info" | "warning" | "error" | "critical";
   source: string;
   message: string;
   metadata?: Record<string, any>;
@@ -74,15 +141,15 @@ interface AlertRule {
   description: string;
   condition: {
     metric: string;
-    operator: '>' | '<' | '=' | '>=' | '<=' | '!=';
+    operator: ">" | "<" | "=" | ">=" | "<=" | "!=";
     value: number;
     duration?: number;
   };
   actions: {
-    type: 'email' | 'slack' | 'webhook' | 'pagerduty';
+    type: "email" | "slack" | "webhook" | "pagerduty";
     config: Record<string, any>;
   }[];
-  severity: 'info' | 'warning' | 'critical';
+  severity: "info" | "warning" | "critical";
   enabled: boolean;
   lastTriggered?: string;
   triggerCount: number;
@@ -94,7 +161,7 @@ interface HealthCheck {
   endpoint: string;
   interval: number;
   timeout: number;
-  status: 'up' | 'down' | 'degraded';
+  status: "up" | "down" | "degraded";
   lastCheck: string;
   responseTime: number;
   uptime: number;
@@ -106,294 +173,299 @@ interface MonitoringDashboardProps {
 }
 
 export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
-  const [timeRange, setTimeRange] = useState('1h');
+  const [timeRange, setTimeRange] = useState("1h");
   const [refreshInterval, setRefreshInterval] = useState(30);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
-  const [logFilter, setLogFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [logFilter, setLogFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [showAlertDialog, setShowAlertDialog] = useState(false);
 
   // Mock data
   const [systemMetrics] = useState<SystemMetric[]>([
     {
-      id: 'cpu',
-      name: 'CPU Usage',
+      id: "cpu",
+      name: "CPU Usage",
       value: 42,
-      unit: '%',
-      status: 'healthy',
-      trend: 'stable',
+      unit: "%",
+      status: "healthy",
+      trend: "stable",
       change: -2.3,
-      threshold: { warning: 70, critical: 90 }
+      threshold: { warning: 70, critical: 90 },
     },
     {
-      id: 'memory',
-      name: 'Memory Usage',
+      id: "memory",
+      name: "Memory Usage",
       value: 68,
-      unit: '%',
-      status: 'warning',
-      trend: 'up',
+      unit: "%",
+      status: "warning",
+      trend: "up",
       change: 12.5,
-      threshold: { warning: 65, critical: 85 }
+      threshold: { warning: 65, critical: 85 },
     },
     {
-      id: 'disk',
-      name: 'Disk Space',
+      id: "disk",
+      name: "Disk Space",
       value: 35,
-      unit: '%',
-      status: 'healthy',
-      trend: 'up',
+      unit: "%",
+      status: "healthy",
+      trend: "up",
       change: 1.2,
-      threshold: { warning: 80, critical: 95 }
+      threshold: { warning: 80, critical: 95 },
     },
     {
-      id: 'api_latency',
-      name: 'API Latency',
+      id: "api_latency",
+      name: "API Latency",
       value: 245,
-      unit: 'ms',
-      status: 'healthy',
-      trend: 'down',
+      unit: "ms",
+      status: "healthy",
+      trend: "down",
       change: -15.3,
-      threshold: { warning: 500, critical: 1000 }
+      threshold: { warning: 500, critical: 1000 },
     },
     {
-      id: 'error_rate',
-      name: 'Error Rate',
+      id: "error_rate",
+      name: "Error Rate",
       value: 0.8,
-      unit: '%',
-      status: 'healthy',
-      trend: 'stable',
+      unit: "%",
+      status: "healthy",
+      trend: "stable",
       change: 0.1,
-      threshold: { warning: 2, critical: 5 }
+      threshold: { warning: 2, critical: 5 },
     },
     {
-      id: 'requests',
-      name: 'Requests/min',
+      id: "requests",
+      name: "Requests/min",
       value: 1247,
-      unit: 'req/min',
-      status: 'healthy',
-      trend: 'up',
+      unit: "req/min",
+      status: "healthy",
+      trend: "up",
       change: 8.7,
-      threshold: { warning: 5000, critical: 10000 }
-    }
+      threshold: { warning: 5000, critical: 10000 },
+    },
   ]);
 
   const [logs] = useState<LogEntry[]>([
     {
-      id: '1',
+      id: "1",
       timestamp: new Date().toISOString(),
-      level: 'info',
-      source: 'api-gateway',
-      message: 'Successfully processed webhook from CRM',
-      metadata: { webhookId: 'wh_123', processingTime: 142 },
-      userId: 'user_456',
-      requestId: 'req_789',
-      duration: 142
+      level: "info",
+      source: "api-gateway",
+      message: "Successfully processed webhook from CRM",
+      metadata: { webhookId: "wh_123", processingTime: 142 },
+      userId: "user_456",
+      requestId: "req_789",
+      duration: 142,
     },
     {
-      id: '2',
+      id: "2",
       timestamp: subMinutes(new Date(), 5).toISOString(),
-      level: 'warning',
-      source: 'lead-processor',
-      message: 'High memory usage detected during lead import',
-      metadata: { memoryUsage: '82%', leadsProcessed: 1523 },
-      requestId: 'req_790',
-      duration: 3421
+      level: "warning",
+      source: "lead-processor",
+      message: "High memory usage detected during lead import",
+      metadata: { memoryUsage: "82%", leadsProcessed: 1523 },
+      requestId: "req_790",
+      duration: 3421,
     },
     {
-      id: '3',
+      id: "3",
       timestamp: subMinutes(new Date(), 12).toISOString(),
-      level: 'error',
-      source: 'email-service',
-      message: 'Failed to send campaign email',
-      metadata: { campaignId: 'camp_123', error: 'SMTP timeout' },
-      userId: 'user_789',
-      requestId: 'req_791',
-      stackTrace: 'Error: SMTP timeout\\n  at EmailService.send (email.js:142)'
+      level: "error",
+      source: "email-service",
+      message: "Failed to send campaign email",
+      metadata: { campaignId: "camp_123", error: "SMTP timeout" },
+      userId: "user_789",
+      requestId: "req_791",
+      stackTrace: "Error: SMTP timeout\\n  at EmailService.send (email.js:142)",
     },
     {
-      id: '4',
+      id: "4",
       timestamp: subMinutes(new Date(), 20).toISOString(),
-      level: 'debug',
-      source: 'auth-service',
-      message: 'User authentication successful',
-      metadata: { method: 'oauth', provider: 'google' },
-      userId: 'user_101',
-      duration: 89
+      level: "debug",
+      source: "auth-service",
+      message: "User authentication successful",
+      metadata: { method: "oauth", provider: "google" },
+      userId: "user_101",
+      duration: 89,
     },
     {
-      id: '5',
+      id: "5",
       timestamp: subMinutes(new Date(), 35).toISOString(),
-      level: 'critical',
-      source: 'database',
-      message: 'Database connection pool exhausted',
+      level: "critical",
+      source: "database",
+      message: "Database connection pool exhausted",
       metadata: { activeConnections: 100, maxConnections: 100 },
-      stackTrace: 'Error: Connection pool exhausted\\n  at DatabasePool.acquire (db.js:78)'
-    }
+      stackTrace:
+        "Error: Connection pool exhausted\\n  at DatabasePool.acquire (db.js:78)",
+    },
   ]);
 
   const [alertRules] = useState<AlertRule[]>([
     {
-      id: '1',
-      name: 'High CPU Usage',
-      description: 'Alert when CPU usage exceeds 80% for 5 minutes',
+      id: "1",
+      name: "High CPU Usage",
+      description: "Alert when CPU usage exceeds 80% for 5 minutes",
       condition: {
-        metric: 'cpu_usage',
-        operator: '>',
+        metric: "cpu_usage",
+        operator: ">",
         value: 80,
-        duration: 5
+        duration: 5,
       },
       actions: [
         {
-          type: 'email',
-          config: { recipients: ['ops@company.com'] }
+          type: "email",
+          config: { recipients: ["ops@company.com"] },
         },
         {
-          type: 'slack',
-          config: { channel: '#alerts', mention: '@oncall' }
-        }
+          type: "slack",
+          config: { channel: "#alerts", mention: "@oncall" },
+        },
       ],
-      severity: 'warning',
+      severity: "warning",
       enabled: true,
       lastTriggered: subHours(new Date(), 2).toISOString(),
-      triggerCount: 3
+      triggerCount: 3,
     },
     {
-      id: '2',
-      name: 'API Error Rate',
-      description: 'Alert when error rate exceeds 5%',
+      id: "2",
+      name: "API Error Rate",
+      description: "Alert when error rate exceeds 5%",
       condition: {
-        metric: 'error_rate',
-        operator: '>',
-        value: 5
+        metric: "error_rate",
+        operator: ">",
+        value: 5,
       },
       actions: [
         {
-          type: 'pagerduty',
-          config: { serviceKey: 'pd_service_123' }
-        }
+          type: "pagerduty",
+          config: { serviceKey: "pd_service_123" },
+        },
       ],
-      severity: 'critical',
+      severity: "critical",
       enabled: true,
-      triggerCount: 0
+      triggerCount: 0,
     },
     {
-      id: '3',
-      name: 'Low Disk Space',
-      description: 'Alert when disk usage exceeds 90%',
+      id: "3",
+      name: "Low Disk Space",
+      description: "Alert when disk usage exceeds 90%",
       condition: {
-        metric: 'disk_usage',
-        operator: '>',
-        value: 90
+        metric: "disk_usage",
+        operator: ">",
+        value: 90,
       },
       actions: [
         {
-          type: 'webhook',
-          config: { url: 'https://api.company.com/alerts' }
-        }
+          type: "webhook",
+          config: { url: "https://api.company.com/alerts" },
+        },
       ],
-      severity: 'warning',
+      severity: "warning",
       enabled: false,
-      triggerCount: 1
-    }
+      triggerCount: 1,
+    },
   ]);
 
   const [healthChecks] = useState<HealthCheck[]>([
     {
-      id: '1',
-      name: 'API Gateway',
-      endpoint: 'https://api.mohitai.com/health',
+      id: "1",
+      name: "API Gateway",
+      endpoint: "https://api.mohitai.com/health",
       interval: 60,
       timeout: 5,
-      status: 'up',
+      status: "up",
       lastCheck: new Date().toISOString(),
       responseTime: 142,
       uptime: 99.98,
-      errors: 0
+      errors: 0,
     },
     {
-      id: '2',
-      name: 'Database',
-      endpoint: 'postgres://db.mohitai.com:5432',
+      id: "2",
+      name: "Database",
+      endpoint: "postgres://db.mohitai.com:5432",
       interval: 30,
       timeout: 3,
-      status: 'up',
+      status: "up",
       lastCheck: new Date().toISOString(),
       responseTime: 23,
       uptime: 99.99,
-      errors: 0
+      errors: 0,
     },
     {
-      id: '3',
-      name: 'Redis Cache',
-      endpoint: 'redis://cache.mohitai.com:6379',
+      id: "3",
+      name: "Redis Cache",
+      endpoint: "redis://cache.mohitai.com:6379",
       interval: 30,
       timeout: 2,
-      status: 'degraded',
+      status: "degraded",
       lastCheck: new Date().toISOString(),
       responseTime: 512,
       uptime: 98.5,
-      errors: 3
+      errors: 3,
     },
     {
-      id: '4',
-      name: 'Email Service',
-      endpoint: 'https://email.mohitai.com/health',
+      id: "4",
+      name: "Email Service",
+      endpoint: "https://email.mohitai.com/health",
       interval: 120,
       timeout: 10,
-      status: 'down',
+      status: "down",
       lastCheck: subMinutes(new Date(), 2).toISOString(),
       responseTime: 0,
       uptime: 95.2,
-      errors: 12
-    }
+      errors: 12,
+    },
   ]);
 
   // Mock time series data
   const timeSeriesData = Array.from({ length: 60 }, (_, i) => ({
-    time: format(subMinutes(new Date(), 60 - i), 'HH:mm'),
+    time: format(subMinutes(new Date(), 60 - i), "HH:mm"),
     cpu: Math.random() * 30 + 30,
     memory: Math.random() * 20 + 60,
     requests: Math.random() * 500 + 1000,
-    errors: Math.random() * 10
+    errors: Math.random() * 10,
   }));
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'healthy':
-      case 'up':
-        return 'text-green-600';
-      case 'warning':
-      case 'degraded':
-        return 'text-yellow-600';
-      case 'critical':
-      case 'down':
-        return 'text-red-600';
+      case "healthy":
+      case "up":
+        return "text-green-600";
+      case "warning":
+      case "degraded":
+        return "text-yellow-600";
+      case "critical":
+      case "down":
+        return "text-red-600";
       default:
-        return 'text-gray-600';
+        return "text-gray-600";
     }
   };
 
   const getLogLevelColor = (level: string) => {
     switch (level) {
-      case 'debug':
-        return 'text-gray-500';
-      case 'info':
-        return 'text-blue-600';
-      case 'warning':
-        return 'text-yellow-600';
-      case 'error':
-        return 'text-red-600';
-      case 'critical':
-        return 'text-red-800';
+      case "debug":
+        return "text-gray-500";
+      case "info":
+        return "text-blue-600";
+      case "warning":
+        return "text-yellow-600";
+      case "error":
+        return "text-red-600";
+      case "critical":
+        return "text-red-800";
       default:
-        return 'text-gray-600';
+        return "text-gray-600";
     }
   };
 
-  const filteredLogs = logs.filter(log => {
-    if (logFilter !== 'all' && log.level !== logFilter) return false;
-    if (searchQuery && !log.message.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+  const filteredLogs = logs.filter((log) => {
+    if (logFilter !== "all" && log.level !== logFilter) return false;
+    if (
+      searchQuery &&
+      !log.message.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+      return false;
     return true;
   });
 
@@ -402,7 +474,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">System Monitoring</h2>
-          <p className="text-muted-foreground">Real-time system health and performance metrics</p>
+          <p className="text-muted-foreground">
+            Real-time system health and performance metrics
+          </p>
         </div>
         <div className="flex items-center gap-4">
           <Select value={timeRange} onValueChange={setTimeRange}>
@@ -419,10 +493,7 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
             </SelectContent>
           </Select>
           <div className="flex items-center gap-2">
-            <Switch
-              checked={autoRefresh}
-              onCheckedChange={setAutoRefresh}
-            />
+            <Switch checked={autoRefresh} onCheckedChange={setAutoRefresh} />
             <Label>Auto refresh</Label>
           </div>
           <Button variant="outline" size="icon">
@@ -434,30 +505,37 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
       {/* System Health Overview */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {systemMetrics.map((metric) => (
-          <Card 
+          <Card
             key={metric.id}
             className={cn(
               "cursor-pointer transition-all hover:shadow-lg",
-              selectedMetric === metric.id && "ring-2 ring-primary"
+              selectedMetric === metric.id && "ring-2 ring-primary",
             )}
             onClick={() => setSelectedMetric(metric.id)}
           >
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-2">
-                <div className={cn("h-8 w-8 rounded-full flex items-center justify-center", {
-                  'bg-green-100': metric.status === 'healthy',
-                  'bg-yellow-100': metric.status === 'warning',
-                  'bg-red-100': metric.status === 'critical'
-                })}>
-                  {metric.id === 'cpu' && <Cpu className="h-4 w-4" />}
-                  {metric.id === 'memory' && <HardDrive className="h-4 w-4" />}
-                  {metric.id === 'disk' && <Database className="h-4 w-4" />}
-                  {metric.id === 'api_latency' && <Timer className="h-4 w-4" />}
-                  {metric.id === 'error_rate' && <AlertTriangle className="h-4 w-4" />}
-                  {metric.id === 'requests' && <Activity className="h-4 w-4" />}
+                <div
+                  className={cn(
+                    "h-8 w-8 rounded-full flex items-center justify-center",
+                    {
+                      "bg-green-100": metric.status === "healthy",
+                      "bg-yellow-100": metric.status === "warning",
+                      "bg-red-100": metric.status === "critical",
+                    },
+                  )}
+                >
+                  {metric.id === "cpu" && <Cpu className="h-4 w-4" />}
+                  {metric.id === "memory" && <HardDrive className="h-4 w-4" />}
+                  {metric.id === "disk" && <Database className="h-4 w-4" />}
+                  {metric.id === "api_latency" && <Timer className="h-4 w-4" />}
+                  {metric.id === "error_rate" && (
+                    <AlertTriangle className="h-4 w-4" />
+                  )}
+                  {metric.id === "requests" && <Activity className="h-4 w-4" />}
                 </div>
-                <Badge 
-                  variant="outline" 
+                <Badge
+                  variant="outline"
                   className={cn("text-xs", getStatusColor(metric.status))}
                 >
                   {metric.status}
@@ -467,13 +545,25 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                 <p className="text-sm text-muted-foreground">{metric.name}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-2xl font-bold">{metric.value}</span>
-                  <span className="text-sm text-muted-foreground">{metric.unit}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {metric.unit}
+                  </span>
                 </div>
                 <div className="flex items-center gap-1 mt-1">
-                  {metric.trend === 'up' && <TrendingUp className="h-3 w-3 text-green-600" />}
-                  {metric.trend === 'down' && <TrendingDown className="h-3 w-3 text-red-600" />}
-                  <span className={cn("text-xs", metric.change > 0 ? 'text-green-600' : 'text-red-600')}>
-                    {metric.change > 0 ? '+' : ''}{metric.change}%
+                  {metric.trend === "up" && (
+                    <TrendingUp className="h-3 w-3 text-green-600" />
+                  )}
+                  {metric.trend === "down" && (
+                    <TrendingDown className="h-3 w-3 text-red-600" />
+                  )}
+                  <span
+                    className={cn(
+                      "text-xs",
+                      metric.change > 0 ? "text-green-600" : "text-red-600",
+                    )}
+                  >
+                    {metric.change > 0 ? "+" : ""}
+                    {metric.change}%
                   </span>
                 </div>
               </div>
@@ -507,35 +597,35 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                     <YAxis yAxisId="right" orientation="right" />
                     <Tooltip />
                     <Legend />
-                    <Line 
+                    <Line
                       yAxisId="left"
-                      type="monotone" 
-                      dataKey="cpu" 
-                      stroke="#3b82f6" 
+                      type="monotone"
+                      dataKey="cpu"
+                      stroke="#3b82f6"
                       name="CPU %"
                       strokeWidth={2}
                     />
-                    <Line 
+                    <Line
                       yAxisId="left"
-                      type="monotone" 
-                      dataKey="memory" 
-                      stroke="#8b5cf6" 
+                      type="monotone"
+                      dataKey="memory"
+                      stroke="#8b5cf6"
                       name="Memory %"
                       strokeWidth={2}
                     />
-                    <Line 
+                    <Line
                       yAxisId="right"
-                      type="monotone" 
-                      dataKey="requests" 
-                      stroke="#10b981" 
+                      type="monotone"
+                      dataKey="requests"
+                      stroke="#10b981"
                       name="Requests/min"
                       strokeWidth={2}
                     />
-                    <Line 
+                    <Line
                       yAxisId="right"
-                      type="monotone" 
-                      dataKey="errors" 
-                      stroke="#ef4444" 
+                      type="monotone"
+                      dataKey="errors"
+                      stroke="#ef4444"
                       name="Errors"
                       strokeWidth={2}
                     />
@@ -557,11 +647,11 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                     <PieChart>
                       <Pie
                         data={[
-                          { name: '/api/leads', value: 35 },
-                          { name: '/api/conversations', value: 28 },
-                          { name: '/api/analytics', value: 20 },
-                          { name: '/api/auth', value: 12 },
-                          { name: 'Other', value: 5 }
+                          { name: "/api/leads", value: 35 },
+                          { name: "/api/conversations", value: 28 },
+                          { name: "/api/analytics", value: 20 },
+                          { name: "/api/auth", value: 12 },
+                          { name: "Other", value: 5 },
                         ]}
                         cx="50%"
                         cy="50%"
@@ -572,9 +662,17 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                         dataKey="value"
                       >
                         {[0, 1, 2, 3, 4].map((index) => (
-                          <Cell 
-                            key={`cell-${index}`} 
-                            fill={['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#6b7280'][index]} 
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={
+                              [
+                                "#3b82f6",
+                                "#8b5cf6",
+                                "#10b981",
+                                "#f59e0b",
+                                "#6b7280",
+                              ][index]
+                            }
                           />
                         ))}
                       </Pie>
@@ -588,18 +686,20 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
             <Card>
               <CardHeader>
                 <CardTitle>Response Times</CardTitle>
-                <CardDescription>API response time distribution</CardDescription>
+                <CardDescription>
+                  API response time distribution
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={[
-                        { range: '0-50ms', count: 245 },
-                        { range: '50-100ms', count: 189 },
-                        { range: '100-200ms', count: 124 },
-                        { range: '200-500ms', count: 67 },
-                        { range: '500ms+', count: 12 }
+                        { range: "0-50ms", count: 245 },
+                        { range: "50-100ms", count: 189 },
+                        { range: "100-200ms", count: 124 },
+                        { range: "200-500ms", count: 67 },
+                        { range: "500ms+", count: 12 },
                       ]}
                     >
                       <CartesianGrid strokeDasharray="3 3" />
@@ -621,7 +721,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>System Logs</CardTitle>
-                  <CardDescription>Real-time application logs and events</CardDescription>
+                  <CardDescription>
+                    Real-time application logs and events
+                  </CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
                   <Select value={logFilter} onValueChange={setLogFilter}>
@@ -656,21 +758,27 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
               <ScrollArea className="h-[600px]">
                 <div className="space-y-2">
                   {filteredLogs.map((log) => (
-                    <div 
+                    <div
                       key={log.id}
                       className="p-3 border rounded-lg hover:bg-muted/50 transition-colors"
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <Badge 
-                              variant="outline" 
-                              className={cn("text-xs", getLogLevelColor(log.level))}
+                            <Badge
+                              variant="outline"
+                              className={cn(
+                                "text-xs",
+                                getLogLevelColor(log.level),
+                              )}
                             >
                               {log.level.toUpperCase()}
                             </Badge>
                             <span className="text-xs text-muted-foreground">
-                              {format(new Date(log.timestamp), 'MMM dd HH:mm:ss')}
+                              {format(
+                                new Date(log.timestamp),
+                                "MMM dd HH:mm:ss",
+                              )}
                             </span>
                             <span className="text-xs font-mono bg-muted px-1 rounded">
                               {log.source}
@@ -706,7 +814,11 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                           )}
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="icon" className="h-6 w-6">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6"
+                              >
                                 <MoreVertical className="h-3 w-3" />
                               </Button>
                             </DropdownMenuTrigger>
@@ -741,7 +853,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Alert Rules</CardTitle>
-                  <CardDescription>Configure monitoring alerts and notifications</CardDescription>
+                  <CardDescription>
+                    Configure monitoring alerts and notifications
+                  </CardDescription>
                 </div>
                 <Button onClick={() => setShowAlertDialog(true)}>
                   <Plus className="h-4 w-4 mr-2" />
@@ -757,24 +871,38 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <h4 className="font-semibold">{rule.name}</h4>
-                          <Badge 
-                            variant={rule.severity === 'critical' ? 'destructive' : rule.severity === 'warning' ? 'default' : 'secondary'}
+                          <Badge
+                            variant={
+                              rule.severity === "critical"
+                                ? "destructive"
+                                : rule.severity === "warning"
+                                  ? "default"
+                                  : "secondary"
+                            }
                           >
                             {rule.severity}
                           </Badge>
                           {rule.lastTriggered && (
                             <span className="text-xs text-muted-foreground">
-                              Last triggered {formatDistanceToNow(new Date(rule.lastTriggered))} ago
+                              Last triggered{" "}
+                              {formatDistanceToNow(
+                                new Date(rule.lastTriggered),
+                              )}{" "}
+                              ago
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-muted-foreground mb-2">{rule.description}</p>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          {rule.description}
+                        </p>
                         <div className="flex items-center gap-4 text-sm">
                           <div className="flex items-center gap-1">
                             <Gauge className="h-4 w-4 text-muted-foreground" />
                             <span className="font-mono">
-                              {rule.condition.metric} {rule.condition.operator} {rule.condition.value}
-                              {rule.condition.duration && ` for ${rule.condition.duration}min`}
+                              {rule.condition.metric} {rule.condition.operator}{" "}
+                              {rule.condition.value}
+                              {rule.condition.duration &&
+                                ` for ${rule.condition.duration}min`}
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
@@ -826,7 +954,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
           <Card>
             <CardHeader>
               <CardTitle>Alert History</CardTitle>
-              <CardDescription>Recent alert triggers and resolutions</CardDescription>
+              <CardDescription>
+                Recent alert triggers and resolutions
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -865,7 +995,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Service Health</CardTitle>
-                  <CardDescription>Monitor critical service endpoints</CardDescription>
+                  <CardDescription>
+                    Monitor critical service endpoints
+                  </CardDescription>
                 </div>
                 <Button variant="outline">
                   <Plus className="h-4 w-4 mr-2" />
@@ -879,35 +1011,56 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                   <div key={check.id} className="border rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <div className={cn("h-10 w-10 rounded-full flex items-center justify-center", {
-                          'bg-green-100': check.status === 'up',
-                          'bg-yellow-100': check.status === 'degraded',
-                          'bg-red-100': check.status === 'down'
-                        })}>
-                          {check.status === 'up' && <Wifi className="h-5 w-5 text-green-600" />}
-                          {check.status === 'degraded' && <WifiOff className="h-5 w-5 text-yellow-600" />}
-                          {check.status === 'down' && <XCircle className="h-5 w-5 text-red-600" />}
+                        <div
+                          className={cn(
+                            "h-10 w-10 rounded-full flex items-center justify-center",
+                            {
+                              "bg-green-100": check.status === "up",
+                              "bg-yellow-100": check.status === "degraded",
+                              "bg-red-100": check.status === "down",
+                            },
+                          )}
+                        >
+                          {check.status === "up" && (
+                            <Wifi className="h-5 w-5 text-green-600" />
+                          )}
+                          {check.status === "degraded" && (
+                            <WifiOff className="h-5 w-5 text-yellow-600" />
+                          )}
+                          {check.status === "down" && (
+                            <XCircle className="h-5 w-5 text-red-600" />
+                          )}
                         </div>
                         <div>
                           <h4 className="font-semibold">{check.name}</h4>
-                          <p className="text-sm text-muted-foreground">{check.endpoint}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {check.endpoint}
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-center gap-6 text-sm">
                         <div className="text-center">
                           <p className="font-semibold">{check.uptime}%</p>
-                          <p className="text-xs text-muted-foreground">Uptime</p>
+                          <p className="text-xs text-muted-foreground">
+                            Uptime
+                          </p>
                         </div>
                         <div className="text-center">
-                          <p className="font-semibold">{check.responseTime}ms</p>
-                          <p className="text-xs text-muted-foreground">Response</p>
+                          <p className="font-semibold">
+                            {check.responseTime}ms
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Response
+                          </p>
                         </div>
                         <div className="text-center">
                           <p className="font-semibold">{check.errors}</p>
-                          <p className="text-xs text-muted-foreground">Errors</p>
+                          <p className="text-xs text-muted-foreground">
+                            Errors
+                          </p>
                         </div>
-                        <Badge 
-                          variant="outline" 
+                        <Badge
+                          variant="outline"
                           className={cn(getStatusColor(check.status))}
                         >
                           {check.status}
@@ -915,8 +1068,14 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                       </div>
                     </div>
                     <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                      <span>Check every {check.interval}s • Timeout: {check.timeout}s</span>
-                      <span>Last checked {formatDistanceToNow(new Date(check.lastCheck))} ago</span>
+                      <span>
+                        Check every {check.interval}s • Timeout: {check.timeout}
+                        s
+                      </span>
+                      <span>
+                        Last checked{" "}
+                        {formatDistanceToNow(new Date(check.lastCheck))} ago
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -935,7 +1094,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                   <Cloud className="h-8 w-8 text-blue-600" />
                   <div className="flex-1">
                     <h4 className="font-medium">AWS Services</h4>
-                    <p className="text-sm text-muted-foreground">All systems operational</p>
+                    <p className="text-sm text-muted-foreground">
+                      All systems operational
+                    </p>
                   </div>
                   <CheckCircle className="h-5 w-5 text-green-600" />
                 </div>
@@ -943,7 +1104,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                   <Database className="h-8 w-8 text-purple-600" />
                   <div className="flex-1">
                     <h4 className="font-medium">Database Cluster</h4>
-                    <p className="text-sm text-muted-foreground">Primary: Healthy • Replicas: 2/2</p>
+                    <p className="text-sm text-muted-foreground">
+                      Primary: Healthy • Replicas: 2/2
+                    </p>
                   </div>
                   <CheckCircle className="h-5 w-5 text-green-600" />
                 </div>
@@ -951,7 +1114,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                   <Shield className="h-8 w-8 text-green-600" />
                   <div className="flex-1">
                     <h4 className="font-medium">SSL Certificates</h4>
-                    <p className="text-sm text-muted-foreground">Valid • Expires in 87 days</p>
+                    <p className="text-sm text-muted-foreground">
+                      Valid • Expires in 87 days
+                    </p>
                   </div>
                   <CheckCircle className="h-5 w-5 text-green-600" />
                 </div>
@@ -959,7 +1124,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                   <Globe className="h-8 w-8 text-indigo-600" />
                   <div className="flex-1">
                     <h4 className="font-medium">CDN</h4>
-                    <p className="text-sm text-muted-foreground">Cache hit rate: 94.2%</p>
+                    <p className="text-sm text-muted-foreground">
+                      Cache hit rate: 94.2%
+                    </p>
                   </div>
                   <CheckCircle className="h-5 w-5 text-green-600" />
                 </div>
@@ -972,7 +1139,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
           <Card>
             <CardHeader>
               <CardTitle>Monitoring Configuration</CardTitle>
-              <CardDescription>Configure monitoring preferences and integrations</CardDescription>
+              <CardDescription>
+                Configure monitoring preferences and integrations
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -1001,7 +1170,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                         <Mail className="h-5 w-5 text-muted-foreground" />
                         <div>
                           <p className="font-medium">Email</p>
-                          <p className="text-sm text-muted-foreground">ops@mohitai.com</p>
+                          <p className="text-sm text-muted-foreground">
+                            ops@mohitai.com
+                          </p>
                         </div>
                       </div>
                       <Switch defaultChecked />
@@ -1011,7 +1182,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                         <MessageSquare className="h-5 w-5 text-muted-foreground" />
                         <div>
                           <p className="font-medium">Slack</p>
-                          <p className="text-sm text-muted-foreground">#alerts channel</p>
+                          <p className="text-sm text-muted-foreground">
+                            #alerts channel
+                          </p>
                         </div>
                       </div>
                       <Switch defaultChecked />
@@ -1021,7 +1194,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                         <Smartphone className="h-5 w-5 text-muted-foreground" />
                         <div>
                           <p className="font-medium">PagerDuty</p>
-                          <p className="text-sm text-muted-foreground">Critical alerts only</p>
+                          <p className="text-sm text-muted-foreground">
+                            Critical alerts only
+                          </p>
                         </div>
                       </div>
                       <Switch />
@@ -1037,14 +1212,18 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Export to S3</p>
-                        <p className="text-sm text-muted-foreground">Automatically export logs to AWS S3</p>
+                        <p className="text-sm text-muted-foreground">
+                          Automatically export logs to AWS S3
+                        </p>
                       </div>
                       <Switch />
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Export to Datadog</p>
-                        <p className="text-sm text-muted-foreground">Stream logs to Datadog for analysis</p>
+                        <p className="text-sm text-muted-foreground">
+                          Stream logs to Datadog for analysis
+                        </p>
                       </div>
                       <Switch defaultChecked />
                     </div>
@@ -1073,7 +1252,9 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Enable APM</p>
-                        <p className="text-sm text-muted-foreground">Application Performance Monitoring</p>
+                        <p className="text-sm text-muted-foreground">
+                          Application Performance Monitoring
+                        </p>
                       </div>
                       <Switch defaultChecked />
                     </div>
@@ -1102,12 +1283,15 @@ export function MonitoringDashboard({ className }: MonitoringDashboardProps) {
           <div className="space-y-4">
             <div>
               <Label>Alert Name</Label>
-              <Input placeholder="e.g., High Database Connection Count" className="mt-2" />
+              <Input
+                placeholder="e.g., High Database Connection Count"
+                className="mt-2"
+              />
             </div>
             <div>
               <Label>Description</Label>
-              <Textarea 
-                placeholder="Describe what this alert monitors and why it's important" 
+              <Textarea
+                placeholder="Describe what this alert monitors and why it's important"
                 className="mt-2"
               />
             </div>

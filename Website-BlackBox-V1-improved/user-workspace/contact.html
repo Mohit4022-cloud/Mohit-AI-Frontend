@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Mohit AI - Get in Touch with Our Team">
+    <title>Contact - Mohit AI</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/master/_brand/favicon-32x32.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#3498DB',
+                        accent: '#A855F7',
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-gray-900/95 backdrop-blur-md border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-white">Mohit AI</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="product.html" class="text-gray-300 hover:text-white transition-colors">Product</a>
+                    <a href="pricing.html" class="text-gray-300 hover:text-white transition-colors">Pricing</a>
+                    <div class="relative group">
+                        <button class="text-gray-300 hover:text-white transition-colors flex items-center">
+                            Solutions
+                            <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 rounded-md shadow-lg hover:shadow-primary/20 bg-gray-900 ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="py-1">
+                                <a href="solutions.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">By Industry</a>
+                                <a href="for-sdrs.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">For SDRs</a>
+                                <a href="for-managers.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">For Managers</a>
+                                <a href="enterprise.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">Enterprise</a>
+                                <a href="small-business.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">Small Business</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="resources.html" class="text-gray-300 hover:text-white transition-colors">Resources</a>
+                    <a href="security.html" class="text-gray-300 hover:text-white transition-colors">Security</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors">About</a>
+                    <a href="signup.html" class="inline-flex items-center px-6 py-2.5 border border-black text-white font-medium rounded-lg hover:shadow-lg hover:shadow-primary/20 hover:shadow-primary/50 transform hover:scale-105 transition-all duration-200">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-bold text-white mb-6">Get in Touch</h1>
+            <p class="text-xl text-gray-300 mb-8">Have questions? We're here to help.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <!-- Contact Form -->
+                <div class="bg-gray-900 p-8 rounded-2xl shadow-sm">
+                    <h2 class="text-2xl font-bold text-white mb-8">Send us a message</h2>
+                    <form id="contactForm" class="space-y-6">
+                        <div class="relative">
+                            <label for="name" class="block text-sm font-medium text-gray-200 mb-1">Full Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors" required>
+                            <div class="error-message hidden mt-1 text-sm text-red-500 transition-all duration-200 opacity-0 transform"></div>
+                        </div>
+                        <div class="relative">
+                            <label for="email" class="block text-sm font-medium text-gray-200 mb-1">Email Address <span class="text-red-500">*</span></label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors" required>
+                            <div class="error-message hidden mt-1 text-sm text-red-500 transition-all duration-200 opacity-0 transform"></div>
+                        </div>
+                        <div class="relative">
+                            <label for="company" class="block text-sm font-medium text-gray-200 mb-1">Company Name</label>
+                            <input type="text" id="company" name="company" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors">
+                            <div class="error-message hidden mt-1 text-sm text-red-500 transition-all duration-200 opacity-0 transform"></div>
+                        </div>
+                        <div class="relative">
+                            <label for="message" class="block text-sm font-medium text-gray-200 mb-1">Message <span class="text-red-500">*</span></label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors" required></textarea>
+                            <div class="error-message hidden mt-1 text-sm text-red-500 transition-all duration-200 opacity-0 transform"></div>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-gradient-primary text-white font-medium rounded-lg hover:opacity-90 transition-all duration-200">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="space-y-12">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-6">Other Ways to Connect</h2>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-2">Sales Inquiries</h3>
+                                <p class="text-gray-300">Email: sales@mohitai.com</p>
+                                <p class="text-gray-300">Phone: +1 (555) 123-4567</p>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-2">Support</h3>
+                                <p class="text-gray-300">Email: support@mohitai.com</p>
+                                <p class="text-gray-300">Phone: +1 (555) 987-6543</p>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-2">Office Location</h3>
+                                <p class="text-gray-300">123 AI Boulevard</p>
+                                <p class="text-gray-300">San Francisco, CA 94105</p>
+                                <p class="text-gray-300">United States</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-6">FAQ</h2>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-2">What are your support hours?</h3>
+                                <p class="text-gray-300">Our support team is available 24/7 to assist you with any questions or concerns.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-2">How quickly do you respond?</h3>
+                                <p class="text-gray-300">We typically respond to all inquiries within 1 business day.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-700 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-3">
+                        <li><a href="features.html" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Integrations</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Solutions</h4>
+                    <ul class="space-y-3">
+                        <li><a href="for-sdrs.html" class="text-gray-300 hover:text-white transition-colors">For SDRs</a></li>
+                        <li><a href="for-managers.html" class="text-gray-300 hover:text-white transition-colors">For Managers</a></li>
+                        <li><a href="enterprise.html" class="text-gray-300 hover:text-white transition-colors">Enterprise</a></li>
+                        <li><a href="small-business.html" class="text-gray-300 hover:text-white transition-colors">Small Business</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="text-gray-300 hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Support</a></li>
+                        <li><a href="security.html" class="text-gray-300 hover:text-white transition-colors">Security</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-gray-800">
+                <p class="text-gray-300 text-center">&copy; 2024 Mohit AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showError(input, message) {
+            const errorDiv = input.parentElement.querySelector('.error-message');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            input.classList.add('border-red-500');
+            input.classList.remove('border-gray-300');
+            // Animate in
+            setTimeout(() => {
+                errorDiv.classList.remove('opacity-0');
+                errorDiv.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        function clearError(input) {
+            const errorDiv = input.parentElement.querySelector('.error-message');
+            errorDiv.classList.add('opacity-0');
+            errorDiv.style.transform = 'translateY(-5px)';
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+                errorDiv.textContent = '';
+            }, 200);
+            input.classList.remove('border-red-500');
+            input.classList.add('border-gray-300');
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showSuccessMessage() {
+            const successMessage = document.createElement('div');
+            successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-primary/20 transform transition-all duration-300 ease-in-out';
+            successMessage.textContent = 'Thank you for your message. We will get back to you soon!';
+            document.body.appendChild(successMessage);
+            
+            // Animate in
+            setTimeout(() => {
+                successMessage.style.transform = 'translateY(10px)';
+            }, 100);
+            
+            // Remove after delay
+            setTimeout(() => {
+                successMessage.style.transform = 'translateY(-10px)';
+                successMessage.style.opacity = '0';
+                setTimeout(() => successMessage.remove(), 300);
+            }, 3000);
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Get all form inputs
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const company = document.getElementById('company');
+            const message = document.getElementById('message');
+            
+            // Clear previous errors
+            [name, email, company, message].forEach(input => clearError(input));
+            
+            // Validate required fields
+            if (!name.value.trim()) {
+                showError(name, 'Name is required');
+                isValid = false;
+            }
+            
+            if (!email.value.trim()) {
+                showError(email, 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(email.value)) {
+                showError(email, 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            if (!message.value.trim()) {
+                showError(message, 'Message is required');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                showSuccessMessage();
+                this.reset();
+                // Here you would typically send the form data to your backend
+            }
+        });
+
+        // Clear errors when user starts typing
+        ['name', 'email', 'company', 'message'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function() {
+                clearError(this);
+            });
+        });
+    </script>
+</body>
+</html>

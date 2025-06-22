@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,27 +19,64 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  Brain, Sparkles, TrendingUp, AlertTriangle, CheckCircle,
-  MessageSquare, Target, Zap, Bot, Hash, Search, Filter,
-  Eye, Activity, BarChart3, Lightbulb, Flag, Heart,
-  ThumbsUp, ThumbsDown, AlertCircle, Info, ChevronRight,
-  Copy, RefreshCw, Settings, Mic, Send, Clock, User
+import {
+  Brain,
+  Sparkles,
+  TrendingUp,
+  AlertTriangle,
+  CheckCircle,
+  MessageSquare,
+  Target,
+  Zap,
+  Bot,
+  Hash,
+  Search,
+  Filter,
+  Eye,
+  Activity,
+  BarChart3,
+  Lightbulb,
+  Flag,
+  Heart,
+  ThumbsUp,
+  ThumbsDown,
+  AlertCircle,
+  Info,
+  ChevronRight,
+  Copy,
+  RefreshCw,
+  Settings,
+  Mic,
+  Send,
+  Clock,
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import {
-  LineChart, Line, AreaChart, Area, BarChart, Bar,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ResponsiveContainer, PieChart, Pie, Cell
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
 
 interface Message {
   id: string;
   content: string;
-  sender: 'lead' | 'agent';
+  sender: "lead" | "agent";
   timestamp: string;
-  sentiment?: 'positive' | 'neutral' | 'negative';
+  sentiment?: "positive" | "neutral" | "negative";
   intent?: string;
   keywords?: string[];
   suggestions?: string[];
@@ -42,14 +85,14 @@ interface Message {
 interface Keyword {
   word: string;
   count: number;
-  sentiment: 'positive' | 'neutral' | 'negative';
+  sentiment: "positive" | "neutral" | "negative";
   category: string;
 }
 
 interface SmartSuggestion {
   id: string;
   text: string;
-  type: 'response' | 'question' | 'objection_handler' | 'closing';
+  type: "response" | "question" | "objection_handler" | "closing";
   confidence: number;
   context: string;
 }
@@ -59,7 +102,7 @@ interface ConversationMetrics {
     positive: number;
     neutral: number;
     negative: number;
-    trend: 'improving' | 'stable' | 'declining';
+    trend: "improving" | "stable" | "declining";
   };
   engagement: {
     responseTime: number;
@@ -86,21 +129,26 @@ interface AIConversationAssistantProps {
   className?: string;
 }
 
-export function AIConversationAssistant({ 
+export function AIConversationAssistant({
   conversationId,
   messages = [],
   onSendMessage,
   onSuggestionSelect,
-  className 
+  className,
 }: AIConversationAssistantProps) {
-  const [activeTab, setActiveTab] = useState('suggestions');
+  const [activeTab, setActiveTab] = useState("suggestions");
   const [keywords, setKeywords] = useState<Keyword[]>([]);
   const [suggestions, setSuggestions] = useState<SmartSuggestion[]>([]);
   const [metrics, setMetrics] = useState<ConversationMetrics>({
-    sentiment: { positive: 0, neutral: 0, negative: 0, trend: 'stable' },
-    engagement: { responseTime: 0, messageLength: 0, questionCount: 0, interactionScore: 0 },
-    intent: { primary: 'unknown', confidence: 0, alternatives: [] },
-    buyingSignals: { score: 0, signals: [] }
+    sentiment: { positive: 0, neutral: 0, negative: 0, trend: "stable" },
+    engagement: {
+      responseTime: 0,
+      messageLength: 0,
+      questionCount: 0,
+      interactionScore: 0,
+    },
+    intent: { primary: "unknown", confidence: 0, alternatives: [] },
+    buyingSignals: { score: 0, signals: [] },
   });
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [autoSuggest, setAutoSuggest] = useState(true);
@@ -116,21 +164,21 @@ export function AIConversationAssistant({
 
   const analyzeConversation = async () => {
     setIsAnalyzing(true);
-    
+
     // Simulate AI analysis
     setTimeout(() => {
       // Extract keywords
       const extractedKeywords = extractKeywords(messages);
       setKeywords(extractedKeywords);
-      
+
       // Generate smart suggestions
       const generatedSuggestions = generateSuggestions(messages);
       setSuggestions(generatedSuggestions);
-      
+
       // Calculate metrics
       const calculatedMetrics = calculateMetrics(messages);
       setMetrics(calculatedMetrics);
-      
+
       setIsAnalyzing(false);
     }, 1000);
   };
@@ -139,14 +187,29 @@ export function AIConversationAssistant({
     // Simulate keyword extraction
     const keywordMap: Record<string, Keyword> = {};
     const importantWords = [
-      'pricing', 'demo', 'features', 'integration', 'security', 'compliance',
-      'budget', 'timeline', 'decision', 'compare', 'competitor', 'implementation',
-      'support', 'training', 'contract', 'discount', 'trial', 'pilot'
+      "pricing",
+      "demo",
+      "features",
+      "integration",
+      "security",
+      "compliance",
+      "budget",
+      "timeline",
+      "decision",
+      "compare",
+      "competitor",
+      "implementation",
+      "support",
+      "training",
+      "contract",
+      "discount",
+      "trial",
+      "pilot",
     ];
-    
-    msgs.forEach(msg => {
+
+    msgs.forEach((msg) => {
       const words = msg.content.toLowerCase().split(/\s+/);
-      words.forEach(word => {
+      words.forEach((word) => {
         if (importantWords.includes(word)) {
           if (keywordMap[word]) {
             keywordMap[word].count++;
@@ -154,255 +217,319 @@ export function AIConversationAssistant({
             keywordMap[word] = {
               word,
               count: 1,
-              sentiment: msg.sentiment || 'neutral',
-              category: categorizeKeyword(word)
+              sentiment: msg.sentiment || "neutral",
+              category: categorizeKeyword(word),
             };
           }
         }
       });
     });
-    
+
     return Object.values(keywordMap).sort((a, b) => b.count - a.count);
   };
 
   const categorizeKeyword = (word: string): string => {
     const categories: Record<string, string[]> = {
-      'Commercial': ['pricing', 'budget', 'discount', 'contract', 'cost'],
-      'Product': ['features', 'integration', 'security', 'compliance', 'demo'],
-      'Decision': ['decision', 'compare', 'competitor', 'timeline', 'pilot'],
-      'Support': ['support', 'training', 'implementation', 'documentation']
+      Commercial: ["pricing", "budget", "discount", "contract", "cost"],
+      Product: ["features", "integration", "security", "compliance", "demo"],
+      Decision: ["decision", "compare", "competitor", "timeline", "pilot"],
+      Support: ["support", "training", "implementation", "documentation"],
     };
-    
+
     for (const [category, words] of Object.entries(categories)) {
       if (words.includes(word)) return category;
     }
-    return 'General';
+    return "General";
   };
 
   const generateSuggestions = (msgs: Message[]): SmartSuggestion[] => {
     const lastMessage = msgs[msgs.length - 1];
-    if (!lastMessage || lastMessage.sender !== 'lead') return [];
-    
+    if (!lastMessage || lastMessage.sender !== "lead") return [];
+
     const suggestions: SmartSuggestion[] = [];
-    
+
     // Pricing inquiry response
-    if (lastMessage.content.toLowerCase().includes('pricing') || 
-        lastMessage.content.toLowerCase().includes('cost')) {
+    if (
+      lastMessage.content.toLowerCase().includes("pricing") ||
+      lastMessage.content.toLowerCase().includes("cost")
+    ) {
       suggestions.push({
-        id: '1',
+        id: "1",
         text: "I'd be happy to discuss our pricing options. We offer flexible plans starting at $X/month for small teams, with enterprise pricing available for larger organizations. Would you like me to prepare a custom quote based on your specific needs?",
-        type: 'response',
+        type: "response",
         confidence: 0.95,
-        context: 'Pricing inquiry'
+        context: "Pricing inquiry",
       });
     }
-    
+
     // Feature question
-    if (lastMessage.content.toLowerCase().includes('feature') || 
-        lastMessage.content.toLowerCase().includes('can it')) {
+    if (
+      lastMessage.content.toLowerCase().includes("feature") ||
+      lastMessage.content.toLowerCase().includes("can it")
+    ) {
       suggestions.push({
-        id: '2',
+        id: "2",
         text: "Yes, our platform includes [specific feature]. I can show you exactly how it works in a quick 15-minute demo. Would tomorrow at 2 PM or 4 PM work better for you?",
-        type: 'response',
-        confidence: 0.90,
-        context: 'Feature inquiry'
+        type: "response",
+        confidence: 0.9,
+        context: "Feature inquiry",
       });
     }
-    
+
     // Objection about competitors
-    if (lastMessage.content.toLowerCase().includes('competitor') || 
-        lastMessage.content.toLowerCase().includes('compare')) {
+    if (
+      lastMessage.content.toLowerCase().includes("competitor") ||
+      lastMessage.content.toLowerCase().includes("compare")
+    ) {
       suggestions.push({
-        id: '3',
+        id: "3",
         text: "Great question! While [competitor] is a solid choice, our clients typically choose us because of [unique value prop]. We also offer [specific advantage]. Would you like to see a side-by-side comparison?",
-        type: 'objection_handler',
+        type: "objection_handler",
         confidence: 0.88,
-        context: 'Competitive comparison'
+        context: "Competitive comparison",
       });
     }
-    
+
     // Timeline urgency
-    if (lastMessage.content.toLowerCase().includes('when') || 
-        lastMessage.content.toLowerCase().includes('timeline')) {
+    if (
+      lastMessage.content.toLowerCase().includes("when") ||
+      lastMessage.content.toLowerCase().includes("timeline")
+    ) {
       suggestions.push({
-        id: '4',
+        id: "4",
         text: "We can have you up and running within 24-48 hours. Our onboarding team will provide white-glove support throughout the process. What's your ideal go-live date?",
-        type: 'response',
+        type: "response",
         confidence: 0.92,
-        context: 'Timeline inquiry'
+        context: "Timeline inquiry",
       });
     }
-    
+
     // Closing suggestion
     if (msgs.length > 5) {
       suggestions.push({
-        id: '5',
+        id: "5",
         text: "Based on our conversation, it seems like [our solution] could really help with [their pain point]. What would need to happen on your end to move forward with a pilot?",
-        type: 'closing',
+        type: "closing",
         confidence: 0.85,
-        context: 'Closing question'
+        context: "Closing question",
       });
     }
-    
+
     return suggestions;
   };
 
   const calculateMetrics = (msgs: Message[]): ConversationMetrics => {
     // Sentiment analysis
-    const sentiments = msgs.map(m => m.sentiment || 'neutral');
+    const sentiments = msgs.map((m) => m.sentiment || "neutral");
     const sentimentCounts = {
-      positive: sentiments.filter(s => s === 'positive').length,
-      neutral: sentiments.filter(s => s === 'neutral').length,
-      negative: sentiments.filter(s => s === 'negative').length
+      positive: sentiments.filter((s) => s === "positive").length,
+      neutral: sentiments.filter((s) => s === "neutral").length,
+      negative: sentiments.filter((s) => s === "negative").length,
     };
-    
+
     // Determine trend
     const recentSentiments = sentiments.slice(-5);
-    const recentPositive = recentSentiments.filter(s => s === 'positive').length;
-    const recentNegative = recentSentiments.filter(s => s === 'negative').length;
-    const trend = recentPositive > recentNegative ? 'improving' : 
-                  recentNegative > recentPositive ? 'declining' : 'stable';
-    
+    const recentPositive = recentSentiments.filter(
+      (s) => s === "positive",
+    ).length;
+    const recentNegative = recentSentiments.filter(
+      (s) => s === "negative",
+    ).length;
+    const trend =
+      recentPositive > recentNegative
+        ? "improving"
+        : recentNegative > recentPositive
+          ? "declining"
+          : "stable";
+
     // Engagement metrics
-    const leadMessages = msgs.filter(m => m.sender === 'lead');
-    const avgMessageLength = leadMessages.reduce((sum, m) => sum + m.content.length, 0) / leadMessages.length;
-    const questionCount = leadMessages.filter(m => m.content.includes('?')).length;
-    
+    const leadMessages = msgs.filter((m) => m.sender === "lead");
+    const avgMessageLength =
+      leadMessages.reduce((sum, m) => sum + m.content.length, 0) /
+      leadMessages.length;
+    const questionCount = leadMessages.filter((m) =>
+      m.content.includes("?"),
+    ).length;
+
     // Intent detection
     const intents = detectIntent(msgs);
-    
+
     // Buying signals
     const buyingSignals = detectBuyingSignals(msgs);
-    
+
     return {
       sentiment: {
         ...sentimentCounts,
-        trend
+        trend,
       },
       engagement: {
         responseTime: 2.5, // minutes
         messageLength: avgMessageLength,
         questionCount,
-        interactionScore: 85
+        interactionScore: 85,
       },
       intent: intents,
-      buyingSignals
+      buyingSignals,
     };
   };
 
   const detectIntent = (msgs: Message[]) => {
-    const content = msgs.map(m => m.content).join(' ').toLowerCase();
-    
+    const content = msgs
+      .map((m) => m.content)
+      .join(" ")
+      .toLowerCase();
+
     const intents = [
-      { intent: 'Purchase Evaluation', keywords: ['pricing', 'cost', 'budget', 'buy', 'purchase'], confidence: 0 },
-      { intent: 'Feature Inquiry', keywords: ['feature', 'can it', 'does it', 'capability'], confidence: 0 },
-      { intent: 'Technical Assessment', keywords: ['integration', 'api', 'security', 'technical'], confidence: 0 },
-      { intent: 'Comparison Shopping', keywords: ['compare', 'competitor', 'alternative', 'vs'], confidence: 0 },
-      { intent: 'Implementation Planning', keywords: ['timeline', 'implement', 'deploy', 'setup'], confidence: 0 }
+      {
+        intent: "Purchase Evaluation",
+        keywords: ["pricing", "cost", "budget", "buy", "purchase"],
+        confidence: 0,
+      },
+      {
+        intent: "Feature Inquiry",
+        keywords: ["feature", "can it", "does it", "capability"],
+        confidence: 0,
+      },
+      {
+        intent: "Technical Assessment",
+        keywords: ["integration", "api", "security", "technical"],
+        confidence: 0,
+      },
+      {
+        intent: "Comparison Shopping",
+        keywords: ["compare", "competitor", "alternative", "vs"],
+        confidence: 0,
+      },
+      {
+        intent: "Implementation Planning",
+        keywords: ["timeline", "implement", "deploy", "setup"],
+        confidence: 0,
+      },
     ];
-    
-    intents.forEach(intent => {
-      intent.confidence = intent.keywords.filter(kw => content.includes(kw)).length / intent.keywords.length;
+
+    intents.forEach((intent) => {
+      intent.confidence =
+        intent.keywords.filter((kw) => content.includes(kw)).length /
+        intent.keywords.length;
     });
-    
+
     intents.sort((a, b) => b.confidence - a.confidence);
-    
+
     return {
-      primary: intents[0]?.intent || 'Unknown',
+      primary: intents[0]?.intent || "Unknown",
       confidence: intents[0]?.confidence || 0,
-      alternatives: intents.slice(1, 3).map(i => ({ intent: i.intent, confidence: i.confidence }))
+      alternatives: intents
+        .slice(1, 3)
+        .map((i) => ({ intent: i.intent, confidence: i.confidence })),
     };
   };
 
   const detectBuyingSignals = (msgs: Message[]) => {
     const signals: string[] = [];
     let score = 0;
-    
-    const content = msgs.map(m => m.content).join(' ').toLowerCase();
-    
-    if (content.includes('budget') || content.includes('pricing')) {
-      signals.push('Budget discussion');
+
+    const content = msgs
+      .map((m) => m.content)
+      .join(" ")
+      .toLowerCase();
+
+    if (content.includes("budget") || content.includes("pricing")) {
+      signals.push("Budget discussion");
       score += 20;
     }
-    
-    if (content.includes('timeline') || content.includes('when')) {
-      signals.push('Timeline urgency');
+
+    if (content.includes("timeline") || content.includes("when")) {
+      signals.push("Timeline urgency");
       score += 15;
     }
-    
-    if (content.includes('decision') || content.includes('decide')) {
-      signals.push('Decision process inquiry');
+
+    if (content.includes("decision") || content.includes("decide")) {
+      signals.push("Decision process inquiry");
       score += 25;
     }
-    
-    if (content.includes('demo') || content.includes('trial')) {
-      signals.push('Demo/trial interest');
+
+    if (content.includes("demo") || content.includes("trial")) {
+      signals.push("Demo/trial interest");
       score += 20;
     }
-    
-    if (content.includes('team') || content.includes('stakeholder')) {
-      signals.push('Multiple stakeholders involved');
+
+    if (content.includes("team") || content.includes("stakeholder")) {
+      signals.push("Multiple stakeholders involved");
       score += 10;
     }
-    
+
     return { score: Math.min(score, 100), signals };
   };
 
   const getSentimentIcon = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive': return <Heart className="h-4 w-4 text-green-500" />;
-      case 'negative': return <AlertCircle className="h-4 w-4 text-red-500" />;
-      default: return <Info className="h-4 w-4 text-gray-500" />;
+      case "positive":
+        return <Heart className="h-4 w-4 text-green-500" />;
+      case "negative":
+        return <AlertCircle className="h-4 w-4 text-red-500" />;
+      default:
+        return <Info className="h-4 w-4 text-gray-500" />;
     }
   };
 
   const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
-      case 'positive': return 'text-green-600 bg-green-50';
-      case 'negative': return 'text-red-600 bg-red-50';
-      default: return 'text-gray-600 bg-gray-50';
+      case "positive":
+        return "text-green-600 bg-green-50";
+      case "negative":
+        return "text-red-600 bg-red-50";
+      default:
+        return "text-gray-600 bg-gray-50";
     }
   };
 
   // Mock conversation data
-  const mockMessages: Message[] = messages.length > 0 ? messages : [
-    {
-      id: '1',
-      content: "Hi, I'm interested in learning more about your platform. We're currently evaluating solutions for our sales team.",
-      sender: 'lead',
-      timestamp: new Date(Date.now() - 600000).toISOString(),
-      sentiment: 'positive',
-      keywords: ['interested', 'platform', 'evaluating', 'solutions']
-    },
-    {
-      id: '2',
-      content: "Great to hear from you! I'd be happy to help. Could you tell me a bit about your team size and current sales process?",
-      sender: 'agent',
-      timestamp: new Date(Date.now() - 540000).toISOString()
-    },
-    {
-      id: '3',
-      content: "We have about 50 sales reps across 3 offices. Our main challenge is lead response time and tracking conversations across multiple channels. What's your pricing like for a team our size?",
-      sender: 'lead',
-      timestamp: new Date(Date.now() - 480000).toISOString(),
-      sentiment: 'neutral',
-      keywords: ['sales reps', 'challenge', 'response time', 'pricing']
-    },
-    {
-      id: '4',
-      content: "For a team of 50, we'd recommend our Business plan. It includes multi-channel tracking, automated lead routing, and response time analytics. Pricing starts at $79/user/month with volume discounts available.",
-      sender: 'agent',
-      timestamp: new Date(Date.now() - 420000).toISOString()
-    },
-    {
-      id: '5',
-      content: "That's within our budget. How does your solution compare to Outreach or Salesloft? We're also looking at those options.",
-      sender: 'lead',
-      timestamp: new Date(Date.now() - 360000).toISOString(),
-      sentiment: 'positive',
-      keywords: ['budget', 'compare', 'Outreach', 'Salesloft']
-    }
-  ];
+  const mockMessages: Message[] =
+    messages.length > 0
+      ? messages
+      : [
+          {
+            id: "1",
+            content:
+              "Hi, I'm interested in learning more about your platform. We're currently evaluating solutions for our sales team.",
+            sender: "lead",
+            timestamp: new Date(Date.now() - 600000).toISOString(),
+            sentiment: "positive",
+            keywords: ["interested", "platform", "evaluating", "solutions"],
+          },
+          {
+            id: "2",
+            content:
+              "Great to hear from you! I'd be happy to help. Could you tell me a bit about your team size and current sales process?",
+            sender: "agent",
+            timestamp: new Date(Date.now() - 540000).toISOString(),
+          },
+          {
+            id: "3",
+            content:
+              "We have about 50 sales reps across 3 offices. Our main challenge is lead response time and tracking conversations across multiple channels. What's your pricing like for a team our size?",
+            sender: "lead",
+            timestamp: new Date(Date.now() - 480000).toISOString(),
+            sentiment: "neutral",
+            keywords: ["sales reps", "challenge", "response time", "pricing"],
+          },
+          {
+            id: "4",
+            content:
+              "For a team of 50, we'd recommend our Business plan. It includes multi-channel tracking, automated lead routing, and response time analytics. Pricing starts at $79/user/month with volume discounts available.",
+            sender: "agent",
+            timestamp: new Date(Date.now() - 420000).toISOString(),
+          },
+          {
+            id: "5",
+            content:
+              "That's within our budget. How does your solution compare to Outreach or Salesloft? We're also looking at those options.",
+            sender: "lead",
+            timestamp: new Date(Date.now() - 360000).toISOString(),
+            sentiment: "positive",
+            keywords: ["budget", "compare", "Outreach", "Salesloft"],
+          },
+        ];
 
   return (
     <div className={cn("space-y-4", className)}>
@@ -426,7 +553,9 @@ export function AIConversationAssistant({
                 onClick={analyzeConversation}
                 disabled={isAnalyzing}
               >
-                <RefreshCw className={cn("h-4 w-4 mr-2", isAnalyzing && "animate-spin")} />
+                <RefreshCw
+                  className={cn("h-4 w-4 mr-2", isAnalyzing && "animate-spin")}
+                />
                 Refresh Analysis
               </Button>
             </div>
@@ -446,7 +575,9 @@ export function AIConversationAssistant({
 
             <TabsContent value="suggestions" className="space-y-4">
               <div className="flex items-center justify-between mb-2">
-                <Label className="text-sm font-medium">Auto-suggest responses</Label>
+                <Label className="text-sm font-medium">
+                  Auto-suggest responses
+                </Label>
                 <Switch
                   checked={autoSuggest}
                   onCheckedChange={setAutoSuggest}
@@ -456,13 +587,16 @@ export function AIConversationAssistant({
               {suggestions.length > 0 ? (
                 <div className="space-y-3">
                   {suggestions.map((suggestion) => (
-                    <Card key={suggestion.id} className="cursor-pointer hover:bg-accent/50 transition-colors">
+                    <Card
+                      key={suggestion.id}
+                      className="cursor-pointer hover:bg-accent/50 transition-colors"
+                    >
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
                               <Badge variant="outline" className="text-xs">
-                                {suggestion.type.replace('_', ' ')}
+                                {suggestion.type.replace("_", " ")}
                               </Badge>
                               <span className="text-xs text-muted-foreground">
                                 {suggestion.context}
@@ -486,7 +620,9 @@ export function AIConversationAssistant({
                             <Button
                               size="icon"
                               variant="ghost"
-                              onClick={() => onSuggestionSelect?.(suggestion.text)}
+                              onClick={() =>
+                                onSuggestionSelect?.(suggestion.text)
+                              }
                             >
                               <Send className="h-4 w-4" />
                             </Button>
@@ -522,37 +658,49 @@ export function AIConversationAssistant({
                       <Badge
                         key={keyword.word}
                         variant="secondary"
-                        className={cn("gap-1", getSentimentColor(keyword.sentiment))}
+                        className={cn(
+                          "gap-1",
+                          getSentimentColor(keyword.sentiment),
+                        )}
                       >
                         <Hash className="h-3 w-3" />
                         {keyword.word}
-                        <span className="ml-1 text-xs opacity-70">×{keyword.count}</span>
+                        <span className="ml-1 text-xs opacity-70">
+                          ×{keyword.count}
+                        </span>
                       </Badge>
                     ))}
                   </div>
 
                   <Card>
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-base">Keyword Categories</CardTitle>
+                      <CardTitle className="text-base">
+                        Keyword Categories
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2">
-                        {['Commercial', 'Product', 'Decision', 'Support'].map(category => {
-                          const categoryKeywords = keywords.filter(k => k.category === category);
-                          const percentage = (categoryKeywords.length / keywords.length) * 100;
-                          
-                          return (
-                            <div key={category} className="space-y-1">
-                              <div className="flex items-center justify-between text-sm">
-                                <span>{category}</span>
-                                <span className="text-muted-foreground">
-                                  {categoryKeywords.length} keywords
-                                </span>
+                        {["Commercial", "Product", "Decision", "Support"].map(
+                          (category) => {
+                            const categoryKeywords = keywords.filter(
+                              (k) => k.category === category,
+                            );
+                            const percentage =
+                              (categoryKeywords.length / keywords.length) * 100;
+
+                            return (
+                              <div key={category} className="space-y-1">
+                                <div className="flex items-center justify-between text-sm">
+                                  <span>{category}</span>
+                                  <span className="text-muted-foreground">
+                                    {categoryKeywords.length} keywords
+                                  </span>
+                                </div>
+                                <Progress value={percentage} className="h-2" />
                               </div>
-                              <Progress value={percentage} className="h-2" />
-                            </div>
-                          );
-                        })}
+                            );
+                          },
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -561,7 +709,8 @@ export function AIConversationAssistant({
                 <Alert>
                   <Search className="h-4 w-4" />
                   <AlertDescription>
-                    Keywords will be extracted from the conversation in real-time
+                    Keywords will be extracted from the conversation in
+                    real-time
                   </AlertDescription>
                 </Alert>
               )}
@@ -581,7 +730,9 @@ export function AIConversationAssistant({
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground">Positive</p>
+                        <p className="text-sm text-muted-foreground">
+                          Positive
+                        </p>
                         <p className="text-2xl font-bold text-green-600">
                           {metrics.sentiment.positive}
                         </p>
@@ -607,7 +758,9 @@ export function AIConversationAssistant({
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground">Negative</p>
+                        <p className="text-sm text-muted-foreground">
+                          Negative
+                        </p>
                         <p className="text-2xl font-bold text-red-600">
                           {metrics.sentiment.negative}
                         </p>
@@ -623,26 +776,78 @@ export function AIConversationAssistant({
                   <CardTitle className="text-base">Sentiment Trend</CardTitle>
                   <CardDescription>
                     Currently {metrics.sentiment.trend}
-                    {metrics.sentiment.trend === 'improving' && <TrendingUp className="h-4 w-4 inline ml-1 text-green-500" />}
-                    {metrics.sentiment.trend === 'declining' && <TrendingUp className="h-4 w-4 inline ml-1 text-red-500 rotate-180" />}
+                    {metrics.sentiment.trend === "improving" && (
+                      <TrendingUp className="h-4 w-4 inline ml-1 text-green-500" />
+                    )}
+                    {metrics.sentiment.trend === "declining" && (
+                      <TrendingUp className="h-4 w-4 inline ml-1 text-red-500 rotate-180" />
+                    )}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={200}>
-                    <AreaChart data={[
-                      { time: '5m ago', positive: 1, neutral: 0, negative: 0 },
-                      { time: '4m ago', positive: 1, neutral: 1, negative: 0 },
-                      { time: '3m ago', positive: 1, neutral: 2, negative: 0 },
-                      { time: '2m ago', positive: 2, neutral: 2, negative: 0 },
-                      { time: '1m ago', positive: 3, neutral: 2, negative: 0 },
-                    ]}>
+                    <AreaChart
+                      data={[
+                        {
+                          time: "5m ago",
+                          positive: 1,
+                          neutral: 0,
+                          negative: 0,
+                        },
+                        {
+                          time: "4m ago",
+                          positive: 1,
+                          neutral: 1,
+                          negative: 0,
+                        },
+                        {
+                          time: "3m ago",
+                          positive: 1,
+                          neutral: 2,
+                          negative: 0,
+                        },
+                        {
+                          time: "2m ago",
+                          positive: 2,
+                          neutral: 2,
+                          negative: 0,
+                        },
+                        {
+                          time: "1m ago",
+                          positive: 3,
+                          neutral: 2,
+                          negative: 0,
+                        },
+                      ]}
+                    >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="time" />
                       <YAxis />
                       <Tooltip />
-                      <Area type="monotone" dataKey="positive" stackId="1" stroke="#22c55e" fill="#22c55e" fillOpacity={0.6} />
-                      <Area type="monotone" dataKey="neutral" stackId="1" stroke="#6b7280" fill="#6b7280" fillOpacity={0.6} />
-                      <Area type="monotone" dataKey="negative" stackId="1" stroke="#ef4444" fill="#ef4444" fillOpacity={0.6} />
+                      <Area
+                        type="monotone"
+                        dataKey="positive"
+                        stackId="1"
+                        stroke="#22c55e"
+                        fill="#22c55e"
+                        fillOpacity={0.6}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="neutral"
+                        stackId="1"
+                        stroke="#6b7280"
+                        fill="#6b7280"
+                        fillOpacity={0.6}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="negative"
+                        stackId="1"
+                        stroke="#ef4444"
+                        fill="#ef4444"
+                        fillOpacity={0.6}
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -662,15 +867,24 @@ export function AIConversationAssistant({
                     <div className="space-y-3">
                       <div>
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm font-medium">{metrics.intent.primary}</span>
+                          <span className="text-sm font-medium">
+                            {metrics.intent.primary}
+                          </span>
                           <span className="text-sm text-muted-foreground">
-                            {Math.round(metrics.intent.confidence * 100)}% confidence
+                            {Math.round(metrics.intent.confidence * 100)}%
+                            confidence
                           </span>
                         </div>
-                        <Progress value={metrics.intent.confidence * 100} className="h-2" />
+                        <Progress
+                          value={metrics.intent.confidence * 100}
+                          className="h-2"
+                        />
                       </div>
                       {metrics.intent.alternatives.map((alt, idx) => (
-                        <div key={idx} className="text-sm text-muted-foreground">
+                        <div
+                          key={idx}
+                          className="text-sm text-muted-foreground"
+                        >
                           • {alt.intent} ({Math.round(alt.confidence * 100)}%)
                         </div>
                       ))}
@@ -689,14 +903,24 @@ export function AIConversationAssistant({
                     <div className="space-y-3">
                       <div>
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm font-medium">Signal Strength</span>
-                          <span className="text-sm font-bold">{metrics.buyingSignals.score}%</span>
+                          <span className="text-sm font-medium">
+                            Signal Strength
+                          </span>
+                          <span className="text-sm font-bold">
+                            {metrics.buyingSignals.score}%
+                          </span>
                         </div>
-                        <Progress value={metrics.buyingSignals.score} className="h-2" />
+                        <Progress
+                          value={metrics.buyingSignals.score}
+                          className="h-2"
+                        />
                       </div>
                       <div className="space-y-1">
                         {metrics.buyingSignals.signals.map((signal, idx) => (
-                          <div key={idx} className="flex items-center gap-2 text-sm">
+                          <div
+                            key={idx}
+                            className="flex items-center gap-2 text-sm"
+                          >
                             <CheckCircle className="h-3 w-3 text-green-500" />
                             <span>{signal}</span>
                           </div>
@@ -716,20 +940,36 @@ export function AIConversationAssistant({
                   <CardContent>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm text-muted-foreground">Response Time</p>
-                        <p className="text-lg font-semibold">{metrics.engagement.responseTime}m</p>
+                        <p className="text-sm text-muted-foreground">
+                          Response Time
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {metrics.engagement.responseTime}m
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Questions Asked</p>
-                        <p className="text-lg font-semibold">{metrics.engagement.questionCount}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Questions Asked
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {metrics.engagement.questionCount}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Avg Message Length</p>
-                        <p className="text-lg font-semibold">{Math.round(metrics.engagement.messageLength)} chars</p>
+                        <p className="text-sm text-muted-foreground">
+                          Avg Message Length
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {Math.round(metrics.engagement.messageLength)} chars
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Interaction Score</p>
-                        <p className="text-lg font-semibold">{metrics.engagement.interactionScore}/100</p>
+                        <p className="text-sm text-muted-foreground">
+                          Interaction Score
+                        </p>
+                        <p className="text-lg font-semibold">
+                          {metrics.engagement.interactionScore}/100
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -738,8 +978,9 @@ export function AIConversationAssistant({
                 <Alert>
                   <Sparkles className="h-4 w-4" />
                   <AlertDescription>
-                    <strong>AI Recommendation:</strong> This lead shows strong buying signals and positive sentiment. 
-                    Consider proposing a demo or trial to move the conversation forward.
+                    <strong>AI Recommendation:</strong> This lead shows strong
+                    buying signals and positive sentiment. Consider proposing a
+                    demo or trial to move the conversation forward.
                   </AlertDescription>
                 </Alert>
               </div>

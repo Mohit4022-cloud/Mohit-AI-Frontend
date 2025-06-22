@@ -1,17 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -26,13 +46,43 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { 
-  Route, Brain, Users, Target, Zap, Settings, TrendingUp, 
-  User, Building, Globe, Clock, Calendar, DollarSign,
-  BarChart3, Shield, AlertTriangle, CheckCircle, Info,
-  RefreshCw, Save, Play, Pause, Edit, Trash2, Plus,
-  ArrowRight, GitBranch, Sparkles, Bot, Activity,
-  MapPin, Briefcase, Hash, Filter, Search, ChevronDown
+import {
+  Route,
+  Brain,
+  Users,
+  Target,
+  Zap,
+  Settings,
+  TrendingUp,
+  User,
+  Building,
+  Globe,
+  Clock,
+  Calendar,
+  DollarSign,
+  BarChart3,
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+  Info,
+  RefreshCw,
+  Save,
+  Play,
+  Pause,
+  Edit,
+  Trash2,
+  Plus,
+  ArrowRight,
+  GitBranch,
+  Sparkles,
+  Bot,
+  Activity,
+  MapPin,
+  Briefcase,
+  Hash,
+  Filter,
+  Search,
+  ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -60,7 +110,7 @@ interface RuleCondition {
 }
 
 interface RuleAction {
-  type: 'assign_to_user' | 'assign_to_team' | 'round_robin' | 'ai_match';
+  type: "assign_to_user" | "assign_to_team" | "round_robin" | "ai_match";
   target?: string;
   options?: any;
 }
@@ -71,7 +121,7 @@ interface Rep {
   email: string;
   team: string;
   role: string;
-  availability: 'available' | 'busy' | 'offline';
+  availability: "available" | "busy" | "offline";
   skills: string[];
   industries: string[];
   languages: string[];
@@ -103,7 +153,7 @@ interface AIMatchingConfig {
     dealSize: number;
     region: number;
   };
-  mode: 'balanced' | 'performance' | 'availability' | 'skills';
+  mode: "balanced" | "performance" | "availability" | "skills";
   constraints: {
     maxLeadsPerRep: number;
     respectTimezone: boolean;
@@ -118,10 +168,10 @@ interface LeadRoutingManagerProps {
   className?: string;
 }
 
-export function LeadRoutingManager({ 
-  reps, 
+export function LeadRoutingManager({
+  reps,
   onRoutingChange,
-  className 
+  className,
 }: LeadRoutingManagerProps) {
   const [rules, setRules] = useState<RoutingRule[]>([]);
   const [selectedRule, setSelectedRule] = useState<RoutingRule | null>(null);
@@ -136,15 +186,15 @@ export function LeadRoutingManager({
       performance: 10,
       workload: 5,
       dealSize: 0,
-      region: 0
+      region: 0,
     },
-    mode: 'balanced',
+    mode: "balanced",
     constraints: {
       maxLeadsPerRep: 50,
       respectTimezone: true,
       requireLanguageMatch: false,
-      preferIndustryMatch: true
-    }
+      preferIndustryMatch: true,
+    },
   });
   const [simulationResults, setSimulationResults] = useState<any>(null);
   const [isSimulating, setIsSimulating] = useState(false);
@@ -153,49 +203,47 @@ export function LeadRoutingManager({
     // Load default routing rules
     const defaultRules: RoutingRule[] = [
       {
-        id: '1',
-        name: 'Enterprise Leads',
-        description: 'Route high-value enterprise leads to senior reps',
+        id: "1",
+        name: "Enterprise Leads",
+        description: "Route high-value enterprise leads to senior reps",
         priority: 1,
         enabled: true,
         conditions: [
-          { field: 'company_size', operator: 'greater_than', value: 500 },
-          { field: 'score', operator: 'greater_than', value: 80 }
+          { field: "company_size", operator: "greater_than", value: 500 },
+          { field: "score", operator: "greater_than", value: 80 },
         ],
         action: {
-          type: 'ai_match',
-          options: { preferSenior: true, requireIndustryMatch: true }
+          type: "ai_match",
+          options: { preferSenior: true, requireIndustryMatch: true },
         },
-        stats: { matched: 145, assigned: 142, successRate: 87 }
+        stats: { matched: 145, assigned: 142, successRate: 87 },
       },
       {
-        id: '2',
-        name: 'Regional Assignment',
-        description: 'Assign leads based on geographic region',
+        id: "2",
+        name: "Regional Assignment",
+        description: "Assign leads based on geographic region",
         priority: 2,
         enabled: true,
-        conditions: [
-          { field: 'region', operator: 'exists', value: true }
-        ],
+        conditions: [{ field: "region", operator: "exists", value: true }],
         action: {
-          type: 'ai_match',
-          options: { matchRegion: true }
+          type: "ai_match",
+          options: { matchRegion: true },
         },
-        stats: { matched: 523, assigned: 520, successRate: 92 }
+        stats: { matched: 523, assigned: 520, successRate: 92 },
       },
       {
-        id: '3',
-        name: 'Round Robin Fallback',
-        description: 'Distribute remaining leads evenly',
+        id: "3",
+        name: "Round Robin Fallback",
+        description: "Distribute remaining leads evenly",
         priority: 99,
         enabled: true,
         conditions: [],
         action: {
-          type: 'round_robin',
-          options: { excludeOffline: true }
+          type: "round_robin",
+          options: { excludeOffline: true },
         },
-        stats: { matched: 89, assigned: 89, successRate: 78 }
-      }
+        stats: { matched: 89, assigned: 89, successRate: 78 },
+      },
     ];
     setRules(defaultRules);
   }, []);
@@ -203,90 +251,93 @@ export function LeadRoutingManager({
   const calculateAIMatch = (lead: any, rep: Rep): number => {
     let score = 0;
     const factors = aiConfig.factors;
-    
+
     // Skills match
     if (lead.requiredSkills) {
-      const matchedSkills = lead.requiredSkills.filter((skill: string) => 
-        rep.skills.includes(skill)
+      const matchedSkills = lead.requiredSkills.filter((skill: string) =>
+        rep.skills.includes(skill),
       ).length;
       score += (matchedSkills / lead.requiredSkills.length) * factors.skills;
     }
-    
+
     // Industry match
     if (lead.industry && rep.industries.includes(lead.industry)) {
       score += factors.industry;
     }
-    
+
     // Language match
     if (lead.language && rep.languages.includes(lead.language)) {
       score += factors.language;
     }
-    
+
     // Timezone compatibility
     const timezoneOffset = Math.abs(
-      parseInt(lead.timezone || '0') - parseInt(rep.timezone || '0')
+      parseInt(lead.timezone || "0") - parseInt(rep.timezone || "0"),
     );
     score += Math.max(0, factors.timezone - timezoneOffset * 2);
-    
+
     // Availability
-    if (rep.availability === 'available') {
+    if (rep.availability === "available") {
       score += factors.availability;
-    } else if (rep.availability === 'busy') {
+    } else if (rep.availability === "busy") {
       score += factors.availability * 0.5;
     }
-    
+
     // Performance
     score += (rep.performance.conversionRate / 100) * factors.performance;
-    
+
     // Workload balance
     const workloadRatio = rep.currentLeads / rep.maxLeads;
     score += (1 - workloadRatio) * factors.workload;
-    
+
     // Deal size preference
     if (lead.dealSize && rep.specialties.dealSize.includes(lead.dealSize)) {
       score += factors.dealSize;
     }
-    
+
     // Region match
     if (lead.region && rep.specialties.regions.includes(lead.region)) {
       score += factors.region;
     }
-    
+
     return Math.round(score);
   };
 
   const simulateRouting = async () => {
     setIsSimulating(true);
-    
+
     // Simulate routing for sample leads
     setTimeout(() => {
       const results = {
         totalLeads: 1000,
         routedSuccessfully: 956,
         avgMatchScore: 78,
-        distributionByRep: reps.map(rep => ({
+        distributionByRep: reps.map((rep) => ({
           rep: rep.name,
           assigned: Math.floor(Math.random() * 50) + 20,
-          matchScore: Math.floor(Math.random() * 30) + 70
+          matchScore: Math.floor(Math.random() * 30) + 70,
         })),
-        rulePerformance: rules.map(rule => ({
+        rulePerformance: rules.map((rule) => ({
           rule: rule.name,
           matched: Math.floor(Math.random() * 400) + 100,
-          avgTime: Math.random() * 2 + 0.5
-        }))
+          avgTime: Math.random() * 2 + 0.5,
+        })),
       };
       setSimulationResults(results);
       setIsSimulating(false);
     }, 2000);
   };
 
-  const updateAIFactor = (factor: keyof AIMatchingConfig['factors'], value: number) => {
+  const updateAIFactor = (
+    factor: keyof AIMatchingConfig["factors"],
+    value: number,
+  ) => {
     setAIConfig({
       ...aiConfig,
       factors: {
         ...aiConfig.factors,
-        [factor]: value
-      }
+        [factor]: value,
+      },
     });
   };
 
@@ -347,100 +398,114 @@ export function LeadRoutingManager({
 
             <TabsContent value="rules" className="space-y-4">
               <div className="space-y-3">
-                {rules.sort((a, b) => a.priority - b.priority).map((rule) => (
-                  <Card key={rule.id} className={cn(
-                    "border",
-                    !rule.enabled && "opacity-60"
-                  )}>
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="space-y-2 flex-1">
-                          <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="text-xs">
-                              Priority {rule.priority}
-                            </Badge>
-                            <h4 className="font-semibold">{rule.name}</h4>
-                            <Switch
-                              checked={rule.enabled}
-                              onCheckedChange={(checked) => {
-                                setRules(rules.map(r => 
-                                  r.id === rule.id ? { ...r, enabled: checked } : r
-                                ));
-                              }}
-                            />
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            {rule.description}
-                          </p>
-                          
-                          {rule.conditions.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {renderRuleConditions(rule.conditions)}
-                            </div>
-                          )}
-                          
-                          <div className="flex items-center gap-4 mt-3">
+                {rules
+                  .sort((a, b) => a.priority - b.priority)
+                  .map((rule) => (
+                    <Card
+                      key={rule.id}
+                      className={cn("border", !rule.enabled && "opacity-60")}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="space-y-2 flex-1">
                             <div className="flex items-center gap-2">
-                              <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                              <Badge>
-                                {rule.action.type === 'ai_match' ? 'AI Match' :
-                                 rule.action.type === 'round_robin' ? 'Round Robin' :
-                                 rule.action.type === 'assign_to_team' ? 'Team Assignment' :
-                                 'User Assignment'}
+                              <Badge variant="outline" className="text-xs">
+                                Priority {rule.priority}
                               </Badge>
-                              {rule.action.target && (
-                                <span className="text-sm text-muted-foreground">
-                                  → {rule.action.target}
-                                </span>
-                              )}
+                              <h4 className="font-semibold">{rule.name}</h4>
+                              <Switch
+                                checked={rule.enabled}
+                                onCheckedChange={(checked) => {
+                                  setRules(
+                                    rules.map((r) =>
+                                      r.id === rule.id
+                                        ? { ...r, enabled: checked }
+                                        : r,
+                                    ),
+                                  );
+                                }}
+                              />
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              {rule.description}
+                            </p>
+
+                            {rule.conditions.length > 0 && (
+                              <div className="flex flex-wrap gap-2 mt-2">
+                                {renderRuleConditions(rule.conditions)}
+                              </div>
+                            )}
+
+                            <div className="flex items-center gap-4 mt-3">
+                              <div className="flex items-center gap-2">
+                                <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                                <Badge>
+                                  {rule.action.type === "ai_match"
+                                    ? "AI Match"
+                                    : rule.action.type === "round_robin"
+                                      ? "Round Robin"
+                                      : rule.action.type === "assign_to_team"
+                                        ? "Team Assignment"
+                                        : "User Assignment"}
+                                </Badge>
+                                {rule.action.target && (
+                                  <span className="text-sm text-muted-foreground">
+                                    → {rule.action.target}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col items-end gap-2 ml-4">
+                            <div className="text-right">
+                              <div className="text-2xl font-bold">
+                                {rule.stats.successRate}%
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                Success Rate
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                onClick={() => {
+                                  setSelectedRule(rule);
+                                  setShowRuleDialog(true);
+                                }}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                onClick={() => {
+                                  setRules(
+                                    rules.filter((r) => r.id !== rule.id),
+                                  );
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
                             </div>
                           </div>
                         </div>
-                        
-                        <div className="flex flex-col items-end gap-2 ml-4">
-                          <div className="text-right">
-                            <div className="text-2xl font-bold">
-                              {rule.stats.successRate}%
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              Success Rate
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Button
-                              size="icon"
-                              variant="ghost"
-                              onClick={() => {
-                                setSelectedRule(rule);
-                                setShowRuleDialog(true);
-                              }}
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              size="icon"
-                              variant="ghost"
-                              onClick={() => {
-                                setRules(rules.filter(r => r.id !== rule.id));
-                              }}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </CardContent>
+                    </Card>
+                  ))}
               </div>
             </TabsContent>
 
             <TabsContent value="ai-config" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">AI Matching Configuration</CardTitle>
+                  <CardTitle className="text-lg">
+                    AI Matching Configuration
+                  </CardTitle>
                   <CardDescription>
-                    Adjust the weights of different factors in the AI matching algorithm
+                    Adjust the weights of different factors in the AI matching
+                    algorithm
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -448,7 +513,9 @@ export function LeadRoutingManager({
                     <Label>Matching Mode</Label>
                     <RadioGroup
                       value={aiConfig.mode}
-                      onValueChange={(value: any) => setAIConfig({ ...aiConfig, mode: value })}
+                      onValueChange={(value: any) =>
+                        setAIConfig({ ...aiConfig, mode: value })
+                      }
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="balanced" id="balanced" />
@@ -459,7 +526,10 @@ export function LeadRoutingManager({
                         <Label htmlFor="performance">Performance First</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="availability" id="availability" />
+                        <RadioGroupItem
+                          value="availability"
+                          id="availability"
+                        />
                         <Label htmlFor="availability">Availability First</Label>
                       </div>
                       <div className="flex items-center space-x-2">
@@ -477,13 +547,17 @@ export function LeadRoutingManager({
                       <div key={factor} className="space-y-2">
                         <div className="flex items-center justify-between">
                           <Label className="text-sm capitalize">
-                            {factor.replace(/([A-Z])/g, ' $1').trim()}
+                            {factor.replace(/([A-Z])/g, " $1").trim()}
                           </Label>
-                          <span className="text-sm text-muted-foreground">{value}%</span>
+                          <span className="text-sm text-muted-foreground">
+                            {value}%
+                          </span>
                         </div>
                         <Slider
                           value={[value]}
-                          onValueChange={([newValue]) => updateAIFactor(factor as any, newValue || 0)}
+                          onValueChange={([newValue]) =>
+                            updateAIFactor(factor as any, newValue || 0)
+                          }
                           max={100}
                           step={5}
                           className="w-full"
@@ -498,18 +572,22 @@ export function LeadRoutingManager({
                     <Label>Constraints</Label>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <Label htmlFor="max-leads" className="text-sm">Max Leads per Rep</Label>
+                        <Label htmlFor="max-leads" className="text-sm">
+                          Max Leads per Rep
+                        </Label>
                         <Input
                           id="max-leads"
                           type="number"
                           value={aiConfig.constraints.maxLeadsPerRep}
-                          onChange={(e) => setAIConfig({
-                            ...aiConfig,
-                            constraints: {
-                              ...aiConfig.constraints,
-                              maxLeadsPerRep: parseInt(e.target.value)
-                            }
-                          })}
+                          onChange={(e) =>
+                            setAIConfig({
+                              ...aiConfig,
+                              constraints: {
+                                ...aiConfig.constraints,
+                                maxLeadsPerRep: parseInt(e.target.value),
+                              },
+                            })
+                          }
                           className="w-20"
                         />
                       </div>
@@ -517,43 +595,55 @@ export function LeadRoutingManager({
                         <Switch
                           id="timezone"
                           checked={aiConfig.constraints.respectTimezone}
-                          onCheckedChange={(checked) => setAIConfig({
-                            ...aiConfig,
-                            constraints: {
-                              ...aiConfig.constraints,
-                              respectTimezone: checked
-                            }
-                          })}
+                          onCheckedChange={(checked) =>
+                            setAIConfig({
+                              ...aiConfig,
+                              constraints: {
+                                ...aiConfig.constraints,
+                                respectTimezone: checked,
+                              },
+                            })
+                          }
                         />
-                        <Label htmlFor="timezone" className="text-sm">Respect Timezone Differences</Label>
+                        <Label htmlFor="timezone" className="text-sm">
+                          Respect Timezone Differences
+                        </Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Switch
                           id="language"
                           checked={aiConfig.constraints.requireLanguageMatch}
-                          onCheckedChange={(checked) => setAIConfig({
-                            ...aiConfig,
-                            constraints: {
-                              ...aiConfig.constraints,
-                              requireLanguageMatch: checked
-                            }
-                          })}
+                          onCheckedChange={(checked) =>
+                            setAIConfig({
+                              ...aiConfig,
+                              constraints: {
+                                ...aiConfig.constraints,
+                                requireLanguageMatch: checked,
+                              },
+                            })
+                          }
                         />
-                        <Label htmlFor="language" className="text-sm">Require Language Match</Label>
+                        <Label htmlFor="language" className="text-sm">
+                          Require Language Match
+                        </Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Switch
                           id="industry"
                           checked={aiConfig.constraints.preferIndustryMatch}
-                          onCheckedChange={(checked) => setAIConfig({
-                            ...aiConfig,
-                            constraints: {
-                              ...aiConfig.constraints,
-                              preferIndustryMatch: checked
-                            }
-                          })}
+                          onCheckedChange={(checked) =>
+                            setAIConfig({
+                              ...aiConfig,
+                              constraints: {
+                                ...aiConfig.constraints,
+                                preferIndustryMatch: checked,
+                              },
+                            })
+                          }
                         />
-                        <Label htmlFor="industry" className="text-sm">Prefer Industry Match</Label>
+                        <Label htmlFor="industry" className="text-sm">
+                          Prefer Industry Match
+                        </Label>
                       </div>
                     </div>
                   </div>
@@ -568,44 +658,69 @@ export function LeadRoutingManager({
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between">
                         <div>
-                          <CardTitle className="text-base">{rep.name}</CardTitle>
-                          <CardDescription>{rep.role} • {rep.team}</CardDescription>
+                          <CardTitle className="text-base">
+                            {rep.name}
+                          </CardTitle>
+                          <CardDescription>
+                            {rep.role} • {rep.team}
+                          </CardDescription>
                         </div>
-                        <Badge variant={
-                          rep.availability === 'available' ? 'default' :
-                          rep.availability === 'busy' ? 'secondary' : 'outline'
-                        }>
+                        <Badge
+                          variant={
+                            rep.availability === "available"
+                              ? "default"
+                              : rep.availability === "busy"
+                                ? "secondary"
+                                : "outline"
+                          }
+                        >
                           {rep.availability}
                         </Badge>
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Current Load</span>
+                        <span className="text-muted-foreground">
+                          Current Load
+                        </span>
                         <div className="flex items-center gap-2">
-                          <Progress 
-                            value={(rep.currentLeads / rep.maxLeads) * 100} 
+                          <Progress
+                            value={(rep.currentLeads / rep.maxLeads) * 100}
                             className="w-20 h-2"
                           />
-                          <span>{rep.currentLeads}/{rep.maxLeads}</span>
+                          <span>
+                            {rep.currentLeads}/{rep.maxLeads}
+                          </span>
                         </div>
                       </div>
-                      
+
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         <div>
-                          <span className="text-muted-foreground">Conversion</span>
-                          <p className="font-semibold">{rep.performance.conversionRate}%</p>
+                          <span className="text-muted-foreground">
+                            Conversion
+                          </span>
+                          <p className="font-semibold">
+                            {rep.performance.conversionRate}%
+                          </p>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">Response</span>
-                          <p className="font-semibold">{rep.performance.avgResponseTime}h</p>
+                          <span className="text-muted-foreground">
+                            Response
+                          </span>
+                          <p className="font-semibold">
+                            {rep.performance.avgResponseTime}h
+                          </p>
                         </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="flex flex-wrap gap-1">
                           {rep.skills.slice(0, 3).map((skill) => (
-                            <Badge key={skill} variant="outline" className="text-xs">
+                            <Badge
+                              key={skill}
+                              variant="outline"
+                              className="text-xs"
+                            >
                               {skill}
                             </Badge>
                           ))}
@@ -646,7 +761,12 @@ export function LeadRoutingManager({
                       <CardHeader className="pb-2">
                         <CardDescription>Success Rate</CardDescription>
                         <CardTitle className="text-2xl">
-                          {((simulationResults.routedSuccessfully / simulationResults.totalLeads) * 100).toFixed(1)}%
+                          {(
+                            (simulationResults.routedSuccessfully /
+                              simulationResults.totalLeads) *
+                            100
+                          ).toFixed(1)}
+                          %
                         </CardTitle>
                       </CardHeader>
                     </Card>
@@ -662,7 +782,9 @@ export function LeadRoutingManager({
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-lg">Distribution by Rep</CardTitle>
+                      <CardTitle className="text-lg">
+                        Distribution by Rep
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <Table>
@@ -675,21 +797,29 @@ export function LeadRoutingManager({
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {simulationResults.distributionByRep.map((item: any) => (
-                            <TableRow key={item.rep}>
-                              <TableCell>{item.rep}</TableCell>
-                              <TableCell>{item.assigned}</TableCell>
-                              <TableCell>
-                                <Badge variant="outline">{item.matchScore}%</Badge>
-                              </TableCell>
-                              <TableCell>
-                                <Progress 
-                                  value={(item.assigned / simulationResults.totalLeads) * 100}
-                                  className="h-2"
-                                />
-                              </TableCell>
-                            </TableRow>
-                          ))}
+                          {simulationResults.distributionByRep.map(
+                            (item: any) => (
+                              <TableRow key={item.rep}>
+                                <TableCell>{item.rep}</TableCell>
+                                <TableCell>{item.assigned}</TableCell>
+                                <TableCell>
+                                  <Badge variant="outline">
+                                    {item.matchScore}%
+                                  </Badge>
+                                </TableCell>
+                                <TableCell>
+                                  <Progress
+                                    value={
+                                      (item.assigned /
+                                        simulationResults.totalLeads) *
+                                      100
+                                    }
+                                    className="h-2"
+                                  />
+                                </TableCell>
+                              </TableRow>
+                            ),
+                          )}
                         </TableBody>
                       </Table>
                     </CardContent>
@@ -698,7 +828,9 @@ export function LeadRoutingManager({
               ) : (
                 <div className="text-center py-12">
                   <Brain className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No Simulation Data</h3>
+                  <h3 className="text-lg font-semibold mb-2">
+                    No Simulation Data
+                  </h3>
                   <p className="text-muted-foreground mb-4">
                     Run a simulation to see how leads would be distributed
                   </p>
@@ -718,7 +850,7 @@ export function LeadRoutingManager({
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>
-              {selectedRule ? 'Edit Routing Rule' : 'Create Routing Rule'}
+              {selectedRule ? "Edit Routing Rule" : "Create Routing Rule"}
             </DialogTitle>
             <DialogDescription>
               Define conditions and actions for lead routing
@@ -764,7 +896,7 @@ export function LeadRoutingManager({
               Cancel
             </Button>
             <Button onClick={() => setShowRuleDialog(false)}>
-              {selectedRule ? 'Update' : 'Create'} Rule
+              {selectedRule ? "Update" : "Create"} Rule
             </Button>
           </DialogFooter>
         </DialogContent>

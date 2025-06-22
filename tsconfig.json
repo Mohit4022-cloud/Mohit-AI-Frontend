@@ -32,10 +32,10 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": [
     "node_modules",
-    "Harper-AI-Frontend",
-    "harper-ai-marketing-website",
-    "harper-ai-website",
-    "harper-ai-website-v3",
+    "Mohit-AI-Frontend",
+    "mohit-ai-marketing-website",
+    "mohit-ai-website",
+    "mohit-ai-website-v3",
     "Website-BlackBox-V1",
     "mohit-ai-backend-new",
     "productiv-ai-relay"

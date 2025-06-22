@@ -1,17 +1,39 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { 
-  Plus, X, Filter, Zap, Database, Code, 
-  ChevronDown, ChevronUp, Save, Trash2,
-  Brackets, Copy, RefreshCw
+import {
+  Plus,
+  X,
+  Filter,
+  Zap,
+  Database,
+  Code,
+  ChevronDown,
+  ChevronUp,
+  Save,
+  Trash2,
+  Brackets,
+  Copy,
+  RefreshCw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,12 +42,12 @@ interface FilterCondition {
   field: string;
   operator: string;
   value: any;
-  valueType: 'text' | 'number' | 'date' | 'select' | 'multiselect';
+  valueType: "text" | "number" | "date" | "select" | "multiselect";
 }
 
 interface FilterGroup {
   id: string;
-  operator: 'AND' | 'OR';
+  operator: "AND" | "OR";
   conditions: FilterCondition[];
   groups: FilterGroup[];
 }
@@ -34,7 +56,7 @@ interface AdvancedFilterBuilderProps {
   fields: {
     name: string;
     label: string;
-    type: 'text' | 'number' | 'date' | 'select' | 'multiselect';
+    type: "text" | "number" | "date" | "select" | "multiselect";
     options?: { value: string; label: string }[];
   }[];
   onApply: (filter: FilterGroup) => void;
@@ -45,44 +67,44 @@ interface AdvancedFilterBuilderProps {
 
 const OPERATORS = {
   text: [
-    { value: 'equals', label: 'Equals' },
-    { value: 'not_equals', label: 'Not Equals' },
-    { value: 'contains', label: 'Contains' },
-    { value: 'not_contains', label: 'Does Not Contain' },
-    { value: 'starts_with', label: 'Starts With' },
-    { value: 'ends_with', label: 'Ends With' },
-    { value: 'is_empty', label: 'Is Empty' },
-    { value: 'is_not_empty', label: 'Is Not Empty' }
+    { value: "equals", label: "Equals" },
+    { value: "not_equals", label: "Not Equals" },
+    { value: "contains", label: "Contains" },
+    { value: "not_contains", label: "Does Not Contain" },
+    { value: "starts_with", label: "Starts With" },
+    { value: "ends_with", label: "Ends With" },
+    { value: "is_empty", label: "Is Empty" },
+    { value: "is_not_empty", label: "Is Not Empty" },
   ],
   number: [
-    { value: 'equals', label: 'Equals' },
-    { value: 'not_equals', label: 'Not Equals' },
-    { value: 'greater_than', label: 'Greater Than' },
-    { value: 'less_than', label: 'Less Than' },
-    { value: 'greater_or_equal', label: 'Greater or Equal' },
-    { value: 'less_or_equal', label: 'Less or Equal' },
-    { value: 'between', label: 'Between' },
-    { value: 'is_empty', label: 'Is Empty' },
-    { value: 'is_not_empty', label: 'Is Not Empty' }
+    { value: "equals", label: "Equals" },
+    { value: "not_equals", label: "Not Equals" },
+    { value: "greater_than", label: "Greater Than" },
+    { value: "less_than", label: "Less Than" },
+    { value: "greater_or_equal", label: "Greater or Equal" },
+    { value: "less_or_equal", label: "Less or Equal" },
+    { value: "between", label: "Between" },
+    { value: "is_empty", label: "Is Empty" },
+    { value: "is_not_empty", label: "Is Not Empty" },
   ],
   date: [
-    { value: 'equals', label: 'On' },
-    { value: 'before', label: 'Before' },
-    { value: 'after', label: 'After' },
-    { value: 'between', label: 'Between' },
-    { value: 'in_last', label: 'In Last' },
-    { value: 'in_next', label: 'In Next' },
-    { value: 'is_empty', label: 'Is Empty' },
-    { value: 'is_not_empty', label: 'Is Not Empty' }
+    { value: "equals", label: "On" },
+    { value: "before", label: "Before" },
+    { value: "after", label: "After" },
+    { value: "between", label: "Between" },
+    { value: "in_last", label: "In Last" },
+    { value: "in_next", label: "In Next" },
+    { value: "is_empty", label: "Is Empty" },
+    { value: "is_not_empty", label: "Is Not Empty" },
   ],
   select: [
-    { value: 'equals', label: 'Is' },
-    { value: 'not_equals', label: 'Is Not' },
-    { value: 'in', label: 'Is Any Of' },
-    { value: 'not_in', label: 'Is None Of' },
-    { value: 'is_empty', label: 'Is Empty' },
-    { value: 'is_not_empty', label: 'Is Not Empty' }
-  ]
+    { value: "equals", label: "Is" },
+    { value: "not_equals", label: "Is Not" },
+    { value: "in", label: "Is Any Of" },
+    { value: "not_in", label: "Is None Of" },
+    { value: "is_empty", label: "Is Empty" },
+    { value: "is_not_empty", label: "Is Not Empty" },
+  ],
 };
 
 export function AdvancedFilterBuilder({
@@ -90,41 +112,41 @@ export function AdvancedFilterBuilder({
   onApply,
   onSave,
   savedFilters = [],
-  className
+  className,
 }: AdvancedFilterBuilderProps) {
   const [filterGroup, setFilterGroup] = useState<FilterGroup>({
     id: Date.now().toString(),
-    operator: 'AND',
+    operator: "AND",
     conditions: [],
-    groups: []
+    groups: [],
   });
   const [showSQL, setShowSQL] = useState(false);
-  const [filterName, setFilterName] = useState('');
+  const [filterName, setFilterName] = useState("");
 
   const addCondition = (groupId: string) => {
     if (fields.length === 0) return;
-    
+
     const firstField = fields[0];
     if (!firstField) return;
-    
+
     const newCondition: FilterCondition = {
       id: Date.now().toString(),
       field: firstField.name,
-      operator: 'equals',
-      value: '',
-      valueType: firstField.type
+      operator: "equals",
+      value: "",
+      valueType: firstField.type,
     };
 
     const updateGroup = (group: FilterGroup): FilterGroup => {
       if (group.id === groupId) {
         return {
           ...group,
-          conditions: [...group.conditions, newCondition]
+          conditions: [...group.conditions, newCondition],
         };
       }
       return {
         ...group,
-        groups: group.groups.map(updateGroup)
+        groups: group.groups.map(updateGroup),
       };
     };
 
@@ -134,42 +156,46 @@ export function AdvancedFilterBuilder({
   const addGroup = (parentGroupId: string) => {
     const newGroup: FilterGroup = {
       id: Date.now().toString(),
-      operator: 'AND',
+      operator: "AND",
       conditions: [],
-      groups: []
+      groups: [],
     };
 
     const updateGroup = (group: FilterGroup): FilterGroup => {
       if (group.id === parentGroupId) {
         return {
           ...group,
-          groups: [...group.groups, newGroup]
+          groups: [...group.groups, newGroup],
         };
       }
       return {
         ...group,
-        groups: group.groups.map(updateGroup)
+        groups: group.groups.map(updateGroup),
       };
     };
 
     setFilterGroup(updateGroup(filterGroup));
   };
 
-  const updateCondition = (groupId: string, conditionId: string, updates: Partial<FilterCondition>) => {
+  const updateCondition = (
+    groupId: string,
+    conditionId: string,
+    updates: Partial<FilterCondition>,
+  ) => {
     const updateGroup = (group: FilterGroup): FilterGroup => {
       if (group.id === groupId) {
         return {
           ...group,
-          conditions: group.conditions.map(condition =>
+          conditions: group.conditions.map((condition) =>
             condition.id === conditionId
               ? { ...condition, ...updates }
-              : condition
-          )
+              : condition,
+          ),
         };
       }
       return {
         ...group,
-        groups: group.groups.map(updateGroup)
+        groups: group.groups.map(updateGroup),
       };
     };
 
@@ -181,12 +207,12 @@ export function AdvancedFilterBuilder({
       if (group.id === groupId) {
         return {
           ...group,
-          conditions: group.conditions.filter(c => c.id !== conditionId)
+          conditions: group.conditions.filter((c) => c.id !== conditionId),
         };
       }
       return {
         ...group,
-        groups: group.groups.map(updateGroup)
+        groups: group.groups.map(updateGroup),
       };
     };
 
@@ -198,26 +224,26 @@ export function AdvancedFilterBuilder({
       if (group.id === parentGroupId) {
         return {
           ...group,
-          groups: group.groups.filter(g => g.id !== groupId)
+          groups: group.groups.filter((g) => g.id !== groupId),
         };
       }
       return {
         ...group,
-        groups: group.groups.map(updateGroup)
+        groups: group.groups.map(updateGroup),
       };
     };
 
     setFilterGroup(updateGroup(filterGroup));
   };
 
-  const updateGroupOperator = (groupId: string, operator: 'AND' | 'OR') => {
+  const updateGroupOperator = (groupId: string, operator: "AND" | "OR") => {
     const updateGroup = (group: FilterGroup): FilterGroup => {
       if (group.id === groupId) {
         return { ...group, operator };
       }
       return {
         ...group,
-        groups: group.groups.map(updateGroup)
+        groups: group.groups.map(updateGroup),
       };
     };
 
@@ -225,54 +251,75 @@ export function AdvancedFilterBuilder({
   };
 
   const generateSQL = (group: FilterGroup): string => {
-    const conditions = group.conditions.map(condition => {
+    const conditions = group.conditions.map((condition) => {
       const field = condition.field;
       const operator = condition.operator;
       const value = condition.value;
 
       switch (operator) {
-        case 'equals': return `${field} = '${value}'`;
-        case 'not_equals': return `${field} != '${value}'`;
-        case 'contains': return `${field} LIKE '%${value}%'`;
-        case 'not_contains': return `${field} NOT LIKE '%${value}%'`;
-        case 'starts_with': return `${field} LIKE '${value}%'`;
-        case 'ends_with': return `${field} LIKE '%${value}'`;
-        case 'greater_than': return `${field} > ${value}`;
-        case 'less_than': return `${field} < ${value}`;
-        case 'greater_or_equal': return `${field} >= ${value}`;
-        case 'less_or_equal': return `${field} <= ${value}`;
-        case 'between': return `${field} BETWEEN ${value[0]} AND ${value[1]}`;
-        case 'is_empty': return `${field} IS NULL OR ${field} = ''`;
-        case 'is_not_empty': return `${field} IS NOT NULL AND ${field} != ''`;
-        case 'in': return `${field} IN (${value.map((v: string) => `'${v}'`).join(', ')})`;
-        case 'not_in': return `${field} NOT IN (${value.map((v: string) => `'${v}'`).join(', ')})`;
-        default: return '';
+        case "equals":
+          return `${field} = '${value}'`;
+        case "not_equals":
+          return `${field} != '${value}'`;
+        case "contains":
+          return `${field} LIKE '%${value}%'`;
+        case "not_contains":
+          return `${field} NOT LIKE '%${value}%'`;
+        case "starts_with":
+          return `${field} LIKE '${value}%'`;
+        case "ends_with":
+          return `${field} LIKE '%${value}'`;
+        case "greater_than":
+          return `${field} > ${value}`;
+        case "less_than":
+          return `${field} < ${value}`;
+        case "greater_or_equal":
+          return `${field} >= ${value}`;
+        case "less_or_equal":
+          return `${field} <= ${value}`;
+        case "between":
+          return `${field} BETWEEN ${value[0]} AND ${value[1]}`;
+        case "is_empty":
+          return `${field} IS NULL OR ${field} = ''`;
+        case "is_not_empty":
+          return `${field} IS NOT NULL AND ${field} != ''`;
+        case "in":
+          return `${field} IN (${value.map((v: string) => `'${v}'`).join(", ")})`;
+        case "not_in":
+          return `${field} NOT IN (${value.map((v: string) => `'${v}'`).join(", ")})`;
+        default:
+          return "";
       }
     });
 
-    const groupSQL = group.groups.map(g => `(${generateSQL(g)})`);
+    const groupSQL = group.groups.map((g) => `(${generateSQL(g)})`);
     const allConditions = [...conditions, ...groupSQL].filter(Boolean);
 
-    return allConditions.length > 0 
+    return allConditions.length > 0
       ? allConditions.join(` ${group.operator} `)
-      : '';
+      : "";
   };
 
   const renderCondition = (condition: FilterCondition, groupId: string) => {
-    const field = fields.find(f => f.name === condition.field);
-    const operators = field ? OPERATORS[field.type as keyof typeof OPERATORS] || OPERATORS.text : OPERATORS.text;
+    const field = fields.find((f) => f.name === condition.field);
+    const operators = field
+      ? OPERATORS[field.type as keyof typeof OPERATORS] || OPERATORS.text
+      : OPERATORS.text;
 
     return (
-      <div key={condition.id} className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg">
+      <div
+        key={condition.id}
+        className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg"
+      >
         <Select
           value={condition.field}
           onValueChange={(value) => {
-            const newField = fields.find(f => f.name === value);
-            updateCondition(groupId, condition.id, { 
-              field: value, 
-              valueType: newField?.type || 'text',
-              operator: 'equals',
-              value: ''
+            const newField = fields.find((f) => f.name === value);
+            updateCondition(groupId, condition.id, {
+              field: value,
+              valueType: newField?.type || "text",
+              operator: "equals",
+              value: "",
             });
           }}
         >
@@ -280,7 +327,7 @@ export function AdvancedFilterBuilder({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {fields.map(field => (
+            {fields.map((field) => (
               <SelectItem key={field.name} value={field.name}>
                 {field.label}
               </SelectItem>
@@ -290,13 +337,15 @@ export function AdvancedFilterBuilder({
 
         <Select
           value={condition.operator}
-          onValueChange={(value) => updateCondition(groupId, condition.id, { operator: value })}
+          onValueChange={(value) =>
+            updateCondition(groupId, condition.id, { operator: value })
+          }
         >
           <SelectTrigger className="w-[150px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {operators.map(op => (
+            {operators.map((op) => (
               <SelectItem key={op.value} value={op.value}>
                 {op.label}
               </SelectItem>
@@ -304,40 +353,46 @@ export function AdvancedFilterBuilder({
           </SelectContent>
         </Select>
 
-        {!['is_empty', 'is_not_empty'].includes(condition.operator) && (
+        {!["is_empty", "is_not_empty"].includes(condition.operator) && (
           <>
-            {condition.operator === 'between' ? (
+            {condition.operator === "between" ? (
               <div className="flex items-center gap-2">
                 <Input
-                  type={condition.valueType === 'number' ? 'number' : 'text'}
-                  value={condition.value?.[0] || ''}
-                  onChange={(e) => updateCondition(groupId, condition.id, { 
-                    value: [e.target.value, condition.value?.[1] || ''] 
-                  })}
+                  type={condition.valueType === "number" ? "number" : "text"}
+                  value={condition.value?.[0] || ""}
+                  onChange={(e) =>
+                    updateCondition(groupId, condition.id, {
+                      value: [e.target.value, condition.value?.[1] || ""],
+                    })
+                  }
                   className="w-[100px]"
                   placeholder="From"
                 />
                 <span className="text-muted-foreground">to</span>
                 <Input
-                  type={condition.valueType === 'number' ? 'number' : 'text'}
-                  value={condition.value?.[1] || ''}
-                  onChange={(e) => updateCondition(groupId, condition.id, { 
-                    value: [condition.value?.[0] || '', e.target.value] 
-                  })}
+                  type={condition.valueType === "number" ? "number" : "text"}
+                  value={condition.value?.[1] || ""}
+                  onChange={(e) =>
+                    updateCondition(groupId, condition.id, {
+                      value: [condition.value?.[0] || "", e.target.value],
+                    })
+                  }
                   className="w-[100px]"
                   placeholder="To"
                 />
               </div>
-            ) : field?.type === 'select' ? (
+            ) : field?.type === "select" ? (
               <Select
                 value={condition.value}
-                onValueChange={(value) => updateCondition(groupId, condition.id, { value })}
+                onValueChange={(value) =>
+                  updateCondition(groupId, condition.id, { value })
+                }
               >
                 <SelectTrigger className="w-[150px]">
                   <SelectValue placeholder="Select value" />
                 </SelectTrigger>
                 <SelectContent>
-                  {field.options?.map(option => (
+                  {field.options?.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
@@ -346,9 +401,19 @@ export function AdvancedFilterBuilder({
               </Select>
             ) : (
               <Input
-                type={condition.valueType === 'number' ? 'number' : condition.valueType === 'date' ? 'date' : 'text'}
+                type={
+                  condition.valueType === "number"
+                    ? "number"
+                    : condition.valueType === "date"
+                      ? "date"
+                      : "text"
+                }
                 value={condition.value}
-                onChange={(e) => updateCondition(groupId, condition.id, { value: e.target.value })}
+                onChange={(e) =>
+                  updateCondition(groupId, condition.id, {
+                    value: e.target.value,
+                  })
+                }
                 className="w-[150px]"
                 placeholder="Value"
               />
@@ -367,17 +432,23 @@ export function AdvancedFilterBuilder({
     );
   };
 
-  const renderGroup = (group: FilterGroup, parentGroupId?: string, depth = 0) => {
+  const renderGroup = (
+    group: FilterGroup,
+    parentGroupId?: string,
+    depth = 0,
+  ) => {
     return (
-      <div key={group.id} className={cn(
-        "border rounded-lg p-3",
-        depth > 0 && "ml-8 mt-2"
-      )}>
+      <div
+        key={group.id}
+        className={cn("border rounded-lg p-3", depth > 0 && "ml-8 mt-2")}
+      >
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <Select
               value={group.operator}
-              onValueChange={(value: 'AND' | 'OR') => updateGroupOperator(group.id, value)}
+              onValueChange={(value: "AND" | "OR") =>
+                updateGroupOperator(group.id, value)
+              }
             >
               <SelectTrigger className="w-[100px] h-8">
                 <SelectValue />
@@ -421,8 +492,12 @@ export function AdvancedFilterBuilder({
         </div>
 
         <div className="space-y-2">
-          {group.conditions.map(condition => renderCondition(condition, group.id))}
-          {group.groups.map(subGroup => renderGroup(subGroup, group.id, depth + 1))}
+          {group.conditions.map((condition) =>
+            renderCondition(condition, group.id),
+          )}
+          {group.groups.map((subGroup) =>
+            renderGroup(subGroup, group.id, depth + 1),
+          )}
         </div>
       </div>
     );
@@ -444,7 +519,7 @@ export function AdvancedFilterBuilder({
           <div className="space-y-2">
             <Label>Quick Filters</Label>
             <div className="flex flex-wrap gap-2">
-              {savedFilters.map(saved => (
+              {savedFilters.map((saved) => (
                 <Button
                   key={saved.id}
                   size="sm"
@@ -458,37 +533,35 @@ export function AdvancedFilterBuilder({
           </div>
         )}
 
-        <div className="space-y-3">
-          {renderGroup(filterGroup)}
-        </div>
+        <div className="space-y-3">{renderGroup(filterGroup)}</div>
 
-        {filterGroup.conditions.length === 0 && filterGroup.groups.length === 0 && (
-          <div className="text-center py-8 border-2 border-dashed rounded-lg">
-            <p className="text-muted-foreground mb-3">No filters added yet</p>
-            <Button onClick={() => addCondition(filterGroup.id)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add First Condition
-            </Button>
-          </div>
-        )}
+        {filterGroup.conditions.length === 0 &&
+          filterGroup.groups.length === 0 && (
+            <div className="text-center py-8 border-2 border-dashed rounded-lg">
+              <p className="text-muted-foreground mb-3">No filters added yet</p>
+              <Button onClick={() => addCondition(filterGroup.id)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add First Condition
+              </Button>
+            </div>
+          )}
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Switch
-              checked={showSQL}
-              onCheckedChange={setShowSQL}
-            />
+            <Switch checked={showSQL} onCheckedChange={setShowSQL} />
             <Label className="text-sm">Show SQL</Label>
           </div>
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
-              onClick={() => setFilterGroup({
-                id: Date.now().toString(),
-                operator: 'AND',
-                conditions: [],
-                groups: []
-              })}
+              onClick={() =>
+                setFilterGroup({
+                  id: Date.now().toString(),
+                  operator: "AND",
+                  conditions: [],
+                  groups: [],
+                })
+              }
             >
               <RefreshCw className="h-4 w-4 mr-2" />
               Reset
@@ -506,7 +579,7 @@ export function AdvancedFilterBuilder({
                   onClick={() => {
                     if (filterName) {
                       onSave(filterName, filterGroup);
-                      setFilterName('');
+                      setFilterName("");
                     }
                   }}
                   disabled={!filterName}
@@ -539,7 +612,7 @@ export function AdvancedFilterBuilder({
               </Button>
             </div>
             <pre className="p-3 bg-muted rounded-lg text-sm overflow-x-auto">
-              <code>{generateSQL(filterGroup) || 'No conditions defined'}</code>
+              <code>{generateSQL(filterGroup) || "No conditions defined"}</code>
             </pre>
           </div>
         )}

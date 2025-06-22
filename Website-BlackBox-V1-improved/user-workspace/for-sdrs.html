@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mohit AI for SDRs - AI-Powered Sales Development Platform">
+    <title>For SDRs - Mohit AI</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/master/_brand/favicon-32x32.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#3498DB',
+                        accent: '#A855F7',
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-gray-900/95 backdrop-blur-md border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-white">Mohit AI</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="features.html" class="text-gray-300 hover:text-white transition-colors">Features</a>
+                    <a href="pricing.html" class="text-gray-300 hover:text-white transition-colors">Pricing</a>
+                    <div class="relative group">
+                        <button class="text-white font-semibold transition-colors flex items-center">
+                            Solutions
+                            <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 rounded-md shadow-lg hover:shadow-primary/20 bg-gray-900 ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="py-1">
+                                <a href="for-sdrs.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">For SDRs</a>
+                                <a href="for-managers.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">For Managers</a>
+                                <a href="enterprise.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">Enterprise</a>
+                                <a href="small-business.html" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100">Small Business</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="security.html" class="text-gray-300 hover:text-white transition-colors">Security</a>
+                    <a href="#" class="inline-flex items-center px-6 py-2.5 border border-black text-white font-medium rounded-lg hover:shadow-lg hover:shadow-primary/20 hover:shadow-primary/50 transform hover:scale-105 transition-all duration-200">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                    <h1 class="text-5xl font-bold text-white leading-tight mb-8">
+                        Double Your Meetings Booked with AI-Powered Outreach
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-12">
+                        Let Mohit AI handle cold outreach while you focus on building relationships and closing deals. Our AI assistant works 24/7 to find and engage perfect-fit prospects.
+                    </p>
+                    <div class="flex gap-4 mb-12">
+                        <a href="#" class="inline-flex items-center px-8 py-3 bg-gradient-primary text-white font-medium rounded-lg hover:opacity-90 transition-all duration-200">
+                            Start Free Trial
+                        </a>
+                        <a href="#" class="inline-flex items-center px-8 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-primary hover:text-white transition-all duration-200">
+                            Watch Demo
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-8 text-sm text-gray-300">
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold">3x</span> More Meetings
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold">80%</span> Less Cold Calling
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold">24/7</span> Outreach
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:mt-0 mt-12">
+                    <div class="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-800">
+                        <h3 class="text-2xl font-bold text-white mb-8">How Mohit AI Helps SDRs</h3>
+                        <ul class="space-y-6">
+                            <li class="flex items-start space-x-4">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-white mb-2">Automated Prospecting</h4>
+                                    <p class="text-gray-300">AI finds and engages perfect-fit prospects 24/7</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start space-x-4">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-white mb-2">Smart Follow-ups</h4>
+                                    <p class="text-gray-300">Never miss a follow-up with AI-powered sequencing</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start space-x-4">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-white mb-2">Meeting Scheduling</h4>
+                                    <p class="text-gray-300">AI handles scheduling and calendar coordination</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-4xl font-bold text-white mb-6">Tools Built for Modern SDRs</h2>
+                <p class="text-xl text-gray-300">Everything you need to exceed your quota without the grind</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800 hover:shadow-xl transition-all duration-300">
+                    <h3 class="text-2xl font-bold text-white mb-4">AI Prospecting</h3>
+                    <p class="text-gray-300">Mohit AI analyzes millions of companies to find your ideal prospects and engages them with personalized outreach.</p>
+                </div>
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800 hover:shadow-xl transition-all duration-300">
+                    <h3 class="text-2xl font-bold text-white mb-4">Smart Sequences</h3>
+                    <p class="text-gray-300">AI creates and executes personalized multi-channel sequences that adapt based on prospect engagement.</p>
+                </div>
+                <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800 hover:shadow-xl transition-all duration-300">
+                    <h3 class="text-2xl font-bold text-white mb-4">Meeting Booking</h3>
+                    <p class="text-gray-300">Automatically qualify prospects, handle objections, and book meetings directly into your calendar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-4xl font-bold text-white mb-8">Real Results for SDRs</h2>
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold">
+                                1
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-2">More Quality Meetings</h3>
+                                <p class="text-gray-300">Book 3x more meetings with qualified prospects who are ready to buy.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold">
+                                2
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-2">Less Busy Work</h3>
+                                <p class="text-gray-300">Eliminate manual prospecting and follow-up tasks to focus on building relationships.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold">
+                                3
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-2">Consistent Pipeline</h3>
+                                <p class="text-gray-300">Maintain a steady flow of qualified opportunities with 24/7 AI-powered outreach.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:mt-0 mt-12">
+                    <div class="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-800">
+                        <h3 class="text-2xl font-bold text-white mb-8 text-center">Start Your Free Trial</h3>
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-200 mb-2" for="name">Full name</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-200 mb-2" for="email">Work email</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-200 mb-2" for="company">Company name</label>
+                                <input type="text" id="company" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all">
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-accent text-white py-3 px-6 rounded-lg hover:bg-gray-900 transition-all duration-200 font-medium">
+                                Start Free Trial
+                            </button>
+                            <p class="text-xs text-gray-400 text-center">
+                                No credit card required. 14-day free trial.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6">Ready to Hit Your Numbers?</h2>
+            <p class="text-xl text-gray-300 mb-12">Join thousands of SDRs who use Mohit AI to exceed their quotas</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#" class="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-gray-900 hover:text-white transition-all duration-200">
+                    Start Free Trial
+                </a>
+                <a href="#" class="inline-flex items-center justify-center px-8 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-100 transition-all duration-200">
+                    Watch Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-700 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-3">
+                        <li><a href="features.html" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Integrations</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Solutions</h4>
+                    <ul class="space-y-3">
+                        <li><a href="for-sdrs.html" class="text-gray-300 hover:text-white transition-colors">For SDRs</a></li>
+                        <li><a href="for-managers.html" class="text-gray-300 hover:text-white transition-colors">For Managers</a></li>
+                        <li><a href="enterprise.html" class="text-gray-300 hover:text-white transition-colors">Enterprise</a></li>
+                        <li><a href="small-business.html" class="text-gray-300 hover:text-white transition-colors">Small Business</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Support</a></li>
+                        <li><a href="security.html" class="text-gray-300 hover:text-white transition-colors">Security</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-gray-800">
+                <p class="text-gray-300 text-center">&copy; 2024 Mohit AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
