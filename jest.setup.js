@@ -1,6 +1,86 @@
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom'
 
+// Mock the Request object for Next.js API routes
+global.Request = class Request {
+  constructor(url, init) {
+    this.url = url;
+    this.method = init?.method || 'GET';
+    this.headers = new Map();
+    if (init?.headers) {
+      Object.entries(init.headers).forEach(([key, value]) => {
+        this.headers.set(key, value);
+      });
+    }
+    this.body = init?.body;
+  }
+  
+  json() {
+    return Promise.resolve(JSON.parse(this.body));
+  }
+  
+  text() {
+    return Promise.resolve(this.body);
+  }
+};
+
+// Mock Response object
+global.Response = class Response {
+  constructor(body, init) {
+    this.body = body;
+    this.status = init?.status || 200;
+    this.statusText = init?.statusText || 'OK';
+    this.headers = new Map();
+    if (init?.headers) {
+      Object.entries(init.headers).forEach(([key, value]) => {
+        this.headers.set(key, value);
+      });
+    }
+  }
+  
+  json() {
+    return Promise.resolve(
+      typeof this.body === 'string' ? JSON.parse(this.body) : this.body
+    );
+  }
+  
+  text() {
+    return Promise.resolve(
+      typeof this.body === 'string' ? this.body : JSON.stringify(this.body)
+    );
+  }
+  
+  ok() {
+    return this.status >= 200 && this.status < 300;
+  }
+};
+
+// Mock Headers
+global.Headers = class Headers extends Map {
+  get(name) {
+    return super.get(name.toLowerCase());
+  }
+  
+  set(name, value) {
+    return super.set(name.toLowerCase(), value);
+  }
+};
+
+// Mock crypto for Node.js environment
+if (!global.crypto) {
+  const crypto = require('crypto');
+  global.crypto = {
+    getRandomValues: (arr) => crypto.randomBytes(arr.length),
+    subtle: {
+      digest: async (algorithm, data) => {
+        const hash = crypto.createHash(algorithm.replace('-', '').toLowerCase());
+        hash.update(data);
+        return hash.digest();
+      },
+    },
+  };
+}
+
 // Mock Next.js router
 jest.mock('next/navigation', () => ({
   useRouter() {
