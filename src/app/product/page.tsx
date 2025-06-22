@@ -6,7 +6,8 @@ import { PublicLayout } from "@/components/layouts/PublicLayout";
 
 export const metadata: Metadata = {
   title: "Product - Mohit AI",
-  description: "One Platform for All Your Sales Outreach - AI-powered calling, intelligent messaging, and advanced analytics",
+  description:
+    "One Platform for All Your Sales Outreach - AI-powered calling, intelligent messaging, and advanced analytics",
 };
 
 export default function ProductPage() {
@@ -42,9 +43,7 @@ export default function ProductPage() {
               <div className="w-12 h-12 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg flex items-center justify-center mb-6">
                 <Phone className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-black mb-4">
-                AI Calling
-              </h3>
+              <h3 className="text-2xl font-bold text-black mb-4">AI Calling</h3>
               <p className="text-gray-600 mb-6">
                 Make hundreds of personalized calls daily using natural voice
                 AI. Our system handles objections, qualifies prospects, and
@@ -175,8 +174,8 @@ export default function ProductPage() {
                   Intelligent Lead Generation
                 </h3>
                 <p className="text-gray-600">
-                  Our AI analyzes millions of data points to find and
-                  prioritize the best prospects for your business.
+                  Our AI analyzes millions of data points to find and prioritize
+                  the best prospects for your business.
                 </p>
               </div>
               <div>
@@ -193,8 +192,8 @@ export default function ProductPage() {
                   Meeting Scheduling
                 </h3>
                 <p className="text-gray-600">
-                  When prospects show interest, Mohit AI automatically
-                  schedules meetings with your sales team.
+                  When prospects show interest, Mohit AI automatically schedules
+                  meetings with your sales team.
                 </p>
               </div>
             </div>

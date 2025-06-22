@@ -5,7 +5,8 @@ import { PublicLayout } from "@/components/layouts/PublicLayout";
 
 export const metadata: Metadata = {
   title: "Features - Mohit AI",
-  description: "Powerful Features for Modern Sales Teams - Everything you need to identify, engage, and close deals faster",
+  description:
+    "Powerful Features for Modern Sales Teams - Everything you need to identify, engage, and close deals faster",
 };
 
 export default function FeaturesPage() {

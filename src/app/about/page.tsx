@@ -5,7 +5,8 @@ import { PublicLayout } from "@/components/layouts/PublicLayout";
 
 export const metadata: Metadata = {
   title: "About - Mohit AI",
-  description: "Empowering Sales Teams with AI - We're on a mission to revolutionize how sales teams work",
+  description:
+    "Empowering Sales Teams with AI - We're on a mission to revolutionize how sales teams work",
 };
 
 export default function AboutPage() {
@@ -61,9 +62,7 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="text-xl font-semibold text-black mb-3">
-                  Trust
-                </h3>
+                <h3 className="text-xl font-semibold text-black mb-3">Trust</h3>
                 <p className="text-gray-600">
                   Building lasting relationships through reliability
                 </p>
