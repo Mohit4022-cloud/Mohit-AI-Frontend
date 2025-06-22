@@ -1,3 +1,6 @@
+// Force dynamic rendering since we use request.headers
+export const dynamic = 'force-dynamic';
+
 import { NextRequest } from 'next/server'
 import { verifyToken } from '@/lib/jwt'
 import { findUserById } from '@/lib/mockData'

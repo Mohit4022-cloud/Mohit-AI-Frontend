@@ -1,3 +1,6 @@
+// Force dynamic rendering since we use searchParams
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server'
 import { callRelayService } from '@/services/callRelayService'
 

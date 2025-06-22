@@ -1,3 +1,6 @@
+// Force dynamic rendering since we use request.headers
+export const dynamic = 'force-dynamic';
+
 import { NextRequest } from 'next/server';
 import { authenticateWebSocket } from '@/middleware/auth';
 import { logSecurityEvent } from '@/lib/security-edge';

@@ -26,7 +26,15 @@ export const CreateContactSchema = ContactSchema.omit({
   updatedAt: true,
 });
 
+// Update Contact Schema (for updating existing contacts)
+export const UpdateContactSchema = ContactSchema.partial().omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types inferred from schemas
 export type Contact = z.infer<typeof ContactSchema>;
 export type ContactStatus = z.infer<typeof ContactStatus>;
 export type CreateContact = z.infer<typeof CreateContactSchema>;
+export type UpdateContact = z.infer<typeof UpdateContactSchema>;
