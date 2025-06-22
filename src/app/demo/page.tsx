@@ -21,7 +21,7 @@ export default function DemoPage() {
     e.preventDefault();
     console.log("Demo form submitted:", formData);
     alert(
-      "Thank you for your interest! Our team will contact you shortly to schedule your personalized demo."
+      "Thank you for your interest! Our team will contact you shortly to schedule your personalized demo.",
     );
     // Reset form
     setFormData({
@@ -34,7 +34,7 @@ export default function DemoPage() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
       ...formData,
@@ -52,8 +52,8 @@ export default function DemoPage() {
               Watch Mohit AI in Action
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              See how Mohit AI handles cold outreach, qualifies leads, and
-              books meetings automatically.
+              See how Mohit AI handles cold outreach, qualifies leads, and books
+              meetings automatically.
             </p>
           </div>
 

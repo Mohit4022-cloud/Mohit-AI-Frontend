@@ -213,9 +213,7 @@ export default function ResourcesPage() {
 
             {/* Help Center */}
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-xl font-bold text-black mb-4">
-                Help Center
-              </h3>
+              <h3 className="text-xl font-bold text-black mb-4">Help Center</h3>
               <p className="text-gray-600 mb-6">
                 Get support, browse FAQs, and find detailed documentation.
               </p>
@@ -252,9 +250,7 @@ export default function ResourcesPage() {
               <p className="text-gray-600 mb-6">
                 Learn the basics of Mohit AI and set up your first campaign.
               </p>
-              <span className="text-sm text-gray-400">
-                4 lessons • 2 hours
-              </span>
+              <span className="text-sm text-gray-400">4 lessons • 2 hours</span>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <BookOpen className="w-12 h-12 text-purple-600 mb-6" />
@@ -264,9 +260,7 @@ export default function ResourcesPage() {
               <p className="text-gray-600 mb-6">
                 Master advanced features and optimization strategies.
               </p>
-              <span className="text-sm text-gray-400">
-                6 lessons • 3 hours
-              </span>
+              <span className="text-sm text-gray-400">6 lessons • 3 hours</span>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <BookOpen className="w-12 h-12 text-purple-600 mb-6" />
@@ -276,9 +270,7 @@ export default function ResourcesPage() {
               <p className="text-gray-600 mb-6">
                 Become an expert in AI-powered sales development.
               </p>
-              <span className="text-sm text-gray-400">
-                8 lessons • 4 hours
-              </span>
+              <span className="text-sm text-gray-400">8 lessons • 4 hours</span>
             </div>
           </div>
         </div>
