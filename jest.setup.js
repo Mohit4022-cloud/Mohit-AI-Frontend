@@ -4,23 +4,46 @@ import '@testing-library/jest-dom'
 // Mock the Request object for Next.js API routes
 global.Request = class Request {
   constructor(url, init) {
-    this.url = url;
-    this.method = init?.method || 'GET';
-    this.headers = new Map();
+    // Store properties that NextRequest will need
+    this._url = url;
+    this._method = init?.method || 'GET';
+    this._headers = new Map();
     if (init?.headers) {
       Object.entries(init.headers).forEach(([key, value]) => {
-        this.headers.set(key, value);
+        this._headers.set(key, value);
       });
     }
-    this.body = init?.body;
+    this._body = init?.body;
+    
+    // Define read-only properties
+    Object.defineProperty(this, 'url', {
+      get: () => this._url,
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(this, 'method', {
+      get: () => this._method,
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(this, 'headers', {
+      get: () => this._headers,
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(this, 'body', {
+      get: () => this._body,
+      enumerable: true,
+      configurable: true
+    });
   }
   
   json() {
-    return Promise.resolve(JSON.parse(this.body));
+    return Promise.resolve(JSON.parse(this._body));
   }
   
   text() {
-    return Promise.resolve(this.body);
+    return Promise.resolve(this._body);
   }
 };
 
@@ -80,6 +103,36 @@ if (!global.crypto) {
     },
   };
 }
+
+// Mock NextRequest
+jest.mock('next/server', () => ({
+  NextRequest: class NextRequest extends global.Request {
+    constructor(input, init) {
+      super(input, init);
+      // Add any NextRequest-specific properties here
+      this.nextUrl = new URL(typeof input === 'string' ? input : input.url);
+      this.cookies = {
+        get: (name) => ({ value: this._headers.get(`cookie`)?.split('; ').find(c => c.startsWith(name + '='))?.split('=')[1] }),
+        set: jest.fn(),
+        delete: jest.fn(),
+      };
+    }
+  },
+  NextResponse: {
+    json: (body, init) => new global.Response(JSON.stringify(body), {
+      ...init,
+      headers: {
+        'content-type': 'application/json',
+        ...(init?.headers || {}),
+      },
+    }),
+    next: () => new global.Response(null, { status: 200 }),
+    redirect: (url) => new global.Response(null, {
+      status: 302,
+      headers: { Location: url.toString() },
+    }),
+  },
+}));
 
 // Mock Next.js router
 jest.mock('next/navigation', () => ({
