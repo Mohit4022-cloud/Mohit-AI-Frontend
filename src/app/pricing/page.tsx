@@ -218,7 +218,7 @@ export default function PricingPage() {
                 Can I change plans at any time?
               </h3>
               <p className="text-gray-600">
-                Yes! Switch plans anytime as you grow. We'll prorate any changes.
+                Yes! Switch plans anytime as you grow. We&apos;ll prorate any changes.
               </p>
             </div>
             <div className="border-b border-gray-200 pb-8">
@@ -226,7 +226,7 @@ export default function PricingPage() {
                 What happens after my free trial ends?
               </h3>
               <p className="text-gray-600">
-                After 14 days, you'll be enrolled in your selected plan. Cancel anytime before to avoid charges.
+                After 14 days, you&apos;ll be enrolled in your selected plan. Cancel anytime before to avoid charges.
               </p>
             </div>
             <div className="border-b border-gray-200 pb-8">

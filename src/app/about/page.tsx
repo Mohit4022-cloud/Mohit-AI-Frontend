@@ -19,7 +19,7 @@ export default function AboutPage() {
             Revolutionizing Inbound Sales with AI
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            We believe no business should ever miss an opportunity because they couldn't respond fast enough.
+            We believe no business should ever miss an opportunity because they couldn&apos;t respond fast enough.
           </p>
         </div>
       </section>
@@ -33,10 +33,10 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                Speed wins deals. That's why we built Mohit AI—to ensure every inbound lead gets an instant, intelligent response that converts interest into revenue. We're helping 500+ sales teams respond in seconds, not hours.
+                Speed wins deals. That&apos;s why we built Mohit AI—to ensure every inbound lead gets an instant, intelligent response that converts interest into revenue. We&apos;re helping 500+ sales teams respond in seconds, not hours.
               </p>
               <p className="text-lg text-gray-600">
-                Our AI doesn't replace your sales team—it empowers them to focus on what humans do best: building relationships and closing deals.
+                Our AI doesn&apos;t replace your sales team—it empowers them to focus on what humans do best: building relationships and closing deals.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-6">

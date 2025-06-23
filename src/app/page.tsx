@@ -340,7 +340,7 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;$75/month for an AI that books more meetings than our $65k/year SDR? It's not even a question. We're saving $5,000/month and converting 3x more leads.&rdquo;
+                &ldquo;$75/month for an AI that books more meetings than our $65k/year SDR? It&apos;s not even a question. We&apos;re saving $5,000/month and converting 3x more leads.&rdquo;
               </p>
               <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
                 <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>

@@ -72,7 +72,7 @@ export default function FeaturesPage() {
                 Intelligent Lead Qualification
               </h3>
               <p className="text-gray-600 mb-6">
-                Our AI qualifies leads using proven frameworks while they're still hot:
+                Our AI qualifies leads using proven frameworks while they&apos;re still hot:
               </p>
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center">
