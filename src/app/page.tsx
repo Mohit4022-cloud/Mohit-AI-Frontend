@@ -15,8 +15,10 @@ import {
 import { PublicLayout } from "@/components/layouts/PublicLayout";
 
 export const metadata: Metadata = {
-  title: "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
-  description: "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
+  title:
+    "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
+  description:
+    "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
 };
 
 export default function HomePage() {
@@ -31,7 +33,8 @@ export default function HomePage() {
                 Never Miss Another Inbound Lead
               </h1>
               <p className="text-xl text-neutral-600 leading-relaxed mb-12">
-                Respond to every lead in under 60 seconds with AI that works across voice, chat, email, and SMS—all for the price of lunch.
+                Respond to every lead in under 60 seconds with AI that works
+                across voice, chat, email, and SMS—all for the price of lunch.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 mb-16">
                 <Link href="/register">
@@ -168,7 +171,8 @@ export default function HomePage() {
                     </Button>
                   </Link>
                   <p className="text-xs text-neutral-500 text-center mt-4">
-                    ✓ No credit card required ✓ Setup in 5 minutes ✓ Cancel anytime
+                    ✓ No credit card required ✓ Setup in 5 minutes ✓ Cancel
+                    anytime
                   </p>
                 </form>
               </div>
@@ -217,7 +221,9 @@ export default function HomePage() {
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white/20">
                   <Shield className="w-8 h-8" />
                 </div>
-                <span className="text-2xl font-semibold">SOC 2 Type II Certified</span>
+                <span className="text-2xl font-semibold">
+                  SOC 2 Type II Certified
+                </span>
               </div>
               <div className="flex items-center justify-center gap-5 bg-white/10 rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 border border-white/10 shadow-md">
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white/20">
@@ -304,7 +310,8 @@ export default function HomePage() {
               What Our Customers Say
             </h2>
             <p className="text-xl text-neutral-600 leading-relaxed">
-              Join hundreds of sales teams capturing every inbound opportunity with Mohit AI.
+              Join hundreds of sales teams capturing every inbound opportunity
+              with Mohit AI.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -318,15 +325,15 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;We went from missing 40% of our inbound leads to capturing every single one. Mohit AI paid for itself in the first week by booking 15 extra demos we would have lost.&rdquo;
+                &ldquo;We went from missing 40% of our inbound leads to
+                capturing every single one. Mohit AI paid for itself in the
+                first week by booking 15 extra demos we would have lost.&rdquo;
               </p>
               <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
                 <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
                 <div>
                   <div className="font-semibold text-black">Sarah Chen</div>
-                  <div className="text-neutral-500">
-                    VP Sales at TechFlow
-                  </div>
+                  <div className="text-neutral-500">VP Sales at TechFlow</div>
                 </div>
               </div>
             </div>
@@ -340,14 +347,14 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;$75/month for an AI that books more meetings than our $65k/year SDR? It&apos;s not even a question. We&apos;re saving $5,000/month and converting 3x more leads.&rdquo;
+                &ldquo;$75/month for an AI that books more meetings than our
+                $65k/year SDR? It&apos;s not even a question. We&apos;re saving
+                $5,000/month and converting 3x more leads.&rdquo;
               </p>
               <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
                 <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
                 <div>
-                  <div className="font-semibold text-black">
-                    Marcus Johnson
-                  </div>
+                  <div className="font-semibold text-black">Marcus Johnson</div>
                   <div className="text-neutral-500">Founder at GrowthLab</div>
                 </div>
               </div>
@@ -362,7 +369,9 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;Finally, an AI that actually works across all channels. Our leads come from everywhere—website chat, email, phone calls. Mohit AI handles them all perfectly.&rdquo;
+                &ldquo;Finally, an AI that actually works across all channels.
+                Our leads come from everywhere—website chat, email, phone calls.
+                Mohit AI handles them all perfectly.&rdquo;
               </p>
               <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
                 <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
@@ -385,7 +394,8 @@ export default function HomePage() {
             Never Miss Another Lead
           </h2>
           <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
-            Join 500+ teams responding to every lead in under 60 seconds. Start your free trial and see results today.
+            Join 500+ teams responding to every lead in under 60 seconds. Start
+            your free trial and see results today.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link href="/register">

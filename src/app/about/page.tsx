@@ -19,7 +19,8 @@ export default function AboutPage() {
             Revolutionizing Inbound Sales with AI
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            We believe no business should ever miss an opportunity because they couldn&apos;t respond fast enough.
+            We believe no business should ever miss an opportunity because they
+            couldn&apos;t respond fast enough.
           </p>
         </div>
       </section>
@@ -33,20 +34,21 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                Speed wins deals. That&apos;s why we built Mohit AI—to ensure every inbound lead gets an instant, intelligent response that converts interest into revenue. We&apos;re helping 500+ sales teams respond in seconds, not hours.
+                Speed wins deals. That&apos;s why we built Mohit AI—to ensure
+                every inbound lead gets an instant, intelligent response that
+                converts interest into revenue. We&apos;re helping 500+ sales
+                teams respond in seconds, not hours.
               </p>
               <p className="text-lg text-gray-600">
-                Our AI doesn&apos;t replace your sales team—it empowers them to focus on what humans do best: building relationships and closing deals.
+                Our AI doesn&apos;t replace your sales team—it empowers them to
+                focus on what humans do best: building relationships and closing
+                deals.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="text-xl font-semibold text-black mb-3">
-                  Speed
-                </h3>
-                <p className="text-gray-600">
-                  Sub-60 second responses, always
-                </p>
+                <h3 className="text-xl font-semibold text-black mb-3">Speed</h3>
+                <p className="text-gray-600">Sub-60 second responses, always</p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h3 className="text-xl font-semibold text-black mb-3">
@@ -57,15 +59,13 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="text-xl font-semibold text-black mb-3">Reliability</h3>
-                <p className="text-gray-600">
-                  99.9% uptime, 24/7 operation
-                </p>
+                <h3 className="text-xl font-semibold text-black mb-3">
+                  Reliability
+                </h3>
+                <p className="text-gray-600">99.9% uptime, 24/7 operation</p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="text-xl font-semibold text-black mb-3">
-                  ROI
-                </h3>
+                <h3 className="text-xl font-semibold text-black mb-3">ROI</h3>
                 <p className="text-gray-600">
                   Measurable impact on your bottom line
                 </p>
@@ -90,7 +90,8 @@ export default function AboutPage() {
               </h3>
               <p className="text-gray-600 mb-4">Chief Executive Officer</p>
               <p className="text-gray-600">
-                Former VP Sales who missed too many leads. Now ensuring no one else does.
+                Former VP Sales who missed too many leads. Now ensuring no one
+                else does.
               </p>
             </div>
             {/* Team Member 2 */}
@@ -101,7 +102,8 @@ export default function AboutPage() {
               </h3>
               <p className="text-gray-600 mb-4">Chief Technology Officer</p>
               <p className="text-gray-600">
-                AI pioneer focused on natural language processing for sales conversations.
+                AI pioneer focused on natural language processing for sales
+                conversations.
               </p>
             </div>
             {/* Team Member 3 */}
@@ -136,7 +138,9 @@ export default function AboutPage() {
               <p className="text-gray-600">Average Conversion Increase</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-black mb-2">47 Second</div>
+              <div className="text-4xl font-bold text-black mb-2">
+                47 Second
+              </div>
               <p className="text-gray-600">Average Response</p>
             </div>
           </div>
@@ -146,7 +150,9 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="py-20 bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Capture Every Opportunity?</h2>
+          <h2 className="text-4xl font-bold mb-6">
+            Ready to Capture Every Opportunity?
+          </h2>
           <p className="text-xl text-gray-300 mb-12">
             See why 78% of deals go to the fastest responder
           </p>

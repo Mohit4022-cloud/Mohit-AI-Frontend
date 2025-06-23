@@ -47,9 +47,7 @@ export default function PricingPage() {
                   <span className="text-4xl font-bold">$399</span>
                   <span className="text-gray-600">/month</span>
                 </div>
-                <p className="text-gray-600">
-                  Perfect for growing teams
-                </p>
+                <p className="text-gray-600">Perfect for growing teams</p>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start text-gray-600">
@@ -72,7 +70,7 @@ export default function PricingPage() {
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
                   <span>Email support</span>
                 </li>
-                </ul>
+              </ul>
               <p className="text-sm text-gray-500 italic mb-6">
                 Ideal for: Teams of 1-10 capturing their first automated leads
               </p>
@@ -101,9 +99,7 @@ export default function PricingPage() {
                   <span className="text-4xl font-bold">$799</span>
                   <span className="text-gray-600">/month</span>
                 </div>
-                <p className="text-gray-600">
-                  Everything you need to scale
-                </p>
+                <p className="text-gray-600">Everything you need to scale</p>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start text-gray-600">
@@ -136,7 +132,9 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Ideal for: Growing teams of 10-50 ready to scale revenue</span>
+                  <span>
+                    Ideal for: Growing teams of 10-50 ready to scale revenue
+                  </span>
                 </li>
               </ul>
               <Link href="/register">
@@ -149,15 +147,11 @@ export default function PricingPage() {
             {/* Enterprise Plan */}
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-black mb-4">
-                  Scale
-                </h3>
+                <h3 className="text-2xl font-bold text-black mb-4">Scale</h3>
                 <div className="mb-4">
                   <span className="text-4xl font-bold">Custom</span>
                 </div>
-                <p className="text-gray-600">
-                  For high-volume operations
-                </p>
+                <p className="text-gray-600">For high-volume operations</p>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start text-gray-600">
@@ -218,7 +212,8 @@ export default function PricingPage() {
                 Can I change plans at any time?
               </h3>
               <p className="text-gray-600">
-                Yes! Switch plans anytime as you grow. We&apos;ll prorate any changes.
+                Yes! Switch plans anytime as you grow. We&apos;ll prorate any
+                changes.
               </p>
             </div>
             <div className="border-b border-gray-200 pb-8">
@@ -226,7 +221,8 @@ export default function PricingPage() {
                 What happens after my free trial ends?
               </h3>
               <p className="text-gray-600">
-                After 14 days, you&apos;ll be enrolled in your selected plan. Cancel anytime before to avoid charges.
+                After 14 days, you&apos;ll be enrolled in your selected plan.
+                Cancel anytime before to avoid charges.
               </p>
             </div>
             <div className="border-b border-gray-200 pb-8">
@@ -234,7 +230,8 @@ export default function PricingPage() {
                 Do you offer annual billing?
               </h3>
               <p className="text-gray-600">
-                Yes! Get 2 months free with annual billing. Contact sales for details.
+                Yes! Get 2 months free with annual billing. Contact sales for
+                details.
               </p>
             </div>
             <div className="border-b border-gray-200 pb-8">
@@ -242,7 +239,8 @@ export default function PricingPage() {
                 How quickly can I get started?
               </h3>
               <p className="text-gray-600">
-                Setup takes under 5 minutes. Most customers see their first qualified lead within an hour.
+                Setup takes under 5 minutes. Most customers see their first
+                qualified lead within an hour.
               </p>
             </div>
           </div>

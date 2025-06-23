@@ -20,7 +20,8 @@ export default function FeaturesPage() {
               Powerful Features for Inbound Sales Excellence
             </h1>
             <p className="text-xl text-gray-600">
-              Everything you need to capture, qualify, and convert every inbound lead
+              Everything you need to capture, qualify, and convert every inbound
+              lead
             </p>
           </div>
         </div>
@@ -36,7 +37,8 @@ export default function FeaturesPage() {
                 Real-Time Lead Response
               </h3>
               <p className="text-gray-600 mb-6">
-                Never let another lead go cold. Mohit AI instantly engages when prospects:
+                Never let another lead go cold. Mohit AI instantly engages when
+                prospects:
               </p>
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center">
@@ -72,7 +74,8 @@ export default function FeaturesPage() {
                 Intelligent Lead Qualification
               </h3>
               <p className="text-gray-600 mb-6">
-                Our AI qualifies leads using proven frameworks while they&apos;re still hot:
+                Our AI qualifies leads using proven frameworks while
+                they&apos;re still hot:
               </p>
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center">
@@ -173,7 +176,9 @@ export default function FeaturesPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-xl font-bold text-black mb-4">CRM Integration</h3>
+              <h3 className="text-xl font-bold text-black mb-4">
+                CRM Integration
+              </h3>
               <p className="text-gray-600">
                 Works with Salesforce, HubSpot, Pipedrive, and 20+ CRMs
               </p>
@@ -191,7 +196,8 @@ export default function FeaturesPage() {
                 Custom AI Training
               </h3>
               <p className="text-gray-600">
-                Train the AI on your specific products and qualification criteria
+                Train the AI on your specific products and qualification
+                criteria
               </p>
             </div>
           </div>
@@ -205,7 +211,8 @@ export default function FeaturesPage() {
             Ready to Capture Every Opportunity?
           </h2>
           <p className="text-xl text-gray-300 mb-12">
-            See why 78% of deals go to the fastest responder—and how to be first every time.
+            See why 78% of deals go to the fastest responder—and how to be first
+            every time.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/register">
