@@ -6,13 +6,15 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package*.json ./
-RUN npm ci --only=production
+# Skip prepare script (husky) in production
+RUN npm ci --only=production --ignore-scripts
 
 # Rebuild the source code only when needed
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-COPY --from=deps /app/node_modules ./node_modules
+# Install all dependencies including devDependencies for build
+RUN npm ci --ignore-scripts
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
