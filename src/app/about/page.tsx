@@ -6,7 +6,7 @@ import { PublicLayout } from "@/components/layouts/PublicLayout";
 export const metadata: Metadata = {
   title: "About - Mohit AI",
   description:
-    "Empowering Sales Teams with AI - We're on a mission to revolutionize how sales teams work",
+    "The World's Fastest Inbound SDR Platform | 391% Higher Conversions",
 };
 
 export default function AboutPage() {
@@ -16,11 +16,10 @@ export default function AboutPage() {
       <section className="pt-32 pb-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold text-black mb-6">
-            Empowering Sales Teams with AI
+            Revolutionizing Inbound Sales with AI
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            We&apos;re on a mission to revolutionize how sales teams work by
-            harnessing the power of artificial intelligence.
+            We believe no business should ever miss an opportunity because they couldn't respond fast enough.
           </p>
         </div>
       </section>
@@ -34,45 +33,41 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                At Mohit AI, we believe in transforming the way sales teams
-                operate. Our mission is to empower sales professionals with
-                cutting-edge AI tools that enhance productivity, improve
-                decision-making, and drive better results.
+                Speed wins deals. That's why we built Mohit AI—to ensure every inbound lead gets an instant, intelligent response that converts interest into revenue. We're helping 500+ sales teams respond in seconds, not hours.
               </p>
               <p className="text-lg text-gray-600">
-                We&apos;re committed to innovation, excellence, and providing
-                solutions that make a real difference in the sales industry.
+                Our AI doesn't replace your sales team—it empowers them to focus on what humans do best: building relationships and closing deals.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h3 className="text-xl font-semibold text-black mb-3">
-                  Innovation
+                  Speed
                 </h3>
                 <p className="text-gray-600">
-                  Pushing boundaries with cutting-edge AI technology
+                  Sub-60 second responses, always
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h3 className="text-xl font-semibold text-black mb-3">
-                  Excellence
+                  Intelligence
                 </h3>
                 <p className="text-gray-600">
-                  Delivering outstanding results for our clients
+                  Natural conversations that convert
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="text-xl font-semibold text-black mb-3">Trust</h3>
+                <h3 className="text-xl font-semibold text-black mb-3">Reliability</h3>
                 <p className="text-gray-600">
-                  Building lasting relationships through reliability
+                  99.9% uptime, 24/7 operation
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h3 className="text-xl font-semibold text-black mb-3">
-                  Impact
+                  ROI
                 </h3>
                 <p className="text-gray-600">
-                  Making a real difference in sales success
+                  Measurable impact on your bottom line
                 </p>
               </div>
             </div>
@@ -84,43 +79,40 @@ export default function AboutPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-black text-center mb-16">
-            Meet Our Leadership Team
+            Leadership Team
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {/* Team Member 1 */}
             <div className="text-center">
               <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden bg-gray-200"></div>
               <h3 className="text-xl font-semibold text-black mb-2">
-                Sarah Johnson
+                David Kim
               </h3>
               <p className="text-gray-600 mb-4">Chief Executive Officer</p>
               <p className="text-gray-600">
-                Leading Mohit AI&apos;s mission to transform sales through
-                artificial intelligence.
+                Former VP Sales who missed too many leads. Now ensuring no one else does.
               </p>
             </div>
             {/* Team Member 2 */}
             <div className="text-center">
               <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden bg-gray-200"></div>
               <h3 className="text-xl font-semibold text-black mb-2">
-                Michael Chen
+                Lisa Wang
               </h3>
               <p className="text-gray-600 mb-4">Chief Technology Officer</p>
               <p className="text-gray-600">
-                Driving innovation in AI and machine learning for sales
-                optimization.
+                AI pioneer focused on natural language processing for sales conversations.
               </p>
             </div>
             {/* Team Member 3 */}
             <div className="text-center">
               <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden bg-gray-200"></div>
               <h3 className="text-xl font-semibold text-black mb-2">
-                Emily Rodriguez
+                James Mitchell
               </h3>
-              <p className="text-gray-600 mb-4">Head of Product</p>
+              <p className="text-gray-600 mb-4">VP Customer Success</p>
               <p className="text-gray-600">
-                Shaping the future of sales technology through user-centric
-                design.
+                Helping 500+ teams achieve 391% higher conversion rates.
               </p>
             </div>
           </div>
@@ -136,16 +128,16 @@ export default function AboutPage() {
               <p className="text-gray-600">Companies Served</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-black mb-2">50k+</div>
-              <p className="text-gray-600">Sales Professionals</p>
+              <div className="text-4xl font-bold text-black mb-2">10M+</div>
+              <p className="text-gray-600">Leads Processed</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-black mb-2">98%</div>
-              <p className="text-gray-600">Customer Satisfaction</p>
+              <div className="text-4xl font-bold text-black mb-2">391%</div>
+              <p className="text-gray-600">Average Conversion Increase</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-black mb-2">24/7</div>
-              <p className="text-gray-600">Support Available</p>
+              <div className="text-4xl font-bold text-black mb-2">47 Second</div>
+              <p className="text-gray-600">Average Response</p>
             </div>
           </div>
         </div>
@@ -154,9 +146,9 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="py-20 bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">Join Our Mission</h2>
+          <h2 className="text-4xl font-bold mb-6">Ready to Capture Every Opportunity?</h2>
           <p className="text-xl text-gray-300 mb-12">
-            Be part of the future of AI-powered sales
+            See why 78% of deals go to the fastest responder
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/careers">
@@ -164,12 +156,12 @@ export default function AboutPage() {
                 variant="outline"
                 className="px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-black font-medium rounded-lg transition-all duration-200"
               >
-                View Careers
+                Start Free Trial
               </Button>
             </Link>
             <Link href="/contact">
               <Button className="px-8 py-3 bg-white text-black font-medium rounded-lg hover:bg-gray-100 transition-all duration-200">
-                Contact Us
+                Get Your Custom Demo
               </Button>
             </Link>
           </div>

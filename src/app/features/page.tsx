@@ -6,7 +6,7 @@ import { PublicLayout } from "@/components/layouts/PublicLayout";
 export const metadata: Metadata = {
   title: "Features - Mohit AI",
   description:
-    "Powerful Features for Modern Sales Teams - Everything you need to identify, engage, and close deals faster",
+    "AI-Powered Inbound SDR | Voice, Chat, Email & SMS in One Platform",
 };
 
 export default function FeaturesPage() {
@@ -17,10 +17,10 @@ export default function FeaturesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-4xl font-bold text-black mb-6">
-              Powerful Features for Modern Sales Teams
+              Powerful Features for Inbound Sales Excellence
             </h1>
             <p className="text-xl text-gray-600">
-              Everything you need to identify, engage, and close deals faster
+              Everything you need to capture, qualify, and convert every inbound lead
             </p>
           </div>
         </div>
@@ -30,101 +30,102 @@ export default function FeaturesPage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Real-Time Prospect Monitoring */}
+            {/* Real-Time Lead Response */}
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <h3 className="text-2xl font-bold text-black mb-6">
-                Real-Time Prospect Monitoring
+                Real-Time Lead Response
               </h3>
               <p className="text-gray-600 mb-6">
-                Never miss a buying signal again. Mohit AI monitors your
-                prospects across multiple channels and alerts you instantly when
-                they:
+                Never let another lead go cold. Mohit AI instantly engages when prospects:
               </p>
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Visit your website or pricing page
+                  Submit a form on your website
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Engage with your content or emails
+                  Start a live chat conversation
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Mention your company on social media
+                  Call your sales number
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Experience leadership changes or funding events
+                  Reply to your emails
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Show increased product usage or engagement
+                  Request a demo or pricing
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                  Download content or sign up for trials
                 </li>
               </ul>
             </div>
 
-            {/* AI-Powered Lead Scoring */}
+            {/* Intelligent Lead Qualification */}
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <h3 className="text-2xl font-bold text-black mb-6">
-                AI-Powered Lead Scoring
+                Intelligent Lead Qualification
               </h3>
               <p className="text-gray-600 mb-6">
-                Our machine learning algorithms analyze hundreds of data points
-                to score and prioritize your leads:
+                Our AI qualifies leads using proven frameworks while they're still hot:
               </p>
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Behavioral scoring based on engagement patterns
+                  BANT/FAINT/MEDDIC qualification frameworks
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Firmographic fit analysis
+                  Dynamic conversation flows based on responses
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Intent data from first and third-party sources
+                  Lead scoring based on qualification criteria
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Predictive modeling for conversion likelihood
+                  Automatic CRM updates with qualification notes
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Dynamic scoring that updates in real-time
+                  Smart routing to appropriate sales reps
                 </li>
               </ul>
             </div>
 
-            {/* Intelligent Email Automation */}
+            {/* Natural Multi-Channel Conversations */}
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <h3 className="text-2xl font-bold text-black mb-6">
-                Intelligent Email Automation
+                Natural Multi-Channel Conversations
               </h3>
               <p className="text-gray-600 mb-6">
-                Engage prospects at scale without losing the personal touch:
+                Engage leads naturally across every channel:
               </p>
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  AI-generated personalized email content
+                  AI voice calls that book meetings
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Optimal send time prediction
+                  Live chat with instant responses
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Multi-touch campaign automation
+                  Personalized email follow-ups
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  A/B testing and optimization
+                  SMS with 98% open rates
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Response detection and routing
+                  Seamless channel switching
                 </li>
               </ul>
             </div>
@@ -132,31 +133,31 @@ export default function FeaturesPage() {
             {/* Advanced Analytics */}
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <h3 className="text-2xl font-bold text-black mb-6">
-                Advanced Analytics & Reporting
+                Advanced Analytics & ROI Tracking
               </h3>
               <p className="text-gray-600 mb-6">
-                Make data-driven decisions with comprehensive insights:
+                Prove the value with comprehensive insights:
               </p>
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Pipeline velocity and conversion metrics
+                  Response time analytics (average: 47 seconds)
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Team and individual performance dashboards
+                  Conversion rate improvements
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Revenue forecasting and predictions
+                  Lead source performance
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Campaign ROI analysis
+                  ROI and revenue impact
                 </li>
                 <li className="flex items-center">
                   <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                  Custom reports and data exports
+                  Missed opportunity tracking
                 </li>
               </ul>
             </div>
@@ -168,30 +169,29 @@ export default function FeaturesPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-black text-center mb-16">
-            More Features to Accelerate Your Sales
+            More Features to Maximize Every Lead
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-xl font-bold text-black mb-4">Mobile App</h3>
+              <h3 className="text-xl font-bold text-black mb-4">CRM Integration</h3>
               <p className="text-gray-600">
-                Access Mohit AI on the go with our iOS and Android apps
+                Works with Salesforce, HubSpot, Pipedrive, and 20+ CRMs
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <h3 className="text-xl font-bold text-black mb-4">
-                Chrome Extension
+                Smart Handoffs
               </h3>
               <p className="text-gray-600">
-                Get insights directly in LinkedIn, Gmail, and your CRM
+                Knows exactly when to loop in your human sales team
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <h3 className="text-xl font-bold text-black mb-4">
-                Data Enrichment
+                Custom AI Training
               </h3>
               <p className="text-gray-600">
-                Automatically enrich leads with accurate contact and company
-                data
+                Train the AI on your specific products and qualification criteria
               </p>
             </div>
           </div>
@@ -202,11 +202,10 @@ export default function FeaturesPage() {
       <section className="py-20 bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Transform Your Sales Process?
+            Ready to Capture Every Opportunity?
           </h2>
           <p className="text-xl text-gray-300 mb-12">
-            See how Mohit AI&apos;s features can revolutionize your sales
-            team&apos;s performance
+            See why 78% of deals go to the fastest responder—and how to be first every time.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/register">
