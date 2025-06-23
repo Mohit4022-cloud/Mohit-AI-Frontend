@@ -124,6 +124,14 @@ const nextConfig = {
       )
     }
 
+    // Webpack caching
+    config.cache = {
+      type: 'filesystem',
+      buildDependencies: {
+        config: [__filename],
+      },
+    }
+
     return config
   },
 
