@@ -54,6 +54,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   compress: true,
+  output: 'standalone',
   
   // Image optimization
   images: {
