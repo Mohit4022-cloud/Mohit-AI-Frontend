@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -39,6 +40,7 @@ import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useAuthStore } from "@/stores/authStore";
+import { toast } from "@/components/ui/use-toast";
 import {
   Shield,
   Users,
@@ -147,6 +149,9 @@ interface WhiteLabelConfig {
 
 export default function SettingsPage() {
   const { token, user } = useAuthStore();
+  const router = useRouter();
+  const logoInputRef = useRef<HTMLInputElement>(null);
+  const faviconInputRef = useRef<HTMLInputElement>(null);
   const [activeTab, setActiveTab] = useState("general");
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
   const [ssoProviders, setSSOProviders] = useState<SSOProvider[]>([
@@ -233,6 +238,198 @@ export default function SettingsPage() {
       email: "sendgrid",
     },
   });
+
+  // Handler functions
+  const handleExportSettings = () => {
+    const exportData = {
+      general: settings.general,
+      notifications: settings.notifications,
+      security: settings.security,
+      integrations: settings.integrations,
+      whiteLabel: whiteLabelConfig,
+      exportedAt: new Date().toISOString(),
+      exportedBy: user?.email || "unknown",
+    };
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `settings-export-${format(new Date(), "yyyy-MM-dd")}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: "Settings exported",
+      description: "Your settings have been exported successfully.",
+    });
+  };
+
+  const handleAddSSOProvider = () => {
+    toast({
+      title: "Adding SSO Provider",
+      description: "Redirecting to SSO provider setup...",
+    });
+    router.push("/settings/sso/new");
+  };
+
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Please upload a logo smaller than 5MB.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setWhiteLabelConfig({
+          ...whiteLabelConfig,
+          logo: e.target?.result as string,
+        });
+        toast({
+          title: "Logo uploaded",
+          description: "Your logo has been uploaded successfully.",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFaviconUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 1 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Please upload a favicon smaller than 1MB.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setWhiteLabelConfig({
+          ...whiteLabelConfig,
+          favicon: e.target?.result as string,
+        });
+        toast({
+          title: "Favicon uploaded",
+          description: "Your favicon has been uploaded successfully.",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePreviewWhiteLabel = () => {
+    toast({
+      title: "Preview mode",
+      description: "Opening white label preview in a new window...",
+    });
+    // Open preview in new window with white label config
+    const previewUrl = `/preview?config=${encodeURIComponent(
+      JSON.stringify(whiteLabelConfig)
+    )}`;
+    window.open(previewUrl, "_blank");
+  };
+
+  const handleSaveWhiteLabel = async () => {
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      
+      toast({
+        title: "White label settings saved",
+        description: "Your branding changes have been applied successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error saving settings",
+        description: "Failed to save white label settings. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleCopyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast({
+        title: "Copied to clipboard",
+        description: `${label} has been copied to your clipboard.`,
+      });
+    }).catch(() => {
+      toast({
+        title: "Copy failed",
+        description: "Failed to copy to clipboard. Please try again.",
+        variant: "destructive",
+      });
+    });
+  };
+
+  const handleTestSSOConnection = async () => {
+    if (!selectedProvider) return;
+
+    toast({
+      title: "Testing connection",
+      description: `Testing ${selectedProvider.name} SSO connection...`,
+    });
+
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      
+      toast({
+        title: "Connection successful",
+        description: `Successfully connected to ${selectedProvider.name}.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Connection failed",
+        description: "Failed to connect to SSO provider. Please check your configuration.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSaveSSOConfig = async () => {
+    if (!selectedProvider) return;
+
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      
+      setSSOProviders((providers) =>
+        providers.map((p) =>
+          p.id === selectedProvider.id
+            ? { ...p, configured: true }
+            : p
+        )
+      );
+      
+      toast({
+        title: "Configuration saved",
+        description: `${selectedProvider.name} SSO configuration has been saved.`,
+      });
+      
+      setShowSSOSetup(false);
+    } catch (error) {
+      toast({
+        title: "Error saving configuration",
+        description: "Failed to save SSO configuration. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   // Mock audit logs
   useState(() => {
@@ -328,7 +525,7 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        <Button>
+        <Button onClick={handleExportSettings}>
           <Download className="mr-2 h-4 w-4" />
           Export Settings
         </Button>
@@ -583,7 +780,7 @@ export default function SettingsPage() {
                 </div>
               ))}
 
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full" onClick={handleAddSSOProvider}>
                 <Plus className="mr-2 h-4 w-4" />
                 Add SSO Provider
               </Button>
@@ -738,7 +935,19 @@ export default function SettingsPage() {
                         </p>
                       </div>
                     )}
-                    <Button variant="outline" size="sm" className="mt-2">
+                    <input
+                      ref={logoInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      className="hidden"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-2"
+                      onClick={() => logoInputRef.current?.click()}
+                    >
                       <Upload className="mr-2 h-4 w-4" />
                       Upload Logo
                     </Button>
@@ -765,7 +974,19 @@ export default function SettingsPage() {
                         </p>
                       </div>
                     )}
-                    <Button variant="outline" size="sm" className="mt-2">
+                    <input
+                      ref={faviconInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFaviconUpload}
+                      className="hidden"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-2"
+                      onClick={() => faviconInputRef.current?.click()}
+                    >
                       <Upload className="mr-2 h-4 w-4" />
                       Upload Favicon
                     </Button>
@@ -906,11 +1127,11 @@ export default function SettingsPage() {
               </div>
 
               <div className="flex justify-end gap-2">
-                <Button variant="outline">
+                <Button variant="outline" onClick={handlePreviewWhiteLabel}>
                   <Eye className="mr-2 h-4 w-4" />
                   Preview
                 </Button>
-                <Button>
+                <Button onClick={handleSaveWhiteLabel}>
                   <Save className="mr-2 h-4 w-4" />
                   Save Changes
                 </Button>
@@ -1141,7 +1362,12 @@ export default function SettingsPage() {
                       readOnly
                       className="font-mono text-sm"
                     />
-                    <Button variant="ghost" size="sm" className="mt-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mt-1"
+                      onClick={() => handleCopyToClipboard("https://app.mohitai.com/saml/metadata", "Entity ID")}
+                    >
                       <Copy className="mr-2 h-4 w-4" />
                       Copy
                     </Button>
@@ -1154,7 +1380,12 @@ export default function SettingsPage() {
                       readOnly
                       className="font-mono text-sm"
                     />
-                    <Button variant="ghost" size="sm" className="mt-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mt-1"
+                      onClick={() => handleCopyToClipboard("https://app.mohitai.com/saml/acs", "ACS URL")}
+                    >
                       <Copy className="mr-2 h-4 w-4" />
                       Copy
                     </Button>
@@ -1196,7 +1427,12 @@ export default function SettingsPage() {
                       readOnly
                       className="font-mono text-sm"
                     />
-                    <Button variant="ghost" size="sm" className="mt-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mt-1"
+                      onClick={() => handleCopyToClipboard("https://app.mohitai.com/auth/callback", "Redirect URI")}
+                    >
                       <Copy className="mr-2 h-4 w-4" />
                       Copy
                     </Button>
@@ -1229,11 +1465,11 @@ export default function SettingsPage() {
             <Button variant="outline" onClick={() => setShowSSOSetup(false)}>
               Cancel
             </Button>
-            <Button>
+            <Button onClick={handleTestSSOConnection}>
               <Shield className="mr-2 h-4 w-4" />
               Test Connection
             </Button>
-            <Button>Save Configuration</Button>
+            <Button onClick={handleSaveSSOConfig}>Save Configuration</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

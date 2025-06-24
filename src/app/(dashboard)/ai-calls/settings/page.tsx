@@ -35,13 +35,61 @@ import {
   Globe,
   FileText,
   AlertCircle,
+  BookOpen,
+  ExternalLink,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { toast } from "@/hooks/use-toast";
 
 export default function AICallSettingsPage() {
   const router = useRouter();
   const [hasChanges, setHasChanges] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+
+  const handleReset = async () => {
+    setIsResetting(true);
+    try {
+      // Simulate API call to reset settings
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Reset the form by reloading the page
+      window.location.reload();
+      
+      toast.success("Settings reset to defaults", {
+        description: "All settings have been restored to their default values.",
+      });
+      
+      setHasChanges(false);
+    } catch (error) {
+      toast.error("Failed to reset settings", {
+        description: "An error occurred while resetting settings. Please try again.",
+      });
+    } finally {
+      setIsResetting(false);
+    }
+  };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      // Simulate API call to save settings
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      toast.success("Settings saved successfully", {
+        description: "Your AI call settings have been updated.",
+      });
+      
+      setHasChanges(false);
+    } catch (error) {
+      toast.error("Failed to save settings", {
+        description: "An error occurred while saving settings. Please try again.",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className="flex flex-col h-full p-4 lg:p-6">
@@ -65,13 +113,29 @@ export default function AICallSettingsPage() {
           </div>
           {hasChanges && (
             <div className="flex items-center gap-2">
-              <Button variant="outline">
-                <RotateCw className="h-4 w-4 mr-2" />
+              <Button 
+                variant="outline" 
+                onClick={handleReset}
+                disabled={isResetting || isSaving}
+              >
+                <RotateCw className={cn("h-4 w-4 mr-2", isResetting && "animate-spin")} />
                 Reset
               </Button>
-              <Button>
-                <Save className="h-4 w-4 mr-2" />
-                Save Changes
+              <Button 
+                onClick={handleSave}
+                disabled={isSaving || isResetting}
+              >
+                {isSaving ? (
+                  <>
+                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Save Changes
+                  </>
+                )}
               </Button>
             </div>
           )}
@@ -113,6 +177,15 @@ export default function AICallSettingsPage() {
 }
 
 function AgentSettings({ onChange }: { onChange: () => void }) {
+  const router = useRouter();
+  const [agentName, setAgentName] = useState("Mohit AI Sales Assistant");
+  const [agentRole, setAgentRole] = useState("I'm an AI sales assistant helping to qualify leads and schedule meetings for the sales team.");
+  const [friendliness, setFriendliness] = useState(80);
+  const [assertiveness, setAssertiveness] = useState(60);
+  const [empathy, setEmpathy] = useState(90);
+  const [humor, setHumor] = useState(30);
+  const [learningMode, setLearningMode] = useState(true);
+
   return (
     <>
       <Card>
@@ -129,8 +202,11 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
           <div>
             <Label>Agent Name</Label>
             <Input
-              defaultValue="Mohit AI Sales Assistant"
-              onChange={onChange}
+              value={agentName}
+              onChange={(e) => {
+                setAgentName(e.target.value);
+                onChange();
+              }}
               className="mt-1"
             />
           </div>
@@ -138,8 +214,11 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
           <div>
             <Label>Agent Role</Label>
             <Textarea
-              defaultValue="I'm an AI sales assistant helping to qualify leads and schedule meetings for the sales team."
-              onChange={onChange}
+              value={agentRole}
+              onChange={(e) => {
+                setAgentRole(e.target.value);
+                onChange();
+              }}
               className="mt-1"
               rows={3}
             />
@@ -151,30 +230,58 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-normal">Friendliness</Label>
-                  <span className="text-sm text-muted-foreground">80%</span>
+                  <span className="text-sm text-muted-foreground">{friendliness}%</span>
                 </div>
-                <Slider defaultValue={[80]} max={100} onChange={onChange} />
+                <Slider 
+                  value={[friendliness]} 
+                  max={100} 
+                  onValueChange={([value]) => {
+                    setFriendliness(value);
+                    onChange();
+                  }} 
+                />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-normal">Assertiveness</Label>
-                  <span className="text-sm text-muted-foreground">60%</span>
+                  <span className="text-sm text-muted-foreground">{assertiveness}%</span>
                 </div>
-                <Slider defaultValue={[60]} max={100} onChange={onChange} />
+                <Slider 
+                  value={[assertiveness]} 
+                  max={100} 
+                  onValueChange={([value]) => {
+                    setAssertiveness(value);
+                    onChange();
+                  }} 
+                />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-normal">Empathy</Label>
-                  <span className="text-sm text-muted-foreground">90%</span>
+                  <span className="text-sm text-muted-foreground">{empathy}%</span>
                 </div>
-                <Slider defaultValue={[90]} max={100} onChange={onChange} />
+                <Slider 
+                  value={[empathy]} 
+                  max={100} 
+                  onValueChange={([value]) => {
+                    setEmpathy(value);
+                    onChange();
+                  }} 
+                />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-normal">Humor</Label>
-                  <span className="text-sm text-muted-foreground">30%</span>
+                  <span className="text-sm text-muted-foreground">{humor}%</span>
                 </div>
-                <Slider defaultValue={[30]} max={100} onChange={onChange} />
+                <Slider 
+                  value={[humor]} 
+                  max={100} 
+                  onValueChange={([value]) => {
+                    setHumor(value);
+                    onChange();
+                  }} 
+                />
               </div>
             </div>
           </div>
@@ -186,7 +293,13 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
                 AI learns from successful calls to improve performance
               </p>
             </div>
-            <Switch defaultChecked onChange={onChange} />
+            <Switch 
+              checked={learningMode} 
+              onCheckedChange={(checked) => {
+                setLearningMode(checked);
+                onChange();
+              }} 
+            />
           </div>
         </CardContent>
       </Card>
@@ -237,7 +350,17 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
               <Badge>Active</Badge>
             </div>
           </div>
-          <Button variant="outline" className="w-full">
+          <Button 
+            variant="outline" 
+            className="w-full"
+            onClick={() => {
+              toast.info("Navigating to Knowledge Base", {
+                description: "Opening knowledge base management section...",
+              });
+              router.push("/ai-calls/knowledge-base");
+            }}
+          >
+            <BookOpen className="h-4 w-4 mr-2" />
             Manage Knowledge Base
           </Button>
         </CardContent>
@@ -247,6 +370,37 @@ function AgentSettings({ onChange }: { onChange: () => void }) {
 }
 
 function VoiceSettings({ onChange }: { onChange: () => void }) {
+  const [voiceModel, setVoiceModel] = useState("professional");
+  const [speakingSpeed, setSpeakingSpeed] = useState(100);
+  const [pitchVariation, setPitchVariation] = useState(50);
+  const [speechStyle, setSpeechStyle] = useState("conversational");
+  const [fillerWords, setFillerWords] = useState(false);
+  const [activeListening, setActiveListening] = useState(true);
+  const [isPreviewing, setIsPreviewing] = useState(false);
+
+  const handlePreviewVoice = async () => {
+    setIsPreviewing(true);
+    try {
+      // Simulate voice preview
+      toast.info("Playing voice preview", {
+        description: "Listen to the AI agent's voice sample...",
+      });
+      
+      // Simulate audio playback delay
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      toast.success("Voice preview completed", {
+        description: "The voice sample has finished playing.",
+      });
+    } catch (error) {
+      toast.error("Failed to preview voice", {
+        description: "Could not play the voice sample. Please try again.",
+      });
+    } finally {
+      setIsPreviewing(false);
+    }
+  };
+
   return (
     <>
       <Card>
@@ -262,7 +416,13 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
         <CardContent className="space-y-4">
           <div>
             <Label>Voice Model</Label>
-            <Select defaultValue="professional" onValueChange={onChange}>
+            <Select 
+              value={voiceModel} 
+              onValueChange={(value) => {
+                setVoiceModel(value);
+                onChange();
+              }}
+            >
               <SelectTrigger className="mt-1">
                 <SelectValue />
               </SelectTrigger>
@@ -285,27 +445,45 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label className="text-sm">Speaking Speed</Label>
-                <span className="text-sm text-muted-foreground">1.0x</span>
+                <span className="text-sm text-muted-foreground">{(speakingSpeed / 100).toFixed(1)}x</span>
               </div>
               <Slider
-                defaultValue={[100]}
+                value={[speakingSpeed]}
                 min={75}
                 max={125}
-                onChange={onChange}
+                onValueChange={([value]) => {
+                  setSpeakingSpeed(value);
+                  onChange();
+                }}
               />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label className="text-sm">Pitch Variation</Label>
-                <span className="text-sm text-muted-foreground">Medium</span>
+                <span className="text-sm text-muted-foreground">
+                  {pitchVariation < 33 ? 'Low' : pitchVariation < 66 ? 'Medium' : 'High'}
+                </span>
               </div>
-              <Slider defaultValue={[50]} max={100} onChange={onChange} />
+              <Slider 
+                value={[pitchVariation]} 
+                max={100} 
+                onValueChange={([value]) => {
+                  setPitchVariation(value);
+                  onChange();
+                }} 
+              />
             </div>
           </div>
 
           <div>
             <Label>Speech Style</Label>
-            <Select defaultValue="conversational" onValueChange={onChange}>
+            <Select 
+              value={speechStyle} 
+              onValueChange={(value) => {
+                setSpeechStyle(value);
+                onChange();
+              }}
+            >
               <SelectTrigger className="mt-1">
                 <SelectValue />
               </SelectTrigger>
@@ -326,7 +504,13 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
                 &quot;uh&quot;
               </p>
             </div>
-            <Switch onChange={onChange} />
+            <Switch 
+              checked={fillerWords} 
+              onCheckedChange={(checked) => {
+                setFillerWords(checked);
+                onChange();
+              }} 
+            />
           </div>
 
           <div className="flex items-center justify-between">
@@ -337,7 +521,13 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
                 listening
               </p>
             </div>
-            <Switch defaultChecked onChange={onChange} />
+            <Switch 
+              checked={activeListening} 
+              onCheckedChange={(checked) => {
+                setActiveListening(checked);
+                onChange();
+              }} 
+            />
           </div>
         </CardContent>
       </Card>
@@ -356,9 +546,22 @@ function VoiceSettings({ onChange }: { onChange: () => void }) {
                 you have a few minutes to chat?&quot;
               </p>
             </div>
-            <Button className="w-full">
-              <Mic className="h-4 w-4 mr-2" />
-              Preview Voice
+            <Button 
+              className="w-full"
+              onClick={handlePreviewVoice}
+              disabled={isPreviewing}
+            >
+              {isPreviewing ? (
+                <>
+                  <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  Playing Preview...
+                </>
+              ) : (
+                <>
+                  <Mic className="h-4 w-4 mr-2" />
+                  Preview Voice
+                </>
+              )}
             </Button>
           </div>
         </CardContent>
@@ -780,7 +983,17 @@ function AdvancedSettings({ onChange }: { onChange: () => void }) {
           </div>
 
           <div className="pt-2">
-            <Button variant="outline" className="w-full">
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => {
+                toast.info("Opening API Documentation", {
+                  description: "Redirecting to API documentation in a new tab...",
+                });
+                window.open("https://docs.mohitai.com/api/calls", "_blank");
+              }}
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
               View API Documentation
             </Button>
           </div>

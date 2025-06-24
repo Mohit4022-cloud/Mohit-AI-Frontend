@@ -26,9 +26,11 @@ import { formatDistanceToNow } from "date-fns";
 
 interface CallQueueProps {
   limit?: number;
+  calls?: QueuedCall[];
+  onViewAll?: () => void;
 }
 
-export function CallQueue({ limit }: CallQueueProps) {
+export function CallQueue({ limit, calls, onViewAll }: CallQueueProps) {
   const {
     queuedCalls,
     loadQueuedCalls,
@@ -43,7 +45,8 @@ export function CallQueue({ limit }: CallQueueProps) {
     return () => clearInterval(interval);
   }, [loadQueuedCalls]);
 
-  const displayCalls = limit ? queuedCalls.slice(0, limit) : queuedCalls;
+  const callsToUse = calls || queuedCalls;
+  const displayCalls = limit ? callsToUse.slice(0, limit) : callsToUse;
 
   const handleCallNow = async (call: QueuedCall) => {
     await initiateCall(call.leadId);
@@ -55,7 +58,7 @@ export function CallQueue({ limit }: CallQueueProps) {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base font-medium">Call Queue</CardTitle>
-          <Badge variant="secondary">{queuedCalls.length} waiting</Badge>
+          <Badge variant="secondary">{callsToUse.length} waiting</Badge>
         </div>
       </CardHeader>
       <CardContent className="flex-1 px-3">
@@ -80,10 +83,15 @@ export function CallQueue({ limit }: CallQueueProps) {
                   }
                 />
               ))}
-              {limit && queuedCalls.length > limit && (
+              {limit && callsToUse.length > limit && (
                 <div className="pt-2 text-center">
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    View all {queuedCalls.length} queued calls
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-xs"
+                    onClick={onViewAll}
+                  >
+                    View all {callsToUse.length} queued calls
                   </Button>
                 </div>
               )}

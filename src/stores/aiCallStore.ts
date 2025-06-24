@@ -100,6 +100,14 @@ interface AICallStore {
     id: string,
     priority: "HIGH" | "MEDIUM" | "LOW",
   ) => void;
+  startNewCall: (params: {
+    phoneNumber: string;
+    contactName: string;
+    company?: string;
+    objective?: string;
+    script?: string;
+    notes?: string;
+  }) => Promise<void>;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
@@ -401,6 +409,58 @@ export const useAICallStore = create<AICallStore>()(
                 return priorityOrder[a.priority] - priorityOrder[b.priority];
               }),
           }));
+        },
+
+        // Start a new AI call
+        startNewCall: async (params) => {
+          try {
+            const response = await fetch(`${API_URL}/calls/start`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                phoneNumber: params.phoneNumber,
+                contactName: params.contactName,
+                company: params.company || "Unknown",
+                objective: params.objective || "sales",
+                script: params.script,
+                notes: params.notes,
+              }),
+            });
+
+            if (!response.ok) throw new Error("Failed to start AI call");
+
+            const data = await response.json();
+            
+            // Add the new call to active calls
+            const newCall: AICall = {
+              id: data.callId,
+              leadId: data.leadId || `lead-${Date.now()}`,
+              leadName: params.contactName,
+              company: params.company || "Unknown",
+              phone: params.phoneNumber,
+              status: "CONNECTING",
+              mode: "AI",
+              agentStatus: "IDLE",
+              startTime: new Date(),
+              duration: 0,
+              sentiment: 50,
+              aiAgentId: data.aiAgentId || "default-agent",
+              tags: [params.objective || "sales"],
+            };
+            
+            get().addCall(newCall);
+            
+            // Emit socket event if connected
+            const socket = get().socket;
+            if (socket && get().isConnected) {
+              socket.emit("call:start", newCall);
+            }
+
+            return data;
+          } catch (error) {
+            console.error("Error starting new AI call:", error);
+            throw error;
+          }
         },
       }),
       {

@@ -3,8 +3,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Target, TrendingUp, Filter, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function PipelinePage() {
+  const router = useRouter();
+  const { toast } = useToast();
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -16,11 +20,29 @@ export default function PipelinePage() {
           </p>
         </div>
         <div className="flex items-center space-x-3">
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2"
+            onClick={() => {
+              toast({
+                title: "Filter Pipeline",
+                description: "Pipeline filters coming soon",
+              });
+            }}
+          >
             <Filter className="h-4 w-4" />
             Filter
           </Button>
-          <Button className="gradient-purple-pink hover:opacity-90">
+          <Button 
+            className="gradient-purple-pink hover:opacity-90"
+            onClick={() => {
+              toast({
+                title: "Add Deal",
+                description: "Opening new deal form...",
+              });
+              router.push("/pipeline/new-deal");
+            }}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Deal
           </Button>

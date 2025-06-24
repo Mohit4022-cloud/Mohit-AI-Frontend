@@ -31,6 +31,8 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -54,6 +56,8 @@ import {
 
 export default function AIAnalyticsPage() {
   const router = useRouter();
+  const { toast } = useToast();
+  const [isExporting, setIsExporting] = useState(false);
 
   // Mock data for agent performance
   const agentPerformance = [
@@ -118,6 +122,71 @@ export default function AIAnalyticsPage() {
     { objection: "Bad timing", count: 76, handled: 84 },
   ];
 
+  const handleExportReport = async () => {
+    setIsExporting(true);
+    
+    try {
+      // Simulate export process
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Create CSV data
+      const csvData = [
+        ["AI Call Analytics Report", `Generated: ${new Date().toLocaleDateString()}`],
+        [],
+        ["Key Metrics"],
+        ["Metric", "Value", "Change"],
+        ["AI Success Rate", "87%", "+5%"],
+        ["Cost per Call", "$4.80", "-23%"],
+        ["Lead Qualification", "62%", "+8%"],
+        ["Avg Response Time", "0.8s", "-0.2s"],
+        [],
+        ["Cost Savings by Month"],
+        ["Month", "AI Calls", "Human Cost", "AI Cost", "Savings"],
+        ...costSavings.map(row => [
+          row.month,
+          row.aiCalls,
+          `$${row.humanCost.toLocaleString()}`,
+          `$${row.aiCost.toLocaleString()}`,
+          `$${row.savings.toLocaleString()}`
+        ]),
+        [],
+        ["Top Objections"],
+        ["Objection", "Count", "Handled", "Success Rate"],
+        ...topObjections.map(obj => [
+          obj.objection,
+          obj.count,
+          obj.handled,
+          `${Math.round((obj.handled / obj.count) * 100)}%`
+        ])
+      ];
+      
+      // Convert to CSV string
+      const csv = csvData.map(row => row.join(",")).join("\n");
+      
+      // Download file
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `ai_call_analytics_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Report Exported",
+        description: "Your analytics report has been downloaded successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "Failed to export the report. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col h-full p-4 lg:p-6">
       {/* Header */}
@@ -138,9 +207,9 @@ export default function AIAnalyticsPage() {
               Deep insights into AI agent performance and ROI
             </p>
           </div>
-          <Button>
+          <Button onClick={handleExportReport} disabled={isExporting}>
             <Download className="h-4 w-4 mr-2" />
-            Export Report
+            {isExporting ? "Exporting..." : "Export Report"}
           </Button>
         </div>
       </div>

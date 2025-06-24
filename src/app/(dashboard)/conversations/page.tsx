@@ -111,6 +111,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AIConversationAssistant } from "@/components/ai-conversation-assistant";
 import { ConversationChannels } from "@/components/conversation-channels";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:5000";
@@ -185,6 +187,8 @@ interface QualityMetrics {
 
 export default function ConversationsPage() {
   const { token, user } = useAuthStore();
+  const { toast } = useToast();
+  const router = useRouter();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversation, setActiveConversation] =
     useState<Conversation | null>(null);
@@ -217,6 +221,7 @@ export default function ConversationsPage() {
   const [micVolume, setMicVolume] = useState(50);
   const [showAIAssistant, setShowAIAssistant] = useState(true);
   const [showChannels, setShowChannels] = useState(false);
+  const [showFilterDialog, setShowFilterDialog] = useState(false);
 
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -709,6 +714,164 @@ export default function ConversationsPage() {
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   };
 
+  const handleStartNewConversation = () => {
+    // Clear active conversation and show a form to start new one
+    setActiveConversation(null);
+    toast({
+      title: "New Conversation",
+      description: "Select a lead from the leads page to start a new conversation.",
+    });
+    // Navigate to leads page to select a lead
+    router.push("/leads");
+  };
+
+  const handleShowFilters = () => {
+    setShowFilterDialog(true);
+    toast({
+      title: "Filter Options",
+      description: "Filter conversations by type, status, date, and more.",
+    });
+  };
+
+  const handleStartCall = () => {
+    if (!activeConversation) {
+      toast({
+        title: "No conversation selected",
+        description: "Please select a conversation first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Initialize call
+    initializeWebRTC();
+    toast({
+      title: "Starting call",
+      description: `Calling ${activeConversation.leadName}...`,
+    });
+
+    // Mock incoming call after 2 seconds
+    setTimeout(() => {
+      handleIncomingCall({
+        callerId: activeConversation.leadName,
+        callId: Date.now().toString(),
+      });
+    }, 2000);
+  };
+
+  const handleOpenWhatsAppWeb = () => {
+    if (!activeConversation || activeConversation.type !== "whatsapp") {
+      toast({
+        title: "Invalid action",
+        description: "This is not a WhatsApp conversation.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const phoneNumber = activeConversation.whatsappNumber?.replace(/[^0-9]/g, "");
+    if (phoneNumber) {
+      window.open(`https://wa.me/${phoneNumber}`, "_blank");
+      toast({
+        title: "WhatsApp Web",
+        description: "Opening WhatsApp Web in a new tab...",
+      });
+    } else {
+      toast({
+        title: "Phone number not found",
+        description: "Unable to open WhatsApp Web without a phone number.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleScheduleMeeting = () => {
+    if (!activeConversation) {
+      toast({
+        title: "No conversation selected",
+        description: "Please select a conversation first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Schedule Meeting",
+      description: `Opening calendar to schedule meeting with ${activeConversation.leadName}...`,
+    });
+
+    // Navigate to calendar/meetings page with pre-filled lead info
+    router.push(`/meetings/new?leadId=${activeConversation.leadId}&leadName=${encodeURIComponent(activeConversation.leadName)}`);
+  };
+
+  const handleViewLeadProfile = () => {
+    if (!activeConversation) {
+      toast({
+        title: "No conversation selected",
+        description: "Please select a conversation first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Lead Profile",
+      description: `Opening profile for ${activeConversation.leadName}...`,
+    });
+
+    // Navigate to lead profile page
+    router.push(`/leads/${activeConversation.leadId}`);
+  };
+
+  const handleExportConversation = async () => {
+    if (!activeConversation) {
+      toast({
+        title: "No conversation selected",
+        description: "Please select a conversation first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Create conversation export data
+      const exportData = {
+        conversation: activeConversation,
+        exportDate: new Date().toISOString(),
+        exportedBy: user?.email,
+      };
+
+      // Convert to JSON and create blob
+      const jsonString = JSON.stringify(exportData, null, 2);
+      const blob = new Blob([jsonString], { type: "application/json" });
+      
+      // Create download link
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `conversation-${activeConversation.leadName.replace(/\s+/g, "-")}-${format(new Date(), "yyyy-MM-dd")}.json`;
+      
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up
+      URL.revokeObjectURL(url);
+
+      toast({
+        title: "Export successful",
+        description: "Conversation exported successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Export failed",
+        description: "Failed to export conversation. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="p-6 h-[calc(100vh-4rem)]">
       {/* Header with Channels Toggle */}
@@ -746,7 +909,7 @@ export default function ConversationsPage() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>Conversations</CardTitle>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" onClick={handleStartNewConversation}>
                     <Plus className="h-4 w-4 mr-1" />
                     New
                   </Button>
@@ -756,7 +919,7 @@ export default function ConversationsPage() {
                     placeholder="Search conversations..."
                     className="flex-1"
                   />
-                  <Button size="icon" variant="ghost">
+                  <Button size="icon" variant="ghost" onClick={handleShowFilters}>
                     <Filter className="h-4 w-4" />
                   </Button>
                 </div>
@@ -987,12 +1150,12 @@ export default function ConversationsPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={handleStartCall}>
                             <Phone className="mr-2 h-4 w-4" />
                             Start Call
                           </DropdownMenuItem>
                           {activeConversation?.type === "whatsapp" && (
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={handleOpenWhatsAppWeb}>
                               <WhatsApp className="mr-2 h-4 w-4" />
                               Open in WhatsApp Web
                             </DropdownMenuItem>
@@ -1010,16 +1173,16 @@ export default function ConversationsPage() {
                               View LinkedIn Profile
                             </DropdownMenuItem>
                           )}
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={handleScheduleMeeting}>
                             <Calendar className="mr-2 h-4 w-4" />
                             Schedule Meeting
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={handleViewLeadProfile}>
                             <FileText className="mr-2 h-4 w-4" />
                             View Lead Profile
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={handleExportConversation}>
                             <Download className="mr-2 h-4 w-4" />
                             Export Conversation
                           </DropdownMenuItem>
@@ -1318,6 +1481,89 @@ export default function ConversationsPage() {
               ))}
             </div>
           </ScrollArea>
+        </DialogContent>
+      </Dialog>
+
+      {/* Filter Dialog */}
+      <Dialog open={showFilterDialog} onOpenChange={setShowFilterDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Filter Conversations</DialogTitle>
+            <DialogDescription>
+              Filter your conversations by various criteria
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label>Conversation Type</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="All types" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All types</SelectItem>
+                  <SelectItem value="call">Calls</SelectItem>
+                  <SelectItem value="email">Emails</SelectItem>
+                  <SelectItem value="chat">Chat</SelectItem>
+                  <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                  <SelectItem value="linkedin">LinkedIn</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Status</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="All statuses" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All statuses</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="scheduled">Scheduled</SelectItem>
+                  <SelectItem value="missed">Missed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Date Range</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="All time" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All time</SelectItem>
+                  <SelectItem value="today">Today</SelectItem>
+                  <SelectItem value="week">This week</SelectItem>
+                  <SelectItem value="month">This month</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Quality Score</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Any score" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Any score</SelectItem>
+                  <SelectItem value="high">High (80%+)</SelectItem>
+                  <SelectItem value="medium">Medium (60-79%)</SelectItem>
+                  <SelectItem value="low">Low (&lt;60%)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowFilterDialog(false)}>Cancel</Button>
+            <Button onClick={() => {
+              setShowFilterDialog(false);
+              toast({
+                title: "Filters applied",
+                description: "Conversations filtered successfully.",
+              });
+            }}>Apply Filters</Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

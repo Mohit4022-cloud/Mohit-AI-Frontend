@@ -27,6 +27,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   ArrowLeft,
   Download,
   Filter,
@@ -38,10 +46,15 @@ import {
   Phone,
   Clock,
   TrendingUp,
+  MoreVertical,
+  Eye,
+  Copy,
+  Share2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { format, subDays } from "date-fns";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock data for call history
 const mockCallHistory = [
@@ -78,6 +91,7 @@ const mockCallHistory = [
 
 export default function CallHistoryPage() {
   const router = useRouter();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [dateRange, setDateRange] = useState<{
     from: Date | undefined;
@@ -116,6 +130,105 @@ export default function CallHistoryPage() {
     ),
   };
 
+  // Export to CSV function
+  const handleExportCSV = () => {
+    const csvHeaders = [
+      "Lead Name",
+      "Company",
+      "Phone",
+      "Date",
+      "Time",
+      "Duration",
+      "Mode",
+      "Outcome",
+      "Sentiment",
+      "Notes",
+    ];
+
+    const csvData = filteredHistory.map((call) => [
+      call.leadName,
+      call.company,
+      call.phone,
+      format(call.date, "yyyy-MM-dd"),
+      format(call.date, "HH:mm:ss"),
+      `${Math.floor(call.duration / 60)}:${(call.duration % 60)
+        .toString()
+        .padStart(2, "0")}`,
+      call.mode,
+      call.outcome,
+      `${call.sentiment}%`,
+      call.notes || "",
+    ]);
+
+    const csvContent = [
+      csvHeaders.join(","),
+      ...csvData.map((row) => row.map((cell) => `"${cell}"`).join(",")),
+    ].join("\n");
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `call_history_${format(new Date(), "yyyy-MM-dd_HH-mm-ss")}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Export Successful",
+      description: "Call history has been exported to CSV file.",
+    });
+  };
+
+  // Play recording function
+  const handlePlayRecording = (callId: string, leadName: string) => {
+    toast({
+      title: "Playing Recording",
+      description: `Playing call recording for ${leadName}...`,
+    });
+    // In a real app, this would trigger audio playback
+  };
+
+  // View/Download transcript function
+  const handleTranscript = (callId: string, leadName: string) => {
+    toast({
+      title: "Downloading Transcript",
+      description: `Downloading transcript for call with ${leadName}...`,
+    });
+    // In a real app, this would download the transcript file
+  };
+
+  // View call details function
+  const handleViewDetails = (callId: string, leadName: string) => {
+    toast({
+      title: "Opening Call Details",
+      description: `Loading detailed view for call with ${leadName}...`,
+    });
+    // In a real app, this would navigate to a detailed view
+    router.push(`/ai-calls/history/${callId}`);
+  };
+
+  // Copy call ID function
+  const handleCopyCallId = (callId: string) => {
+    navigator.clipboard.writeText(callId);
+    toast({
+      title: "Copied",
+      description: "Call ID copied to clipboard.",
+    });
+  };
+
+  // Share call function
+  const handleShareCall = (callId: string, leadName: string) => {
+    const shareUrl = `${window.location.origin}/ai-calls/history/${callId}`;
+    navigator.clipboard.writeText(shareUrl);
+    toast({
+      title: "Share Link Copied",
+      description: `Share link for call with ${leadName} copied to clipboard.`,
+    });
+  };
+
   return (
     <div className="flex flex-col h-full p-4 lg:p-6">
       {/* Header */}
@@ -136,7 +249,7 @@ export default function CallHistoryPage() {
               Review past calls and performance metrics
             </p>
           </div>
-          <Button>
+          <Button onClick={handleExportCSV}>
             <Download className="h-4 w-4 mr-2" />
             Export
           </Button>
@@ -281,10 +394,59 @@ export default function CallHistoryPage() {
           </SelectContent>
         </Select>
 
-        <Button variant="outline">
-          <Filter className="h-4 w-4 mr-2" />
-          More
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              <Filter className="h-4 w-4 mr-2" />
+              More
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Filter Options</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                setFilterOutcome("all");
+                setFilterMode("all");
+                setSearchQuery("");
+                toast({
+                  title: "Filters Cleared",
+                  description: "All filters have been reset.",
+                });
+              }}
+            >
+              Clear All Filters
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                setDateRange({
+                  from: subDays(new Date(), 1),
+                  to: new Date(),
+                });
+                toast({
+                  title: "Date Range Updated",
+                  description: "Showing calls from last 24 hours.",
+                });
+              }}
+            >
+              Last 24 Hours
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                setDateRange({
+                  from: subDays(new Date(), 30),
+                  to: new Date(),
+                });
+                toast({
+                  title: "Date Range Updated",
+                  description: "Showing calls from last 30 days.",
+                });
+              }}
+            >
+              Last 30 Days
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Table */}
@@ -352,15 +514,81 @@ export default function CallHistoryPage() {
                   <TableCell>
                     <div className="flex items-center gap-1">
                       {call.hasRecording && (
-                        <Button size="icon" variant="ghost" className="h-8 w-8">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-8 w-8"
+                          onClick={() => handlePlayRecording(call.id, call.leadName)}
+                          title="Play Recording"
+                        >
                           <Play className="h-4 w-4" />
                         </Button>
                       )}
                       {call.hasTranscript && (
-                        <Button size="icon" variant="ghost" className="h-8 w-8">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-8 w-8"
+                          onClick={() => handleTranscript(call.id, call.leadName)}
+                          title="View/Download Transcript"
+                        >
                           <FileText className="h-4 w-4" />
                         </Button>
                       )}
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-8 w-8"
+                            title="More Actions"
+                          >
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            onClick={() => handleViewDetails(call.id, call.leadName)}
+                          >
+                            <Eye className="h-4 w-4 mr-2" />
+                            View Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleCopyCallId(call.id)}
+                          >
+                            <Copy className="h-4 w-4 mr-2" />
+                            Copy Call ID
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleShareCall(call.id, call.leadName)}
+                          >
+                            <Share2 className="h-4 w-4 mr-2" />
+                            Share Call
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          {call.hasRecording && (
+                            <DropdownMenuItem
+                              onClick={() => {
+                                toast({
+                                  title: "Downloading Recording",
+                                  description: `Downloading recording for ${call.leadName}...`,
+                                });
+                              }}
+                            >
+                              <Download className="h-4 w-4 mr-2" />
+                              Download Recording
+                            </DropdownMenuItem>
+                          )}
+                          {call.hasTranscript && (
+                            <DropdownMenuItem
+                              onClick={() => handleTranscript(call.id, call.leadName)}
+                            >
+                              <FileText className="h-4 w-4 mr-2" />
+                              Download Transcript
+                            </DropdownMenuItem>
+                          )}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                   </TableCell>
                 </TableRow>

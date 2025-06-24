@@ -3,8 +3,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Building, UserPlus, Settings, Award } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function TeamPage() {
+  const router = useRouter();
+  const { toast } = useToast();
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -16,11 +20,30 @@ export default function TeamPage() {
           </p>
         </div>
         <div className="flex items-center space-x-3">
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2"
+            onClick={() => {
+              toast({
+                title: "Team Settings",
+                description: "Opening team settings...",
+              });
+              router.push("/team/settings");
+            }}
+          >
             <Settings className="h-4 w-4" />
             Team Settings
           </Button>
-          <Button className="gradient-purple-pink hover:opacity-90">
+          <Button 
+            className="gradient-purple-pink hover:opacity-90"
+            onClick={() => {
+              toast({
+                title: "Invite Member",
+                description: "Opening invite dialog...",
+              });
+              router.push("/team/invite");
+            }}
+          >
             <UserPlus className="h-4 w-4 mr-2" />
             Invite Member
           </Button>

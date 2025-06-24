@@ -3,8 +3,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Plus, Search, BookOpen } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function PlaybooksPage() {
+  const router = useRouter();
+  const { toast } = useToast();
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -16,11 +20,29 @@ export default function PlaybooksPage() {
           </p>
         </div>
         <div className="flex items-center space-x-3">
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2"
+            onClick={() => {
+              toast({
+                title: "Search Playbooks",
+                description: "Search functionality coming soon",
+              });
+            }}
+          >
             <Search className="h-4 w-4" />
             Search
           </Button>
-          <Button className="gradient-purple-pink hover:opacity-90">
+          <Button 
+            className="gradient-purple-pink hover:opacity-90"
+            onClick={() => {
+              toast({
+                title: "Create Playbook",
+                description: "Opening playbook editor...",
+              });
+              router.push("/playbooks/new");
+            }}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Create Playbook
           </Button>
