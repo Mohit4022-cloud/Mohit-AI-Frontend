@@ -52,6 +52,7 @@ interface CallQueueState {
   // History
   getCallHistory: () => CallRecord[];
   clearHistory: () => void;
+  removeFromHistory: (callId: string) => void;
 }
 
 export const useCallQueueStore = create<CallQueueState>()(
@@ -161,6 +162,10 @@ export const useCallQueueStore = create<CallQueueState>()(
       // History
       getCallHistory: () => get().callHistory,
       clearHistory: () => set({ callHistory: [] }),
+      removeFromHistory: (callId) =>
+        set((state) => ({
+          callHistory: state.callHistory.filter((call) => call.id !== callId),
+        })),
     }),
     {
       name: "call-queue-storage",

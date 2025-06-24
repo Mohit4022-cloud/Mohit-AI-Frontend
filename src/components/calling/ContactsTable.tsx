@@ -11,6 +11,11 @@ import {
   PhoneCall,
   CheckCircle2,
   XCircle,
+  MoreVertical,
+  MessageSquare,
+  Calendar,
+  UserPlus,
+  FileText,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,8 +23,18 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useContactsStore } from "@/stores/contactsStore";
 import { useCallQueueStore } from "@/stores/callQueueStore";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import type { Contact } from "@/types/contact";
 
@@ -28,6 +43,8 @@ export function ContactsTable() {
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
   const { contacts, loading, loadContacts } = useContactsStore();
   const { addToQueue, queue } = useCallQueueStore();
+  const { toast } = useToast();
+  const router = useRouter();
 
   // Load contacts on mount
   useEffect(() => {
@@ -104,6 +121,61 @@ export function ContactsTable() {
     return null;
   };
 
+  const handleCall = (contact: Contact) => {
+    // Add single contact to queue and navigate to dialer
+    const queueContact = {
+      id: contact.id,
+      name: contact.name,
+      company: contact.company || "",
+      title: contact.title || "",
+      phone: contact.phone,
+      email: contact.email,
+      industry: contact.industry || "",
+      lastCalled: contact.lastContactedAt ? new Date(contact.lastContactedAt) : undefined,
+      callStatus: undefined as any,
+      callDuration: undefined,
+      notes: contact.notes,
+    };
+    addToQueue([queueContact]);
+    toast({
+      title: "Added to call queue",
+      description: `${contact.name} has been added to the call queue`,
+    });
+    // Switch to dialer tab
+    const dialerTab = document.querySelector('[value="dialer"]') as HTMLButtonElement;
+    if (dialerTab) dialerTab.click();
+  };
+
+  const handleEmail = (contact: Contact) => {
+    // Open email client
+    window.location.href = `mailto:${contact.email}?subject=Follow up&body=Hi ${contact.name},%0D%0A%0D%0A`;
+  };
+
+  const handleScheduleMeeting = (contact: Contact) => {
+    toast({
+      title: "Schedule Meeting",
+      description: "Calendar integration coming soon",
+    });
+  };
+
+  const handleSendMessage = (contact: Contact) => {
+    toast({
+      title: "Send Message",
+      description: "Messaging feature coming soon",
+    });
+  };
+
+  const handleViewProfile = (contact: Contact) => {
+    router.push(`/contacts/${contact.id}`);
+  };
+
+  const handleAddNote = (contact: Contact) => {
+    toast({
+      title: "Add Note",
+      description: "Notes feature coming soon",
+    });
+  };
+
   return (
     <Card className="h-full flex flex-col">
       <CardHeader className="pb-3">
@@ -170,6 +242,7 @@ export function ContactsTable() {
                     <th className="text-left p-3">Contact Info</th>
                     <th className="text-left p-3">Last Called</th>
                     <th className="text-left p-3">Status</th>
+                    <th className="text-left p-3 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
@@ -257,6 +330,97 @@ export function ContactsTable() {
                               In Queue
                             </Badge>
                           )}
+                        </div>
+                      </td>
+                      <td className="p-3">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCall(contact);
+                            }}
+                            className="h-8 w-8"
+                          >
+                            <Phone className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleEmail(contact);
+                            }}
+                            className="h-8 w-8"
+                          >
+                            <Mail className="h-4 w-4" />
+                          </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={(e) => e.stopPropagation()}
+                                className="h-8 w-8"
+                              >
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-56">
+                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                onClick={() => handleViewProfile(contact)}
+                              >
+                                <User className="mr-2 h-4 w-4" />
+                                View Profile
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleScheduleMeeting(contact)}
+                              >
+                                <Calendar className="mr-2 h-4 w-4" />
+                                Schedule Meeting
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleSendMessage(contact)}
+                              >
+                                <MessageSquare className="mr-2 h-4 w-4" />
+                                Send Message
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleAddNote(contact)}
+                              >
+                                <FileText className="mr-2 h-4 w-4" />
+                                Add Note
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                onClick={() => {
+                                  const queueContact = {
+                                    id: contact.id,
+                                    name: contact.name,
+                                    company: contact.company || "",
+                                    title: contact.title || "",
+                                    phone: contact.phone,
+                                    email: contact.email,
+                                    industry: contact.industry || "",
+                                    lastCalled: contact.lastContactedAt ? new Date(contact.lastContactedAt) : undefined,
+                                    callStatus: undefined as any,
+                                    callDuration: undefined,
+                                    notes: contact.notes,
+                                  };
+                                  addToQueue([queueContact]);
+                                  toast({
+                                    description: `${contact.name} added to call queue`,
+                                  });
+                                }}
+                              >
+                                <UserPlus className="mr-2 h-4 w-4" />
+                                Add to Queue
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
                       </td>
                     </tr>
