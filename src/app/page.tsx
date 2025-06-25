@@ -56,7 +56,7 @@ export default function HomePage() {
               <div className="flex justify-between space-x-8">
                 <div className="flex-1 text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
                   <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    47 Second
+                    47 Sec
                   </div>
                   <div className="text-sm font-medium text-neutral-600">
                     Response Time
@@ -64,7 +64,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1 text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
                   <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    391%
+                    391 %
                   </div>
                   <div className="text-sm font-medium text-neutral-600">
                     Higher Conversion
@@ -72,7 +72,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1 text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
                   <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    21x
+                    21 ×
                   </div>
                   <div className="text-sm font-medium text-neutral-600">
                     More Qualified Leads
