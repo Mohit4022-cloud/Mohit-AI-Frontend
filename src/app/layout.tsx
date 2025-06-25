@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
+import { GrammarlySuppressor } from "@/components/grammarly-suppressor";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -94,10 +95,18 @@ export default function RootLayout({
       <head>
         <link rel="dns-prefetch" href={config.api.baseUrl} />
         <link rel="preconnect" href={config.api.baseUrl} />
+        {/* Remove or update CSP to allow localhost connections */}
+        <meta 
+          httpEquiv="Content-Security-Policy" 
+          content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' http://localhost:3002 ws://localhost:3002 wss://api.elevenlabs.io https://api.elevenlabs.io; media-src 'self' blob:; worker-src 'self' blob:;"
+        />
       </head>
       <body className={inter.className}>
         <ErrorBoundary>
-          <Providers>{children}</Providers>
+          <Providers>
+            <GrammarlySuppressor />
+            {children}
+          </Providers>
         </ErrorBoundary>
       </body>
     </html>

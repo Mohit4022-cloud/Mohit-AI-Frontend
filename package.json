@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "node server.js",
+    "dev:ws": "node websocket-proxy.js",
+    "proxy": "node proxy-server.js",
+    "dev:all": "concurrently \"npm run dev\" \"npm run proxy\"",
+    "check:proxy": "curl -s http://localhost:3002/health || echo 'Proxy not running'",
     "build": "prisma generate && next build",
     "start": "NODE_ENV=production node server.js",
     "start:next": "next start -p ${PORT:-3000} -H 0.0.0.0",

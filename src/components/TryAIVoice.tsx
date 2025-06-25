@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, MessageCircle, Mic, MicOff, Volume2, VolumeX, Phone, PhoneOff } from 'lucide-react';
+import { AudioDiagnostics } from './AudioDiagnostics';
 
 interface TryAIVoiceProps {
   isOpen: boolean;
@@ -78,6 +79,7 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   const audioFormatRef = useRef<string>('pcm_48000');
   const mp3QueueRef = useRef<string[]>([]);
   const isPlayingMP3Ref = useRef(false);
+  const lastBase64AudioRef = useRef<string>('');
 
   useEffect(() => {
     if (isOpen && !isConnected && !isConnecting) {
@@ -97,10 +99,23 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   }, [isMuted]);
 
   const connectToVoiceAI = async () => {
+    // Prevent multiple simultaneous connections
+    if (wsRef.current?.readyState === WebSocket.CONNECTING || 
+        wsRef.current?.readyState === WebSocket.OPEN) {
+      console.log('WebSocket already connected or connecting');
+      return;
+    }
+    
     setIsConnecting(true);
     setError(null);
 
     try {
+      // Close any existing connection
+      if (wsRef.current) {
+        wsRef.current.close();
+        wsRef.current = null;
+      }
+      
       // Connect to our WebSocket proxy server
       const agentId = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID || 'agent_01jx1w1hf3e68v6n8510t90ww0';
       const wsUrl = `ws://localhost:3002/?agent_id=${agentId}`;
@@ -194,15 +209,25 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         
       case 'audio':
         if (data.audio_event?.audio_base_64) {
-          console.log('Processing audio chunk, length:', data.audio_event.audio_base_64.length, 'muted:', isMuted);
+          // THIS IS THE FIX - Extract the actual audio data!
+          const actualAudioBase64 = data.audio_event.audio_base_64;
+          console.log('Audio format:', audioFormatRef.current);
+          console.log('Processing audio chunk, base64 length:', actualAudioBase64.length);
+          console.log('First 50 chars:', actualAudioBase64.substring(0, 50));
+          
           if (!isMuted) {
-            // Handle audio based on format
-            if (audioFormatRef.current.startsWith('pcm_')) {
+            // If format says PCM but data looks like MP3, try MP3 playback
+            const firstBytes = atob(actualAudioBase64.substring(0, 8));
+            
+            if (firstBytes.charCodeAt(0) === 0xFF && firstBytes.charCodeAt(1) === 0xFB) {
+              console.log('Detected MP3 header, using MP3 playback');
+              playMP3Audio(actualAudioBase64); // Pass ONLY the audio data
+            } else if (audioFormatRef.current.startsWith('pcm_')) {
               // PCM audio format
-              playPCMAudio(data.audio_event.audio_base_64);
+              playPCMAudio(actualAudioBase64); // Pass ONLY the audio data
             } else {
               // MP3 format (fallback)
-              playMP3Audio(data.audio_event.audio_base_64);
+              playMP3Audio(actualAudioBase64); // Pass ONLY the audio data
             }
           }
         } else {
@@ -240,20 +265,34 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         }
         break;
         
+      case 'ping':
+        // Handle ping messages - don't try to play them as audio!
+        if (data.ping_event?.event_id && wsRef.current?.readyState === WebSocket.OPEN) {
+          console.log('Responding to ping:', data.ping_event.event_id);
+          wsRef.current.send(JSON.stringify({
+            type: 'pong',
+            event_id: data.ping_event.event_id
+          }));
+        }
+        break;
+        
       case 'error':
         setError(data.message || 'An error occurred');
         break;
+        
+      default:
+        console.log('Unknown message type:', data.type);
     }
   };
 
   const initializeAudioContext = async () => {
     if (!playbackContextRef.current) {
       try {
-        // Try to create with 16kHz sample rate
-        playbackContextRef.current = new AudioContext({ sampleRate: 16000 });
-      } catch (error) {
-        console.warn('Failed to create 16kHz context, using default sample rate');
+        // Create audio context with default sample rate (usually 48kHz)
         playbackContextRef.current = new AudioContext();
+      } catch (error) {
+        console.error('Failed to create audio context:', error);
+        return;
       }
       
       console.log('Audio context initialized with sample rate:', playbackContextRef.current.sampleRate);
@@ -262,13 +301,14 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       gainNodeRef.current = playbackContextRef.current.createGain();
       gainNodeRef.current.connect(playbackContextRef.current.destination);
       gainNodeRef.current.gain.value = isMuted ? 0 : 1;
+      console.log('Gain node created with volume:', gainNodeRef.current.gain.value);
     }
     
     // Resume audio context if it's suspended (browser autoplay policy)
     if (playbackContextRef.current.state === 'suspended') {
       try {
         await playbackContextRef.current.resume();
-        console.log('Audio context resumed');
+        console.log('Audio context resumed, state:', playbackContextRef.current.state);
       } catch (error) {
         console.error('Failed to resume audio context:', error);
       }
@@ -304,7 +344,9 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
 
   const playPCMAudio = async (base64Audio: string) => {
     try {
-      console.log('Processing PCM audio, base64 length:', base64Audio.length);
+      console.log('=== PCM AUDIO DEBUG START ===');
+      console.log('Base64 length:', base64Audio.length);
+      console.log('First 50 chars of base64:', base64Audio.substring(0, 50));
       
       // Initialize audio context if needed
       await initializeAudioContext();
@@ -321,47 +363,182 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         bytes[i] = binaryString.charCodeAt(i);
       }
       
-      console.log('Binary data size:', bytes.length, 'bytes');
+      console.log('Binary size:', bytes.length);
+      console.log('First 20 bytes:', Array.from(bytes.slice(0, 20)));
       
-      // Convert bytes to 16-bit PCM samples
-      const pcmData = new Int16Array(bytes.buffer);
-      console.log('PCM samples:', pcmData.length);
+      // Handle odd-sized buffers
+      let processedBytes = bytes;
+      if (bytes.length % 2 !== 0) {
+        console.warn('Odd-sized buffer, padding...');
+        processedBytes = new Uint8Array(bytes.length + 1);
+        processedBytes.set(bytes);
+        processedBytes[bytes.length] = 0;
+      }
       
-      // Convert to Float32 for Web Audio API
+      // Try different byte orders to see which one works
+      console.log('=== TESTING BYTE ORDERS ===');
+      
+      // Method 1: Direct Int16Array (assumes little-endian)
+      const pcmData = new Int16Array(processedBytes.buffer, 0, processedBytes.length / 2);
+      
+      // Check the range of PCM values
+      let min = 32767, max = -32768;
+      for (let i = 0; i < Math.min(1000, pcmData.length); i++) {
+        if (pcmData[i] < min) min = pcmData[i];
+        if (pcmData[i] > max) max = pcmData[i];
+      }
+      console.log('PCM value range:', { min, max });
+      console.log('First 10 PCM samples:', Array.from(pcmData.slice(0, 10)));
+      
+      // If values are all near zero or very small, might be wrong format
+      if (Math.abs(max) < 100 && Math.abs(min) < 100) {
+        console.warn('⚠️ PCM values are suspiciously small - might be wrong format!');
+      }
+      
+      // Convert to Float32
       const float32Data = new Float32Array(pcmData.length);
       for (let i = 0; i < pcmData.length; i++) {
-        // Convert from 16-bit signed integer to float (-1 to 1)
         float32Data[i] = pcmData[i] / 32768.0;
       }
       
-      // Extract sample rate from format (e.g., "pcm_48000" -> 48000)
-      let sampleRate = 48000; // default
+      // Check float values
+      console.log('First 10 float samples:', Array.from(float32Data.slice(0, 10)));
+      
+      // Get sample rate
+      let sampleRate = 48000;
       if (audioFormatRef.current && audioFormatRef.current.includes('_')) {
         sampleRate = parseInt(audioFormatRef.current.split('_')[1]) || 48000;
       }
+      console.log('Sample rate:', sampleRate);
+      console.log('Audio format:', audioFormatRef.current);
       
-      console.log('Using sample rate:', sampleRate, 'Hz');
-      
-      // Create audio buffer with correct sample rate
-      const audioBuffer = playbackContextRef.current.createBuffer(
-        1, // mono
-        float32Data.length,
-        sampleRate
-      );
+      // Create audio buffer
+      const audioBuffer = playbackContextRef.current.createBuffer(1, float32Data.length, sampleRate);
       audioBuffer.copyToChannel(float32Data, 0);
       
-      // Add to queue and play
-      audioQueueRef.current.push(audioBuffer);
-      console.log(`Added PCM audio to queue, size: ${audioQueueRef.current.length}`);
+      console.log('Audio buffer created:', {
+        duration: audioBuffer.duration,
+        length: audioBuffer.length,
+        sampleRate: audioBuffer.sampleRate
+      });
       
-      // Process queue if not already playing
-      if (!isPlayingRef.current) {
-        processAudioQueue();
+      // Add to queue
+      if (audioQueueRef.current.length > 10) {
+        console.warn('Audio queue too large, clearing old entries');
+        audioQueueRef.current = audioQueueRef.current.slice(-5);
       }
       
+      audioQueueRef.current.push(audioBuffer);
+      console.log('Queue size:', audioQueueRef.current.length);
+      console.log('=== PCM AUDIO DEBUG END ===');
+      
+      // Store for testing
+      lastBase64AudioRef.current = base64Audio;
+      
+      // Process queue
+      processAudioQueue();
+      
     } catch (error) {
-      console.error('Error playing PCM audio:', error);
+      console.error('Error in playPCMAudio:', error);
     }
+  };
+
+  const testAudioSystem = async () => {
+    console.log('=== TESTING AUDIO SYSTEM WITH KNOWN GOOD AUDIO ===');
+    
+    await initializeAudioContext();
+    if (!playbackContextRef.current) return;
+    
+    // Generate a 440Hz sine wave for 0.5 seconds
+    const sampleRate = playbackContextRef.current.sampleRate;
+    const duration = 0.5;
+    const numSamples = sampleRate * duration;
+    
+    const audioBuffer = playbackContextRef.current.createBuffer(1, numSamples, sampleRate);
+    const channelData = audioBuffer.getChannelData(0);
+    
+    // Generate sine wave
+    for (let i = 0; i < numSamples; i++) {
+      channelData[i] = Math.sin(2 * Math.PI * 440 * i / sampleRate) * 0.3;
+    }
+    
+    // Play it
+    const source = playbackContextRef.current.createBufferSource();
+    source.buffer = audioBuffer;
+    
+    if (gainNodeRef.current) {
+      source.connect(gainNodeRef.current);
+    } else {
+      source.connect(playbackContextRef.current.destination);
+    }
+    
+    source.start();
+    console.log('Test tone should be playing now - do you hear it?');
+  };
+
+  const checkAudioContextState = async () => {
+    if (!playbackContextRef.current) {
+      console.error('No audio context!');
+      return;
+    }
+    
+    console.log('Audio Context State:', {
+      state: playbackContextRef.current.state,
+      sampleRate: playbackContextRef.current.sampleRate,
+      baseLatency: (playbackContextRef.current as any).baseLatency,
+      currentTime: playbackContextRef.current.currentTime
+    });
+    
+    if (playbackContextRef.current.state === 'suspended') {
+      console.log('Resuming suspended audio context...');
+      await playbackContextRef.current.resume();
+    }
+    
+    // Check gain node
+    if (gainNodeRef.current) {
+      console.log('Gain node value:', gainNodeRef.current.gain.value);
+    }
+  };
+
+  const testAlternativePCMProcessing = async (base64Audio: string) => {
+    console.log('=== TESTING ALTERNATIVE PCM PROCESSING ===');
+    
+    const binaryString = atob(base64Audio);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    
+    // Method 2: Manual byte order (try big-endian)
+    const dataView = new DataView(bytes.buffer);
+    const samples = bytes.length / 2;
+    const pcmBigEndian = new Int16Array(samples);
+    
+    for (let i = 0; i < samples; i++) {
+      // Try big-endian
+      pcmBigEndian[i] = dataView.getInt16(i * 2, false); // false = big-endian
+    }
+    
+    console.log('Big-endian first 10 samples:', Array.from(pcmBigEndian.slice(0, 10)));
+    
+    // Method 3: Try swapping bytes manually
+    const pcmSwapped = new Int16Array(samples);
+    for (let i = 0; i < samples; i++) {
+      const low = bytes[i * 2];
+      const high = bytes[i * 2 + 1];
+      pcmSwapped[i] = (high << 8) | low; // Swap bytes
+    }
+    
+    console.log('Byte-swapped first 10 samples:', Array.from(pcmSwapped.slice(0, 10)));
+    
+    // Method 4: Check if it's actually 8-bit data
+    const pcm8bit = new Int16Array(bytes.length);
+    for (let i = 0; i < bytes.length; i++) {
+      // Convert 8-bit to 16-bit
+      pcm8bit[i] = (bytes[i] - 128) * 256;
+    }
+    
+    console.log('8-bit converted first 10 samples:', Array.from(pcm8bit.slice(0, 10)));
   };
 
   const playMP3Audio = async (base64Audio: string) => {
@@ -607,13 +784,24 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       
       // Schedule playback
       source.start(startTime);
+      console.log('Started PCM chunk playback', {
+        duration: audioBuffer.duration,
+        sampleRate: audioBuffer.sampleRate,
+        startTime: startTime,
+        currentTime: currentTime,
+        audioContextState: playbackContextRef.current.state,
+        volume: gainNodeRef.current?.gain.value
+      });
       
       // Update next start time to ensure gapless playback
       nextStartTimeRef.current = startTime + audioBuffer.duration;
       
       // Wait for this chunk to finish
       await new Promise<void>((resolve) => {
-        source.onended = () => resolve();
+        source.onended = () => {
+          console.log('PCM chunk playback finished');
+          resolve();
+        };
       });
     } catch (error) {
       console.error('Error playing audio buffer:', error);
@@ -821,6 +1009,13 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
             </button>
           </div>
         )}
+        
+        {/* Audio Diagnostics - show when not connected */}
+        {!isConnected && !isConnecting && (
+          <div className="mx-4 mt-4">
+            <AudioDiagnostics />
+          </div>
+        )}
 
         {/* Chat Area */}
         <div className="flex-1 p-4 overflow-y-auto">
@@ -878,11 +1073,42 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
               </button>
             )}
           </div>
+          
+          {/* Add these test buttons in development mode */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="flex gap-2 mt-2 justify-center">
+              <button
+                onClick={testAudioSystem}
+                className="px-3 py-1 bg-green-500 text-white rounded text-sm"
+              >
+                Test Tone
+              </button>
+              <button
+                onClick={checkAudioContextState}
+                className="px-3 py-1 bg-yellow-500 text-white rounded text-sm"
+              >
+                Check Audio
+              </button>
+              <button
+                onClick={() => {
+                  if (lastBase64AudioRef.current) {
+                    testAlternativePCMProcessing(lastBase64AudioRef.current);
+                  } else {
+                    console.log('No audio data stored yet');
+                  }
+                }}
+                className="px-3 py-1 bg-purple-500 text-white rounded text-sm"
+              >
+                Test Alt Processing
+              </button>
+            </div>
+          )}
+          
           <p className="text-xs text-gray-500 mt-4 text-center">
             Powered by ElevenLabs Conversational AI
           </p>
           <p className="text-xs text-gray-400 mt-1 text-center">
-            Note: Make sure the WebSocket server is running (npm run dev:ws)
+            Note: Make sure the WebSocket server is running (npm run proxy)
           </p>
         </div>
 
