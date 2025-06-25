@@ -61,23 +61,10 @@ wss.on('connection', async (clientWs, req) => {
     const elevenLabsWs = new WebSocket(elevenLabsUrl);
     
     elevenLabsWs.on('open', () => {
-      console.log('Connected to ElevenLabs, sending initialization...');
+      console.log('Connected to ElevenLabs WebSocket');
       
-      // Send initialization message to ElevenLabs
-      const initMessage = {
-        type: "conversation_initiation_client_data",
-        conversation_config_override: {
-          agent: {
-            agent_id: agentId,
-            voice: {
-              voice_id: "21m00Tcm4TlvDq8ikWAM"
-            }
-          }
-        }
-      };
-      
-      elevenLabsWs.send(JSON.stringify(initMessage));
-      console.log('Sent initialization message');
+      // Don't send any initialization message - ElevenLabs will handle it
+      console.log('Connected to ElevenLabs, ready for messages');
       
       // Notify client
       clientWs.send(JSON.stringify({ type: 'connected' }));
@@ -85,9 +72,21 @@ wss.on('connection', async (clientWs, req) => {
 
     // Relay messages from client to ElevenLabs
     clientWs.on('message', (message) => {
-      console.log('Received from client, forwarding to ElevenLabs');
-      if (elevenLabsWs.readyState === WebSocket.OPEN) {
-        elevenLabsWs.send(message);
+      console.log('Received from client:', message.toString().substring(0, 200));
+      
+      // Validate it's proper JSON
+      try {
+        const parsed = JSON.parse(message.toString());
+        console.log('Message type:', Object.keys(parsed));
+        
+        // IMPORTANT: Convert Buffer to string before sending
+        if (elevenLabsWs.readyState === WebSocket.OPEN) {
+          const messageStr = message.toString();
+          console.log('Sending to ElevenLabs (first 100 chars):', messageStr.substring(0, 100));
+          elevenLabsWs.send(messageStr);
+        }
+      } catch (e) {
+        console.error('Client sent invalid JSON:', e);
       }
     });
 
@@ -95,15 +94,31 @@ wss.on('connection', async (clientWs, req) => {
     elevenLabsWs.on('message', (message, isBinary) => {
       if (isBinary) {
         // Binary data (audio)
-        console.log('Received binary audio data from ElevenLabs');
+        console.log('Received binary audio data from ElevenLabs, size:', message.length);
         if (clientWs.readyState === WebSocket.OPEN) {
-          clientWs.send(message, { binary: true });
+          // Send audio data wrapped in JSON for easier handling
+          const audioBase64 = message.toString('base64');
+          clientWs.send(JSON.stringify({
+            type: 'audio',
+            audio_event: {
+              audio_base_64: audioBase64
+            }
+          }));
         }
       } else {
         // Text/JSON data
         try {
           const data = JSON.parse(message.toString());
           console.log('Received from ElevenLabs:', data.type || 'unknown type');
+          if (data.type === 'agent_response') {
+            console.log('Agent response full:', JSON.stringify(data, null, 2));
+          }
+          if (data.type === 'audio') {
+            console.log('Audio message details:', {
+              hasAudioData: !!data.audio_event?.audio_base_64,
+              audioLength: data.audio_event?.audio_base_64?.length || 0
+            });
+          }
           
           // Handle ping messages
           if (data.type === 'ping') {

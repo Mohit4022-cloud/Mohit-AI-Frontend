@@ -49,6 +49,7 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       
       wsRef.current.onopen = () => {
         console.log('Connected to proxy server');
+        // Don't send any initialization - let ElevenLabs handle it
       };
 
       wsRef.current.onmessage = async (event) => {
@@ -61,7 +62,10 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
           // It's text/JSON data
           try {
             const data = JSON.parse(event.data);
-            console.log('Received message:', data);
+            console.log('Received message type:', data.type);
+            if (data.type === 'audio') {
+              console.log('Received audio event, has audio:', !!data.audio_event?.audio_base_64);
+            }
             handleWebSocketMessage(data);
           } catch (e) {
             console.error('Failed to parse message:', e);
@@ -117,6 +121,8 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
             content: data.agent_response_event.text,
             timestamp: new Date()
           }]);
+          // Stop recording after agent responds
+          stopRecording();
         }
         break;
         
@@ -146,12 +152,15 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         view[i] = audioData.charCodeAt(i);
       }
       
-      const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
+      // ElevenLabs sends raw PCM audio at 16kHz, mono, 16-bit
+      const blob = new Blob([arrayBuffer], { type: 'audio/wav' });
       const audioUrl = URL.createObjectURL(blob);
       
       if (audioRef.current) {
         audioRef.current.src = audioUrl;
-        audioRef.current.play().catch(console.error);
+        audioRef.current.play().catch(e => {
+          console.log('Audio playback blocked - user interaction required');
+        });
       }
     } catch (error) {
       console.error('Error playing audio:', error);
@@ -160,7 +169,9 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
 
   const startRecording = async () => {
     try {
+      console.log('Requesting microphone permission...');
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      console.log('Microphone permission granted');
       
       // Initialize audio context
       audioContextRef.current = new AudioContext({ sampleRate: 16000 });
@@ -168,17 +179,19 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       mediaRecorderRef.current = new MediaRecorder(stream, {
         mimeType: 'audio/webm;codecs=opus'
       });
+      console.log('MediaRecorder created');
 
       mediaRecorderRef.current.ondataavailable = async (event) => {
-        if (event.data.size > 0 && wsRef.current?.readyState === WebSocket.OPEN) {
-          // Convert to base64 and send
+        // Send any non-empty chunks
+        if (event.data.size > 0 && wsRef.current?.readyState === WebSocket.OPEN && isRecording) {
+          console.log('Sending audio chunk, size:', event.data.size);
+          // Convert audio to base64 and send
           const reader = new FileReader();
           reader.onloadend = () => {
             const base64 = reader.result?.toString().split(',')[1];
-            if (base64) {
-              wsRef.current?.send(JSON.stringify({
-                type: 'user_audio_input',
-                audio: base64
+            if (base64 && wsRef.current?.readyState === WebSocket.OPEN && isRecording) {
+              wsRef.current.send(JSON.stringify({
+                user_audio_chunk: base64
               }));
             }
           };
