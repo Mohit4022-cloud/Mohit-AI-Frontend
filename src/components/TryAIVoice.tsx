@@ -28,7 +28,7 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   
   // Audio playback system
   const playbackContextRef = useRef<AudioContext | null>(null);
-  const audioQueueRef = useRef<AudioBuffer[]>([]);
+  const audioQueueRef = useRef<string[]>([]);
   const isPlayingRef = useRef(false);
   const nextStartTimeRef = useRef(0);
   const gainNodeRef = useRef<GainNode | null>(null);
@@ -127,8 +127,10 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         
       case 'audio':
         if (data.audio_event?.audio_base_64) {
-          console.log('Processing audio chunk, length:', data.audio_event.audio_base_64.length);
-          playAudioChunk(data.audio_event.audio_base_64);
+          console.log('Processing audio chunk, length:', data.audio_event.audio_base_64.length, 'muted:', isMuted);
+          if (!isMuted) {
+            addToAudioQueue(data.audio_event.audio_base_64);
+          }
         } else {
           console.warn('Received audio event without audio data');
         }
@@ -199,6 +201,32 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  const addToAudioQueue = (base64Audio: string) => {
+    console.log('Adding audio to queue, current queue size:', audioQueueRef.current.length);
+    audioQueueRef.current.push(base64Audio);
+    
+    if (!isPlayingRef.current) {
+      processAudioQueue();
+    }
+  };
+
+  const processAudioQueue = async () => {
+    if (isPlayingRef.current || audioQueueRef.current.length === 0) {
+      return;
+    }
+    
+    isPlayingRef.current = true;
+    
+    while (audioQueueRef.current.length > 0) {
+      const base64Audio = audioQueueRef.current.shift();
+      if (base64Audio) {
+        await playAudioChunk(base64Audio);
+      }
+    }
+    
+    isPlayingRef.current = false;
+  };
+
   const playAudioChunk = async (base64Audio: string) => {
     try {
       // Initialize audio context if needed
@@ -230,14 +258,8 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
           numberOfChannels: audioBuffer.numberOfChannels
         });
         
-        // Add to queue
-        audioQueueRef.current.push(audioBuffer);
-        
-        // Start playback if not already playing
-        if (!isPlayingRef.current) {
-          console.log('Starting audio playback');
-          processAudioQueue();
-        }
+        // Play the audio buffer
+        await playBuffer(audioBuffer);
       }
     } catch (error) {
       console.error('Error processing audio chunk:', error);
@@ -277,50 +299,41 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const processAudioQueue = async () => {
-    if (!playbackContextRef.current || audioQueueRef.current.length === 0) {
-      isPlayingRef.current = false;
+  const playBuffer = async (audioBuffer: AudioBuffer): Promise<void> => {
+    if (!playbackContextRef.current) {
+      console.error('Audio context not available');
       return;
     }
     
-    isPlayingRef.current = true;
-    
-    while (audioQueueRef.current.length > 0) {
-      const audioBuffer = audioQueueRef.current.shift();
-      if (!audioBuffer) continue;
+    try {
+      // Create buffer source
+      const source = playbackContextRef.current.createBufferSource();
+      source.buffer = audioBuffer;
       
-      try {
-        // Create buffer source
-        const source = playbackContextRef.current.createBufferSource();
-        source.buffer = audioBuffer;
-        
-        // Connect to gain node instead of directly to destination
-        if (gainNodeRef.current) {
-          source.connect(gainNodeRef.current);
-        } else {
-          source.connect(playbackContextRef.current.destination);
-        }
-        
-        // Calculate when to start this chunk
-        const currentTime = playbackContextRef.current.currentTime;
-        const startTime = Math.max(currentTime, nextStartTimeRef.current);
-        
-        // Schedule playback
-        source.start(startTime);
-        
-        // Update next start time to ensure gapless playback
-        nextStartTimeRef.current = startTime + audioBuffer.duration;
-        
-        // Wait for this chunk to finish before processing next
-        await new Promise<void>((resolve) => {
-          source.onended = () => resolve();
-        });
-      } catch (error) {
-        console.error('Error playing audio buffer:', error);
+      // Connect to gain node instead of directly to destination
+      if (gainNodeRef.current) {
+        source.connect(gainNodeRef.current);
+      } else {
+        source.connect(playbackContextRef.current.destination);
       }
+      
+      // Calculate when to start this chunk
+      const currentTime = playbackContextRef.current.currentTime;
+      const startTime = Math.max(currentTime, nextStartTimeRef.current);
+      
+      // Schedule playback
+      source.start(startTime);
+      
+      // Update next start time to ensure gapless playback
+      nextStartTimeRef.current = startTime + audioBuffer.duration;
+      
+      // Wait for this chunk to finish
+      await new Promise<void>((resolve) => {
+        source.onended = () => resolve();
+      });
+    } catch (error) {
+      console.error('Error playing audio buffer:', error);
     }
-    
-    isPlayingRef.current = false;
   };
 
   const startRecording = async () => {
