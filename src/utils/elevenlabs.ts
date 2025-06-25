@@ -23,13 +23,33 @@ export class ElevenLabsConversationalAI {
 
   // Initialize WebSocket connection for real-time conversation
   async initializeConnection(): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        // ElevenLabs WebSocket endpoint for Conversational AI 2.0
-        // Include API key in the URL as a query parameter for browser compatibility
-        const wsUrl = `wss://api.elevenlabs.io/v1/convai/conversation?agent_id=${this.config.agentId}&xi_api_key=${this.config.apiKey}`;
+        // First, get a signed URL from ElevenLabs API
+        const response = await fetch('https://api.elevenlabs.io/v1/convai/conversation/get_signed_url', {
+          method: 'POST',
+          headers: {
+            'xi-api-key': this.config.apiKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            agent_id: this.config.agentId
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to get signed URL: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const signedUrl = data.signed_url;
         
-        this.websocket = new WebSocket(wsUrl);
+        if (!signedUrl) {
+          throw new Error('No signed URL received from ElevenLabs');
+        }
+
+        // Connect using the signed URL
+        this.websocket = new WebSocket(signedUrl);
 
         this.websocket.onopen = () => {
           this.isConnected = true;

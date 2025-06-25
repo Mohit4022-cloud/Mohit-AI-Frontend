@@ -63,7 +63,8 @@ export const TryAIModal: React.FC<TryAIModalProps> = ({ isOpen, onClose }) => {
       
     } catch (error) {
       console.error('Failed to initialize ElevenLabs:', error);
-      setConnectionError('Failed to connect to AI. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setConnectionError(`Failed to connect to AI: ${errorMessage}. Please check your API key and try again.`);
     } finally {
       setIsConnecting(false);
     }
