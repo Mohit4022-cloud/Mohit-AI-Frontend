@@ -100,71 +100,56 @@ wss.on('connection', async (clientWs, req) => {
 
     // Relay messages from ElevenLabs to client
     elevenLabsWs.on('message', (message, isBinary) => {
-      if (isBinary) {
-        // Binary data (audio)
-        console.log('Received binary audio data from ElevenLabs, size:', message.length);
-        
-        
-        if (clientWs.readyState === WebSocket.OPEN) {
-          // Send audio data wrapped in JSON for easier handling
-          const audioBase64 = message.toString('base64');
-          clientWs.send(JSON.stringify({
-            type: 'audio',
-            audio_event: {
-              audio_base_64: audioBase64
-            }
-          }));
+      // Text/JSON data
+      try {
+        const data = JSON.parse(message.toString());
+        console.log('Received from ElevenLabs:', data.type || 'unknown type');
+        if (data.type === 'agent_response') {
+          console.log('Agent response full:', JSON.stringify(data, null, 2));
         }
-      } else {
-        // Text/JSON data
-        try {
-          const data = JSON.parse(message.toString());
-          console.log('Received from ElevenLabs:', data.type || 'unknown type');
-          if (data.type === 'agent_response') {
-            console.log('Agent response full:', JSON.stringify(data, null, 2));
-          }
-          if (data.type === 'audio') {
-            console.log('Audio message details:', {
-              hasAudioData: !!data.audio_event?.audio_base_64,
-              audioLength: data.audio_event?.audio_base_64?.length || 0
-            });
-          }
+        if (data.type === 'audio') {
+          console.log('Audio message details:', {
+            hasAudioData: !!data.audio_event?.audio_base_64,
+            audioLength: data.audio_event?.audio_base_64?.length || 0
+          });
+        }
+        
+        // Handle ping messages
+        if (data.type === 'ping') {
+          // Log the actual ping structure to debug
+          console.log('Ping data structure:', JSON.stringify(data));
           
-          // Handle ping messages
-          if (data.type === 'ping') {
-            // Log the actual ping structure to debug
-            console.log('Ping data structure:', JSON.stringify(data));
-            
-            // Extract event_id from the ping message
-            let eventId;
-            if (data.ping_event && typeof data.ping_event === 'object') {
-              eventId = data.ping_event.event_id;
-            } else if (data.event_id !== undefined) {
-              eventId = data.event_id;
-            } else {
-              console.error('No event_id found in ping message');
-              return;
-            }
-            
-            const pongMessage = {
-              type: 'pong',
-              event_id: eventId
-            };
-            
-            elevenLabsWs.send(JSON.stringify(pongMessage));
-            console.log('Sent pong response:', JSON.stringify(pongMessage));
-            
-            // Don't forward ping to client
+          // Extract event_id from the ping message
+          let eventId;
+          if (data.ping_event && typeof data.ping_event === 'object') {
+            eventId = data.ping_event.event_id;
+          } else if (data.event_id !== undefined) {
+            eventId = data.event_id;
+          } else {
+            console.error('No event_id found in ping message');
             return;
           }
           
-          // Forward message to client
-          if (clientWs.readyState === WebSocket.OPEN) {
-            clientWs.send(message);
-          }
-        } catch (e) {
-          console.error('Failed to parse ElevenLabs message:', e);
+          const pongMessage = {
+            type: 'pong',
+            event_id: eventId
+          };
+          
+          elevenLabsWs.send(JSON.stringify(pongMessage));
+          console.log('Sent pong response:', JSON.stringify(pongMessage));
+          
+          // Don't forward ping to client
+          return;
         }
+        
+        // Forward message to client
+        if (clientWs.readyState === WebSocket.OPEN) {
+          clientWs.send(message);
+        }
+      } catch (e) {
+        console.error('Failed to parse ElevenLabs message:', e);
+        console.log('Raw message type:', typeof message);
+        console.log('Is binary:', isBinary);
       }
     });
 

@@ -12,6 +12,47 @@ interface ConversationMessage {
   timestamp: Date;
 }
 
+// Simple resampler class for audio resampling
+class Resampler {
+  fromSampleRate: number;
+  toSampleRate: number;
+  channels: number;
+  inputBufferSize: number;
+  outputBufferSize: number;
+  resampler: (input: Float32Array) => Float32Array;
+
+  constructor(fromSampleRate: number, toSampleRate: number, channels: number, inputBufferSize: number) {
+    this.fromSampleRate = fromSampleRate;
+    this.toSampleRate = toSampleRate;
+    this.channels = channels;
+    this.inputBufferSize = inputBufferSize;
+    
+    const resampleRatio = toSampleRate / fromSampleRate;
+    this.outputBufferSize = Math.round(inputBufferSize * resampleRatio);
+    
+    this.resampler = (input: Float32Array): Float32Array => {
+      const output = new Float32Array(this.outputBufferSize);
+      const resampleRatio = this.toSampleRate / this.fromSampleRate;
+      
+      for (let i = 0; i < this.outputBufferSize; i++) {
+        const srcIndex = i / resampleRatio;
+        const srcIndexFloor = Math.floor(srcIndex);
+        const srcIndexCeil = Math.ceil(srcIndex);
+        const fraction = srcIndex - srcIndexFloor;
+        
+        if (srcIndexCeil >= input.length) {
+          output[i] = input[input.length - 1];
+        } else {
+          // Linear interpolation
+          output[i] = input[srcIndexFloor] * (1 - fraction) + input[srcIndexCeil] * fraction;
+        }
+      }
+      
+      return output;
+    };
+  }
+}
+
 export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -22,10 +63,11 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   
   const wsRef = useRef<WebSocket | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const isRecordingRef = useRef(false);
-  const audioChunksRef = useRef<Blob[]>([]);
+  const scriptProcessorRef = useRef<ScriptProcessorNode | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const resamplerRef = useRef<any>(null);
   
   // Audio playback system
   const playbackContextRef = useRef<AudioContext | null>(null);
@@ -33,6 +75,8 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   const isPlayingRef = useRef(false);
   const nextStartTimeRef = useRef(0);
   const gainNodeRef = useRef<GainNode | null>(null);
+  const mp3QueueRef = useRef<string[]>([]);
+  const isPlayingMP3Ref = useRef(false);
 
   useEffect(() => {
     if (isOpen && !isConnected && !isConnecting) {
@@ -69,24 +113,17 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       };
 
       wsRef.current.onmessage = async (event) => {
-        // Check if it's binary data (audio)
-        if (event.data instanceof Blob) {
-          console.log('Received binary audio data, size:', event.data.size);
-          // Skip audio playback for now - focus on text conversation
-          return;
-        } else {
-          // It's text/JSON data
-          try {
-            const data = JSON.parse(event.data);
-            console.log('Received message type:', data.type);
-            if (data.type === 'audio') {
-              console.log('Received audio event, has audio:', !!data.audio_event?.audio_base_64);
-            }
-            handleWebSocketMessage(data);
-          } catch (e) {
-            console.error('Failed to parse message:', e);
-            console.log('Raw message:', event.data);
+        // It's text/JSON data
+        try {
+          const data = JSON.parse(event.data);
+          console.log('Received message type:', data.type);
+          if (data.type === 'audio') {
+            console.log('Received audio event, has audio:', !!data.audio_event?.audio_base_64);
           }
+          handleWebSocketMessage(data);
+        } catch (e) {
+          console.error('Failed to parse message:', e);
+          console.log('Raw message:', event.data);
         }
       };
 
@@ -124,13 +161,18 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         
       case 'conversation_initiation_metadata':
         console.log('Conversation initialized:', data);
+        // Check for audio format - ElevenLabs defaults to MP3
+        if (data.conversation_initiation_metadata_event?.agent_output_audio_format) {
+          console.log('Audio format:', data.conversation_initiation_metadata_event.agent_output_audio_format);
+        }
         break;
         
       case 'audio':
         if (data.audio_event?.audio_base_64) {
           console.log('Processing audio chunk, length:', data.audio_event.audio_base_64.length, 'muted:', isMuted);
           if (!isMuted) {
-            addToAudioQueue(data.audio_event.audio_base_64);
+            // ElevenLabs sends MP3 audio by default
+            playMP3Audio(data.audio_event.audio_base_64);
           }
         } else {
           console.warn('Received audio event without audio data');
@@ -202,6 +244,85 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  const playMP3Audio = async (base64Audio: string) => {
+    // Add to MP3 queue
+    mp3QueueRef.current.push(base64Audio);
+    console.log('Added MP3 to queue, size:', mp3QueueRef.current.length);
+    
+    // Process queue if not already playing
+    if (!isPlayingMP3Ref.current) {
+      processMP3Queue();
+    }
+  };
+
+  const processMP3Queue = async () => {
+    if (isPlayingMP3Ref.current || mp3QueueRef.current.length === 0) {
+      return;
+    }
+    
+    isPlayingMP3Ref.current = true;
+    
+    while (mp3QueueRef.current.length > 0) {
+      const base64Audio = mp3QueueRef.current.shift();
+      if (base64Audio) {
+        await playMP3Chunk(base64Audio);
+      }
+    }
+    
+    isPlayingMP3Ref.current = false;
+  };
+
+  const playMP3Chunk = async (base64Audio: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      try {
+        // Initialize audio context if needed
+        initializeAudioContext();
+        
+        // Decode base64 to binary
+        const binaryString = atob(base64Audio);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        
+        // Create a blob with MP3 mime type
+        const audioBlob = new Blob([bytes], { type: 'audio/mp3' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        
+        // Create audio element
+        const audio = new Audio(audioUrl);
+        audio.volume = isMuted ? 0 : 1;
+        
+        // Resolve when playback ends
+        audio.onended = () => {
+          URL.revokeObjectURL(audioUrl);
+          console.log('MP3 chunk playback finished');
+          resolve();
+        };
+        
+        // Handle errors
+        audio.onerror = (e) => {
+          console.error('Audio playback error:', e);
+          URL.revokeObjectURL(audioUrl);
+          resolve(); // Continue with next chunk even if this one fails
+        };
+        
+        // Play the audio
+        audio.play().then(() => {
+          console.log('Started MP3 chunk playback');
+        }).catch((error) => {
+          console.error('Failed to play audio:', error);
+          URL.revokeObjectURL(audioUrl);
+          resolve();
+        });
+        
+      } catch (error) {
+        console.error('Error in playMP3Chunk:', error);
+        resolve();
+      }
+    });
+  };
+
   const addToAudioQueue = (base64Audio: string) => {
     console.log('Adding audio to queue, current queue size:', audioQueueRef.current.length);
     audioQueueRef.current.push(base64Audio);
@@ -267,30 +388,81 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  // Convert Float32Array to 16-bit PCM
+  const float32ToPCM16 = (float32Array: Float32Array): Uint8Array => {
+    const pcm16 = new Uint8Array(float32Array.length * 2);
+    
+    for (let i = 0; i < float32Array.length; i++) {
+      // Clamp to [-1, 1]
+      let sample = Math.max(-1, Math.min(1, float32Array[i]));
+      
+      // Convert to 16-bit signed integer
+      const int16 = Math.round(sample * 32767);
+      
+      // Write as little-endian bytes
+      pcm16[i * 2] = int16 & 0xFF;
+      pcm16[i * 2 + 1] = (int16 >> 8) & 0xFF;
+    }
+    
+    return pcm16;
+  };
+
+  // Convert ArrayBuffer to base64
+  const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  };
+
   const pcmToAudioBuffer = async (pcmData: Uint8Array, audioContext: AudioContext): Promise<AudioBuffer | null> => {
     try {
       // PCM parameters: 16-bit, mono, 16kHz
-      const sampleRate = 16000;
+      const inputSampleRate = 16000;
       const numChannels = 1;
       const bytesPerSample = 2; // 16-bit
       
       // Calculate number of samples
       const numSamples = pcmData.length / bytesPerSample;
       
-      // Create AudioBuffer - use context's sample rate to avoid resampling issues
-      const audioBuffer = audioContext.createBuffer(numChannels, numSamples, audioContext.sampleRate);
+      // Create AudioBuffer at the audio context's sample rate
+      const outputSampleRate = audioContext.sampleRate;
+      const resampledLength = Math.ceil(numSamples * outputSampleRate / inputSampleRate);
+      const audioBuffer = audioContext.createBuffer(numChannels, resampledLength, outputSampleRate);
       
       // Get channel data
       const channelData = audioBuffer.getChannelData(0);
       
-      // Convert 16-bit PCM to float32
-      for (let i = 0; i < numSamples; i++) {
-        // Read 16-bit signed integer (little-endian)
-        const sample = (pcmData[i * 2] | (pcmData[i * 2 + 1] << 8));
-        // Convert to signed 16-bit
-        const signedSample = sample > 32767 ? sample - 65536 : sample;
-        // Normalize to -1 to 1 range
-        channelData[i] = signedSample / 32768;
+      // Convert 16-bit PCM to float32 with resampling
+      const resampleRatio = outputSampleRate / inputSampleRate;
+      
+      for (let i = 0; i < resampledLength; i++) {
+        const srcIndex = i / resampleRatio;
+        const srcIndexFloor = Math.floor(srcIndex);
+        const srcIndexCeil = Math.ceil(srcIndex);
+        const fraction = srcIndex - srcIndexFloor;
+        
+        if (srcIndexCeil >= numSamples) {
+          // Use last sample
+          const lastIndex = numSamples - 1;
+          const sample = (pcmData[lastIndex * 2] | (pcmData[lastIndex * 2 + 1] << 8));
+          const signedSample = sample > 32767 ? sample - 65536 : sample;
+          channelData[i] = signedSample / 32768;
+        } else {
+          // Linear interpolation between samples
+          const sample1 = (pcmData[srcIndexFloor * 2] | (pcmData[srcIndexFloor * 2 + 1] << 8));
+          const signedSample1 = sample1 > 32767 ? sample1 - 65536 : sample1;
+          
+          const sample2 = (pcmData[srcIndexCeil * 2] | (pcmData[srcIndexCeil * 2 + 1] << 8));
+          const signedSample2 = sample2 > 32767 ? sample2 - 65536 : sample2;
+          
+          // Interpolate
+          const float1 = signedSample1 / 32768;
+          const float2 = signedSample2 / 32768;
+          channelData[i] = float1 * (1 - fraction) + float2 * fraction;
+        }
       }
       
       return audioBuffer;
@@ -343,7 +515,7 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       const stream = await navigator.mediaDevices.getUserMedia({ 
         audio: {
           channelCount: 1, // Mono
-          sampleRate: 16000, // 16kHz
+          sampleRate: { ideal: 16000 }, // Request 16kHz if possible
           echoCancellation: true,
           noiseSuppression: true,
           autoGainControl: true
@@ -351,67 +523,76 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       });
       console.log('Microphone permission granted');
       
+      // Store the stream reference
+      mediaStreamRef.current = stream;
+      
       // Initialize audio context for processing
-      audioContextRef.current = new AudioContext({ sampleRate: 16000 });
+      // Try to create with native sample rate first
+      const track = stream.getAudioTracks()[0];
+      const settings = track.getSettings();
+      const sampleRate = settings.sampleRate || 48000; // Default to 48kHz if not available
       
-      // Create a MediaRecorder that outputs WebM/Opus
-      const mimeTypes = [
-        'audio/webm;codecs=opus',
-        'audio/webm',
-        'audio/ogg;codecs=opus'
-      ];
+      console.log('Microphone sample rate:', sampleRate);
       
-      let selectedMimeType = 'audio/webm';
-      for (const mimeType of mimeTypes) {
-        if (MediaRecorder.isTypeSupported(mimeType)) {
-          selectedMimeType = mimeType;
-          console.log('Using mime type:', selectedMimeType);
-          break;
-        }
+      audioContextRef.current = new AudioContext({ sampleRate });
+      
+      // Create source node from stream
+      const source = audioContextRef.current.createMediaStreamSource(stream);
+      
+      // Create script processor for real-time processing
+      // Buffer size: 4096 samples (good balance between latency and performance)
+      const bufferSize = 4096;
+      scriptProcessorRef.current = audioContextRef.current.createScriptProcessor(bufferSize, 1, 1);
+      
+      // Set up resampler if needed
+      if (sampleRate !== 16000) {
+        resamplerRef.current = new Resampler(sampleRate, 16000, 1, bufferSize);
       }
       
-      mediaRecorderRef.current = new MediaRecorder(stream, {
-        mimeType: selectedMimeType,
-        audioBitsPerSecond: 16000
-      });
-      console.log('MediaRecorder created');
-
-      // Clear any previous chunks
-      audioChunksRef.current = [];
-      
-      mediaRecorderRef.current.ondataavailable = async (event) => {
-        console.log('Data available event fired, size:', event.data.size, 'isRecording:', isRecordingRef.current);
-        if (event.data.size > 0) {
-          audioChunksRef.current.push(event.data);
-          
-          // Process accumulated chunks every 100ms worth of data
-          if (audioChunksRef.current.length >= 1 && wsRef.current?.readyState === WebSocket.OPEN && isRecordingRef.current) {
-            // Combine chunks into a single blob
-            const combinedBlob = new Blob(audioChunksRef.current, { type: selectedMimeType });
-            audioChunksRef.current = []; // Clear the array
-            
-            try {
-              // Convert WebM/Opus to PCM
-              const pcmBase64 = await convertWebMToPCM(combinedBlob);
-              
-              if (pcmBase64 && wsRef.current?.readyState === WebSocket.OPEN && isRecordingRef.current) {
-                console.log('Sending PCM audio chunk, base64 length:', pcmBase64.length);
-                wsRef.current.send(JSON.stringify({
-                  user_audio_chunk: pcmBase64
-                }));
-                console.log('Sent PCM audio chunk to WebSocket');
-              }
-            } catch (error) {
-              console.error('Error converting audio to PCM:', error);
-            }
-          }
+      // Process audio in real-time
+      scriptProcessorRef.current.onaudioprocess = (audioProcessingEvent) => {
+        if (!isRecordingRef.current || wsRef.current?.readyState !== WebSocket.OPEN) {
+          return;
+        }
+        
+        // Get input samples
+        const inputBuffer = audioProcessingEvent.inputBuffer;
+        const inputData = inputBuffer.getChannelData(0);
+        
+        // Clear output to prevent hearing your own voice
+        const outputBuffer = audioProcessingEvent.outputBuffer;
+        const outputData = outputBuffer.getChannelData(0);
+        outputData.fill(0);
+        
+        // Resample if necessary
+        let processedData: Float32Array;
+        if (resamplerRef.current) {
+          processedData = resamplerRef.current.resampler(inputData);
+        } else {
+          processedData = new Float32Array(inputData);
+        }
+        
+        // Convert to 16-bit PCM
+        const pcmData = float32ToPCM16(processedData);
+        
+        // Convert to base64
+        const base64 = arrayBufferToBase64(pcmData.buffer);
+        
+        // Send to WebSocket
+        if (wsRef.current?.readyState === WebSocket.OPEN && isRecordingRef.current) {
+          wsRef.current.send(JSON.stringify({
+            user_audio_chunk: base64
+          }));
         }
       };
-
-      mediaRecorderRef.current.start(100); // Collect chunks every 100ms
+      
+      // Connect the audio graph
+      source.connect(scriptProcessorRef.current);
+      scriptProcessorRef.current.connect(audioContextRef.current.destination);
+      
       setIsRecording(true);
       isRecordingRef.current = true;
-      console.log('Started recording, isRecording:', true);
+      console.log('Started real-time PCM recording');
       
     } catch (error) {
       console.error('Error starting recording:', error);
@@ -419,116 +600,33 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  // Convert WebM/Opus blob to PCM base64
-  const convertWebMToPCM = async (webmBlob: Blob): Promise<string | null> => {
-    try {
-      // Convert blob to ArrayBuffer
-      const arrayBuffer = await webmBlob.arrayBuffer();
-      
-      // Decode audio data using Web Audio API
-      if (!audioContextRef.current) {
-        audioContextRef.current = new AudioContext({ sampleRate: 16000 });
-      }
-      
-      // Decode the WebM/Opus data
-      const audioBuffer = await audioContextRef.current.decodeAudioData(arrayBuffer);
-      
-      // Convert to 16-bit PCM at 16kHz
-      const pcmData = audioBufferToPCM(audioBuffer);
-      
-      // Convert to base64
-      const base64 = btoa(String.fromCharCode(...pcmData));
-      
-      return base64;
-    } catch (error) {
-      console.error('Error converting WebM to PCM:', error);
-      return null;
-    }
-  };
-
-  // Convert AudioBuffer to 16-bit PCM Uint8Array
-  const audioBufferToPCM = (audioBuffer: AudioBuffer): Uint8Array => {
-    // Get the first channel (mono)
-    const channelData = audioBuffer.getChannelData(0);
-    
-    // Resample to 16kHz if needed
-    let resampled: Float32Array;
-    if (audioBuffer.sampleRate !== 16000) {
-      const resampleRatio = 16000 / audioBuffer.sampleRate;
-      const newLength = Math.round(channelData.length * resampleRatio);
-      resampled = new Float32Array(newLength);
-      
-      // Simple linear interpolation resampling
-      for (let i = 0; i < newLength; i++) {
-        const srcIndex = i / resampleRatio;
-        const srcIndexFloor = Math.floor(srcIndex);
-        const srcIndexCeil = Math.ceil(srcIndex);
-        const fraction = srcIndex - srcIndexFloor;
-        
-        if (srcIndexCeil >= channelData.length) {
-          resampled[i] = channelData[channelData.length - 1];
-        } else {
-          resampled[i] = channelData[srcIndexFloor] * (1 - fraction) + channelData[srcIndexCeil] * fraction;
-        }
-      }
-    } else {
-      resampled = channelData;
-    }
-    
-    // Convert float32 [-1, 1] to 16-bit PCM
-    const pcmData = new Uint8Array(resampled.length * 2);
-    
-    for (let i = 0; i < resampled.length; i++) {
-      // Clamp to [-1, 1]
-      let sample = Math.max(-1, Math.min(1, resampled[i]));
-      
-      // Convert to 16-bit signed integer
-      const int16 = Math.round(sample * 32767);
-      
-      // Write as little-endian bytes
-      pcmData[i * 2] = int16 & 0xFF;
-      pcmData[i * 2 + 1] = (int16 >> 8) & 0xFF;
-    }
-    
-    return pcmData;
-  };
 
   const stopRecording = async () => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-      // Stop recording first
-      setIsRecording(false);
-      isRecordingRef.current = false;
-      
-      // Process any remaining chunks before stopping
-      if (audioChunksRef.current.length > 0 && wsRef.current?.readyState === WebSocket.OPEN) {
-        try {
-          const mimeType = mediaRecorderRef.current.mimeType || 'audio/webm';
-          const combinedBlob = new Blob(audioChunksRef.current, { type: mimeType });
-          audioChunksRef.current = [];
-          
-          const pcmBase64 = await convertWebMToPCM(combinedBlob);
-          if (pcmBase64) {
-            console.log('Sending final PCM audio chunk');
-            wsRef.current.send(JSON.stringify({
-              user_audio_chunk: pcmBase64
-            }));
-          }
-        } catch (error) {
-          console.error('Error processing final chunks:', error);
-        }
-      }
-      
-      // Now stop the MediaRecorder
-      mediaRecorderRef.current.stop();
-      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
-      
-      // Send end of stream signal
-      if (wsRef.current?.readyState === WebSocket.OPEN) {
-        console.log('Sending end of audio signal');
-        wsRef.current.send(JSON.stringify({
-          user_audio_chunk: ""  // Empty chunk signals end of audio
-        }));
-      }
+    // Stop recording first
+    setIsRecording(false);
+    isRecordingRef.current = false;
+    
+    // Disconnect script processor
+    if (scriptProcessorRef.current) {
+      scriptProcessorRef.current.disconnect();
+      scriptProcessorRef.current = null;
+    }
+    
+    // Stop media stream
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach(track => track.stop());
+      mediaStreamRef.current = null;
+    }
+    
+    // Clear resampler
+    resamplerRef.current = null;
+    
+    // Send end of stream signal
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      console.log('Sending end of audio signal');
+      wsRef.current.send(JSON.stringify({
+        user_audio_chunk: ""  // Empty chunk signals end of audio
+      }));
     }
   };
 
@@ -554,10 +652,11 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       playbackContextRef.current.close();
       playbackContextRef.current = null;
     }
-    // Clear audio queue and chunks
+    // Clear audio queues
     audioQueueRef.current = [];
-    audioChunksRef.current = [];
+    mp3QueueRef.current = [];
     isPlayingRef.current = false;
+    isPlayingMP3Ref.current = false;
     nextStartTimeRef.current = 0;
     setIsConnected(false);
   };
