@@ -25,6 +25,13 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const isRecordingRef = useRef(false);
+  
+  // Audio playback system
+  const playbackContextRef = useRef<AudioContext | null>(null);
+  const audioQueueRef = useRef<AudioBuffer[]>([]);
+  const isPlayingRef = useRef(false);
+  const nextStartTimeRef = useRef(0);
+  const gainNodeRef = useRef<GainNode | null>(null);
 
   useEffect(() => {
     if (isOpen && !isConnected && !isConnecting) {
@@ -35,6 +42,13 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       disconnect();
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    // Update gain when mute state changes
+    if (gainNodeRef.current) {
+      gainNodeRef.current.gain.value = isMuted ? 0 : 1;
+    }
+  }, [isMuted]);
 
   const connectToVoiceAI = async () => {
     setIsConnecting(true);
@@ -112,8 +126,11 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         break;
         
       case 'audio':
-        if (!isMuted && data.audio_event?.audio_base_64) {
+        if (data.audio_event?.audio_base_64) {
+          console.log('Processing audio chunk, length:', data.audio_event.audio_base_64.length);
           playAudioChunk(data.audio_event.audio_base_64);
+        } else {
+          console.warn('Received audio event without audio data');
         }
         break;
         
@@ -153,29 +170,157 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const playAudioChunk = (base64Audio: string) => {
-    try {
-      const audioData = atob(base64Audio);
-      const arrayBuffer = new ArrayBuffer(audioData.length);
-      const view = new Uint8Array(arrayBuffer);
-      
-      for (let i = 0; i < audioData.length; i++) {
-        view[i] = audioData.charCodeAt(i);
+  const initializeAudioContext = async () => {
+    if (!playbackContextRef.current) {
+      try {
+        // Try to create with 16kHz sample rate
+        playbackContextRef.current = new AudioContext({ sampleRate: 16000 });
+      } catch (error) {
+        console.warn('Failed to create 16kHz context, using default sample rate');
+        playbackContextRef.current = new AudioContext();
       }
       
-      // ElevenLabs sends raw PCM audio at 16kHz, mono, 16-bit
-      const blob = new Blob([arrayBuffer], { type: 'audio/wav' });
-      const audioUrl = URL.createObjectURL(blob);
+      console.log('Audio context initialized with sample rate:', playbackContextRef.current.sampleRate);
       
-      if (audioRef.current) {
-        audioRef.current.src = audioUrl;
-        audioRef.current.play().catch(e => {
-          console.log('Audio playback blocked - user interaction required');
+      // Create gain node for volume control
+      gainNodeRef.current = playbackContextRef.current.createGain();
+      gainNodeRef.current.connect(playbackContextRef.current.destination);
+      gainNodeRef.current.gain.value = isMuted ? 0 : 1;
+    }
+    
+    // Resume audio context if it's suspended (browser autoplay policy)
+    if (playbackContextRef.current.state === 'suspended') {
+      try {
+        await playbackContextRef.current.resume();
+        console.log('Audio context resumed');
+      } catch (error) {
+        console.error('Failed to resume audio context:', error);
+      }
+    }
+  };
+
+  const playAudioChunk = async (base64Audio: string) => {
+    try {
+      // Initialize audio context if needed
+      await initializeAudioContext();
+      
+      if (!playbackContextRef.current) {
+        console.error('Audio context not initialized');
+        return;
+      }
+
+      // Decode base64 to binary
+      const binaryString = atob(base64Audio);
+      const length = binaryString.length;
+      const bytes = new Uint8Array(length);
+      
+      for (let i = 0; i < length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      
+      // Convert PCM data to AudioBuffer
+      // ElevenLabs sends 16-bit PCM at 16kHz, mono
+      const audioBuffer = await pcmToAudioBuffer(bytes, playbackContextRef.current);
+      
+      if (audioBuffer) {
+        console.log('Created audio buffer:', {
+          duration: audioBuffer.duration,
+          length: audioBuffer.length,
+          sampleRate: audioBuffer.sampleRate,
+          numberOfChannels: audioBuffer.numberOfChannels
         });
+        
+        // Add to queue
+        audioQueueRef.current.push(audioBuffer);
+        
+        // Start playback if not already playing
+        if (!isPlayingRef.current) {
+          console.log('Starting audio playback');
+          processAudioQueue();
+        }
       }
     } catch (error) {
-      console.error('Error playing audio:', error);
+      console.error('Error processing audio chunk:', error);
     }
+  };
+
+  const pcmToAudioBuffer = async (pcmData: Uint8Array, audioContext: AudioContext): Promise<AudioBuffer | null> => {
+    try {
+      // PCM parameters: 16-bit, mono, 16kHz
+      const sampleRate = 16000;
+      const numChannels = 1;
+      const bytesPerSample = 2; // 16-bit
+      
+      // Calculate number of samples
+      const numSamples = pcmData.length / bytesPerSample;
+      
+      // Create AudioBuffer - use context's sample rate to avoid resampling issues
+      const audioBuffer = audioContext.createBuffer(numChannels, numSamples, audioContext.sampleRate);
+      
+      // Get channel data
+      const channelData = audioBuffer.getChannelData(0);
+      
+      // Convert 16-bit PCM to float32
+      for (let i = 0; i < numSamples; i++) {
+        // Read 16-bit signed integer (little-endian)
+        const sample = (pcmData[i * 2] | (pcmData[i * 2 + 1] << 8));
+        // Convert to signed 16-bit
+        const signedSample = sample > 32767 ? sample - 65536 : sample;
+        // Normalize to -1 to 1 range
+        channelData[i] = signedSample / 32768;
+      }
+      
+      return audioBuffer;
+    } catch (error) {
+      console.error('Error converting PCM to AudioBuffer:', error);
+      return null;
+    }
+  };
+
+  const processAudioQueue = async () => {
+    if (!playbackContextRef.current || audioQueueRef.current.length === 0) {
+      isPlayingRef.current = false;
+      return;
+    }
+    
+    isPlayingRef.current = true;
+    
+    while (audioQueueRef.current.length > 0) {
+      const audioBuffer = audioQueueRef.current.shift();
+      if (!audioBuffer) continue;
+      
+      try {
+        // Create buffer source
+        const source = playbackContextRef.current.createBufferSource();
+        source.buffer = audioBuffer;
+        
+        // Connect to gain node instead of directly to destination
+        if (gainNodeRef.current) {
+          source.connect(gainNodeRef.current);
+        } else {
+          source.connect(playbackContextRef.current.destination);
+        }
+        
+        // Calculate when to start this chunk
+        const currentTime = playbackContextRef.current.currentTime;
+        const startTime = Math.max(currentTime, nextStartTimeRef.current);
+        
+        // Schedule playback
+        source.start(startTime);
+        
+        // Update next start time to ensure gapless playback
+        nextStartTimeRef.current = startTime + audioBuffer.duration;
+        
+        // Wait for this chunk to finish before processing next
+        await new Promise<void>((resolve) => {
+          source.onended = () => resolve();
+        });
+      } catch (error) {
+        console.error('Error playing audio buffer:', error);
+      }
+    }
+    
+    isPlayingRef.current = false;
   };
 
   const startRecording = async () => {
@@ -283,6 +428,14 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       audioContextRef.current.close();
       audioContextRef.current = null;
     }
+    if (playbackContextRef.current) {
+      playbackContextRef.current.close();
+      playbackContextRef.current = null;
+    }
+    // Clear audio queue
+    audioQueueRef.current = [];
+    isPlayingRef.current = false;
+    nextStartTimeRef.current = 0;
     setIsConnected(false);
   };
 
@@ -363,7 +516,8 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
 
         {/* Control Area */}
         <div className="border-t p-4">
-          <div className="flex items-center justify-center space-x-4">
+          <div className="flex items-center justify-center space-x-4"
+               onClick={() => initializeAudioContext()}>
             {isConnected ? (
               <>
                 <button

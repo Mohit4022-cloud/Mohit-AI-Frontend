@@ -145,10 +145,10 @@ wss.on('connection', async (clientWs, req) => {
           if (data.type === 'ping') {
             const pongMessage = {
               type: 'pong',
-              event_id: data.event_id
+              event_id: data.ping_event?.event_id || data.event_id
             };
             elevenLabsWs.send(JSON.stringify(pongMessage));
-            console.log('Sent pong response with event_id:', data.event_id);
+            console.log('Sent pong response with event_id:', data.ping_event?.event_id || data.event_id);
             
             // Don't forward ping to client
             return;
