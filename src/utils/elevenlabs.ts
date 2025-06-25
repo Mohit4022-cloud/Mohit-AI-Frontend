@@ -23,16 +23,31 @@ export class ElevenLabsConversationalAI {
 
   // Initialize WebSocket connection for real-time conversation
   async initializeConnection(): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
         console.log('Initializing ElevenLabs connection...');
         console.log('Agent ID:', this.config.agentId);
 
-        // Direct WebSocket connection to ElevenLabs
-        const websocketUrl = `wss://api.elevenlabs.io/v1/convai/conversation?agent_id=${this.config.agentId}`;
-        console.log('Connecting to:', websocketUrl);
+        // Get WebSocket URL from server API
+        const response = await fetch('/api/elevenlabs/conversation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            agent_id: this.config.agentId
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to get WebSocket URL');
+        }
+
+        const { websocket_url, is_public } = await response.json();
+        console.log('Got WebSocket URL, connecting...', { is_public });
         
-        this.websocket = new WebSocket(websocketUrl);
+        this.websocket = new WebSocket(websocket_url);
 
         this.websocket.onopen = () => {
           console.log('WebSocket connected');
@@ -43,6 +58,8 @@ export class ElevenLabsConversationalAI {
 
         this.websocket.onerror = (error) => {
           console.error('WebSocket error:', error);
+          console.error('WebSocket readyState:', this.websocket?.readyState);
+          console.error('WebSocket URL:', websocket_url);
           reject(new Error('WebSocket connection failed'));
         };
 

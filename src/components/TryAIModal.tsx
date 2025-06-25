@@ -41,7 +41,7 @@ export const TryAIModal: React.FC<TryAIModalProps> = ({ isOpen, onClose }) => {
     try {
       // ElevenLabs configuration with agent ID
       const config = {
-        apiKey: process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY || 'your-api-key',
+        apiKey: '', // Not needed for client-side, handled by server
         agentId: process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID || 'agent_01jx1w1hf3e68v6n8510t90ww0'
       };
 

@@ -16,7 +16,7 @@ import {
   Target,
   Sparkles,
 } from "lucide-react";
-import { TryAIModal } from "@/components/TryAIModal";
+import { TryAIModalSimple } from "@/components/TryAIModalSimple";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -89,7 +89,7 @@ export function Sidebar() {
         </div>
       </div>
 
-      <TryAIModal 
+      <TryAIModalSimple 
         isOpen={isTryAIModalOpen} 
         onClose={() => setIsTryAIModalOpen(false)} 
       />
