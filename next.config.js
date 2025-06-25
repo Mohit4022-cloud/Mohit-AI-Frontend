@@ -54,6 +54,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   compress: true,
+  output: 'standalone',
   
   // Image optimization
   images: {
@@ -121,6 +122,14 @@ const nextConfig = {
           openAnalyzer: true,
         })
       )
+    }
+
+    // Webpack caching
+    config.cache = {
+      type: 'filesystem',
+      buildDependencies: {
+        config: [__filename],
+      },
     }
 
     return config

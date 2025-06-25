@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { useContactsStore } from "@/stores/contactsStore";
 import { Contact } from "@/types/contact";
 import { AddContactForm } from "@/components/contacts/AddContactForm";
@@ -9,14 +10,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,36 +28,55 @@ import {
   Download,
   RefreshCw,
   Users,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useDebounce } from "@/lib/hooks/useDebounce";
 
 const statusColors = {
-  active: "bg-green-100 text-green-800",
-  inactive: "bg-gray-100 text-gray-800",
-  prospect: "bg-blue-100 text-blue-800",
-  customer: "bg-purple-100 text-purple-800",
-  churned: "bg-red-100 text-red-800",
+  new: "bg-blue-100 text-blue-800",
+  contacted: "bg-yellow-100 text-yellow-800",
+  qualified: "bg-purple-100 text-purple-800",
+  converted: "bg-green-100 text-green-800",
+  lost: "bg-red-100 text-red-800",
 };
 
 export default function ContactsPage() {
-  const { contacts, loading, error, loadContacts, deleteContact } =
-    useContactsStore();
+  const { 
+    contacts, 
+    loading, 
+    error, 
+    loadContacts, 
+    deleteContact,
+    page,
+    limit,
+    total 
+  } = useContactsStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
   const { toast } = useToast();
+  
+  // Debounce search query
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   useEffect(() => {
-    loadContacts();
-  }, [loadContacts]);
+    loadContacts(page, limit);
+  }, [loadContacts, page, limit]);
 
-  const filteredContacts = contacts.filter(
-    (contact) =>
-      contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      contact.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      contact.company?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      contact.phone.includes(searchQuery),
-  );
+  const filteredContacts = useMemo(() => {
+    if (!debouncedSearchQuery) return contacts;
+    
+    const query = debouncedSearchQuery.toLowerCase();
+    return contacts.filter(
+      (contact) =>
+        contact.name.toLowerCase().includes(query) ||
+        contact.email.toLowerCase().includes(query) ||
+        contact.company?.toLowerCase().includes(query) ||
+        contact.phone.includes(debouncedSearchQuery)
+    );
+  }, [contacts, debouncedSearchQuery]);
 
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Are you sure you want to delete ${name}?`)) return;
@@ -109,11 +121,27 @@ export default function ContactsPage() {
   };
 
   const stats = {
-    total: contacts.length,
-    active: contacts.filter((c) => c.status === "active").length,
-    prospects: contacts.filter((c) => c.status === "prospect").length,
-    customers: contacts.filter((c) => c.status === "customer").length,
+    total: total || contacts.length,
+    new: contacts.filter((c) => c.status === "new").length,
+    qualified: contacts.filter((c) => c.status === "qualified").length,
+    converted: contacts.filter((c) => c.status === "converted").length,
   };
+
+  const totalPages = Math.ceil(total / limit);
+
+  const handlePageChange = (newPage: number) => {
+    loadContacts(newPage, limit);
+  };
+
+  // Virtual scrolling setup
+  const parentRef = React.useRef<HTMLDivElement>(null);
+  
+  const rowVirtualizer = useVirtualizer({
+    count: filteredContacts.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 80,
+    overscan: 5,
+  });
 
   return (
     <div className="p-6 space-y-6">
@@ -126,7 +154,7 @@ export default function ContactsPage() {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => loadContacts()}
+            onClick={() => loadContacts(page, limit)}
             disabled={loading}
           >
             <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
@@ -158,21 +186,8 @@ export default function ContactsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Active</p>
-                <p className="text-2xl font-bold">{stats.active}</p>
-              </div>
-              <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-                <div className="h-3 w-3 rounded-full bg-green-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Prospects</p>
-                <p className="text-2xl font-bold">{stats.prospects}</p>
+                <p className="text-sm text-gray-600">New Leads</p>
+                <p className="text-2xl font-bold">{stats.new}</p>
               </div>
               <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
                 <div className="h-3 w-3 rounded-full bg-blue-600" />
@@ -184,11 +199,24 @@ export default function ContactsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Customers</p>
-                <p className="text-2xl font-bold">{stats.customers}</p>
+                <p className="text-sm text-gray-600">Qualified</p>
+                <p className="text-2xl font-bold">{stats.qualified}</p>
               </div>
               <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
                 <div className="h-3 w-3 rounded-full bg-purple-600" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Converted</p>
+                <p className="text-2xl font-bold">{stats.converted}</p>
+              </div>
+              <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                <div className="h-3 w-3 rounded-full bg-green-600" />
               </div>
             </div>
           </CardContent>
@@ -226,91 +254,145 @@ export default function ContactsPage() {
                 : "No contacts yet. Add your first contact!"}
             </div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Contact Info</TableHead>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Lead Score</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredContacts.map((contact) => (
-                  <TableRow key={contact.id}>
-                    <TableCell className="font-medium">
-                      {contact.name}
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2 text-sm">
-                          <Mail className="h-3 w-3" />
-                          {contact.email}
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Phone className="h-3 w-3" />
-                          {contact.phone}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {contact.company && (
-                        <div>
-                          <div className="font-medium">{contact.company}</div>
-                          {contact.title && (
-                            <div className="text-sm text-gray-500">
-                              {contact.title}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <Badge
-                        className={cn(
-                          statusColors[contact.status || "prospect"],
-                        )}
+            <>
+              {/* Virtual scrolling container */}
+              <div
+                ref={parentRef}
+                className="h-[600px] overflow-auto border rounded-lg"
+              >
+                <div
+                  style={{
+                    height: `${rowVirtualizer.getTotalSize()}px`,
+                    width: '100%',
+                    position: 'relative',
+                  }}
+                >
+                  {/* Header */}
+                  <div className="sticky top-0 bg-white z-10 border-b">
+                    <div className="grid grid-cols-6 gap-4 p-4 font-medium text-sm text-gray-700">
+                      <div>Name</div>
+                      <div>Contact Info</div>
+                      <div>Company</div>
+                      <div>Status</div>
+                      <div>Lead Score</div>
+                      <div className="text-right">Actions</div>
+                    </div>
+                  </div>
+
+                  {/* Virtual rows */}
+                  {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                    const contact = filteredContacts[virtualRow.index];
+                    return (
+                      <div
+                        key={contact.id}
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: `${virtualRow.size}px`,
+                          transform: `translateY(${virtualRow.start + 48}px)`,
+                        }}
                       >
-                        {contact.status || "prospect"}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-center">
-                        {contact.leadScore || 50}
+                        <div className="grid grid-cols-6 gap-4 p-4 border-b hover:bg-gray-50">
+                          <div className="font-medium">{contact.name}</div>
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2 text-sm">
+                              <Mail className="h-3 w-3" />
+                              {contact.email}
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                              <Phone className="h-3 w-3" />
+                              {contact.phone}
+                            </div>
+                          </div>
+                          <div>
+                            {contact.company && (
+                              <div>
+                                <div className="font-medium">{contact.company}</div>
+                                {contact.title && (
+                                  <div className="text-sm text-gray-500">
+                                    {contact.title}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            <Badge
+                              className={cn(
+                                statusColors[contact.status || "new"],
+                              )}
+                            >
+                              {contact.status || "new"}
+                            </Badge>
+                          </div>
+                          <div className="text-center">
+                            {contact.leadScore || 50}
+                          </div>
+                          <div className="text-right">
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon">
+                                  <MoreVertical className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem
+                                  onClick={() => setEditingContact(contact)}
+                                >
+                                  <Edit className="h-4 w-4 mr-2" />
+                                  Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleDelete(contact.id, contact.name)
+                                  }
+                                  className="text-red-600"
+                                >
+                                  <Trash className="h-4 w-4 mr-2" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </div>
+                        </div>
                       </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon">
-                            <MoreVertical className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem
-                            onClick={() => setEditingContact(contact)}
-                          >
-                            <Edit className="h-4 w-4 mr-2" />
-                            Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() =>
-                              handleDelete(contact.id, contact.name)
-                            }
-                            className="text-red-600"
-                          >
-                            <Trash className="h-4 w-4 mr-2" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Pagination */}
+              <div className="flex items-center justify-between mt-4">
+                <div className="text-sm text-gray-600">
+                  Showing {(page - 1) * limit + 1} to {Math.min(page * limit, total)} of {total} contacts
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(page - 1)}
+                    disabled={page === 1 || loading}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    Previous
+                  </Button>
+                  <span className="text-sm">
+                    Page {page} of {totalPages}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(page + 1)}
+                    disabled={page === totalPages || loading}
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </>
           )}
         </CardContent>
       </Card>

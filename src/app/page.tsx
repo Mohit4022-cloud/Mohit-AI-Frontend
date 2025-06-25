@@ -11,12 +11,17 @@ import {
   Lock,
   Play,
   Star,
+  Clock,
+  TrendingUp,
+  Target,
 } from "lucide-react";
 import { PublicLayout } from "@/components/layouts/PublicLayout";
 
 export const metadata: Metadata = {
-  title: "Mohit AI - AI-Powered SDR Automation",
-  description: "Mohit AI - Your AI SDR That Never Sleeps",
+  title:
+    "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
+  description:
+    "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
 };
 
 export default function HomePage() {
@@ -28,15 +33,11 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="max-w-2xl">
               <h1 className="text-7xl font-bold text-black tracking-tight leading-[1.1] mb-8">
-                Your AI SDR That{" "}
-                <span className="bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent inline-block transform hover:scale-105 transition-transform duration-300">
-                  Never Sleeps
-                </span>
+                Never Miss Another Inbound Lead
               </h1>
               <p className="text-xl text-neutral-600 leading-relaxed mb-12">
-                Mohit AI handles 100% of cold outreach—calls, emails, LinkedIn
-                messages—and delivers 10-15 hot, qualified leads daily to your
-                human SDRs. Focus on closing, not cold calling.
+                Respond to every lead in under 60 seconds with AI that works
+                across voice, chat, email, and SMS—all for the price of lunch.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 mb-16">
                 <Link href="/register">
@@ -55,29 +56,62 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-              <div className="grid grid-cols-3 gap-8">
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
-                  <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    10-15
-                  </div>
-                  <div className="text-sm font-medium text-neutral-600">
-                    Hot Leads Daily
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Clock className="w-8 h-8 text-purple-600" />
+                      </div>
+                    </div>
+                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
+                      47
+                    </div>
+                    <div className="text-lg font-semibold text-neutral-800 mb-1">
+                      Second
+                    </div>
+                    <div className="text-sm text-neutral-600">
+                      Response Time
+                    </div>
                   </div>
                 </div>
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
-                  <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    3x
-                  </div>
-                  <div className="text-sm font-medium text-neutral-600">
-                    More Meetings
+                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <TrendingUp className="w-8 h-8 text-purple-600" />
+                      </div>
+                    </div>
+                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      391%
+                    </div>
+                    <div className="text-lg font-semibold text-neutral-800 mb-1">
+                      Higher
+                    </div>
+                    <div className="text-sm text-neutral-600">
+                      Conversion Rate
+                    </div>
                   </div>
                 </div>
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
-                  <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    80%
-                  </div>
-                  <div className="text-sm font-medium text-neutral-600">
-                    Less Cold Calling
+                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Target className="w-8 h-8 text-purple-600" />
+                      </div>
+                    </div>
+                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      21×
+                    </div>
+                    <div className="text-lg font-semibold text-neutral-800 mb-1">
+                      More Qualified
+                    </div>
+                    <div className="text-sm text-neutral-600">
+                      Leads Generated
+                    </div>
                   </div>
                 </div>
               </div>
@@ -85,7 +119,7 @@ export default function HomePage() {
             <div className="lg:mt-0 mt-12">
               <div className="bg-white rounded-2xl shadow-xl p-8 border border-neutral-100 hover:border-neutral-200 transition-all duration-300 transform hover:translate-y-[-4px] hover:shadow-2xl">
                 <h3 className="text-2xl font-bold text-black mb-8 text-center">
-                  See Mohit AI in action
+                  Start Your Free Trial
                 </h3>
                 <form className="space-y-6">
                   <div>
@@ -173,8 +207,8 @@ export default function HomePage() {
                     </Button>
                   </Link>
                   <p className="text-xs text-neutral-500 text-center mt-4">
-                    By clicking &ldquo;Get Started,&rdquo; you agree to our
-                    Privacy Policy and Terms of Service.
+                    ✓ No credit card required ✓ Setup in 5 minutes ✓ Cancel
+                    anytime
                   </p>
                 </form>
               </div>
@@ -223,20 +257,22 @@ export default function HomePage() {
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white/20">
                   <Shield className="w-8 h-8" />
                 </div>
-                <span className="text-2xl font-semibold">SOC 2 Compliant</span>
+                <span className="text-2xl font-semibold">
+                  SOC 2 Type II Certified
+                </span>
               </div>
               <div className="flex items-center justify-center gap-5 bg-white/10 rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 border border-white/10 shadow-md">
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white/20">
                   <Zap className="w-8 h-8" />
                 </div>
-                <span className="text-2xl font-semibold">99.9% Uptime</span>
+                <span className="text-2xl font-semibold">99.9% Uptime SLA</span>
               </div>
               <div className="flex items-center justify-center gap-5 bg-white/10 rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 border border-white/10 shadow-md">
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white/20">
                   <Lock className="w-8 h-8" />
                 </div>
                 <span className="text-2xl font-semibold">
-                  Enterprise Security
+                  Bank-Level Encryption
                 </span>
               </div>
             </div>
@@ -310,7 +346,7 @@ export default function HomePage() {
               What Our Customers Say
             </h2>
             <p className="text-xl text-neutral-600 leading-relaxed">
-              Join hundreds of sales teams who have transformed their outreach
+              Join hundreds of sales teams capturing every inbound opportunity
               with Mohit AI.
             </p>
           </div>
@@ -325,16 +361,15 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;We went from 200 cold calls daily to 15 hot
-                conversations. Our close rate jumped from 3% to 28%.&rdquo;
+                &ldquo;We went from missing 40% of our inbound leads to
+                capturing every single one. Mohit AI paid for itself in the
+                first week by booking 15 extra demos we would have lost.&rdquo;
               </p>
               <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
                 <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
                 <div>
                   <div className="font-semibold text-black">Sarah Chen</div>
-                  <div className="text-neutral-500">
-                    VP of Sales at TechFlow
-                  </div>
+                  <div className="text-neutral-500">VP Sales at TechFlow</div>
                 </div>
               </div>
             </div>
@@ -348,16 +383,15 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;Our SDRs now focus entirely on warm leads. Revenue per
-                SDR has increased by 218% in 6 months.&rdquo;
+                &ldquo;$75/month for an AI that books more meetings than our
+                $65k/year SDR? It&apos;s not even a question. We&apos;re saving
+                $5,000/month and converting 3x more leads.&rdquo;
               </p>
               <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
                 <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
                 <div>
-                  <div className="font-semibold text-black">
-                    Michael Rodriguez
-                  </div>
-                  <div className="text-neutral-500">CRO at SalesBoost</div>
+                  <div className="font-semibold text-black">Marcus Johnson</div>
+                  <div className="text-neutral-500">Founder at GrowthLab</div>
                 </div>
               </div>
             </div>
@@ -371,15 +405,16 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;Mohit AI paid for itself in the first week. We&apos;re
-                booking 12 qualified meetings per day now.&rdquo;
+                &ldquo;Finally, an AI that actually works across all channels.
+                Our leads come from everywhere—website chat, email, phone calls.
+                Mohit AI handles them all perfectly.&rdquo;
               </p>
               <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
                 <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
                 <div>
-                  <div className="font-semibold text-black">Emma Thompson</div>
+                  <div className="font-semibold text-black">Jennifer Park</div>
                   <div className="text-neutral-500">
-                    Head of Sales at DataSync
+                    Revenue Operations at CloudFirst
                   </div>
                 </div>
               </div>
@@ -392,11 +427,11 @@ export default function HomePage() {
       <section className="py-32 bg-black">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-5xl md:text-6xl font-bold text-white mb-8">
-            Ready to 10x Your Sales Pipeline?
+            Never Miss Another Lead
           </h2>
           <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
-            Join 500+ companies using Mohit AI to transform their sales process.
-            Start your free trial today and see results in 24 hours.
+            Join 500+ teams responding to every lead in under 60 seconds. Start
+            your free trial and see results today.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link href="/register">
