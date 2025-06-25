@@ -23,54 +23,82 @@ export class ElevenLabsConversationalAI {
 
   // Initialize WebSocket connection for real-time conversation
   async initializeConnection(): Promise<void> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // First, get a signed URL from ElevenLabs API
-        const response = await fetch('https://api.elevenlabs.io/v1/convai/conversation/get_signed_url', {
-          method: 'POST',
-          headers: {
-            'xi-api-key': this.config.apiKey,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            agent_id: this.config.agentId
-          })
-        });
+    try {
+      console.log('Initializing ElevenLabs connection...');
+      console.log('Agent ID:', this.config.agentId);
 
-        if (!response.ok) {
-          throw new Error(`Failed to get signed URL: ${response.status} ${response.statusText}`);
-        }
+      // First, create a conversation session through our API
+      const response = await fetch('/api/elevenlabs/conversation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          agent_id: this.config.agentId
+        })
+      });
 
-        const data = await response.json();
-        const signedUrl = data.signed_url;
-        
-        if (!signedUrl) {
-          throw new Error('No signed URL received from ElevenLabs');
-        }
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to create conversation session');
+      }
 
-        // Connect using the signed URL
-        this.websocket = new WebSocket(signedUrl);
+      const { websocket_url, api_key } = await response.json();
+      console.log('Got WebSocket URL, connecting...');
 
-        this.websocket.onopen = () => {
-          this.isConnected = true;
-          console.log('ElevenLabs Conversational AI connected');
-          resolve();
+      // Connect to the WebSocket URL
+      this.websocket = new WebSocket(websocket_url);
+
+      return new Promise((resolve, reject) => {
+        this.websocket!.onopen = () => {
+          console.log('WebSocket connected, authenticating...');
+          
+          // Send authentication with API key from server
+          const authMessage = {
+            type: "authentication",
+            payload: {
+              xi_api_key: api_key
+            }
+          };
+          
+          this.websocket!.send(JSON.stringify(authMessage));
+          
+          // Wait a bit then send initialization
+          setTimeout(() => {
+            const initMessage = {
+              type: "conversation_initiation_client_data",
+              conversation_config_override: {
+                agent: {
+                  agent_id: this.config.agentId,
+                  voice: {
+                    voice_id: "21m00Tcm4TlvDq8ikWAM" // Default voice
+                  }
+                }
+              }
+            };
+            
+            this.websocket!.send(JSON.stringify(initMessage));
+            
+            this.isConnected = true;
+            console.log('ElevenLabs Conversational AI ready');
+            resolve();
+          }, 100);
         };
 
-        this.websocket.onerror = (error) => {
+        this.websocket!.onerror = (error) => {
           console.error('WebSocket error:', error);
-          reject(error);
+          reject(new Error('WebSocket connection failed'));
         };
 
-        this.websocket.onclose = () => {
+        this.websocket!.onclose = () => {
           this.isConnected = false;
           console.log('ElevenLabs connection closed');
         };
-
-      } catch (error) {
-        reject(error);
-      }
-    });
+      });
+    } catch (error) {
+      console.error('Connection error:', error);
+      throw error;
+    }
   }
 
   // Send text message to AI
