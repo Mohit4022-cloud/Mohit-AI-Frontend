@@ -103,7 +103,7 @@ export function PublicNavigation() {
                 variant="outline"
                 className="border-2 border-black text-black hover:bg-black hover:text-white transition-all duration-200"
               >
-                Login
+                Check out the platform
               </Button>
             </Link>
 

@@ -55,8 +55,8 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-              <div className="grid grid-cols-3 gap-8">
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
+              <div className="flex justify-between space-x-8">
+                <div className="flex-1 text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
                   <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
                     10-15
                   </div>
@@ -64,7 +64,7 @@ export default function HomePage() {
                     Hot Leads Daily
                   </div>
                 </div>
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
+                <div className="flex-1 text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
                   <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
                     3x
                   </div>
@@ -72,7 +72,7 @@ export default function HomePage() {
                     More Meetings
                   </div>
                 </div>
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
+                <div className="flex-1 text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
                   <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
                     80%
                   </div>
