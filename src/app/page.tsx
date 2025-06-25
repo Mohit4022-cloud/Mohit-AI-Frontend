@@ -11,6 +11,9 @@ import {
   Lock,
   Play,
   Star,
+  Clock,
+  TrendingUp,
+  Target,
 } from "lucide-react";
 import { PublicLayout } from "@/components/layouts/PublicLayout";
 
@@ -53,29 +56,62 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-              <div className="flex justify-between space-x-8 items-end">
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
-                  <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    47 Second
-                  </div>
-                  <div className="text-sm font-medium text-neutral-600">
-                    Response Time
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Clock className="w-8 h-8 text-purple-600" />
+                      </div>
+                    </div>
+                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
+                      47
+                    </div>
+                    <div className="text-lg font-semibold text-neutral-800 mb-1">
+                      Second
+                    </div>
+                    <div className="text-sm text-neutral-600">
+                      Response Time
+                    </div>
                   </div>
                 </div>
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
-                  <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    391%
-                  </div>
-                  <div className="text-sm font-medium text-neutral-600">
-                    Higher Conversion
+                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <TrendingUp className="w-8 h-8 text-purple-600" />
+                      </div>
+                    </div>
+                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      391%
+                    </div>
+                    <div className="text-lg font-semibold text-neutral-800 mb-1">
+                      Higher
+                    </div>
+                    <div className="text-sm text-neutral-600">
+                      Conversion Rate
+                    </div>
                   </div>
                 </div>
-                <div className="text-center p-6 rounded-xl hover:bg-neutral-50 transition-colors duration-300">
-                  <div className="text-5xl font-bold text-black mb-3 bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">
-                    21x
-                  </div>
-                  <div className="text-sm font-medium text-neutral-600">
-                    More Qualified Leads
+                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Target className="w-8 h-8 text-purple-600" />
+                      </div>
+                    </div>
+                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      21×
+                    </div>
+                    <div className="text-lg font-semibold text-neutral-800 mb-1">
+                      More Qualified
+                    </div>
+                    <div className="text-sm text-neutral-600">
+                      Leads Generated
+                    </div>
                   </div>
                 </div>
               </div>
