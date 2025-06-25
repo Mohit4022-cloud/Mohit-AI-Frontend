@@ -39,10 +39,10 @@ export const TryAIModal: React.FC<TryAIModalProps> = ({ isOpen, onClose }) => {
     setConnectionError(null);
 
     try {
-      // Replace with your actual ElevenLabs API key and agent ID
+      // ElevenLabs configuration with agent ID
       const config = {
         apiKey: process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY || 'your-api-key',
-        agentId: process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID || 'your-agent-id'
+        agentId: process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID || 'agent_01jx1w1hf3e68v6n8510t90ww0'
       };
 
       elevenLabsRef.current = new ElevenLabsConversationalAI(config);
