@@ -46,7 +46,6 @@ wss.on('connection', async (clientWs, req) => {
     );
 
     let elevenLabsUrl;
-    let hasReceivedResponse = false;
     
     if (signedUrlResponse.ok) {
       const data = await signedUrlResponse.json();
@@ -87,11 +86,6 @@ wss.on('connection', async (clientWs, req) => {
         const parsed = JSON.parse(message.toString());
         console.log('Message type:', Object.keys(parsed));
         
-        // Don't send audio chunks after we've received a response
-        if (hasReceivedResponse && parsed.user_audio_chunk) {
-          console.log('Ignoring audio chunk - conversation already has response');
-          return;
-        }
         
         // IMPORTANT: Convert Buffer to string before sending
         if (elevenLabsWs.readyState === WebSocket.OPEN) {
@@ -110,10 +104,6 @@ wss.on('connection', async (clientWs, req) => {
         // Binary data (audio)
         console.log('Received binary audio data from ElevenLabs, size:', message.length);
         
-        // Mark that we've received audio response (larger chunks are voice responses)
-        if (message.length > 1000) {
-          hasReceivedResponse = true;
-        }
         
         if (clientWs.readyState === WebSocket.OPEN) {
           // Send audio data wrapped in JSON for easier handling
@@ -132,7 +122,6 @@ wss.on('connection', async (clientWs, req) => {
           console.log('Received from ElevenLabs:', data.type || 'unknown type');
           if (data.type === 'agent_response') {
             console.log('Agent response full:', JSON.stringify(data, null, 2));
-            hasReceivedResponse = true;
           }
           if (data.type === 'audio') {
             console.log('Audio message details:', {
