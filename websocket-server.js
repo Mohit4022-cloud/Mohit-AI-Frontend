@@ -143,12 +143,27 @@ wss.on('connection', async (clientWs, req) => {
           
           // Handle ping messages
           if (data.type === 'ping') {
+            // Log the actual ping structure to debug
+            console.log('Ping data structure:', JSON.stringify(data));
+            
+            // Extract event_id from the ping message
+            let eventId;
+            if (data.ping_event && typeof data.ping_event === 'object') {
+              eventId = data.ping_event.event_id;
+            } else if (data.event_id !== undefined) {
+              eventId = data.event_id;
+            } else {
+              console.error('No event_id found in ping message');
+              return;
+            }
+            
             const pongMessage = {
               type: 'pong',
-              event_id: data.ping_event?.event_id || data.event_id
+              event_id: eventId
             };
+            
             elevenLabsWs.send(JSON.stringify(pongMessage));
-            console.log('Sent pong response with event_id:', data.ping_event?.event_id || data.event_id);
+            console.log('Sent pong response:', JSON.stringify(pongMessage));
             
             // Don't forward ping to client
             return;
