@@ -256,6 +256,7 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         
       case 'user_transcript':
         if (data.user_transcript_event?.text) {
+          console.log('User said:', data.user_transcript_event.text);
           setMessages(prev => [...prev, {
             role: 'user',
             content: data.user_transcript_event.text,

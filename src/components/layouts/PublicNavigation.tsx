@@ -98,20 +98,17 @@ export function PublicNavigation() {
             </Link>
 
             {/* Login button - preserve functionality from Mohit-AI-Frontend */}
-            <Link href="/login">
-              <Button
-                variant="outline"
-                className="border-2 border-black text-black hover:bg-black hover:text-white transition-all duration-200"
-              >
-                Check out the platform
-              </Button>
-            </Link>
+            <Button
+              variant="outline"
+              className="border-2 border-black text-black hover:bg-black hover:text-white transition-all duration-200"
+              asChild
+            >
+              <Link href="/dashboard">Check out the platform</Link>
+            </Button>
 
-            <Link href="/register">
-              <Button className="bg-black text-white hover:bg-neutral-900 transition-all duration-200">
-                Get Started
-              </Button>
-            </Link>
+            <Button className="bg-black text-white hover:bg-neutral-900 transition-all duration-200" asChild>
+              <Link href="/register">Get Started</Link>
+            </Button>
           </div>
         </div>
       </div>
