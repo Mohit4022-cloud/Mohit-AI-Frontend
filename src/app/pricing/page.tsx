@@ -6,7 +6,7 @@ import { PublicLayout } from "@/components/layouts/PublicLayout";
 
 export const metadata: Metadata = {
   title: "Pricing - Mohit AI",
-  description: "Simple, transparent pricing for every team size",
+  description: "Transparent Pricing Starting at $75/month | 14-Day Free Trial",
 };
 
 export default function PricingPage() {
@@ -16,11 +16,10 @@ export default function PricingPage() {
       <section className="pt-12 pb-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold text-black mb-6">
-            Simple, Transparent Pricing
+            Transparent pricing that scales with you
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            Choose the plan that fits your team&apos;s needs. All plans include
-            a 14-day free trial.
+            No hidden fees. No setup costs. No surprises.
           </p>
           <div className="flex justify-center gap-8 text-sm text-gray-600">
             <div className="flex items-center gap-2">
@@ -30,7 +29,7 @@ export default function PricingPage() {
               <span className="font-semibold">No</span> Credit Card Required
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-semibold">Cancel</span> Anytime
+              <span className="font-semibold">Setup in 5 Minutes</span>
             </div>
           </div>
         </div>
@@ -45,33 +44,23 @@ export default function PricingPage() {
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-black mb-4">Starter</h3>
                 <div className="mb-4">
-                  <span className="text-4xl font-bold">$49</span>
-                  <span className="text-gray-600">/user/month</span>
+                  <span className="text-4xl font-bold">$399</span>
+                  <span className="text-gray-600">/month</span>
                 </div>
-                <p className="text-gray-600">
-                  Perfect for small sales teams getting started with AI
-                </p>
+                <p className="text-gray-600">Perfect for growing teams</p>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Up to 1,000 monitored contacts</span>
+                  <span>Up to 500 leads/month</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Basic lead scoring</span>
+                  <span>All channels (voice, chat, email, SMS)</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Email tracking and automation</span>
-                </li>
-                <li className="flex items-start text-gray-600">
-                  <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>CRM integration (1 platform)</span>
-                </li>
-                <li className="flex items-start text-gray-600">
-                  <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Real-time alerts</span>
+                  <span>3 CRM integrations</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -82,6 +71,9 @@ export default function PricingPage() {
                   <span>Email support</span>
                 </li>
               </ul>
+              <p className="text-sm text-gray-500 italic mb-6">
+                Ideal for: Teams of 1-10 capturing their first automated leads
+              </p>
               <Link href="/register">
                 <Button
                   variant="outline"
@@ -104,37 +96,35 @@ export default function PricingPage() {
                   Professional
                 </h3>
                 <div className="mb-4">
-                  <span className="text-4xl font-bold">$99</span>
-                  <span className="text-gray-600">/user/month</span>
+                  <span className="text-4xl font-bold">$799</span>
+                  <span className="text-gray-600">/month</span>
                 </div>
-                <p className="text-gray-600">
-                  Ideal for growing teams that need advanced features
-                </p>
+                <p className="text-gray-600">Everything you need to scale</p>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Up to 10,000 monitored contacts</span>
+                  <span>Up to 2,000 leads/month</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>AI-powered lead scoring</span>
+                  <span>Everything in Starter, plus:</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Multi-channel automation</span>
+                  <span>Unlimited CRM integrations</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>CRM integration (3 platforms)</span>
+                  <span>Advanced lead scoring</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Intent data insights</span>
+                  <span>Custom AI training</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Advanced analytics & reporting</span>
+                  <span>A/B testing tools</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -142,7 +132,9 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>AI voice calling (500 min/month)</span>
+                  <span>
+                    Ideal for: Growing teams of 10-50 ready to scale revenue
+                  </span>
                 </li>
               </ul>
               <Link href="/register">
@@ -155,36 +147,32 @@ export default function PricingPage() {
             {/* Enterprise Plan */}
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-black mb-4">
-                  Enterprise
-                </h3>
+                <h3 className="text-2xl font-bold text-black mb-4">Scale</h3>
                 <div className="mb-4">
                   <span className="text-4xl font-bold">Custom</span>
                 </div>
-                <p className="text-gray-600">
-                  For large teams with custom requirements
-                </p>
+                <p className="text-gray-600">For high-volume operations</p>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Unlimited contacts</span>
+                  <span>Unlimited leads</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Custom AI models</span>
+                  <span>Everything in Professional, plus:</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Enterprise-grade security</span>
+                  <span>API access</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Unlimited integrations</span>
+                  <span>Custom integrations</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Custom workflows</span>
+                  <span>White-label options</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -192,11 +180,11 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>24/7 phone support</span>
+                  <span>SLA guarantees</span>
                 </li>
                 <li className="flex items-start text-gray-600">
                   <Check className="w-5 h-5 text-purple-500 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Unlimited AI voice calling</span>
+                  <span>Ideal for: Teams of 50+ with complex workflows</span>
                 </li>
               </ul>
               <Link href="/contact">
@@ -204,7 +192,7 @@ export default function PricingPage() {
                   variant="outline"
                   className="w-full border-black text-black hover:bg-black hover:text-white"
                 >
-                  Contact Sales
+                  Talk to Sales
                 </Button>
               </Link>
             </div>
@@ -224,9 +212,8 @@ export default function PricingPage() {
                 Can I change plans at any time?
               </h3>
               <p className="text-gray-600">
-                Yes, you can upgrade or downgrade your plan at any time. Changes
-                take effect immediately, and we&apos;ll prorate any charges or
-                credits.
+                Yes! Switch plans anytime as you grow. We&apos;ll prorate any
+                changes.
               </p>
             </div>
             <div className="border-b border-gray-200 pb-8">
@@ -234,9 +221,8 @@ export default function PricingPage() {
                 What happens after my free trial ends?
               </h3>
               <p className="text-gray-600">
-                After your 14-day free trial, you&apos;ll be automatically
-                enrolled in your selected plan. You can cancel anytime before
-                the trial ends to avoid charges.
+                After 14 days, you&apos;ll be enrolled in your selected plan.
+                Cancel anytime before to avoid charges.
               </p>
             </div>
             <div className="border-b border-gray-200 pb-8">
@@ -244,18 +230,17 @@ export default function PricingPage() {
                 Do you offer annual billing?
               </h3>
               <p className="text-gray-600">
-                Yes! We offer a 20% discount for annual billing. Contact our
-                sales team to learn more about annual plans.
+                Yes! Get 2 months free with annual billing. Contact sales for
+                details.
               </p>
             </div>
             <div className="border-b border-gray-200 pb-8">
               <h3 className="text-xl font-semibold text-black mb-4">
-                What integrations are available?
+                How quickly can I get started?
               </h3>
               <p className="text-gray-600">
-                We integrate with all major CRMs including Salesforce, HubSpot,
-                Pipedrive, and more. Enterprise plans can request custom
-                integrations.
+                Setup takes under 5 minutes. Most customers see their first
+                qualified lead within an hour.
               </p>
             </div>
           </div>
@@ -266,11 +251,10 @@ export default function PricingPage() {
       <section className="py-20 bg-gradient-to-r from-purple-300 to-purple-500">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Transform Your Sales Process?
+            Ready to never miss another lead?
           </h2>
           <p className="text-xl text-white/90 mb-8">
-            Join thousands of teams using Mohit AI to accelerate their sales
-            pipeline.
+            Join 500+ teams responding to every lead in under 60 seconds.
           </p>
           <Link href="/register">
             <Button className="px-8 py-4 bg-white text-purple-600 hover:bg-gray-100 text-lg font-semibold rounded-xl">

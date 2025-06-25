@@ -1,5 +1,6 @@
 "use client";
 
+import { PerformanceProfiler } from "@/components/PerformanceProfiler";
 import {
   Card,
   CardContent,
@@ -16,8 +17,9 @@ import {
   MessageSquare,
   Mail,
   Target,
-  CheckCircle2,
 } from "lucide-react";
+
+// Import Recharts components directly for now to fix loading issues
 import {
   ResponsiveContainer,
   AreaChart,
@@ -98,150 +100,152 @@ const activeLeads = [
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Monitor your inbound lead performance
-        </p>
-      </div>
+    <PerformanceProfiler id="DashboardPage">
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <p className="text-muted-foreground">
+            Monitor your inbound lead performance
+          </p>
+        </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat) => (
-          <Card key={stat.label}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                {stat.label}
-              </CardTitle>
-              <stat.icon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <div className="flex items-center text-xs">
-                <span
-                  className={
-                    stat.change.startsWith("+")
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }
-                >
-                  {stat.change}
-                </span>
-                <span className="text-muted-foreground ml-1">
-                  {stat.description}
-                </span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Response Time Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Response Time Trend</CardTitle>
-            <CardDescription>
-              Average response time throughout the day
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={responseTimeData}>
-                <defs>
-                  <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" />
-                <YAxis />
-                <Tooltip />
-                <Area
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#3b82f6"
-                  fillOpacity={1}
-                  fill="url(#colorValue)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Channel Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Response Channels</CardTitle>
-            <CardDescription>Lead engagement by channel today</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <ChannelStat
-              icon={Phone}
-              label="Voice Calls"
-              value={245}
-              total={500}
-            />
-            <ChannelStat
-              icon={MessageSquare}
-              label="Live Chat"
-              value={189}
-              total={500}
-            />
-            <ChannelStat icon={Mail} label="Email" value={156} total={500} />
-            <ChannelStat
-              icon={MessageSquare}
-              label="SMS"
-              value={110}
-              total={500}
-            />
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Active Leads */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Active Leads</CardTitle>
-          <CardDescription>Leads currently being processed</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {activeLeads.map((lead) => (
-              <div
-                key={lead.id}
-                className="flex items-center justify-between p-4 border rounded-lg"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    {lead.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </div>
-                  <div>
-                    <p className="font-medium">{lead.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {lead.company}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <StatusBadge status={lead.status} />
-                  <ChannelBadge channel={lead.channel} />
-                  <span className="text-sm text-muted-foreground">
-                    {lead.time}
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat) => (
+            <Card key={stat.label}>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  {stat.label}
+                </CardTitle>
+                <stat.icon className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stat.value}</div>
+                <div className="flex items-center text-xs">
+                  <span
+                    className={
+                      stat.change.startsWith("+")
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {stat.change}
+                  </span>
+                  <span className="text-muted-foreground ml-1">
+                    {stat.description}
                   </span>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Charts Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Response Time Chart */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Response Time Trend</CardTitle>
+              <CardDescription>
+                Average response time throughout the day
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={responseTimeData}>
+                  <defs>
+                    <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="time" />
+                  <YAxis />
+                  <Tooltip />
+                  <Area
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#3b82f6"
+                    fillOpacity={1}
+                    fill="url(#colorValue)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          {/* Channel Distribution */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Response Channels</CardTitle>
+              <CardDescription>Lead engagement by channel today</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ChannelStat
+                icon={Phone}
+                label="Voice Calls"
+                value={245}
+                total={500}
+              />
+              <ChannelStat
+                icon={MessageSquare}
+                label="Live Chat"
+                value={189}
+                total={500}
+              />
+              <ChannelStat icon={Mail} label="Email" value={156} total={500} />
+              <ChannelStat
+                icon={MessageSquare}
+                label="SMS"
+                value={110}
+                total={500}
+              />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Active Leads */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Active Leads</CardTitle>
+            <CardDescription>Leads currently being processed</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {activeLeads.map((lead) => (
+                <div
+                  key={lead.id}
+                  className="flex items-center justify-between p-4 border rounded-lg"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      {lead.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </div>
+                    <div>
+                      <p className="font-medium">{lead.name}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {lead.company}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <StatusBadge status={lead.status} />
+                    <ChannelBadge channel={lead.channel} />
+                    <span className="text-sm text-muted-foreground">
+                      {lead.time}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </PerformanceProfiler>
   );
 }
 
