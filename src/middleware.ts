@@ -16,22 +16,38 @@ const publicPaths = [
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  
+  // Create response
+  const response = NextResponse.next();
+  
+  // Add CSP headers to allow blob URLs for audio
+  response.headers.set(
+    'Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' data: blob: https:; " +
+    "media-src 'self' blob: data:; " +
+    "connect-src 'self' ws://localhost:3002 wss://api.elevenlabs.io https://api.elevenlabs.io; " +
+    "font-src 'self' data:; " +
+    "frame-src 'self';"
+  );
 
   // Allow public paths
   if (publicPaths.includes(pathname)) {
-    return NextResponse.next();
+    return response;
   }
 
   // In development, allow dev token
   if (process.env.NODE_ENV === 'development') {
     const authHeader = request.headers.get('authorization');
     if (authHeader?.includes('dev-token')) {
-      return NextResponse.next();
+      return response;
     }
   }
 
   // Allow all other requests to pass through for now
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
