@@ -46,6 +46,7 @@ wss.on('connection', async (clientWs, req) => {
     );
 
     let elevenLabsUrl;
+    let hasReceivedResponse = false;
     
     if (signedUrlResponse.ok) {
       const data = await signedUrlResponse.json();
@@ -63,8 +64,15 @@ wss.on('connection', async (clientWs, req) => {
     elevenLabsWs.on('open', () => {
       console.log('Connected to ElevenLabs WebSocket');
       
-      // Don't send any initialization message - ElevenLabs will handle it
-      console.log('Connected to ElevenLabs, ready for messages');
+      // Send conversation initialization
+      const initMessage = {
+        type: 'conversation_initiation_client_data',
+        conversation_initiation_client_data: {
+          conversation_id: `conv_${Date.now()}`
+        }
+      };
+      elevenLabsWs.send(JSON.stringify(initMessage));
+      console.log('Sent initialization message');
       
       // Notify client
       clientWs.send(JSON.stringify({ type: 'connected' }));
@@ -78,6 +86,12 @@ wss.on('connection', async (clientWs, req) => {
       try {
         const parsed = JSON.parse(message.toString());
         console.log('Message type:', Object.keys(parsed));
+        
+        // Don't send audio chunks after we've received a response
+        if (hasReceivedResponse && parsed.user_audio_chunk) {
+          console.log('Ignoring audio chunk - conversation already has response');
+          return;
+        }
         
         // IMPORTANT: Convert Buffer to string before sending
         if (elevenLabsWs.readyState === WebSocket.OPEN) {
@@ -95,6 +109,12 @@ wss.on('connection', async (clientWs, req) => {
       if (isBinary) {
         // Binary data (audio)
         console.log('Received binary audio data from ElevenLabs, size:', message.length);
+        
+        // Mark that we've received audio response (larger chunks are voice responses)
+        if (message.length > 1000) {
+          hasReceivedResponse = true;
+        }
+        
         if (clientWs.readyState === WebSocket.OPEN) {
           // Send audio data wrapped in JSON for easier handling
           const audioBase64 = message.toString('base64');
@@ -112,6 +132,7 @@ wss.on('connection', async (clientWs, req) => {
           console.log('Received from ElevenLabs:', data.type || 'unknown type');
           if (data.type === 'agent_response') {
             console.log('Agent response full:', JSON.stringify(data, null, 2));
+            hasReceivedResponse = true;
           }
           if (data.type === 'audio') {
             console.log('Audio message details:', {
@@ -127,7 +148,10 @@ wss.on('connection', async (clientWs, req) => {
               event_id: data.event_id
             };
             elevenLabsWs.send(JSON.stringify(pongMessage));
-            console.log('Sent pong response');
+            console.log('Sent pong response with event_id:', data.event_id);
+            
+            // Don't forward ping to client
+            return;
           }
           
           // Forward message to client

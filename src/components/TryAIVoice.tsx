@@ -24,6 +24,7 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const isRecordingRef = useRef(false);
 
   useEffect(() => {
     if (isOpen && !isConnected && !isConnecting) {
@@ -83,6 +84,8 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         console.log('WebSocket closed');
         setIsConnected(false);
         setIsRecording(false);
+        isRecordingRef.current = false;
+        stopRecording();
       };
 
     } catch (err) {
@@ -115,14 +118,22 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         break;
         
       case 'agent_response':
-        if (data.agent_response_event?.text) {
+        if (data.agent_response_event?.agent_response) {
+          console.log('Agent said:', data.agent_response_event.agent_response);
           setMessages(prev => [...prev, {
             role: 'assistant',
-            content: data.agent_response_event.text,
+            content: data.agent_response_event.agent_response,
             timestamp: new Date()
           }]);
-          // Stop recording after agent responds
+          // Stop recording immediately after agent responds
           stopRecording();
+          // Close the connection after a short delay to allow audio to finish playing
+          setTimeout(() => {
+            if (wsRef.current?.readyState === WebSocket.OPEN) {
+              console.log('Closing connection after agent response');
+              wsRef.current.close();
+            }
+          }, 2000);
         }
         break;
         
@@ -176,31 +187,60 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       // Initialize audio context
       audioContextRef.current = new AudioContext({ sampleRate: 16000 });
       
+      // Try different mime types based on browser support
+      const mimeTypes = [
+        'audio/webm;codecs=pcm',
+        'audio/webm;codecs=opus', 
+        'audio/webm',
+        'audio/ogg;codecs=opus'
+      ];
+      
+      let selectedMimeType = 'audio/webm';
+      for (const mimeType of mimeTypes) {
+        if (MediaRecorder.isTypeSupported(mimeType)) {
+          selectedMimeType = mimeType;
+          console.log('Using mime type:', selectedMimeType);
+          break;
+        }
+      }
+      
       mediaRecorderRef.current = new MediaRecorder(stream, {
-        mimeType: 'audio/webm;codecs=opus'
+        mimeType: selectedMimeType,
+        audioBitsPerSecond: 16000
       });
       console.log('MediaRecorder created');
 
       mediaRecorderRef.current.ondataavailable = async (event) => {
+        console.log('Data available event fired, size:', event.data.size, 'isRecording:', isRecordingRef.current);
         // Send any non-empty chunks
-        if (event.data.size > 0 && wsRef.current?.readyState === WebSocket.OPEN && isRecording) {
+        if (event.data.size > 0 && wsRef.current?.readyState === WebSocket.OPEN && isRecordingRef.current) {
           console.log('Sending audio chunk, size:', event.data.size);
           // Convert audio to base64 and send
           const reader = new FileReader();
           reader.onloadend = () => {
             const base64 = reader.result?.toString().split(',')[1];
-            if (base64 && wsRef.current?.readyState === WebSocket.OPEN && isRecording) {
+            console.log('Base64 length:', base64?.length);
+            if (base64 && wsRef.current?.readyState === WebSocket.OPEN && isRecordingRef.current) {
               wsRef.current.send(JSON.stringify({
                 user_audio_chunk: base64
               }));
+              console.log('Sent audio chunk to WebSocket');
             }
           };
           reader.readAsDataURL(event.data);
+        } else {
+          console.log('Not sending - conditions not met:', {
+            size: event.data.size,
+            wsOpen: wsRef.current?.readyState === WebSocket.OPEN,
+            isRecording: isRecordingRef.current
+          });
         }
       };
 
       mediaRecorderRef.current.start(100); // Send chunks every 100ms
       setIsRecording(true);
+      isRecordingRef.current = true;
+      console.log('Started recording, isRecording:', true);
       
     } catch (error) {
       console.error('Error starting recording:', error);
@@ -213,6 +253,15 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       mediaRecorderRef.current.stop();
       mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
       setIsRecording(false);
+      isRecordingRef.current = false;
+      
+      // Send end of stream signal
+      if (wsRef.current?.readyState === WebSocket.OPEN) {
+        console.log('Sending end of audio signal');
+        wsRef.current.send(JSON.stringify({
+          user_audio_chunk: ""  // Empty chunk signals end of audio
+        }));
+      }
     }
   };
 
@@ -322,14 +371,14 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
                   disabled={!isConnected}
                   className={`p-4 rounded-full transition-all ${
                     isRecording 
-                      ? 'bg-red-500 text-white hover:bg-red-600 scale-110' 
+                      ? 'bg-red-500 text-white hover:bg-red-600 scale-110 animate-pulse' 
                       : 'bg-blue-500 text-white hover:bg-blue-600'
                   }`}
                 >
                   {isRecording ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
                 </button>
                 <span className="text-sm text-gray-500">
-                  {isRecording ? 'Click to stop' : 'Click to speak'}
+                  {isRecording ? 'Recording... Click to stop' : 'Click to start speaking'}
                 </span>
               </>
             ) : (
