@@ -142,9 +142,10 @@ wss.on('connection', async (clientWs, req) => {
           return;
         }
         
-        // Forward message to client
+        // Forward message to client as text
         if (clientWs.readyState === WebSocket.OPEN) {
-          clientWs.send(message);
+          // Ensure we send as text, not binary
+          clientWs.send(JSON.stringify(data));
         }
       } catch (e) {
         console.error('Failed to parse ElevenLabs message:', e);

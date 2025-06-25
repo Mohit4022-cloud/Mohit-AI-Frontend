@@ -71,10 +71,11 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
   
   // Audio playback system
   const playbackContextRef = useRef<AudioContext | null>(null);
-  const audioQueueRef = useRef<string[]>([]);
+  const audioQueueRef = useRef<AudioBuffer[]>([]);
   const isPlayingRef = useRef(false);
   const nextStartTimeRef = useRef(0);
   const gainNodeRef = useRef<GainNode | null>(null);
+  const audioFormatRef = useRef<string>('pcm_48000');
   const mp3QueueRef = useRef<string[]>([]);
   const isPlayingMP3Ref = useRef(false);
 
@@ -113,17 +114,40 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       };
 
       wsRef.current.onmessage = async (event) => {
-        // It's text/JSON data
         try {
-          const data = JSON.parse(event.data);
-          console.log('Received message type:', data.type);
-          if (data.type === 'audio') {
-            console.log('Received audio event, has audio:', !!data.audio_event?.audio_base_64);
+          // Check if the message is a Blob (binary data)
+          if (event.data instanceof Blob) {
+            console.log('Received binary message, size:', event.data.size);
+            
+            // Small blobs (< 1000 bytes) are likely JSON messages
+            if (event.data.size < 1000) {
+              // Convert small blob to text and try to parse as JSON
+              const text = await event.data.text();
+              try {
+                const data = JSON.parse(text);
+                console.log('Parsed JSON from blob:', data.type);
+                handleWebSocketMessage(data);
+              } catch (e) {
+                // If not JSON, it might be small audio chunk
+                console.log('Small binary data, might be audio');
+                handleBinaryAudio(event.data);
+              }
+            } else {
+              // Large blobs are audio data
+              console.log('Received audio chunk, size:', event.data.size);
+              handleBinaryAudio(event.data);
+            }
+          } 
+          // If it's already a string, parse it as JSON
+          else if (typeof event.data === 'string') {
+            const data = JSON.parse(event.data);
+            console.log('Received JSON message:', data.type);
+            handleWebSocketMessage(data);
           }
-          handleWebSocketMessage(data);
-        } catch (e) {
-          console.error('Failed to parse message:', e);
-          console.log('Raw message:', event.data);
+        } catch (error) {
+          console.error('Error processing message:', error);
+          console.log('Raw data type:', typeof event.data);
+          console.log('Raw data:', event.data);
         }
       };
 
@@ -161,9 +185,10 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         
       case 'conversation_initiation_metadata':
         console.log('Conversation initialized:', data);
-        // Check for audio format - ElevenLabs defaults to MP3
+        // Check for audio format
         if (data.conversation_initiation_metadata_event?.agent_output_audio_format) {
-          console.log('Audio format:', data.conversation_initiation_metadata_event.agent_output_audio_format);
+          audioFormatRef.current = data.conversation_initiation_metadata_event.agent_output_audio_format;
+          console.log('Audio format:', audioFormatRef.current);
         }
         break;
         
@@ -171,8 +196,14 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
         if (data.audio_event?.audio_base_64) {
           console.log('Processing audio chunk, length:', data.audio_event.audio_base_64.length, 'muted:', isMuted);
           if (!isMuted) {
-            // ElevenLabs sends MP3 audio by default
-            playMP3Audio(data.audio_event.audio_base_64);
+            // Handle audio based on format
+            if (audioFormatRef.current.startsWith('pcm_')) {
+              // PCM audio format
+              playPCMAudio(data.audio_event.audio_base_64);
+            } else {
+              // MP3 format (fallback)
+              playMP3Audio(data.audio_event.audio_base_64);
+            }
           }
         } else {
           console.warn('Received audio event without audio data');
@@ -241,6 +272,95 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
       } catch (error) {
         console.error('Failed to resume audio context:', error);
       }
+    }
+  };
+
+  const handleBinaryAudio = async (blob: Blob) => {
+    try {
+      console.log('Processing binary audio blob, size:', blob.size);
+      
+      // Option 1: If it's MP3 audio, play directly
+      const audioUrl = URL.createObjectURL(blob);
+      const audio = new Audio(audioUrl);
+      audio.volume = isMuted ? 0 : 1;
+      
+      audio.onended = () => {
+        URL.revokeObjectURL(audioUrl);
+        console.log('Binary audio playback finished');
+      };
+      
+      audio.onerror = (e) => {
+        console.error('Binary audio playback error:', e);
+        URL.revokeObjectURL(audioUrl);
+      };
+      
+      await audio.play();
+      console.log('Started binary audio playback');
+      
+    } catch (error) {
+      console.error('Error playing binary audio:', error);
+    }
+  };
+
+  const playPCMAudio = async (base64Audio: string) => {
+    try {
+      console.log('Processing PCM audio, base64 length:', base64Audio.length);
+      
+      // Initialize audio context if needed
+      await initializeAudioContext();
+      
+      if (!playbackContextRef.current) {
+        console.error('Audio context not initialized');
+        return;
+      }
+      
+      // Decode base64 to binary
+      const binaryString = atob(base64Audio);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      
+      console.log('Binary data size:', bytes.length, 'bytes');
+      
+      // Convert bytes to 16-bit PCM samples
+      const pcmData = new Int16Array(bytes.buffer);
+      console.log('PCM samples:', pcmData.length);
+      
+      // Convert to Float32 for Web Audio API
+      const float32Data = new Float32Array(pcmData.length);
+      for (let i = 0; i < pcmData.length; i++) {
+        // Convert from 16-bit signed integer to float (-1 to 1)
+        float32Data[i] = pcmData[i] / 32768.0;
+      }
+      
+      // Extract sample rate from format (e.g., "pcm_48000" -> 48000)
+      let sampleRate = 48000; // default
+      if (audioFormatRef.current && audioFormatRef.current.includes('_')) {
+        sampleRate = parseInt(audioFormatRef.current.split('_')[1]) || 48000;
+      }
+      
+      console.log('Using sample rate:', sampleRate, 'Hz');
+      
+      // Create audio buffer with correct sample rate
+      const audioBuffer = playbackContextRef.current.createBuffer(
+        1, // mono
+        float32Data.length,
+        sampleRate
+      );
+      audioBuffer.copyToChannel(float32Data, 0);
+      
+      // Add to queue and play
+      audioQueueRef.current.push(audioBuffer);
+      console.log(`Added PCM audio to queue, size: ${audioQueueRef.current.length}`);
+      
+      // Process queue if not already playing
+      if (!isPlayingRef.current) {
+        processAudioQueue();
+      }
+      
+    } catch (error) {
+      console.error('Error playing PCM audio:', error);
     }
   };
 
@@ -323,15 +443,6 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
     });
   };
 
-  const addToAudioQueue = (base64Audio: string) => {
-    console.log('Adding audio to queue, current queue size:', audioQueueRef.current.length);
-    audioQueueRef.current.push(base64Audio);
-    
-    if (!isPlayingRef.current) {
-      processAudioQueue();
-    }
-  };
-
   const processAudioQueue = async () => {
     if (isPlayingRef.current || audioQueueRef.current.length === 0) {
       return;
@@ -340,9 +451,9 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
     isPlayingRef.current = true;
     
     while (audioQueueRef.current.length > 0) {
-      const base64Audio = audioQueueRef.current.shift();
-      if (base64Audio) {
-        await playAudioChunk(base64Audio);
+      const audioBuffer = audioQueueRef.current.shift();
+      if (audioBuffer) {
+        await playBuffer(audioBuffer);
       }
     }
     
