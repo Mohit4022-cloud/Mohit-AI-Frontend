@@ -11,7 +11,7 @@ interface ConversationMessage {
 
 export class ElevenLabsConversationalAI {
   private config: ElevenLabsConfig;
-  private websocket: WebSocket | null = null;
+  public websocket: WebSocket | null = null;
   private isConnected = false;
   private audioContext: AudioContext | null = null;
   private mediaRecorder: MediaRecorder | null = null;
@@ -23,82 +23,38 @@ export class ElevenLabsConversationalAI {
 
   // Initialize WebSocket connection for real-time conversation
   async initializeConnection(): Promise<void> {
-    try {
-      console.log('Initializing ElevenLabs connection...');
-      console.log('Agent ID:', this.config.agentId);
+    return new Promise((resolve, reject) => {
+      try {
+        console.log('Initializing ElevenLabs connection...');
+        console.log('Agent ID:', this.config.agentId);
 
-      // First, create a conversation session through our API
-      const response = await fetch('/api/elevenlabs/conversation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          agent_id: this.config.agentId
-        })
-      });
+        // Direct WebSocket connection to ElevenLabs
+        const websocketUrl = `wss://api.elevenlabs.io/v1/convai/conversation?agent_id=${this.config.agentId}`;
+        console.log('Connecting to:', websocketUrl);
+        
+        this.websocket = new WebSocket(websocketUrl);
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to create conversation session');
-      }
-
-      const { websocket_url, api_key } = await response.json();
-      console.log('Got WebSocket URL, connecting...');
-
-      // Connect to the WebSocket URL
-      this.websocket = new WebSocket(websocket_url);
-
-      return new Promise((resolve, reject) => {
-        this.websocket!.onopen = () => {
-          console.log('WebSocket connected, authenticating...');
-          
-          // Send authentication with API key from server
-          const authMessage = {
-            type: "authentication",
-            payload: {
-              xi_api_key: api_key
-            }
-          };
-          
-          this.websocket!.send(JSON.stringify(authMessage));
-          
-          // Wait a bit then send initialization
-          setTimeout(() => {
-            const initMessage = {
-              type: "conversation_initiation_client_data",
-              conversation_config_override: {
-                agent: {
-                  agent_id: this.config.agentId,
-                  voice: {
-                    voice_id: "21m00Tcm4TlvDq8ikWAM" // Default voice
-                  }
-                }
-              }
-            };
-            
-            this.websocket!.send(JSON.stringify(initMessage));
-            
-            this.isConnected = true;
-            console.log('ElevenLabs Conversational AI ready');
-            resolve();
-          }, 100);
+        this.websocket.onopen = () => {
+          console.log('WebSocket connected');
+          this.isConnected = true;
+          console.log('ElevenLabs Conversational AI ready');
+          resolve();
         };
 
-        this.websocket!.onerror = (error) => {
+        this.websocket.onerror = (error) => {
           console.error('WebSocket error:', error);
           reject(new Error('WebSocket connection failed'));
         };
 
-        this.websocket!.onclose = () => {
+        this.websocket.onclose = () => {
           this.isConnected = false;
           console.log('ElevenLabs connection closed');
         };
-      });
-    } catch (error) {
-      console.error('Connection error:', error);
-      throw error;
-    }
+      } catch (error) {
+        console.error('Connection error:', error);
+        reject(error);
+      }
+    });
   }
 
   // Send text message to AI
@@ -108,9 +64,8 @@ export class ElevenLabsConversationalAI {
     }
 
     const payload = {
-      user_audio_chunk: null,
-      text: message,
-      try_trigger_generation: true
+      type: 'user_text_input',
+      text: message
     };
 
     this.websocket.send(JSON.stringify(payload));
@@ -153,9 +108,8 @@ export class ElevenLabsConversationalAI {
     const base64Audio = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
 
     const payload = {
-      user_audio_chunk: base64Audio,
-      text: null,
-      try_trigger_generation: false
+      type: 'user_audio_input',
+      audio: base64Audio
     };
 
     this.websocket.send(JSON.stringify(payload));

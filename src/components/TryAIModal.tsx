@@ -74,29 +74,56 @@ export const TryAIModal: React.FC<TryAIModalProps> = ({ isOpen, onClose }) => {
     console.log('ElevenLabs message:', data);
     
     // Handle different types of messages from ElevenLabs
-    if (data.type === 'conversation_initiation_metadata') {
-      console.log('Conversation initiated');
-    } else if (data.type === 'audio') {
-      // Play audio response
-      if (!isMuted && data.audio_event?.audio_base_64) {
-        playAudioResponse(data.audio_event.audio_base_64);
-      }
-    } else if (data.type === 'transcript' && data.transcript_event) {
-      const transcript = data.transcript_event;
-      
-      if (transcript.final) {
-        // Add final transcript to messages
-        setMessages(prev => [...prev, {
-          role: transcript.source === 'user' ? 'user' : 'assistant',
-          content: transcript.transcript,
-          timestamp: new Date()
-        }]);
+    switch (data.type) {
+      case 'conversation_initiation_metadata':
+        console.log('Conversation initiated');
+        break;
         
+      case 'audio':
+        // Play audio response
+        if (!isMuted && data.audio) {
+          playAudioResponse(data.audio);
+        }
+        break;
+        
+      case 'agent_response':
+        // Agent's text response
+        if (data.text) {
+          setMessages(prev => [...prev, {
+            role: 'assistant',
+            content: data.text,
+            timestamp: new Date()
+          }]);
+          setIsTyping(false);
+        }
+        break;
+        
+      case 'user_transcript':
+        // User's speech transcription
+        if (data.text) {
+          setMessages(prev => [...prev, {
+            role: 'user',
+            content: data.text,
+            timestamp: new Date()
+          }]);
+        }
+        break;
+        
+      case 'interruption':
+        // Handle interruptions
+        console.log('Interruption detected');
         setIsTyping(false);
-      } else if (transcript.source === 'agent') {
-        // Show typing indicator for agent responses
-        setIsTyping(true);
-      }
+        break;
+        
+      case 'ping':
+        // Respond to ping with pong
+        if (elevenLabsRef.current?.websocket) {
+          elevenLabsRef.current.websocket.send(JSON.stringify({
+            type: 'pong',
+            event_id: data.event_id
+          }));
+        }
+        break;
     }
   };
 
