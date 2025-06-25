@@ -566,7 +566,7 @@ export function AIConversationAssistant({
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="flex space-x-4 mb-4">
               <TabsTrigger value="suggestions">Smart Suggestions</TabsTrigger>
               <TabsTrigger value="keywords">Keywords</TabsTrigger>
               <TabsTrigger value="sentiment">Sentiment</TabsTrigger>
