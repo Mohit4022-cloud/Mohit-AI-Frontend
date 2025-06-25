@@ -205,6 +205,11 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
           audioFormatRef.current = data.conversation_initiation_metadata_event.agent_output_audio_format;
           console.log('Audio format:', audioFormatRef.current);
         }
+        // Auto-start recording for seamless conversation
+        if (!isRecording) {
+          console.log('Auto-starting recording for conversation...');
+          startRecording().catch(console.error);
+        }
         break;
         
       case 'audio':
@@ -243,15 +248,9 @@ export const TryAIVoice: React.FC<TryAIVoiceProps> = ({ isOpen, onClose }) => {
             content: data.agent_response_event.agent_response,
             timestamp: new Date()
           }]);
-          // Stop recording immediately after agent responds
-          stopRecording().catch(console.error);
-          // Close the connection after a short delay to allow audio to finish playing
-          setTimeout(() => {
-            if (wsRef.current?.readyState === WebSocket.OPEN) {
-              console.log('Closing connection after agent response');
-              wsRef.current.close();
-            }
-          }, 2000);
+          // Keep connection open for continued conversation
+          // Don't stop recording - let the user continue speaking
+          console.log('Agent finished speaking, user can continue...');
         }
         break;
         

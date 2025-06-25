@@ -2,13 +2,15 @@ const WebSocket = require('ws');
 const http = require('http');
 
 const PORT = process.env.PROXY_PORT || 3002;
-const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY || process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY;
+const ELEVENLABS_API_KEY = (process.env.ELEVENLABS_API_KEY || process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY || '').trim();
 
 if (!ELEVENLABS_API_KEY) {
   console.error('Error: ELEVENLABS_API_KEY environment variable is not set');
   console.error('Please set your ElevenLabs API key: export ELEVENLABS_API_KEY=your_api_key_here');
   process.exit(1);
 }
+
+console.log('Using API key:', ELEVENLABS_API_KEY.substring(0, 10) + '...');
 
 const server = http.createServer();
 const wss = new WebSocket.Server({ server });
@@ -63,14 +65,19 @@ wss.on('connection', (ws, req) => {
       
       // Forward audio chunks to ElevenLabs
       if (message.user_audio_chunk !== undefined) {
+        // ElevenLabs expects user audio in this exact format
         const audioMessage = {
-          type: 'audio',
-          audio_event: {
-            audio_base_64: message.user_audio_chunk
-          }
+          user_audio_chunk: message.user_audio_chunk
         };
         if (elevenLabsWs.readyState === WebSocket.OPEN) {
           elevenLabsWs.send(JSON.stringify(audioMessage));
+        }
+      }
+      
+      // Handle pong responses
+      if (message.type === 'pong' && message.event_id !== undefined) {
+        if (elevenLabsWs.readyState === WebSocket.OPEN) {
+          elevenLabsWs.send(JSON.stringify(message));
         }
       }
     } catch (error) {
