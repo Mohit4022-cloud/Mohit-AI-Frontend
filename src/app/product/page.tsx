@@ -35,9 +35,14 @@ export default function ProductPage() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="py-32 bg-gradient-to-b from-neutral-50/50 to-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-neutral-200 to-transparent rounded-full blur-3xl animate-[rotate_30s_linear_infinite]"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-tl from-neutral-200 to-transparent rounded-full blur-3xl animate-[rotate_35s_linear_infinite_reverse]"></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="relative overflow-visible px-8 -mx-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative py-4">
             {/* AI Calling */}
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
               <div className="w-12 h-12 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg flex items-center justify-center mb-6">
@@ -150,6 +155,7 @@ export default function ProductPage() {
                 </li>
               </ul>
             </div>
+          </div>
           </div>
         </div>
       </section>
