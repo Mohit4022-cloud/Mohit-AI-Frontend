@@ -168,4 +168,27 @@
       transform: scaleY(1);
     }
   }
+
+  /* Modern Glass Morphism Animations */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px) skewY(2deg);
+      filter: blur(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) skewY(0deg);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }

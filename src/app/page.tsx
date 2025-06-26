@@ -56,61 +56,128 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-center mb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <Clock className="w-8 h-8 text-purple-600" />
+              <div className="relative overflow-visible px-8 -mx-8">
+                {/* Mesh gradient background */}
+                <div className="absolute inset-0 opacity-30 pointer-events-none">
+                  <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-neutral-200 to-transparent rounded-full blur-3xl animate-[rotate_20s_linear_infinite]"></div>
+                  <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-neutral-200 to-transparent rounded-full blur-3xl animate-[rotate_25s_linear_infinite_reverse]"></div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative py-4">
+                  <div className="group relative overflow-visible rounded-[32px] p-8 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:0ms] isolate">
+                    {/* Multiple gradient layers for depth */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                    <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                    
+                    {/* Animated shine effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                    </div>
+                    
+                    {/* Subtle pulse glow */}
+                    <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                    
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="flex items-center justify-center mb-8">
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/5 rounded-[24px] blur-xl transform scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                          <div className="w-20 h-20 bg-gradient-to-br from-white via-neutral-50 to-neutral-100 rounded-[24px] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(0,0,0,0.06),inset_0_-2px_4px_rgba(255,255,255,0.8)] group-hover:rotate-[-10deg] group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                            <Clock className="w-8 h-8 text-black/70 group-hover:text-black/90 transition-colors duration-300" />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
-                      47
-                    </div>
-                    <div className="text-lg font-semibold text-neutral-800 mb-1">
-                      Second
-                    </div>
-                    <div className="text-sm text-neutral-600">
-                      Response Time
+                      <div className="relative flex items-center justify-center">
+                        <div className="text-[4rem] font-[900] mb-3 bg-gradient-to-b from-black via-neutral-700 to-neutral-500 bg-clip-text text-transparent leading-none tracking-[-0.06em] drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)] group-hover:drop-shadow-[0_4px_4px_rgba(0,0,0,0.15)] transition-all duration-300">
+                          6
+                        </div>
+                        <div className="absolute inset-0 text-[4rem] font-[900] bg-gradient-to-t from-black/20 to-transparent bg-clip-text text-transparent leading-none tracking-[-0.06em] blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 flex items-center justify-center">
+                          6
+                        </div>
+                      </div>
+                      <div className="text-[0.7rem] font-semibold text-black/50 mb-2 uppercase tracking-[0.2em] group-hover:text-black/70 transition-colors duration-300 text-center">
+                        Seconds
+                      </div>
+                      <div className="text-sm font-normal text-black/70 leading-relaxed group-hover:text-black/80 transition-colors duration-300 text-center">
+                        Response Time
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-center mb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <TrendingUp className="w-8 h-8 text-purple-600" />
+                  
+                  <div className="group relative overflow-visible rounded-[32px] p-8 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:150ms] isolate">
+                    {/* Multiple gradient layers for depth */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                    <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                    
+                    {/* Animated shine effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                    </div>
+                    
+                    {/* Subtle pulse glow */}
+                    <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                    
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="flex items-center justify-center mb-8">
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/5 rounded-[24px] blur-xl transform scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                          <div className="w-20 h-20 bg-gradient-to-br from-white via-neutral-50 to-neutral-100 rounded-[24px] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(0,0,0,0.06),inset_0_-2px_4px_rgba(255,255,255,0.8)] group-hover:rotate-[-10deg] group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                            <TrendingUp className="w-8 h-8 text-black/70 group-hover:text-black/90 transition-colors duration-300" />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                      391%
-                    </div>
-                    <div className="text-lg font-semibold text-neutral-800 mb-1">
-                      Higher
-                    </div>
-                    <div className="text-sm text-neutral-600">
-                      Conversion Rate
+                      <div className="relative flex items-center justify-center">
+                        <div className="text-[4rem] font-[900] mb-3 bg-gradient-to-b from-black via-neutral-700 to-neutral-500 bg-clip-text text-transparent leading-none tracking-[-0.06em] drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)] group-hover:drop-shadow-[0_4px_4px_rgba(0,0,0,0.15)] transition-all duration-300">
+                          4×
+                        </div>
+                        <div className="absolute inset-0 text-[4rem] font-[900] bg-gradient-to-t from-black/20 to-transparent bg-clip-text text-transparent leading-none tracking-[-0.06em] blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 flex items-center justify-center">
+                          4×
+                        </div>
+                      </div>
+                      <div className="text-[0.7rem] font-semibold text-black/50 mb-2 uppercase tracking-[0.2em] group-hover:text-black/70 transition-colors duration-300 text-center">
+                        Higher
+                      </div>
+                      <div className="text-sm font-normal text-black/70 leading-relaxed group-hover:text-black/80 transition-colors duration-300 text-center">
+                        Conversion Rate
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="group relative overflow-hidden bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-neutral-100">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-center mb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <Target className="w-8 h-8 text-purple-600" />
+                  
+                  <div className="group relative overflow-visible rounded-[32px] p-8 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:300ms] isolate">
+                    {/* Multiple gradient layers for depth */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                    <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                    
+                    {/* Animated shine effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                    </div>
+                    
+                    {/* Subtle pulse glow */}
+                    <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                    
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="flex items-center justify-center mb-8">
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/5 rounded-[24px] blur-xl transform scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                          <div className="w-20 h-20 bg-gradient-to-br from-white via-neutral-50 to-neutral-100 rounded-[24px] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(0,0,0,0.06),inset_0_-2px_4px_rgba(255,255,255,0.8)] group-hover:rotate-[-10deg] group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                            <Target className="w-8 h-8 text-black/70 group-hover:text-black/90 transition-colors duration-300" />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-6xl font-black mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                      21×
-                    </div>
-                    <div className="text-lg font-semibold text-neutral-800 mb-1">
-                      More Qualified
-                    </div>
-                    <div className="text-sm text-neutral-600">
-                      Leads Generated
+                      <div className="relative flex items-center justify-center">
+                        <div className="text-[4rem] font-[900] mb-3 bg-gradient-to-b from-black via-neutral-700 to-neutral-500 bg-clip-text text-transparent leading-none tracking-[-0.06em] drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)] group-hover:drop-shadow-[0_4px_4px_rgba(0,0,0,0.15)] transition-all duration-300">
+                          2×
+                        </div>
+                        <div className="absolute inset-0 text-[4rem] font-[900] bg-gradient-to-t from-black/20 to-transparent bg-clip-text text-transparent leading-none tracking-[-0.06em] blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300 flex items-center justify-center">
+                          2×
+                        </div>
+                      </div>
+                      <div className="text-[0.7rem] font-semibold text-black/50 mb-2 uppercase tracking-[0.2em] group-hover:text-black/70 transition-colors duration-300 text-center">
+                        More Qualified
+                      </div>
+                      <div className="text-sm font-normal text-black/70 leading-relaxed group-hover:text-black/80 transition-colors duration-300 text-center">
+                        Leads Generated
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -281,140 +348,227 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-50/50 to-white/0"></div>
+      <section className="py-32 bg-gradient-to-b from-neutral-50/50 to-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-neutral-200 to-transparent rounded-full blur-3xl animate-[rotate_30s_linear_infinite]"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-tl from-neutral-200 to-transparent rounded-full blur-3xl animate-[rotate_35s_linear_infinite_reverse]"></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-3xl mx-auto text-center mb-24">
-            <h2 className="text-5xl font-bold text-black tracking-tight mb-6">
+            <h2 className="text-5xl font-[800] text-black tracking-tight mb-6 bg-gradient-to-b from-black to-neutral-600 bg-clip-text text-transparent">
               Your AI SDR&apos;s Complete Toolkit
             </h2>
-            <p className="text-xl text-neutral-600 leading-relaxed">
+            <p className="text-xl text-neutral-600/80 leading-relaxed">
               Mohit AI handles all aspects of prospecting and outreach,
               delivering only qualified, interested leads to your human SDRs.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="bg-white p-10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-neutral-100">
-              <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
-                <Phone className="w-6 h-6 text-purple-600" />
+          <div className="relative overflow-visible px-8 -mx-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative py-4">
+              <div className="group relative overflow-visible rounded-[32px] p-10 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:0ms] isolate">
+                <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                </div>
+                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-center mb-8">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/5 rounded-[24px] blur-xl transform scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                      <div className="w-20 h-20 bg-gradient-to-br from-white via-neutral-50 to-neutral-100 rounded-[24px] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(0,0,0,0.06),inset_0_-2px_4px_rgba(255,255,255,0.8)] group-hover:rotate-[-10deg] group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                        <Phone className="w-8 h-8 text-black/70 group-hover:text-black/90 transition-colors duration-300" />
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-[800] mb-4 bg-gradient-to-b from-black to-neutral-700 bg-clip-text text-transparent tracking-[-0.02em]">
+                    AI Voice Calling
+                  </h3>
+                  <p className="text-sm text-black/70 leading-relaxed group-hover:text-black/80 transition-colors duration-300">
+                    Your AI SDR makes hundreds of personalized calls daily using
+                    natural voice AI, qualifies interest, and books meetings
+                    automatically.
+                  </p>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-black mb-4">
-                AI Voice Calling
-              </h3>
-              <p className="text-neutral-600 leading-relaxed">
-                Your AI SDR makes hundreds of personalized calls daily using
-                natural voice AI, qualifies interest, and books meetings
-                automatically.
-              </p>
-            </div>
-            <div className="bg-white p-10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-neutral-100">
-              <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
-                <Mail className="w-6 h-6 text-purple-600" />
+              
+              <div className="group relative overflow-visible rounded-[32px] p-10 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:150ms] isolate">
+                <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                </div>
+                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-center mb-8">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/5 rounded-[24px] blur-xl transform scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                      <div className="w-20 h-20 bg-gradient-to-br from-black via-neutral-800 to-neutral-600 rounded-[24px] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.1),inset_0_-2px_4px_rgba(0,0,0,0.3)] group-hover:rotate-[-10deg] group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                        <Mail className="w-8 h-8 text-white/90 group-hover:text-white transition-colors duration-300" />
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-[800] mb-4 bg-gradient-to-b from-black to-neutral-700 bg-clip-text text-transparent tracking-[-0.02em]">
+                    Intelligent Email Outreach
+                  </h3>
+                  <p className="text-sm text-black/70 leading-relaxed group-hover:text-black/80 transition-colors duration-300">
+                    AI writes and sends personalized emails based on prospect
+                    research, company news, and buying signals. Follows up
+                    automatically.
+                  </p>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-black mb-4">
-                Intelligent Email Outreach
-              </h3>
-              <p className="text-neutral-600 leading-relaxed">
-                AI writes and sends personalized emails based on prospect
-                research, company news, and buying signals. Follows up
-                automatically.
-              </p>
-            </div>
-            <div className="bg-white p-10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-neutral-100">
-              <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
-                <Users className="w-6 h-6 text-purple-600" />
+              
+              <div className="group relative overflow-visible rounded-[32px] p-10 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:300ms] isolate">
+                <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                </div>
+                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-center mb-8">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/5 rounded-[24px] blur-xl transform scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                      <div className="w-20 h-20 bg-gradient-to-br from-white via-neutral-50 to-neutral-100 rounded-[24px] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(0,0,0,0.06),inset_0_-2px_4px_rgba(255,255,255,0.8)] group-hover:rotate-[-10deg] group-hover:scale-110 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                        <Users className="w-8 h-8 text-black/70 group-hover:text-black/90 transition-colors duration-300" />
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-[800] mb-4 bg-gradient-to-b from-black to-neutral-700 bg-clip-text text-transparent tracking-[-0.02em]">
+                    Multi-Channel Engagement
+                  </h3>
+                  <p className="text-sm text-black/70 leading-relaxed group-hover:text-black/80 transition-colors duration-300">
+                    Seamlessly engage prospects across email, LinkedIn, SMS, and
+                    phone calls. Maintains consistent messaging while adapting to
+                    preferences.
+                  </p>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-black mb-4">
-                Multi-Channel Engagement
-              </h3>
-              <p className="text-neutral-600 leading-relaxed">
-                Seamlessly engage prospects across email, LinkedIn, SMS, and
-                phone calls. Maintains consistent messaging while adapting to
-                preferences.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-32 bg-neutral-50 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-neutral-50/0"></div>
+      <section className="py-32 bg-gradient-to-b from-white to-neutral-50/30 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-15">
+          <div className="absolute top-40 right-40 w-96 h-96 bg-gradient-to-br from-neutral-200 to-transparent rounded-full blur-3xl animate-[rotate_40s_linear_infinite]"></div>
+          <div className="absolute bottom-40 left-40 w-96 h-96 bg-gradient-to-tl from-neutral-200 to-transparent rounded-full blur-3xl animate-[rotate_45s_linear_infinite_reverse]"></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-3xl mx-auto text-center mb-20">
-            <h2 className="text-4xl font-bold text-black tracking-tight mb-6">
+            <h2 className="text-5xl font-[800] text-black tracking-tight mb-6 bg-gradient-to-b from-black to-neutral-600 bg-clip-text text-transparent">
               What Our Customers Say
             </h2>
-            <p className="text-xl text-neutral-600 leading-relaxed">
+            <p className="text-xl text-neutral-600/80 leading-relaxed">
               Join hundreds of sales teams capturing every inbound opportunity
               with Mohit AI.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="bg-white p-10 rounded-2xl border border-neutral-100 hover:border-neutral-200 transition-all duration-500 group hover:shadow-2xl hover:-translate-y-2">
-              <div className="flex items-center gap-2 mb-8">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 text-yellow-400 fill-current"
-                  />
-                ))}
-              </div>
-              <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;We went from missing 40% of our inbound leads to
-                capturing every single one. Mohit AI paid for itself in the
-                first week by booking 15 extra demos we would have lost.&rdquo;
-              </p>
-              <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
-                <div>
-                  <div className="font-semibold text-black">Sarah Chen</div>
-                  <div className="text-neutral-500">VP Sales at TechFlow</div>
+          <div className="relative overflow-visible px-8 -mx-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative py-4">
+              <div className="group relative overflow-visible rounded-[32px] p-10 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:0ms] isolate">
+                <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                </div>
+                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center gap-1 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-5 h-5 text-black/80 fill-current group-hover:text-black transition-colors duration-300"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-base text-black/70 leading-relaxed mb-10 group-hover:text-black/90 transition-colors duration-300 min-h-[120px]">
+                    &ldquo;We went from missing 40% of our inbound leads to
+                    capturing every single one. Mohit AI paid for itself in the
+                    first week by booking 15 extra demos we would have lost.&rdquo;
+                  </p>
+                  <div className="flex items-center gap-4 pt-8 border-t border-black/10">
+                    <div className="relative">
+                      <div className="h-14 w-14 rounded-[16px] bg-gradient-to-br from-black via-neutral-800 to-neutral-600 shadow-[0_4px_20px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.1)]"></div>
+                    </div>
+                    <div>
+                      <div className="font-[700] text-black/90 tracking-[-0.01em]">Sarah Chen</div>
+                      <div className="text-sm text-black/60">VP Sales at TechFlow</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="bg-white p-10 rounded-2xl border border-neutral-100 hover:border-neutral-200 transition-all duration-500 group hover:shadow-2xl hover:-translate-y-2">
-              <div className="flex items-center gap-2 mb-8">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 text-yellow-400 fill-current"
-                  />
-                ))}
-              </div>
-              <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;$75/month for an AI that books more meetings than our
-                $65k/year SDR? It&apos;s not even a question. We&apos;re saving
-                $5,000/month and converting 3x more leads.&rdquo;
-              </p>
-              <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
-                <div>
-                  <div className="font-semibold text-black">Marcus Johnson</div>
-                  <div className="text-neutral-500">Founder at GrowthLab</div>
+              
+              <div className="group relative overflow-visible rounded-[32px] p-10 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:150ms] isolate">
+                <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                </div>
+                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center gap-1 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-5 h-5 text-black/80 fill-current group-hover:text-black transition-colors duration-300"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-base text-black/70 leading-relaxed mb-10 group-hover:text-black/90 transition-colors duration-300 min-h-[120px]">
+                    &ldquo;$75/month for an AI that books more meetings than our
+                    $65k/year SDR? It&apos;s not even a question. We&apos;re saving
+                    $5,000/month and converting 3x more leads.&rdquo;
+                  </p>
+                  <div className="flex items-center gap-4 pt-8 border-t border-black/10">
+                    <div className="relative">
+                      <div className="h-14 w-14 rounded-[16px] bg-gradient-to-br from-white via-neutral-50 to-neutral-100 shadow-[0_4px_20px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(0,0,0,0.06),inset_0_-2px_4px_rgba(255,255,255,0.8)]"></div>
+                    </div>
+                    <div>
+                      <div className="font-[700] text-black/90 tracking-[-0.01em]">Marcus Johnson</div>
+                      <div className="text-sm text-black/60">Founder at GrowthLab</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="bg-white p-10 rounded-2xl border border-neutral-100 hover:border-neutral-200 transition-all duration-500 group hover:shadow-2xl hover:-translate-y-2">
-              <div className="flex items-center gap-2 mb-8">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 text-yellow-400 fill-current"
-                  />
-                ))}
-              </div>
-              <p className="text-xl text-neutral-600 leading-relaxed mb-8 group-hover:text-black transition-colors duration-300">
-                &ldquo;Finally, an AI that actually works across all channels.
-                Our leads come from everywhere—website chat, email, phone calls.
-                Mohit AI handles them all perfectly.&rdquo;
-              </p>
-              <div className="flex items-center gap-4 pt-8 border-t border-neutral-100">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-300 to-purple-500"></div>
-                <div>
-                  <div className="font-semibold text-black">Jennifer Park</div>
-                  <div className="text-neutral-500">
-                    Revenue Operations at CloudFirst
+              
+              <div className="group relative overflow-visible rounded-[32px] p-10 backdrop-blur-[30px] backdrop-saturate-[200%] bg-gradient-to-br from-white/80 via-white/50 to-white/30 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04),0_16px_64px_rgba(0,0,0,0.02),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:translate-y-[-16px] hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),0_40px_120px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.6)] animate-[fadeInUp_0.8s_ease-out_forwards] opacity-0 [animation-delay:300ms] isolate">
+                <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02] opacity-50"></div>
+                <div className="absolute inset-0 bg-gradient-to-tl from-white/10 via-transparent to-white/10"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+                </div>
+                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center gap-1 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-5 h-5 text-black/80 fill-current group-hover:text-black transition-colors duration-300"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-base text-black/70 leading-relaxed mb-10 group-hover:text-black/90 transition-colors duration-300 min-h-[120px]">
+                    &ldquo;Finally, an AI that actually works across all channels.
+                    Our leads come from everywhere—website chat, email, phone calls.
+                    Mohit AI handles them all perfectly.&rdquo;
+                  </p>
+                  <div className="flex items-center gap-4 pt-8 border-t border-black/10">
+                    <div className="relative">
+                      <div className="h-14 w-14 rounded-[16px] bg-gradient-to-br from-black via-neutral-800 to-neutral-600 shadow-[0_4px_20px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.1)]"></div>
+                    </div>
+                    <div>
+                      <div className="font-[700] text-black/90 tracking-[-0.01em]">Jennifer Park</div>
+                      <div className="text-sm text-black/60">Revenue Operations at CloudFirst</div>
+                    </div>
                   </div>
                 </div>
               </div>
