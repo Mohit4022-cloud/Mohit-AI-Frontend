@@ -50,6 +50,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "custom-pink": "#f99bff",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -69,11 +70,33 @@ module.exports = {
           "0%": { transform: "scale(1)", opacity: 1 },
           "100%": { transform: "scale(1.5)", opacity: 0 },
         },
+        "fade-in": {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+        "fade-in-up": {
+          "0%": {
+            opacity: 0,
+            transform: "translateY(20px)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translateY(0)",
+          },
+        },
+        "shine": {
+          "100%": {
+            left: "125%",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "pulse-ring": "pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "fade-in": "fade-in 1s ease-in-out",
+        "fade-in-up": "fade-in-up 1s ease-in-out",
+        "shine": "shine 1s",
       },
     },
   },
