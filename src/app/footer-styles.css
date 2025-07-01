@@ -1,9 +1,9 @@
 /* Footer Styles - Matching Refined Design System */
 
 .site-footer {
-  background: linear-gradient(180deg, #FAFBFC 0%, #F3F4F6 100%);
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 80px 0 24px;
+  background: white;
+  border-top: 1px solid var(--border-subtle, #E5E7EB);
+  padding: 80px 0 32px;
   margin-top: 120px;
   position: relative;
   overflow: hidden;
@@ -12,11 +12,11 @@
 .site-footer::before {
   content: '';
   position: absolute;
-  top: -200px;
-  right: -200px;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255, 110, 199, 0.03) 0%, transparent 70%);
+  top: -300px;
+  right: -300px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 110, 199, 0.02) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -35,7 +35,7 @@
   gap: 80px;
   margin-bottom: 60px;
   padding-bottom: 60px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--border-subtle, #E5E7EB);
 }
 
 /* Footer Brand Section */
@@ -46,11 +46,11 @@
 }
 
 .footer-logo {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--text-primary, #1A1A1A);
+  font-size: 24px;
+  font-weight: 700;
+  color: #1A1A1A;
   text-decoration: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   transition: color 0.3s ease;
 }
 
@@ -59,15 +59,15 @@
 }
 
 .footer-tagline {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
-  color: var(--text-secondary, #6B7280);
+  color: #6B7280;
   max-width: 320px;
 }
 
 /* Newsletter Section */
 .footer-newsletter {
-  background: white;
+  background: var(--background-secondary, #FAFBFC);
   border: 1px solid var(--border-subtle, #E5E7EB);
   border-radius: 16px;
   padding: 24px;
@@ -161,7 +161,7 @@
 
 .footer-column a {
   font-size: 15px;
-  color: var(--text-secondary);
+  color: #6B7280;
   text-decoration: none;
   padding: 6px 0;
   transition: color 0.3s ease;
@@ -194,7 +194,7 @@
   gap: 40px;
   padding: 40px 0;
   margin-bottom: 40px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--border-subtle);
   flex-wrap: wrap;
 }
 
@@ -203,9 +203,9 @@
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  color: var(--text-secondary);
+  color: #6B7280;
   padding: 10px 20px;
-  background: white;
+  background: var(--background-secondary, #FAFBFC);
   border: 1px solid var(--border-subtle);
   border-radius: 100px;
   transition: all 0.3s ease;
@@ -240,7 +240,7 @@
 
 .footer-legal a {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: #6B7280;
   text-decoration: none;
   padding: 4px 8px;
   transition: color 0.3s ease;
@@ -258,7 +258,7 @@
 
 .footer-copyright {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: #6B7280;
 }
 
 /* Social Links */
@@ -273,7 +273,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: var(--background-secondary, #FAFBFC);
   border: 1px solid var(--border-subtle);
   border-radius: 50%;
   color: var(--text-secondary);
@@ -308,7 +308,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: white;
+  background: var(--background-secondary, #FAFBFC);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
   font-size: 14px;
@@ -434,39 +434,6 @@
   }
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  .site-footer {
-    background: linear-gradient(180deg, #1F2937 0%, #111827 100%);
-    border-top-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .footer-newsletter {
-    background: #1F2937;
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .newsletter-input {
-    background: #111827;
-    border-color: rgba(255, 255, 255, 0.1);
-    color: white;
-  }
-  
-  .trust-item {
-    background: #1F2937;
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .social-link {
-    background: #1F2937;
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .region-selector {
-    background: #1F2937;
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-}
 
 /* Print Styles */
 @media print {
