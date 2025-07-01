@@ -25,11 +25,11 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="layout-full-height layout-base-bg">
       <Sidebar />
-      <div className="pl-64">
+      <div className="layout-with-nav">
         <Header />
-        <main className="p-6">{children}</main>
+        <main className="layout-pad-6">{children}</main>
       </div>
     </div>
   );

@@ -1,0 +1,38 @@
+/* Form Height Fix - Ensure Full Visibility */
+
+/* Ensure form container shows all content */
+.demo-form-card {
+  min-height: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Add padding bottom to ensure button is fully visible */
+.demo-form-card form {
+  padding-bottom: 8px !important;
+}
+
+/* Ensure the submit button has proper spacing */
+.demo-form-card .form-submit,
+.demo-form-card button[type="submit"] {
+  margin-bottom: 0 !important;
+}
+
+/* Ensure hero section has enough height */
+.hero-section {
+  min-height: auto !important;
+  overflow: visible !important;
+}
+
+/* Ensure hero container doesn't cut off content */
+.hero-container {
+  overflow: visible !important;
+  padding-bottom: 20px !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .demo-form-card {
+    margin-bottom: 20px !important;
+  }
+}

@@ -1,0 +1,129 @@
+/* CTA Section - Premium Light Theme Update */
+
+/* Update CTA section background */
+.cta-section {
+  background: var(--background-secondary, #FAFBFC) !important;
+  padding: 100px 0 !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Add subtle gradient mesh */
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -25%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 110, 199, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* CTA container styling */
+.cta-container {
+  background: white !important;
+  border: 1px solid var(--border-subtle, #E1E7EC) !important;
+  border-radius: 24px !important;
+  padding: 80px !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.cta-container:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 32px rgba(255, 110, 199, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(255, 110, 199, 0.2) !important;
+}
+
+/* Add accent line */
+.cta-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-pink);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cta-container:hover::after {
+  opacity: 1;
+}
+
+/* CTA content text */
+.cta-content h2 {
+  color: var(--text-primary, #0A0A0A) !important;
+  font-size: 48px !important;
+  font-weight: 700 !important;
+  margin-bottom: 16px !important;
+  letter-spacing: -0.02em !important;
+}
+
+.cta-content p {
+  color: var(--text-secondary, #57606A) !important;
+  font-size: 20px !important;
+  line-height: 1.6 !important;
+  opacity: 1 !important;
+}
+
+/* Update button styles */
+.cta-buttons .btn-secondary {
+  background: var(--gradient-pink) !important;
+  border: none !important;
+  color: white !important;
+  padding: 16px 32px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.cta-buttons .btn-secondary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(255, 110, 199, 0.25) !important;
+}
+
+.cta-buttons .btn-outline {
+  background: white !important;
+  border: 2px solid var(--border-subtle, #E1E7EC) !important;
+  color: var(--text-primary, #0A0A0A) !important;
+  padding: 16px 32px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.cta-buttons .btn-outline:hover {
+  border-color: var(--accent-pink, #FF69B4) !important;
+  color: var(--accent-pink, #FF69B4) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(255, 110, 199, 0.15) !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .cta-container {
+    padding: 48px 32px !important;
+    border-radius: 20px !important;
+  }
+  
+  .cta-content h2 {
+    font-size: 36px !important;
+  }
+  
+  .cta-content p {
+    font-size: 18px !important;
+  }
+  
+  .cta-buttons {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  
+  .cta-buttons .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -13,7 +13,10 @@ import {
   MessageSquare,
   Clock,
   Target,
+  Sparkles,
 } from "lucide-react";
+import { TryAIVoice } from "@/components/TryAIVoice";
+import "@/app/navigation-optimizations.css";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -27,49 +30,70 @@ const navigation = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const [isTryAIModalOpen, setIsTryAIModalOpen] = useState(false);
 
   return (
-    <div className="fixed inset-y-0 left-0 w-64 bg-card border-r">
-      <div className="flex h-16 items-center px-6 border-b">
-        <Zap className="h-8 w-8 text-primary mr-2" />
-        <span className="text-xl font-bold">Mohit AI</span>
-      </div>
-
-      <nav className="flex-1 space-y-1 p-4">
-        {navigation.map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground",
-              )}
-            >
-              <item.icon className="h-5 w-5" />
-              {item.name}
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div className="p-4 border-t">
-        <div className="rounded-lg bg-primary/10 p-4">
-          <h3 className="font-semibold mb-1">Response Status</h3>
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-green-500 pulse-dot" />
-            <span className="text-sm text-muted-foreground">
-              All systems active
-            </span>
+    <>
+      <div className="app-navigation-panel">
+        {/* Compact Header */}
+        <div className="app-nav-header">
+          <div className="app-nav-logo">
+            <Zap className="h-5 w-5" />
           </div>
-          <p className="text-xs text-muted-foreground mt-2">
-            Avg response time: 47 seconds
+          <span className="app-nav-title">Mohit AI</span>
+        </div>
+        
+        <div className="app-nav-divider" />
+
+        {/* Navigation Links */}
+        <nav className="app-nav-section">
+          {navigation.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                data-tooltip={item.name}
+                className={`app-nav-link ${isActive ? 'app-nav-link-active' : ''}`}
+              >
+                <div className="app-nav-icon-box">
+                  <item.icon className="app-nav-icon" />
+                </div>
+                <span className="app-nav-label">{item.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="app-nav-divider" />
+        
+        {/* Try AI Button */}
+        <button
+          onClick={() => setIsTryAIModalOpen(true)}
+          className="app-nav-action"
+        >
+          <Sparkles className="app-nav-icon" />
+          <span>Try AI</span>
+          <span className="app-nav-badge">LIVE</span>
+        </button>
+
+        {/* Compact Status Box */}
+        <div className="app-nav-status">
+          <h3 className="app-nav-status-title">System Status</h3>
+          <div className="app-nav-status-indicator">
+            <div className="app-nav-status-dot" />
+            <span className="app-nav-status-text">All systems active</span>
+          </div>
+          <p className="app-nav-status-metric">
+            Avg response: <span className="app-nav-status-value">47s</span>
           </p>
         </div>
       </div>
-    </div>
+
+      <TryAIVoice 
+        isOpen={isTryAIModalOpen} 
+        onClose={() => setIsTryAIModalOpen(false)} 
+      />
+    </>
   );
 }

@@ -1,0 +1,399 @@
+/* Integrated Layout Fixes for Ultra-Modern Design */
+
+/* ===================================
+   LAYOUT FIXES FOR ULTRA-MODERN DESIGN
+   Preserves: Glass morphism, pink accent (#f99bff), massive white space
+   Fixes: Overlapping text, misaligned elements, container boundaries
+   =================================== */
+
+/* Fix body padding to account for fixed navigation */
+body {
+  padding-top: 100px !important; /* Override for fixed nav height */
+}
+
+/* ===================================
+   NAVIGATION FIXES
+   =================================== */
+
+/* Fix navigation container alignment */
+.ultra-nav {
+  display: flex;
+  align-items: center;
+  contain: layout;
+}
+
+.ultra-nav .ultra-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.ultra-nav .flex {
+  width: 100%;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* Fix nav brand spacing */
+.ultra-nav .ultra-heading-3 {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Fix nav menu spacing */
+.ultra-nav .hidden.md\\:flex {
+  flex-wrap: nowrap;
+  gap: 2rem;
+}
+
+/* Fix dropdown positioning */
+.ultra-nav .relative {
+  position: relative;
+}
+
+.ultra-nav .glass-card {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  z-index: 1100;
+  min-width: 220px;
+  margin: 0;
+  padding: 1rem;
+}
+
+/* Fix nav buttons alignment */
+.ultra-nav .flex.items-center.gap-4.ml-8 {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.ultra-nav .ultra-button {
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+/* ===================================
+   HERO SECTION FIXES
+   =================================== */
+
+/* Fix hero text overflow */
+.ultra-heading-1 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  hyphens: auto;
+}
+
+/* Fix hero buttons alignment */
+.flex.flex-col.sm\\:flex-row.gap-8.justify-center {
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Fix text container boundaries */
+.text-center > p {
+  max-width: 100%;
+  padding: 0 1rem;
+}
+
+/* ===================================
+   STATS GRID FIXES
+   =================================== */
+
+/* Fix stat cards grid */
+.ultra-grid {
+  display: grid;
+  gap: var(--space-xl);
+  width: 100%;
+  justify-items: center;
+}
+
+.ultra-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.ultra-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Fix stat card dimensions */
+.glass-card {
+  width: 100%;
+  max-width: 400px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Fix number display */
+.ultra-number {
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+/* ===================================
+   FEATURES SECTION FIXES
+   =================================== */
+
+/* Fix feature cards height consistency */
+.ultra-grid .glass-card {
+  min-height: 300px;
+  padding: var(--space-2xl);
+}
+
+/* Fix feature text overflow */
+.glass-card p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* ===================================
+   TESTIMONIALS FIXES
+   =================================== */
+
+/* Fix testimonial quote overflow */
+.glass-card p[class*="text-lg"] {
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+  line-height: 1.6;
+}
+
+/* Fix star alignment */
+.flex.gap-1.mb-6 {
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+/* ===================================
+   FOOTER FIXES
+   =================================== */
+
+footer .ultra-container {
+  max-width: 1400px;
+}
+
+footer .ultra-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+}
+
+footer a {
+  display: block;
+  padding: 0.5rem 0;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+/* ===================================
+   RESPONSIVE FIXES
+   =================================== */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  .ultra-container {
+    padding: 0 var(--space-lg);
+  }
+  
+  .ultra-heading-1 {
+    font-size: clamp(3rem, 7vw, 5rem);
+  }
+  
+  .ultra-heading-2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+  
+  .ultra-grid-3,
+  .ultra-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .glass-card {
+    padding: var(--space-xl);
+  }
+}
+
+/* Mobile (480px - 768px) */
+@media (max-width: 768px) {
+  body {
+    padding-top: 80px !important;
+  }
+  
+  .ultra-nav {
+    height: 80px;
+  }
+  
+  .ultra-container {
+    padding: 0 var(--space-md);
+  }
+  
+  /* Hide desktop nav items */
+  .ultra-nav .hidden.md\\:flex {
+    display: none !important;
+  }
+  
+  /* Stack buttons vertically on mobile */
+  .flex.flex-col.sm\\:flex-row {
+    flex-direction: column !important;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .ultra-button {
+    width: 100%;
+  }
+  
+  /* Single column grids */
+  .ultra-grid-2,
+  .ultra-grid-3,
+  .ultra-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .ultra-heading-1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    line-height: 1.1;
+  }
+  
+  .ultra-heading-2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  
+  .ultra-spacer-5xl {
+    height: var(--space-3xl);
+  }
+  
+  .ultra-spacer-3xl {
+    height: var(--space-2xl);
+  }
+}
+
+/* Small Mobile (below 480px) */
+@media (max-width: 480px) {
+  .ultra-container {
+    padding: 0 1rem;
+  }
+  
+  .ultra-heading-1 {
+    font-size: 2.5rem;
+  }
+  
+  .ultra-heading-2 {
+    font-size: 2rem;
+  }
+  
+  .ultra-number {
+    font-size: 3rem;
+  }
+  
+  .glass-card {
+    padding: var(--space-lg);
+    margin: var(--space-md) 0;
+  }
+  
+  .ultra-button {
+    padding: var(--space-md) var(--space-lg);
+    font-size: 0.875rem;
+  }
+}
+
+/* ===================================
+   Z-INDEX HIERARCHY FIX
+   =================================== */
+
+.mesh-background { z-index: 1; }
+main { position: relative; z-index: 10; }
+.ultra-nav { z-index: 100; }
+.ultra-nav .glass-card { z-index: 101; }
+
+/* ===================================
+   OVERFLOW FIXES
+   =================================== */
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.ultra-container {
+  overflow-x: hidden;
+}
+
+/* Fix text overflow in all sections */
+h1, h2, h3, h4, h5, h6, p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* ===================================
+   SPECIFIC COMPONENT FIXES
+   =================================== */
+
+/* Fix CTA section padding */
+.glass-card.glass-card-accent.p-20 {
+  padding: clamp(2rem, 5vw, 5rem);
+}
+
+/* Fix badge alignment */
+.ultra-badge {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Fix icon box centering */
+.ultra-icon-box {
+  flex-shrink: 0;
+}
+
+/* Fix divider width */
+.ultra-divider {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===================================
+   ANIMATION PERFORMANCE
+   =================================== */
+
+/* Reduce animations on mobile for performance */
+@media (max-width: 768px) {
+  .scan-effect::after {
+    display: none;
+  }
+  
+  .mesh-circle {
+    animation: none;
+    opacity: 0.02;
+  }
+}
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+
+@media print {
+  .ultra-nav,
+  .mesh-background {
+    display: none;
+  }
+  
+  body {
+    padding-top: 0 !important;
+  }
+  
+  .glass-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}

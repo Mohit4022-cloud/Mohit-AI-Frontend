@@ -1,9 +1,36 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./ultra-modern.css";
+import "./layout-fixes.css";
+import "./integrated-fixes.css";
+import "./complete-layout-fix.css";
+import "./design-preserving-fixes.css";
+import "./targeted-fixes.css";
+import "./premium-complete.css";
+import "./navigation-fix.css";
+import "./hero-positioning-fix.css";
+import "./hero-text-fix.css";
+import "./hero-override-fix.css";
+import "./hero-final-fix.css";
+import "./form-height-fix.css";
+import "./white-line-position-fix.css";
+import "./feature-icon-fix.css";
+import "./feature-icon-color-fix.css";
+import "./icon-force-pink.css";
+import "./cta-premium-style.css";
+import "./product-page-styles.css";
+import "./pricing-page-styles.css";
+import "./solutions-page-styles.css";
+import "./homepage-enhanced-styles.css";
+import "./footer-styles.css";
+import "./internal-platform.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { GrammarlySuppressor } from "@/components/grammarly-suppressor";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -90,14 +117,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head>
         <link rel="dns-prefetch" href={config.api.baseUrl} />
         <link rel="preconnect" href={config.api.baseUrl} />
+        {/* Remove or update CSP to allow localhost connections */}
+        <meta 
+          httpEquiv="Content-Security-Policy" 
+          content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' http://localhost:3002 ws://localhost:3002 wss://api.elevenlabs.io https://api.elevenlabs.io; media-src 'self' blob:; worker-src 'self' blob:;"
+        />
       </head>
       <body className={inter.className}>
+        <div className="mesh-background">
+          <div className="mesh-circle mesh-circle-1"></div>
+          <div className="mesh-circle mesh-circle-2"></div>
+          <div className="mesh-circle mesh-circle-3"></div>
+        </div>
         <ErrorBoundary>
-          <Providers>{children}</Providers>
+          <Providers>
+            <GrammarlySuppressor />
+            {children}
+            <ScrollToTop />
+            <Footer />
+          </Providers>
         </ErrorBoundary>
       </body>
     </html>

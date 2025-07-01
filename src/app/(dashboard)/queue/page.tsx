@@ -331,7 +331,7 @@ export default function QueuePage() {
   const [escalationRules, setEscalationRules] = useState<EscalationRule[]>([]);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [realtimeEnabled, setRealtimeEnabled] = useState(true);
+  const [realtimeEnabled, setRealtimeEnabled] = useState(false);
   const [newLeadNotifications, setNewLeadNotifications] = useState<
     QueuedLead[]
   >([]);

@@ -532,15 +532,15 @@ export function AIConversationAssistant({
         ];
 
   return (
-    <div className={cn("space-y-4", className)}>
-      <Card>
+    <div className={cn("space-y-4 min-w-[340px] max-w-[400px] w-full", className)}>
+      <Card className="w-full min-w-[320px] max-w-[400px]">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Brain className="h-5 w-5" />
-              <CardTitle>AI Conversation Assistant</CardTitle>
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <Brain className="h-5 w-5 shrink-0" />
+              <CardTitle className="truncate">AI Conversation Assistant</CardTitle>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-shrink-0">
               {isAnalyzing && (
                 <Badge variant="outline" className="animate-pulse">
                   <Activity className="h-3 w-3 mr-1" />
@@ -560,13 +560,13 @@ export function AIConversationAssistant({
               </Button>
             </div>
           </div>
-          <CardDescription>
+          <CardDescription className="whitespace-normal break-words">
             Real-time conversation analysis with smart suggestions and insights
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="flex flex-wrap space-x-2 mb-4 overflow-x-auto">
               <TabsTrigger value="suggestions">Smart Suggestions</TabsTrigger>
               <TabsTrigger value="keywords">Keywords</TabsTrigger>
               <TabsTrigger value="sentiment">Sentiment</TabsTrigger>

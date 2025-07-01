@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import BlackBox V1 Styles */
-@import "./styles-phase5.css";
-@import "./styles.css";
+/* Clean Foundation V8 - Removed all problematic styles */
+@import './clean-foundation.css';
+
+/* Visual Fixes - Remove glass effects and establish modern background */
+@import './visual-fixes.css';
 
 /* Custom styles for beautiful landing pages */
 @layer base {
@@ -18,9 +20,7 @@
     background: var(--gradient-primary);
   }
 
-  .backdrop-blur {
-    backdrop-filter: blur(8px);
-  }
+  /* Backdrop blur removed for clean foundation */
 
   /* Animations */
   @keyframes fade-in {

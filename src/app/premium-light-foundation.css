@@ -1,0 +1,118 @@
+/* Premium Light Foundation - Apple meets Modern SaaS */
+
+:root {
+  /* Premium Light Color Palette */
+  --background-primary: #FFFFFF;
+  --background-secondary: #FAFBFC;
+  --background-tertiary: #F6F8FA;
+  --accent-pink: #FF6EC7;
+  --accent-pink-vibrant: #E94B9B;
+  --accent-pink-light: #FFE5F5;
+  --accent-pink-subtle: #FFF0FA;
+  --text-primary: #0A0A0A;
+  --text-secondary: #57606A;
+  --border-subtle: #E1E7EC;
+  --shadow-subtle: rgba(0, 0, 0, 0.04);
+  --shadow-pink: rgba(255, 110, 199, 0.08);
+  --gradient-pink: linear-gradient(135deg, #FF6EC7 0%, #E94B9B 100%);
+  --gradient-light: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%);
+  --gradient-mesh: radial-gradient(at 30% 10%, rgba(255, 110, 199, 0.06) 0px, transparent 50%), 
+                   radial-gradient(at 70% 50%, rgba(255, 182, 225, 0.04) 0px, transparent 50%);
+}
+
+/* Base Reset for Premium Experience */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Premium Typography Foundation */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Smooth Transitions Global */
+* {
+  transition: color 0.2s ease, 
+              background-color 0.2s ease, 
+              border-color 0.2s ease, 
+              box-shadow 0.2s ease,
+              transform 0.2s ease;
+}
+
+/* Selection Style */
+::selection {
+  background-color: var(--accent-pink-light);
+  color: var(--text-primary);
+}
+
+/* Focus States */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-pink);
+  outline-offset: 2px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D1D9E0;
+}
+
+/* Container System */
+.container-premium {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .container-premium {
+    padding: 0 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-premium {
+    padding: 0 80px;
+  }
+}

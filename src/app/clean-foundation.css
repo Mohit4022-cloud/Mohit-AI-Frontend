@@ -1,0 +1,414 @@
+/* Clean Modern Foundation - V8 */
+
+/* ============================= */
+/* 1. Core Color Palette */
+/* ============================= */
+:root {
+  /* Primary backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  
+  /* Borders */
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+  
+  /* Text colors */
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  
+  /* Accent colors */
+  --accent-pink: #ec4899;
+  --accent-purple: #8b5cf6;
+  --accent-blue: #3b82f6;
+  
+  /* Navigation */
+  --nav-bg: #1a1a2e;
+  --nav-text: #ffffff;
+  --nav-hover: rgba(255, 255, 255, 0.1);
+  
+  /* Shadows - Simple and clean */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+/* ============================= */
+/* 2. Reset & Base Styles */
+/* ============================= */
+[class*="app-"],
+[class*="data-"],
+[class*="layout-"],
+[class*="control-"] {
+  /* Remove all problematic effects */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-blend-mode: normal !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Remove all glass effects */
+.glass-effect,
+.glass-card,
+.glass-panel,
+[class*="glass"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--bg-primary) !important;
+}
+
+/* ============================= */
+/* 3. Layout Components */
+/* ============================= */
+.layout-workspace {
+  background: var(--bg-secondary);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.layout-content {
+  background: transparent;
+  padding: var(--space-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.layout-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* ============================= */
+/* 4. Navigation */
+/* ============================= */
+.app-navigation-panel {
+  background: var(--nav-bg);
+  color: var(--nav-text);
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: var(--space-lg) 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.app-navigation-brand {
+  font-size: 24px;
+  font-weight: 700;
+  padding: 0 var(--space-lg);
+  margin-bottom: var(--space-xl);
+  color: var(--nav-text);
+}
+
+.app-navigation-link {
+  display: flex;
+  align-items: center;
+  padding: var(--space-sm) var(--space-lg);
+  color: var(--nav-text);
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.app-navigation-link:hover {
+  background: var(--nav-hover);
+}
+
+.app-navigation-link.active {
+  background: var(--nav-hover);
+}
+
+.app-navigation-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent-pink);
+}
+
+/* ============================= */
+/* 5. Cards & Metrics */
+/* ============================= */
+.data-metric-box {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.data-metric-box:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.data-metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+  background: var(--bg-secondary);
+  color: var(--accent-pink);
+}
+
+.data-metric-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: var(--space-xs);
+}
+
+.data-metric-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.data-metric-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-sm);
+}
+
+.data-metric-trend.positive {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.data-metric-trend.negative {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ============================= */
+/* 6. Tables */
+/* ============================= */
+.data-table-container {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  background: var(--bg-secondary);
+  padding: var(--space-md);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover {
+  background: var(--bg-secondary);
+}
+
+/* ============================= */
+/* 7. Forms */
+/* ============================= */
+.control-input,
+.control-select,
+.control-textarea {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.control-input:focus,
+.control-select:focus,
+.control-textarea:focus {
+  outline: none;
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.control-label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.control-group {
+  margin-bottom: var(--space-lg);
+}
+
+/* ============================= */
+/* 8. Buttons */
+/* ============================= */
+.control-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.control-button-primary {
+  background: var(--accent-pink);
+  color: white;
+}
+
+.control-button-primary:hover {
+  background: #db2777;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.control-button-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.control-button-secondary:hover {
+  background: var(--bg-tertiary);
+}
+
+/* ============================= */
+/* 9. Sections & Containers */
+/* ============================= */
+.data-section {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.data-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.data-section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ============================= */
+/* 10. Mobile Responsive */
+/* ============================= */
+@media (max-width: 768px) {
+  .app-navigation-panel {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .app-navigation-panel.open {
+    transform: translateX(0);
+  }
+  
+  .layout-content {
+    padding: var(--space-md);
+  }
+  
+  .layout-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  
+  .data-metric-value {
+    font-size: 24px;
+  }
+}
+
+/* ============================= */
+/* 11. Utility Classes */
+/* ============================= */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-pink { color: var(--accent-pink); }
+.text-purple { color: var(--accent-purple); }
+
+.bg-primary { background: var(--bg-primary); }
+.bg-secondary { background: var(--bg-secondary); }
+.bg-tertiary { background: var(--bg-tertiary); }
+
+.border { border: 1px solid var(--border); }
+.rounded { border-radius: var(--radius-md); }
+.shadow { box-shadow: var(--shadow-sm); }
+
+/* ============================= */
+/* 12. Remove Old Styles */
+/* ============================= */
+/* Force removal of problematic styles */
+* {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.glass-morphism,
+.glassmorphism,
+[class*="glass-"] {
+  background: var(--bg-primary) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
