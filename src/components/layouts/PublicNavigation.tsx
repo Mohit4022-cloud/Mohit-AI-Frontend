@@ -9,13 +9,13 @@ export function PublicNavigation() {
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
 
   return (
-    <nav className="fixed w-full bg-white/95 backdrop-blur-md border-b border-neutral-100 z-50 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20">
+    <nav className="ultra-nav">
+      <div className="ultra-container">
+        <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-2xl font-bold text-black tracking-tight"
+              className="ultra-heading-3"
             >
               Mohit AI
             </Link>
@@ -24,13 +24,13 @@ export function PublicNavigation() {
           <div className="hidden md:flex items-center space-x-8">
             <Link
               href="/product"
-              className="text-neutral-600 hover:text-black transition-colors duration-200"
+              className="text-lg font-medium hover:text-accent-pink transition-colors"
             >
               Product
             </Link>
             <Link
               href="/pricing"
-              className="text-neutral-600 hover:text-black transition-colors duration-200"
+              className="text-lg font-medium hover:text-accent-pink transition-colors"
             >
               Pricing
             </Link>
@@ -40,43 +40,43 @@ export function PublicNavigation() {
               onMouseEnter={() => setIsSolutionsOpen(true)}
               onMouseLeave={() => setIsSolutionsOpen(false)}
             >
-              <button className="text-neutral-600 hover:text-black transition-colors duration-200 flex items-center">
+              <button className="text-lg font-medium hover:text-accent-pink transition-colors flex items-center">
                 Solutions
                 <ChevronDown
                   className={`ml-2 h-5 w-5 transition-transform duration-200 ${isSolutionsOpen ? "rotate-180" : ""}`}
                 />
               </button>
               <div
-                className={`absolute left-0 mt-2 w-48 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 transform origin-top ${isSolutionsOpen ? "opacity-100 visible scale-100" : "opacity-0 invisible scale-95"}`}
+                className={`absolute left-0 top-full mt-2 w-64 glass-card transition-all duration-200 transform origin-top ${isSolutionsOpen ? "opacity-100 visible scale-100" : "opacity-0 invisible scale-95"}`}
               >
-                <div className="py-1">
+                <div className="p-4 space-y-2">
                   <Link
                     href="/solutions"
-                    className="block px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-50"
+                    className="block px-4 py-3 text-base font-medium rounded-16 hover:bg-gray-100 hover:text-accent-pink transition-all"
                   >
                     By Industry
                   </Link>
                   <Link
                     href="/solutions/for-sdrs"
-                    className="block px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-50"
+                    className="block px-4 py-3 text-base font-medium rounded-16 hover:bg-gray-100 hover:text-accent-pink transition-all"
                   >
                     For SDRs
                   </Link>
                   <Link
                     href="/solutions/for-managers"
-                    className="block px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-50"
+                    className="block px-4 py-3 text-base font-medium rounded-16 hover:bg-gray-100 hover:text-accent-pink transition-all"
                   >
                     For Managers
                   </Link>
                   <Link
                     href="/solutions/enterprise"
-                    className="block px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-50"
+                    className="block px-4 py-3 text-base font-medium rounded-16 hover:bg-gray-100 hover:text-accent-pink transition-all"
                   >
                     Enterprise
                   </Link>
                   <Link
                     href="/solutions/small-business"
-                    className="block px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-50"
+                    className="block px-4 py-3 text-base font-medium rounded-16 hover:bg-gray-100 hover:text-accent-pink transition-all"
                   >
                     Small Business
                   </Link>
@@ -86,29 +86,31 @@ export function PublicNavigation() {
 
             <Link
               href="/resources"
-              className="text-neutral-600 hover:text-black transition-colors duration-200"
+              className="text-lg font-medium hover:text-accent-pink transition-colors"
             >
               Resources
             </Link>
             <Link
               href="/security"
-              className="text-neutral-600 hover:text-black transition-colors duration-200"
+              className="text-lg font-medium hover:text-accent-pink transition-colors"
             >
               Security
             </Link>
 
-            {/* Login button - preserve functionality from Mohit-AI-Frontend */}
-            <Button
-              variant="outline"
-              className="border-2 border-black text-black hover:bg-black hover:text-white transition-all duration-200"
-              asChild
-            >
-              <Link href="/dashboard">Check out the platform</Link>
-            </Button>
+            {/* Fix: Aligned CTA buttons */}
+            <div className="flex items-center gap-4 ml-8">
+              <Link href="/dashboard">
+                <button className="ultra-button ultra-button-primary">
+                  Check out the platform
+                </button>
+              </Link>
 
-            <Button className="bg-black text-white hover:bg-neutral-900 transition-all duration-200" asChild>
-              <Link href="/register">Get Started</Link>
-            </Button>
+              <Link href="/register">
+                <button className="ultra-button ultra-button-accent">
+                  Get Started
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import BlackBox V1 Styles */
-@import "./styles-phase5.css";
-@import "./styles.css";
-
 /* Custom styles for beautiful landing pages */
 @layer base {
   :root {

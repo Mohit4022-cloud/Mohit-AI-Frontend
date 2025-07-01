@@ -18,6 +18,21 @@ const config: Config = {
       },
     },
     extend: {
+      backdropBlur: {
+        '20': '20px',
+      },
+      backdropSaturate: {
+        '180': '180%',
+      },
+      transitionDuration: {
+        '400': '400ms',
+      },
+      transitionTimingFunction: {
+        'premium': 'cubic-bezier(0.23, 1, 0.32, 1)',
+      },
+      boxShadow: {
+        'lift': '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
+      },
       colors: {
         // AI Calls specific colors from design guide
         "ai-blue": "#2563EB",
@@ -25,6 +40,11 @@ const config: Config = {
         "ai-amber": "#F59E0B",
         "ai-red": "#DC2626",
         "ai-gray": "#6B7280",
+        
+        // Ultra-modern accent colors
+        "accent-pink": "#f99bff",
+        "accent-pink-light": "#ffb3ff",
+        "accent-pink-dark": "#ff6fff",
         
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -80,6 +100,9 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        "16": "16px",
+        "24": "24px",
+        "4xl": "2rem",
       },
       keyframes: {
         "accordion-down": {

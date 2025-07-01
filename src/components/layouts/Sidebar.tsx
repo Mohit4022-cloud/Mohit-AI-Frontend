@@ -34,13 +34,17 @@ export function Sidebar() {
 
   return (
     <>
-      <div className="fixed inset-y-0 left-0 w-64 bg-card border-r">
-        <div className="flex h-16 items-center px-6 border-b">
-          <Zap className="h-8 w-8 text-primary mr-2" />
-          <span className="text-xl font-bold">Mohit AI</span>
+      <div className="fixed inset-y-0 left-0 w-80 glass-card rounded-r-[32px] m-0">
+        <div className="flex h-24 items-center px-8">
+          <div className="ultra-icon-box ultra-icon-box-accent">
+            <Zap className="h-8 w-8" />
+          </div>
+          <span className="ultra-heading-3 ml-4">Mohit AI</span>
         </div>
+        
+        <div className="ultra-divider mx-8" />
 
-        <nav className="flex-1 space-y-1 p-4">
+        <nav className="flex-1 space-y-4 p-8">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -48,42 +52,54 @@ export function Sidebar() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  "flex items-center gap-4 rounded-24 px-6 py-4 text-sm font-semibold transition-all scan-effect",
                   isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+                    ? "bg-black text-white shadow-lg transform scale-105"
+                    : "text-gray-600 hover:bg-gray-100 hover:text-black hover:shadow-md hover:transform hover:scale-105",
                 )}
               >
-                <item.icon className="h-5 w-5" />
+                <div className={cn(
+                  "h-8 w-8 rounded-16 flex items-center justify-center transition-all",
+                  isActive ? "bg-accent-pink" : "bg-gray-200"
+                )}>
+                  <item.icon className={cn(
+                    "h-5 w-5",
+                    isActive ? "text-white" : "text-gray-600"
+                  )} />
+                </div>
                 {item.name}
               </Link>
             );
           })}
           
+          
+          <div className="ultra-spacer-lg" />
+          
           {/* Try AI Button */}
           <button
             onClick={() => setIsTryAIModalOpen(true)}
-            className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors text-blue-600 hover:bg-blue-50 hover:text-blue-700 relative"
+            className="ultra-button ultra-button-accent w-full flex items-center justify-center gap-3 scan-effect"
           >
-            <Sparkles className="h-5 w-5 text-blue-500" />
-            <span className="font-medium">Try AI</span>
-            <span className="ml-auto bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">
-              Live
+            <Sparkles className="h-5 w-5" />
+            <span>Try AI</span>
+            <span className="ultra-badge ml-auto">
+              LIVE
             </span>
           </button>
         </nav>
 
-        <div className="p-4 border-t">
-          <div className="rounded-lg bg-primary/10 p-4">
-            <h3 className="font-semibold mb-1">Response Status</h3>
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-green-500 pulse-dot" />
-              <span className="text-sm text-muted-foreground">
+        <div className="p-8">
+          <div className="glass-card glass-card-accent">
+            <h3 className="font-bold text-lg mb-4">System Status</h3>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="h-3 w-3 rounded-full bg-accent-pink animate-pulse" />
+              <span className="text-sm font-medium">
                 All systems active
               </span>
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              Avg response time: 47 seconds
+            <div className="ultra-spacer-sm" />
+            <p className="text-xs opacity-60">
+              Avg response: <span className="text-accent-pink font-bold">47s</span>
             </p>
           </div>
         </div>

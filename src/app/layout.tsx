@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./ultra-modern.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
@@ -102,6 +103,11 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <div className="mesh-background">
+          <div className="mesh-circle mesh-circle-1"></div>
+          <div className="mesh-circle mesh-circle-2"></div>
+          <div className="mesh-circle mesh-circle-3"></div>
+        </div>
         <ErrorBoundary>
           <Providers>
             <GrammarlySuppressor />
