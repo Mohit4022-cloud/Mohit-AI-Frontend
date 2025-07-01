@@ -23,10 +23,12 @@ import "./product-page-styles.css";
 import "./pricing-page-styles.css";
 import "./solutions-page-styles.css";
 import "./homepage-enhanced-styles.css";
+import "./footer-styles.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
 import { GrammarlySuppressor } from "@/components/grammarly-suppressor";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -133,6 +135,7 @@ export default function RootLayout({
           <Providers>
             <GrammarlySuppressor />
             {children}
+            <Footer />
           </Providers>
         </ErrorBoundary>
       </body>
