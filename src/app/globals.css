@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Clean Foundation V8 - Removed all problematic styles */
-@import './clean-foundation.css';
-
-/* Visual Fixes - Remove glass effects and establish modern background */
-@import './visual-fixes.css';
+/* Import modern background system for internal pages */
+@import './modern-background.css';
+@import './modern-cards.css';
+@import './typography-colors.css';
+@import './platform-optimizations.css';
 
 /* Custom styles for beautiful landing pages */
 @layer base {
