@@ -1,0 +1,41 @@
+/* Feature Text Color Fix - Ensure Consistent Text Color */
+
+/* Fix feature card text color */
+.feature-card h3,
+.feature-heading,
+.feature-card .feature-title {
+  color: var(--text-primary, #0A0A0A) !important;
+  opacity: 1 !important;
+}
+
+/* Fix feature description text */
+.feature-card p,
+.feature-description,
+.feature-card .feature-text {
+  color: var(--text-secondary, #57606A) !important;
+  opacity: 1 !important;
+}
+
+/* Ensure all feature cards have same text treatment */
+.features-grid .feature-card:nth-child(2) h3,
+.features-grid .feature-card:nth-child(2) p,
+.features-grid .feature-card:nth-child(3) h3,
+.features-grid .feature-card:nth-child(3) p {
+  opacity: 1 !important;
+}
+
+/* Remove any grey filters or overlays */
+.feature-card {
+  filter: none !important;
+}
+
+/* Ensure consistent heading color across all cards */
+.features-section h3 {
+  color: #0A0A0A !important;
+  font-weight: 700 !important;
+}
+
+/* Ensure consistent paragraph color across all cards */
+.features-section p {
+  color: #57606A !important;
+}

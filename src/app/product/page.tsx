@@ -1,266 +1,603 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, LayoutGrid, Check } from "lucide-react";
-import { PublicLayout } from "@/components/layouts/PublicLayout";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Product - Mohit AI",
-  description:
-    "One Platform for All Your Sales Outreach - AI-powered calling, intelligent messaging, and advanced analytics",
-};
+import Link from "next/link";
+import {
+  ArrowRight,
+  Phone,
+  Mail,
+  MessageSquare,
+  Zap,
+  Shield,
+  Clock,
+  BarChart3,
+  Users,
+  Bot,
+  CheckCircle,
+  Globe,
+  Sparkles,
+  Play,
+  ChevronDown,
+  Plus,
+  Minus,
+} from "lucide-react";
+import { useState } from "react";
 
 export default function ProductPage() {
   return (
-    <PublicLayout>
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="text-5xl font-bold text-black mb-6">
-              One Platform for All Your Sales Outreach
-            </h1>
-            <p className="text-xl text-gray-600">
-              Mohit AI combines AI-powered calling, intelligent messaging, and
-              advanced analytics to automate your entire sales development
-              process.
-            </p>
-          </div>
-          <div className="relative">
-            <div className="bg-gray-100 rounded-2xl p-8 aspect-video flex items-center justify-center">
-              <p className="text-gray-500">Platform Demo Video Coming Soon</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    <>
+      {/* Skip to content for accessibility */}
+      <a href="#main" className="skip-to-content">
+        Skip to content
+      </a>
 
-      {/* Features Grid */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* AI Calling */}
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg flex items-center justify-center mb-6">
-                <Phone className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-black mb-4">AI Calling</h3>
-              <p className="text-gray-600 mb-6">
-                Make hundreds of personalized calls daily using natural voice
-                AI. Our system handles objections, qualifies prospects, and
-                books meetings automatically.
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">
-                    Natural voice conversations
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">
-                    Real-time objection handling
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">
-                    Automatic meeting scheduling
-                  </span>
-                </li>
-              </ul>
-            </div>
+      {/* Fixed Navigation - Reused from main page */}
+      <nav className="navbar-fixed">
+        <div className="navbar-container">
+          <Link href="/" className="navbar-brand">
+            Mohit AI
+          </Link>
 
-            {/* AI Messaging */}
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg flex items-center justify-center mb-6">
-                <MessageSquare className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-black mb-4">
-                AI Messaging
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Send personalized emails, LinkedIn messages, and SMS based on
-                prospect research and buying signals. Follow up automatically
-                until you get a response.
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">
-                    Multi-channel outreach
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">
-                    Personalized messaging
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">
-                    Smart follow-up sequences
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Platform */}
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg flex items-center justify-center mb-6">
-                <LayoutGrid className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-black mb-4">Platform</h3>
-              <p className="text-gray-600 mb-6">
-                A comprehensive platform that integrates with your existing
-                tools and provides powerful analytics to optimize your sales
-                process.
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">CRM integration</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">Advanced analytics</span>
-                </li>
-                <li className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white text-sm">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="ml-3 text-gray-600">Custom workflows</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Platform Features */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl font-bold text-black mb-6">
-              Everything You Need in One Place
-            </h2>
-            <p className="text-xl text-gray-600">
-              Mohit AI combines powerful features to streamline your sales
-              development process.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            {/* Left Column */}
-            <div className="space-y-12">
-              <div>
-                <h3 className="text-2xl font-bold text-black mb-4">
-                  Intelligent Lead Generation
-                </h3>
-                <p className="text-gray-600">
-                  Our AI analyzes millions of data points to find and prioritize
-                  the best prospects for your business.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-black mb-4">
-                  Smart Engagement
-                </h3>
-                <p className="text-gray-600">
-                  Automatically engage prospects across multiple channels with
-                  personalized messaging that gets responses.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-black mb-4">
-                  Meeting Scheduling
-                </h3>
-                <p className="text-gray-600">
-                  When prospects show interest, Mohit AI automatically schedules
-                  meetings with your sales team.
-                </p>
-              </div>
-            </div>
-            {/* Right Column */}
-            <div className="bg-gray-100 rounded-2xl aspect-square flex items-center justify-center">
-              <p className="text-gray-500">Platform Screenshot Coming Soon</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Integration Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl font-bold text-black mb-6">
-              Works With Your Existing Tools
-            </h2>
-            <p className="text-xl text-gray-600">
-              Mohit AI integrates seamlessly with your favorite CRM and sales
-              tools.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 flex items-center justify-center">
-              <span className="text-gray-400">Salesforce</span>
-            </div>
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 flex items-center justify-center">
-              <span className="text-gray-400">HubSpot</span>
-            </div>
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 flex items-center justify-center">
-              <span className="text-gray-400">Outreach</span>
-            </div>
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 flex items-center justify-center">
-              <span className="text-gray-400">SalesLoft</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Ready to Transform Your Sales Process?
-          </h2>
-          <p className="text-xl text-gray-300 mb-12">
-            Join thousands of companies using Mohit AI to automate their sales
-            development.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/register">
-              <Button
-                variant="outline"
-                className="px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-black font-medium rounded-lg transition-all duration-200"
-              >
-                Start Free Trial
-              </Button>
+          <div className="navbar-menu">
+            <Link href="/product" className="navbar-link">
+              Product
             </Link>
-            <Link href="/demo">
-              <Button className="px-8 py-3 bg-white text-black font-medium rounded-lg hover:bg-gray-100 transition-all duration-200">
-                Watch Demo
-              </Button>
+            <Link href="/pricing" className="navbar-link">
+              Pricing
+            </Link>
+
+            {/* Solutions Dropdown */}
+            <div className="navbar-dropdown">
+              <button className="navbar-dropdown-toggle">
+                Solutions
+                <ChevronDown className="w-4 h-4" />
+              </button>
+              <div className="navbar-dropdown-menu">
+                <Link href="/solutions" className="navbar-dropdown-item">
+                  By Industry
+                </Link>
+                <Link href="/solutions/for-sdrs" className="navbar-dropdown-item">
+                  For SDRs
+                </Link>
+                <Link href="/solutions/for-managers" className="navbar-dropdown-item">
+                  For Managers
+                </Link>
+                <Link href="/solutions/enterprise" className="navbar-dropdown-item">
+                  Enterprise
+                </Link>
+                <Link href="/solutions/small-business" className="navbar-dropdown-item">
+                  Small Business
+                </Link>
+              </div>
+            </div>
+
+            <Link href="/resources" className="navbar-link">
+              Resources
+            </Link>
+            <Link href="/security" className="navbar-link">
+              Security
+            </Link>
+          </div>
+
+          <div className="navbar-actions">
+            <Link href="/dashboard" className="btn btn-outline">
+              Check out the platform
+            </Link>
+            <Link href="/register" className="btn btn-primary">
+              Get Started
             </Link>
           </div>
         </div>
-      </section>
-    </PublicLayout>
+      </nav>
+
+      <main id="main">
+        {/* Product Hero Section */}
+        <section className="hero-section product-hero">
+          <div className="hero-container">
+            <div className="hero-content product-hero-content">
+              <div className="product-badge">
+                <Bot className="w-4 h-4" />
+                <span>AI-Powered Sales Platform</span>
+              </div>
+              
+              <h1 className="hero-heading">
+                Your AI SDR That<br />
+                <span className="text-pink">Never Sleeps</span>
+              </h1>
+              
+              <p className="hero-description">
+                Mohit AI responds to every lead in under 60 seconds, qualifies prospects,
+                books meetings, and nurtures relationships across voice, email, SMS, and chat
+                - all for the price of lunch.
+              </p>
+              
+              <div className="hero-buttons">
+                <Link href="/demo" className="btn btn-secondary">
+                  <span>See It In Action</span>
+                  <Play className="w-5 h-5" />
+                </Link>
+                <Link href="/register" className="btn btn-outline">
+                  <span>Start Free Trial</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+              
+              <div className="hero-trust-badges">
+                <div className="trust-badge-item">
+                  <CheckCircle className="w-5 h-5 text-pink" />
+                  <span>No credit card required</span>
+                </div>
+                <div className="trust-badge-item">
+                  <Shield className="w-5 h-5 text-pink" />
+                  <span>SOC 2 certified</span>
+                </div>
+                <div className="trust-badge-item">
+                  <Users className="w-5 h-5 text-pink" />
+                  <span>Trusted by 500+ teams</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Product Demo Visual */}
+            <div className="product-demo-visual">
+              <div className="demo-screen">
+                <div className="demo-header">
+                  <div className="demo-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <span className="demo-title">Mohit AI Dashboard</span>
+                </div>
+                <div className="demo-content">
+                  <div className="demo-stats-row">
+                    <div className="demo-stat">
+                      <h4>Active Conversations</h4>
+                      <div className="demo-stat-value">
+                        <span className="stat-number">127</span>
+                        <span className="stat-badge positive">+23%</span>
+                      </div>
+                    </div>
+                    <div className="demo-stat">
+                      <h4>Meetings Booked</h4>
+                      <div className="demo-stat-value">
+                        <span className="stat-number">48</span>
+                        <span className="stat-badge positive">+15%</span>
+                      </div>
+                    </div>
+                    <div className="demo-stat">
+                      <h4>Response Time</h4>
+                      <div className="demo-stat-value">
+                        <span className="stat-number">0:47</span>
+                        <span className="stat-unit">seconds</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="demo-conversation">
+                    <div className="conversation-header">
+                      <Bot className="w-5 h-5 text-pink" />
+                      <span>AI Agent • Sarah Chen</span>
+                      <span className="conversation-badge">Qualifying</span>
+                    </div>
+                    <div className="conversation-messages">
+                      <div className="message ai">
+                        Hi Sarah! I noticed you downloaded our ROI calculator. 
+                        I&apos;d love to show you how other companies in SaaS are 
+                        seeing 391% higher conversion rates.
+                      </div>
+                      <div className="message user">
+                        That sounds interesting! We&apos;re struggling with lead 
+                        response times right now.
+                      </div>
+                      <div className="message ai">
+                        I hear that a lot. Most teams we work with were 
+                        missing 40% of leads before Mohit AI. Would you 
+                        be open to a quick 15-minute demo tomorrow at 2pm?
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        
+        {/* How It Works Section */}
+        <section className="features-section how-it-works">
+          <div className="features-container">
+            <div className="features-header">
+              <div className="section-badge">
+                <Zap className="w-4 h-4" />
+                <span>How It Works</span>
+              </div>
+              <h2 className="features-heading">
+                From Lead to Meeting in<br />
+                <span className="text-pink">Three Simple Steps</span>
+              </h2>
+              <p className="features-description">
+                Mohit AI seamlessly integrates with your existing workflow,
+                qualifying and nurturing leads while your team focuses on closing deals.
+              </p>
+            </div>
+            
+            <div className="features-grid">
+              <div className="feature-card step-card">
+                <div className="step-number">1</div>
+                <div className="feature-icon">
+                  <Globe className="h-8 w-8" />
+                </div>
+                <h3 className="feature-title">Instant Response</h3>
+                <p className="feature-description">
+                  The moment a lead comes in - whether from your website, ads, 
+                  or campaigns - Mohit AI responds within 60 seconds across 
+                  their preferred channel.
+                </p>
+              </div>
+              
+              <div className="feature-card step-card">
+                <div className="step-number">2</div>
+                <div className="feature-icon">
+                  <MessageSquare className="h-8 w-8" />
+                </div>
+                <h3 className="feature-title">Intelligent Qualification</h3>
+                <p className="feature-description">
+                  Our AI engages in natural conversations, asking the right 
+                  questions to understand needs, budget, timeline, and 
+                  decision-making process.
+                </p>
+              </div>
+              
+              <div className="feature-card step-card">
+                <div className="step-number">3</div>
+                <div className="feature-icon">
+                  <Users className="h-8 w-8" />
+                </div>
+                <h3 className="feature-title">Seamless Handoff</h3>
+                <p className="feature-description">
+                  Qualified leads are automatically booked for meetings with 
+                  your sales team, complete with conversation history and 
+                  key insights.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Core Features Section */}
+        <section className="trust-section core-features">
+          <div className="features-container">
+            <div className="features-header">
+              <h2 className="features-heading">
+                Everything You Need to<br />
+                <span className="text-pink">Accelerate Sales</span>
+              </h2>
+            </div>
+            
+            <div className="features-two-column">
+              <div className="feature-row">
+                <div className="feature-content">
+                  <div className="feature-icon-large">
+                    <Phone className="h-10 w-10 text-pink" />
+                  </div>
+                  <h3 className="feature-title-large">AI Voice Calling</h3>
+                  <p className="feature-description-large">
+                    Natural-sounding AI that conducts full sales conversations, 
+                    handles objections, and books meetings - indistinguishable 
+                    from your best SDRs.
+                  </p>
+                  <ul className="feature-checklist">
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Human-like voice with perfect pitch and tone</span>
+                    </li>
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Handles interruptions and complex questions</span>
+                    </li>
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Automatic CRM logging and call recording</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="feature-visual">
+                  <div className="voice-wave-animation">
+                    <div className="wave-bar"></div>
+                    <div className="wave-bar"></div>
+                    <div className="wave-bar"></div>
+                    <div className="wave-bar"></div>
+                    <div className="wave-bar"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="feature-row reverse">
+                <div className="feature-content">
+                  <div className="feature-icon-large">
+                    <Mail className="h-10 w-10 text-pink" />
+                  </div>
+                  <h3 className="feature-title-large">Intelligent Email & SMS</h3>
+                  <p className="feature-description-large">
+                    Personalized outreach that reads like it was written by 
+                    your top performers, with perfect timing and follow-up 
+                    sequences.
+                  </p>
+                  <ul className="feature-checklist">
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Company and prospect research built-in</span>
+                    </li>
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Dynamic personalization at scale</span>
+                    </li>
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Optimal send time prediction</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="feature-visual">
+                  <div className="email-preview">
+                    <div className="email-header">
+                      <div className="email-from">Mohit AI</div>
+                      <div className="email-subject">Re: Your interest in automation</div>
+                    </div>
+                    <div className="email-body">
+                      <p>Hi Sarah,</p>
+                      <p>I noticed you&apos;re expanding your sales team at TechCorp...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="feature-row">
+                <div className="feature-content">
+                  <div className="feature-icon-large">
+                    <BarChart3 className="h-10 w-10 text-pink" />
+                  </div>
+                  <h3 className="feature-title-large">Real-Time Analytics</h3>
+                  <p className="feature-description-large">
+                    Complete visibility into every interaction, with insights 
+                    that help you optimize your sales process and coach your 
+                    human team.
+                  </p>
+                  <ul className="feature-checklist">
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Conversation analytics and sentiment scoring</span>
+                    </li>
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Lead quality and conversion tracking</span>
+                    </li>
+                    <li>
+                      <CheckCircle className="w-5 h-5 text-pink" />
+                      <span>Team performance benchmarking</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="feature-visual">
+                  <div className="analytics-chart">
+                    <div className="chart-bar" style={{ height: '60%' }}></div>
+                    <div className="chart-bar" style={{ height: '80%' }}></div>
+                    <div className="chart-bar" style={{ height: '45%' }}></div>
+                    <div className="chart-bar" style={{ height: '90%' }}></div>
+                    <div className="chart-bar" style={{ height: '70%' }}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Integration Section */}
+        <section className="stats-section integrations">
+          <div className="stats-container">
+            <div className="integration-header">
+              <h2 className="features-heading">
+                Works With Your<br />
+                <span className="text-pink">Entire Tech Stack</span>
+              </h2>
+              <p className="features-description">
+                Mohit AI integrates seamlessly with the tools you already use,
+                creating a unified workflow that amplifies your team&apos;s productivity.
+              </p>
+            </div>
+            
+            <div className="integration-grid">
+              <div className="integration-card">
+                <div className="integration-logo">CRM</div>
+                <p>Salesforce, HubSpot, Pipedrive</p>
+              </div>
+              <div className="integration-card">
+                <div className="integration-logo">Email</div>
+                <p>Gmail, Outlook, SendGrid</p>
+              </div>
+              <div className="integration-card">
+                <div className="integration-logo">Calendar</div>
+                <p>Google Calendar, Calendly, Outlook</p>
+              </div>
+              <div className="integration-card">
+                <div className="integration-logo">Comms</div>
+                <p>Slack, Teams, Discord</p>
+              </div>
+              <div className="integration-card">
+                <div className="integration-logo">Phone</div>
+                <p>Twilio, RingCentral, Aircall</p>
+              </div>
+              <div className="integration-card">
+                <div className="integration-logo">Analytics</div>
+                <p>Google Analytics, Segment, Mixpanel</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Pricing Preview Section */}
+        <section className="features-section pricing-preview">
+          <div className="features-container">
+            <div className="features-header">
+              <h2 className="features-heading">
+                Pricing That Makes<br />
+                <span className="text-pink">Perfect Sense</span>
+              </h2>
+              <p className="features-description">
+                Start with our Starter plan at just $75/month. No setup fees,
+                no hidden costs, and you can cancel anytime.
+              </p>
+            </div>
+            
+            <div className="pricing-comparison-card">
+              <div className="comparison-header">
+                <h3>Traditional SDR vs Mohit AI</h3>
+              </div>
+              <div className="comparison-grid">
+                <div className="comparison-column">
+                  <h4>Traditional SDR</h4>
+                  <div className="comparison-cost">$5,417/mo</div>
+                  <ul className="comparison-list">
+                    <li className="negative">
+                      <Minus className="w-4 h-4" />
+                      <span>40 hour work week</span>
+                    </li>
+                    <li className="negative">
+                      <Minus className="w-4 h-4" />
+                      <span>2-3 weeks ramp time</span>
+                    </li>
+                    <li className="negative">
+                      <Minus className="w-4 h-4" />
+                      <span>50-100 calls per day</span>
+                    </li>
+                    <li className="negative">
+                      <Minus className="w-4 h-4" />
+                      <span>Single channel focus</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="comparison-column highlight">
+                  <h4>Mohit AI</h4>
+                  <div className="comparison-cost">$75/mo</div>
+                  <ul className="comparison-list">
+                    <li className="positive">
+                      <Plus className="w-4 h-4" />
+                      <span>24/7 availability</span>
+                    </li>
+                    <li className="positive">
+                      <Plus className="w-4 h-4" />
+                      <span>Instant deployment</span>
+                    </li>
+                    <li className="positive">
+                      <Plus className="w-4 h-4" />
+                      <span>1000+ interactions daily</span>
+                    </li>
+                    <li className="positive">
+                      <Plus className="w-4 h-4" />
+                      <span>Omnichannel engagement</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <Link href="/pricing" className="btn btn-secondary comparison-cta">
+                <span>View All Pricing Options</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </section>
+        
+        {/* FAQ Section */}
+        <section className="trust-section faq-section">
+          <div className="features-container">
+            <div className="features-header">
+              <h2 className="features-heading">
+                Frequently Asked<br />
+                <span className="text-pink">Questions</span>
+              </h2>
+            </div>
+            
+            <div className="faq-container">
+              <FAQItem 
+                question="How quickly can I get started with Mohit AI?"
+                answer="You can be up and running in less than 10 minutes. Simply connect your CRM, customize your AI agent's personality and scripts, and start receiving leads. No technical expertise required."
+              />
+              <FAQItem 
+                question="Will leads know they're talking to an AI?"
+                answer="Our AI is designed to be indistinguishable from human SDRs. It uses natural language, handles interruptions smoothly, and even adds appropriate pauses and verbal fillers. Most leads never realize they're speaking with AI."
+              />
+              <FAQItem 
+                question="Can I customize the AI's approach and messaging?"
+                answer="Absolutely! You have full control over scripts, qualification criteria, objection handling, and even the AI's personality. Update messaging in real-time based on what's working."
+              />
+              <FAQItem 
+                question="What happens when a lead wants to speak to a human?"
+                answer="The AI seamlessly transfers qualified leads to your human team with full context. Your reps receive a complete summary of the conversation, key insights, and suggested next steps."
+              />
+              <FAQItem 
+                question="How does Mohit AI integrate with my existing tools?"
+                answer="We offer native integrations with all major CRMs, calendaring tools, and communication platforms. Our API also allows for custom integrations. Most customers are fully integrated within 30 minutes."
+              />
+              <FAQItem 
+                question="Is my data secure with Mohit AI?"
+                answer="Security is our top priority. We're SOC 2 Type II certified, use bank-level encryption, and never train our models on your data. All conversations are encrypted and stored in compliance with GDPR and CCPA."
+              />
+            </div>
+          </div>
+        </section>
+        
+        {/* CTA Section - Matching main page style */}
+        <section className="cta-section">
+          <div className="stats-container">
+            <div className="cta-container">
+              <div className="cta-content">
+                <h2 className="cta-heading">
+                  Ready to 10x Your Sales?
+                </h2>
+                <p className="cta-description">
+                  Join 500+ teams using Mohit AI to respond to every lead in 
+                  under 60 seconds. Start your free trial today.
+                </p>
+              </div>
+              
+              <div className="cta-buttons">
+                <Link href="/register" className="btn">
+                  <Sparkles className="w-5 h-5" />
+                  Start Free Trial
+                </Link>
+                <Link href="/demo" className="btn">
+                  Schedule Demo
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
+  );
+}
+
+// FAQ Item Component
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <div className="faq-item">
+      <button
+        className="faq-question"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+      >
+        <span>{question}</span>
+        <div className={`faq-icon ${isOpen ? 'open' : ''}`}>
+          <Plus className="w-5 h-5" />
+        </div>
+      </button>
+      {isOpen && (
+        <div className="faq-answer">
+          <p>{answer}</p>
+        </div>
+      )}
+    </div>
   );
 }

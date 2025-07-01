@@ -28,26 +28,8 @@ const securityHeaders = [
   {
     key: 'Referrer-Policy',
     value: 'origin-when-cross-origin'
-  },
-  {
-    key: 'Content-Security-Policy',
-    value: `
-      default-src 'self';
-      script-src 'self' 'unsafe-eval' 'unsafe-inline' *.google-analytics.com *.googletagmanager.com;
-      style-src 'self' 'unsafe-inline';
-      img-src 'self' blob: data: https:;
-      font-src 'self';
-      connect-src 'self' http://localhost:* ws://localhost:* https://*.com wss://*.com *.google-analytics.com;
-      media-src 'self';
-      object-src 'none';
-      child-src 'self';
-      frame-src 'self';
-      worker-src 'self' blob:;
-      form-action 'self';
-      base-uri 'self';
-      manifest-src 'self';
-    `.replace(/\s{2,}/g, ' ').trim()
   }
+  // Removed Content-Security-Policy to avoid conflicts with WebSocket connections
 ]
 
 const nextConfig = {

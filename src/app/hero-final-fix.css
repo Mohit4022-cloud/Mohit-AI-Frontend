@@ -1,0 +1,125 @@
+/* Hero Final Fix - Target Exact Structure */
+
+/* Main hero section */
+section.hero-section {
+  padding-top: 100px !important;
+  padding-bottom: 80px !important;
+  min-height: auto !important;
+  display: block !important;
+  background: #FFFFFF !important;
+}
+
+/* Hero container */
+.hero-section .hero-container {
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 80px !important;
+  align-items: start !important;
+}
+
+/* Left column - Hero content */
+.hero-section .hero-content {
+  display: block !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Hero heading - Force correct display */
+.hero-section h1.hero-heading {
+  font-size: clamp(56px, 7vw, 84px) !important;
+  font-weight: 700 !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.03em !important;
+  margin: 0 0 28px 0 !important;
+  padding: 0 !important;
+  color: #0A0A0A !important;
+  display: block !important;
+}
+
+/* Line break */
+.hero-heading br {
+  display: block !important;
+}
+
+/* Pink text */
+.hero-heading span.text-pink {
+  color: #FF69B4 !important;
+  display: inline !important;
+}
+
+/* Hero description */
+.hero-section p.hero-description {
+  font-size: 20px !important;
+  line-height: 1.6 !important;
+  color: #57606A !important;
+  margin: 0 0 40px 0 !important;
+  padding: 0 !important;
+  max-width: 540px !important;
+  display: block !important;
+}
+
+/* Hero buttons */
+.hero-section .hero-buttons {
+  display: flex !important;
+  gap: 16px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Right column - Demo form */
+.hero-section .demo-form-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E7EC !important;
+  border-radius: 20px !important;
+  padding: 40px !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  section.hero-section {
+    padding-top: 80px !important;
+    padding-bottom: 60px !important;
+  }
+  
+  .hero-section .hero-container {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  
+  .hero-section h1.hero-heading {
+    font-size: clamp(40px, 12vw, 56px) !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+  }
+  
+  .hero-section p.hero-description {
+    font-size: 18px !important;
+    text-align: center !important;
+    margin: 0 auto 32px auto !important;
+  }
+  
+  .hero-section .hero-buttons {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .hero-section .hero-content {
+    text-align: center !important;
+  }
+}
+
+/* Remove any transforms or animations that might be hiding content */
+.hero-section * {
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure body padding accounts for nav */
+body {
+  padding-top: 80px !important;
+}

@@ -1,0 +1,420 @@
+/* Modern Clean Card Designs for Light Backgrounds */
+
+/* Base Card Styling */
+.data-metric-box,
+.data-container,
+.data-queue-item,
+.data-table-container,
+.data-chart-container,
+.layout-queue-container,
+.data-active-leads-container {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle gradient accent for metric boxes */
+.data-metric-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.data-metric-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #e0e0e0;
+}
+
+.data-metric-box:hover::before {
+  opacity: 1;
+}
+
+/* Modern icon styling with gradient */
+.data-metric-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 12px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(236, 72, 153, 0.3);
+}
+
+/* Alternative gradient styles for variety */
+.data-metric-icon-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.data-metric-icon-success {
+  background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.data-metric-icon-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.data-metric-icon-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Container card styling */
+.data-container:hover,
+.data-table-container:hover,
+.data-chart-container:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #e0e0e0;
+}
+
+/* Queue item card enhancements */
+.data-queue-item {
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.data-queue-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #ec4899 0%, #8b5cf6 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 10px 0 0 10px;
+}
+
+.data-queue-item:hover::before {
+  opacity: 1;
+}
+
+/* Chart container modern styling */
+.data-chart-container {
+  padding: 24px;
+}
+
+.data-chart-header {
+  position: relative;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.data-chart-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 50%, transparent 100%);
+  opacity: 0.3;
+}
+
+/* Table container modern styling */
+.data-table-container {
+  padding: 0;
+  overflow: hidden;
+}
+
+.data-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.data-table-header {
+  background: #fafbfc;
+  position: relative;
+}
+
+.data-table-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #e5e7eb 50%, transparent 100%);
+}
+
+/* Modern badge styling */
+.data-table-badge,
+.data-queue-priority {
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient text for special elements */
+.data-metric-value {
+  background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+/* Ensure readability */
+.data-metric-label {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 8px;
+}
+
+/* Card button styling */
+.data-table-action,
+.data-queue-action {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.data-table-action:hover,
+.data-queue-action:hover {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-color: #d1d5db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Form card styling */
+.data-container.form-card {
+  padding: 24px;
+}
+
+/* Active leads container */
+.data-active-leads-container {
+  padding: 24px;
+}
+
+.data-lead-item {
+  background: #fafbfc;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.data-lead-item::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #ec4899 0%, #8b5cf6 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.data-lead-item:hover {
+  transform: translateX(-2px);
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.data-lead-item:hover::after {
+  opacity: 1;
+}
+
+/* Avatar gradient backgrounds */
+.data-table-avatar,
+.data-queue-avatar,
+.data-lead-avatar {
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(236, 72, 153, 0.2);
+}
+
+/* Ensure metric change indicators are visible */
+.data-metric-change {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.data-metric-change-positive {
+  color: #10b981;
+}
+
+.data-metric-change-negative {
+  color: #ef4444;
+}
+
+/* Score bar modern styling */
+.data-table-score-bar {
+  background: #f3f4f6;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.data-table-score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%);
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+/* Channel progress modern styling */
+.data-channel-progress {
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.data-channel-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: 4px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Empty state card */
+.layout-empty {
+  background: white;
+  border: 2px dashed #e5e7eb;
+  border-radius: 12px;
+  padding: 48px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.layout-empty:hover {
+  border-color: #d1d5db;
+  background: #fafbfc;
+}
+
+/* Filter bar card styling */
+.layout-filter-bar {
+  background: white;
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Notification card styling */
+.data-queue-notification {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.data-queue-notification::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+}
+
+/* Dropdown menu card styling */
+.app-dropdown-menu {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.app-dropdown-item {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.app-dropdown-item:hover {
+  background: linear-gradient(90deg, #fafbfc 0%, #f9fafb 100%);
+  padding-left: 16px;
+}
+
+/* Ensure all text remains readable */
+h1, h2, h3, h4, h5, h6 {
+  color: #111827;
+  font-weight: 600;
+}
+
+p {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.text-muted {
+  color: #6b7280;
+}
+
+/* Loading state for cards */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.card-loading {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Focus states for accessibility */
+.data-metric-box:focus-visible,
+.data-container:focus-visible,
+.data-queue-item:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}

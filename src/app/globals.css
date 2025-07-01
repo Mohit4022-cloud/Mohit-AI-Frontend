@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import BlackBox V1 Styles */
-@import "./styles-phase5.css";
-@import "./styles.css";
+/* Import modern background system for internal pages */
+@import './modern-background.css';
+@import './modern-cards.css';
+@import './typography-colors.css';
+@import './platform-optimizations.css';
 
 /* Custom styles for beautiful landing pages */
 @layer base {

@@ -1,0 +1,180 @@
+/* Design-Preserving Fixes - Maintains EXACT Original Visual Design */
+
+/* ===================================
+   PRESERVE ORIGINAL DESIGN COLORS
+   =================================== */
+
+:root {
+  /* Original Pink/Purple Gradient Colors */
+  --original-pink: #FF6EC7;
+  --original-pink-accent: #FFB6E1;
+  --original-gradient: linear-gradient(135deg, #FF6EC7 0%, #E94B9B 100%);
+  
+  /* Keep all other original colors */
+  --original-black: #000000;
+  --original-white: #FFFFFF;
+  --original-gray-bg: #F8F9FA;
+  --original-text-gray: #6B7280;
+}
+
+/* ===================================
+   COLOR FIXES ONLY - No Visual Changes
+   =================================== */
+
+/* Apply pink to specific statistics while preserving exact shade */
+/* Target stats that need to be pink */
+.stat-value,
+.ultra-number {
+  color: var(--original-pink) !important;
+}
+
+/* Exception: Keep 80% black */
+.stat-value.text-black,
+.ultra-number.text-black,
+.stat-card:has(.stat-label:contains("Less Cold Calling")) .stat-value,
+.glass-card:has(p:contains("Less Cold Calling")) .ultra-number {
+  color: var(--original-black) !important;
+}
+
+/* Ensure "Another Lead" uses the lighter pink accent */
+.text-accent,
+.text-pink {
+  color: var(--original-pink-accent) !important;
+}
+
+/* Fix trust section numbers */
+.trust-section .stat-value:not(.text-black) {
+  color: var(--original-pink) !important;
+}
+
+/* ===================================
+   NAVIGATION LINK FIXES ONLY
+   =================================== */
+
+/* Fix platform button link styling - preserve original appearance */
+.btn-outline[href="/platform"],
+.ultra-button[href="/dashboard"],
+.navbar-actions a[href="/platform"] {
+  /* Keep original styling, just ensure link works */
+  cursor: pointer;
+}
+
+/* ===================================
+   LAYOUT FIXES - No Visual Changes
+   =================================== */
+
+/* Fix bottom CTA to be horizontal while preserving design */
+.cta-container {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 3rem !important;
+}
+
+.cta-content {
+  flex: 1 !important;
+  text-align: left !important;
+}
+
+.cta-buttons {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  gap: 1rem !important;
+}
+
+/* Mobile responsiveness for CTA */
+@media (max-width: 768px) {
+  .cta-container {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+  
+  .cta-content {
+    text-align: center !important;
+  }
+  
+  .cta-buttons {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* ===================================
+   PRESERVE ALL ORIGINAL STYLES
+   =================================== */
+
+/* Ensure we don't override any visual design elements */
+.glass-card,
+.ultra-button,
+.btn,
+.feature-card,
+.stat-card {
+  /* Preserve all original properties */
+  /* Only fix functionality, not appearance */
+}
+
+/* ===================================
+   SPECIFIC NUMBER TARGETING
+   =================================== */
+
+/* Target specific statistics by their content */
+/* 47 seconds - already pink */
+/* 391% - make pink */
+.stat-card:has(.stat-label:contains("Higher")) .stat-value {
+  color: var(--original-pink) !important;
+}
+
+/* 21× - make pink */
+.stat-card:has(.stat-label:contains("More Qualified")) .stat-value {
+  color: var(--original-pink) !important;
+}
+
+/* 10-15 - make pink */
+.stat-card:has(p:contains("Hot Leads Daily")) .stat-value {
+  color: var(--original-pink) !important;
+}
+
+/* 3x - make pink */
+.stat-card:has(p:contains("More Meetings")) .stat-value {
+  color: var(--original-pink) !important;
+}
+
+/* ===================================
+   TECHNICAL FIXES ONLY
+   =================================== */
+
+/* Fix text overflow without changing appearance */
+.hero-description,
+.features-description,
+.feature-description {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Fix navigation dropdown positioning */
+.navbar-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  /* Keep all original styling */
+}
+
+/* Ensure form inputs maintain original style */
+.form-input:focus,
+.form-select:focus {
+  outline-color: var(--original-pink);
+  /* Preserve original focus effect */
+}
+
+/* ===================================
+   DO NOT CHANGE
+   =================================== */
+
+/* Typography - Keep Original */
+/* Animations - Keep Original */
+/* Shadows - Keep Original */
+/* Border Radius - Keep Original */
+/* Padding/Margins - Keep Original (except for fixes) */
+/* Hover Effects - Keep Original */
+/* Transitions - Keep Original */

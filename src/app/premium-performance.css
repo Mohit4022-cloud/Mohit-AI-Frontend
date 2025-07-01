@@ -1,0 +1,378 @@
+/* Performance & Polish Optimizations */
+
+/* Font Rendering Optimization */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* GPU Acceleration */
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.gpu-3d {
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-filter {
+  will-change: filter;
+}
+
+/* Smooth Transitions */
+.smooth-transition {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-transition-all {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-transition-transform {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-transition-opacity {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Performance Classes */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.no-drag {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+.no-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-layout {
+  contain: layout;
+}
+
+.contain-strict {
+  contain: strict;
+}
+
+/* Optimized Shadows */
+.shadow-optimized {
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-optimized-lg {
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    0 16px 32px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-optimized-pink {
+  box-shadow: 
+    0 2px 8px rgba(255, 110, 199, 0.08),
+    0 8px 16px rgba(255, 110, 199, 0.08);
+}
+
+/* Blur Performance */
+.blur-optimized {
+  transform: translateZ(0);
+  will-change: filter;
+}
+
+.backdrop-blur-optimized {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transform: translateZ(0);
+}
+
+/* Animation Performance */
+@keyframes optimizedFadeIn {
+  from { 
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to { 
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes optimizedSlideIn {
+  from { 
+    transform: translate3d(100%, 0, 0);
+  }
+  to { 
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes optimizedScale {
+  from { 
+    transform: scale3d(0.9, 0.9, 1);
+  }
+  to { 
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* Optimized Hover States */
+.hover-optimize {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transform: translateZ(0);
+}
+
+.hover-optimize:hover {
+  transform: translate3d(0, -4px, 0);
+}
+
+/* Image Optimization */
+.image-optimized {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.image-lazy {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-lazy.loaded {
+  opacity: 1;
+}
+
+/* Scroll Performance */
+.scroll-optimized {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.no-scroll-bounce {
+  overscroll-behavior: contain;
+}
+
+/* Interaction Optimization */
+.touch-optimized {
+  touch-action: manipulation;
+}
+
+.pointer-fine {
+  cursor: pointer;
+}
+
+@media (pointer: coarse) {
+  .pointer-fine {
+    cursor: default;
+  }
+}
+
+/* Loading States */
+.skeleton-optimized {
+  background: linear-gradient(
+    90deg,
+    var(--background-secondary) 0%,
+    var(--background-tertiary) 50%,
+    var(--background-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerOptimized 1.5s infinite;
+  transform: translateZ(0);
+}
+
+@keyframes shimmerOptimized {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Reduced Motion Optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .gpu-accelerate,
+  .gpu-3d {
+    transform: none !important;
+  }
+}
+
+/* Dark Mode Performance */
+@media (prefers-color-scheme: dark) {
+  .shadow-optimized,
+  .shadow-optimized-lg {
+    box-shadow: none;
+  }
+  
+  .backdrop-blur-optimized {
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* High Refresh Rate Screens */
+@media (min-resolution: 2dppx) {
+  .smooth-transition {
+    transition-duration: 0.2s;
+  }
+  
+  .smooth-transition-all {
+    transition-duration: 0.2s;
+  }
+}
+
+/* Memory Optimization */
+.memory-optimize {
+  contain: content;
+  content-visibility: auto;
+}
+
+/* Composite Layer Optimization */
+.promote-layer {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.layer-children * {
+  transform: translateZ(0);
+}
+
+/* Optimized Border Radius */
+.rounded-optimized {
+  border-radius: 16px;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+/* Paint Optimization */
+.paint-optimize {
+  will-change: transform, opacity;
+}
+
+.no-paint {
+  pointer-events: none;
+}
+
+/* Layout Optimization */
+.layout-optimize {
+  contain: layout style;
+}
+
+.flex-optimize {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+/* CSS Grid Performance */
+.grid-optimize {
+  display: grid;
+  will-change: transform;
+}
+
+/* Batch DOM Updates */
+.batch-update {
+  will-change: contents;
+}
+
+/* Optimize Reflows */
+.no-reflow {
+  position: absolute;
+  visibility: hidden;
+}
+
+.minimize-reflow {
+  overflow: hidden;
+  height: auto;
+}
+
+/* Font Loading Optimization */
+.font-display-swap {
+  font-display: swap;
+}
+
+.font-display-optional {
+  font-display: optional;
+}
+
+/* Critical CSS */
+.critical {
+  /* Critical styles load first */
+}
+
+.non-critical {
+  /* Non-critical styles load later */
+}
+
+/* Performance Monitoring Classes */
+.monitor-performance {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* Animation Frame Optimization */
+.raf-optimize {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Intersection Observer Optimization */
+.io-optimize {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Resource Hints */
+.prefetch-optimize {
+  /* Styles for prefetched content */
+}
+
+.preload-optimize {
+  /* Styles for preloaded content */
+}
+
+/* CSS Containment */
+.contain-all {
+  contain: size layout style paint;
+}
+
+/* Optimize Touch Interactions */
+@media (hover: none) and (pointer: coarse) {
+  .touch-optimize {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  .hover-optimize:active {
+    transform: scale(0.98);
+  }
+}
