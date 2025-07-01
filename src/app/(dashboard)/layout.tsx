@@ -27,7 +27,7 @@ export default function DashboardLayout({
   return (
     <div className="layout-full-height layout-base-bg">
       <Sidebar />
-      <div className="layout-pad-left-64">
+      <div className="layout-with-nav">
         <Header />
         <main className="layout-pad-6">{children}</main>
       </div>

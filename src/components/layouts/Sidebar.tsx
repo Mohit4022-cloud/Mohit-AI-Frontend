@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   Users,
@@ -17,6 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { TryAIVoice } from "@/components/TryAIVoice";
+import "@/app/navigation-optimizations.css";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -34,74 +34,59 @@ export function Sidebar() {
 
   return (
     <>
-      <div className="layout-fixed layout-inset-vertical layout-left-0 layout-width-80 app-surface-glass app-corner-right-32 layout-margin-0">
-        <div className="layout-flex layout-height-24 layout-items-center layout-pad-x-8">
-          <div className="app-icon-container app-icon-container-accent">
-            <Zap className="layout-height-8 layout-width-8" />
+      <div className="app-navigation-panel">
+        {/* Compact Header */}
+        <div className="app-nav-header">
+          <div className="app-nav-logo">
+            <Zap className="h-5 w-5" />
           </div>
-          <span className="app-title-tertiary layout-margin-left-4">Mohit AI</span>
+          <span className="app-nav-title">Mohit AI</span>
         </div>
         
-        <div className="app-separator layout-margin-x-8" />
+        <div className="app-nav-divider" />
 
-        <nav className="layout-flex-grow layout-space-y-4 layout-pad-8">
+        {/* Navigation Links */}
+        <nav className="app-nav-section">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
                 key={item.name}
                 href={item.href}
-                className={cn(
-                  "layout-flex layout-items-center layout-gap-4 app-corner-24 layout-pad-x-6 layout-pad-y-4 app-text-sm app-font-semibold app-transition-full app-scan-animation",
-                  isActive
-                    ? "app-bg-black app-text-white app-shadow-large app-transform app-scale-105"
-                    : "app-text-gray-600 app-hover-bg-gray-100 app-hover-text-black app-hover-shadow-medium app-hover-transform app-hover-scale-105",
-                )}
+                data-tooltip={item.name}
+                className={`app-nav-link ${isActive ? 'app-nav-link-active' : ''}`}
               >
-                <div className={cn(
-                  "layout-height-8 layout-width-8 app-corner-16 layout-flex layout-items-center layout-justify-center app-transition-full",
-                  isActive ? "app-bg-primary" : "app-bg-gray-200"
-                )}>
-                  <item.icon className={cn(
-                    "layout-height-5 layout-width-5",
-                    isActive ? "app-text-white" : "app-text-gray-600"
-                  )} />
+                <div className="app-nav-icon-box">
+                  <item.icon className="app-nav-icon" />
                 </div>
-                {item.name}
+                <span className="app-nav-label">{item.name}</span>
               </Link>
             );
           })}
-          
-          
-          <div className="layout-gap-large" />
-          
-          {/* Try AI Button */}
-          <button
-            onClick={() => setIsTryAIModalOpen(true)}
-            className="control-action control-action-primary layout-width-full layout-flex layout-items-center layout-justify-center layout-gap-3 app-scan-animation"
-          >
-            <Sparkles className="layout-height-5 layout-width-5" />
-            <span>Try AI</span>
-            <span className="app-status-indicator layout-margin-left-auto">
-              LIVE
-            </span>
-          </button>
         </nav>
 
-        <div className="layout-pad-8">
-          <div className="app-surface-glass app-surface-accent">
-            <h3 className="app-font-bold app-text-lg layout-margin-bottom-4">System Status</h3>
-            <div className="layout-flex layout-items-center layout-gap-3 layout-margin-bottom-3">
-              <div className="layout-height-3 layout-width-3 app-corner-circle app-bg-primary app-anim-pulse" />
-              <span className="app-text-sm app-font-medium">
-                All systems active
-              </span>
-            </div>
-            <div className="layout-gap-small" />
-            <p className="app-text-xs app-opacity-60">
-              Avg response: <span className="app-text-primary app-font-bold">47s</span>
-            </p>
+        <div className="app-nav-divider" />
+        
+        {/* Try AI Button */}
+        <button
+          onClick={() => setIsTryAIModalOpen(true)}
+          className="app-nav-action"
+        >
+          <Sparkles className="app-nav-icon" />
+          <span>Try AI</span>
+          <span className="app-nav-badge">LIVE</span>
+        </button>
+
+        {/* Compact Status Box */}
+        <div className="app-nav-status">
+          <h3 className="app-nav-status-title">System Status</h3>
+          <div className="app-nav-status-indicator">
+            <div className="app-nav-status-dot" />
+            <span className="app-nav-status-text">All systems active</span>
           </div>
+          <p className="app-nav-status-metric">
+            Avg response: <span className="app-nav-status-value">47s</span>
+          </p>
         </div>
       </div>
 
