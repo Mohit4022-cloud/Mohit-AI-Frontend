@@ -19,6 +19,7 @@ import "./feature-icon-fix.css";
 import "./feature-icon-color-fix.css";
 import "./icon-force-pink.css";
 import "./cta-premium-style.css";
+import "./product-page-styles.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
