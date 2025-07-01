@@ -398,6 +398,24 @@ export default function HomePage() {
                   <p className="stat-description">RevOps at CloudFirst</p>
                 </div>
               </div>
+              
+              <div className="feature-card">
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-6 h-6 text-pink fill-current"
+                    />
+                  ))}
+                </div>
+                <p className="feature-description" style={{ fontSize: '1.125rem', marginBottom: 'var(--space-lg)' }}>
+                  &ldquo;The ROI is incredible. Our conversion rate jumped 391% and we&apos;re closing deals faster than ever before.&rdquo;
+                </p>
+                <div style={{ borderTop: '1px solid var(--border-gray)', paddingTop: 'var(--space-md)' }}>
+                  <p className="feature-title" style={{ fontSize: '1.125rem' }}>David Kim</p>
+                  <p className="stat-description">CEO at ScaleUp Inc</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
