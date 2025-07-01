@@ -1,0 +1,44 @@
+/* Feature Icon Color Fix - Target Specific Icons */
+
+/* Fix the Mail icon (Intelligent Email) */
+.feature-card:nth-child(2) .feature-icon,
+.feature-card:nth-child(2) .feature-icon svg,
+.feature-card:nth-child(2) .feature-icon .lucide-mail {
+  color: var(--accent-pink, #FF6EC7) !important;
+  opacity: 1 !important;
+  fill: currentColor !important;
+}
+
+/* Fix the Users icon (Multi-Channel) */
+.feature-card:nth-child(3) .feature-icon,
+.feature-card:nth-child(3) .feature-icon svg,
+.feature-card:nth-child(3) .feature-icon .lucide-users {
+  color: var(--accent-pink, #FF6EC7) !important;
+  opacity: 1 !important;
+  fill: currentColor !important;
+}
+
+/* Ensure all feature icons have same treatment */
+.features-grid .feature-icon {
+  background: var(--accent-pink-subtle, #FFE5F5) !important;
+  color: var(--accent-pink, #FF6EC7) !important;
+  opacity: 1 !important;
+}
+
+.features-grid .feature-icon svg {
+  color: inherit !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Force pink color on all Lucide icons in features */
+.features-section .lucide {
+  color: var(--accent-pink, #FF6EC7) !important;
+  opacity: 1 !important;
+}
+
+/* Remove any graying effects */
+.feature-card .feature-icon * {
+  opacity: 1 !important;
+  filter: none !important;
+}
