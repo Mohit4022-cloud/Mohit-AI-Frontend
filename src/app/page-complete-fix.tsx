@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
 };
 
-export default function HomePage() {
+export default function HomePageCompleteFix() {
   return (
     <>
       {/* Skip to content for accessibility */}
@@ -81,7 +81,7 @@ export default function HomePage() {
           </div>
 
           <div className="navbar-actions">
-            <Link href="/dashboard" className="btn btn-outline">
+            <Link href="/platform" className="btn btn-outline">
               Check out the platform
             </Link>
             <Link href="/register" className="btn btn-primary">
