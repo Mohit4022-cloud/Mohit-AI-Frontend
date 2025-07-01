@@ -2,11 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import modern background system for internal pages */
-@import './modern-background.css';
-@import './modern-cards.css';
-@import './typography-colors.css';
-@import './platform-optimizations.css';
+/* Clean Foundation V8 - Removed all problematic styles */
+@import './clean-foundation.css';
 
 /* Custom styles for beautiful landing pages */
 @layer base {
@@ -20,9 +17,7 @@
     background: var(--gradient-primary);
   }
 
-  .backdrop-blur {
-    backdrop-filter: blur(8px);
-  }
+  /* Backdrop blur removed for clean foundation */
 
   /* Animations */
   @keyframes fade-in {
