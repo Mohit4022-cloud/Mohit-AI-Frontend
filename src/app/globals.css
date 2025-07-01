@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import modern background system for internal pages */
+@import './modern-background.css';
+@import './modern-cards.css';
+@import './typography-colors.css';
+@import './platform-optimizations.css';
+
 /* Custom styles for beautiful landing pages */
 @layer base {
   :root {
