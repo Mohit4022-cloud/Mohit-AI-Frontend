@@ -296,24 +296,24 @@ function ChannelStat({ icon: Icon, label, value, total }: any) {
   const percentage = (value / total) * 100;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-16 bg-black flex items-center justify-center">
-            <Icon className="h-5 w-5 text-white" />
+    <div className="layout-space-y-4">
+      <div className="layout-flex layout-items-center layout-justify-between">
+        <div className="layout-flex layout-items-center layout-gap-4">
+          <div className="layout-height-12 layout-width-12 app-corner-16 app-bg-black layout-flex layout-items-center layout-justify-center">
+            <Icon className="layout-height-5 layout-width-5 app-text-white" />
           </div>
           <div>
-            <span className="text-lg font-semibold">{label}</span>
-            <p className="text-2xl font-bold mt-1">{value}</p>
+            <span className="app-text-lg app-font-semibold">{label}</span>
+            <p className="app-text-2xl app-font-bold layout-margin-top-1">{value}</p>
           </div>
         </div>
-        <span className="text-3xl font-bold opacity-20">
+        <span className="app-text-3xl app-font-bold app-opacity-20">
           {Math.round(percentage)}%
         </span>
       </div>
-      <div className="relative h-3 bg-gray-100 rounded-full overflow-hidden">
+      <div className="layout-relative layout-height-3 app-bg-gray-100 app-corner-circle app-overflow-hidden">
         <div 
-          className="absolute inset-y-0 left-0 bg-gradient-to-r from-accent-pink to-accent-pink-dark rounded-full transition-all duration-1000 ease-out"
+          className="layout-absolute layout-inset-vertical layout-left-0 app-bg-gradient-primary app-corner-circle app-transition-full app-duration-1000 app-ease-out"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -323,14 +323,14 @@ function ChannelStat({ icon: Icon, label, value, total }: any) {
 
 function StatusBadge({ status }: { status: string }) {
   const styles = {
-    new: "ultra-badge",
-    contacted: "ultra-badge",
-    qualifying: "ultra-badge ultra-badge-accent",
-    qualified: "ultra-badge",
+    new: "app-status-indicator",
+    contacted: "app-status-indicator",
+    qualifying: "app-status-indicator app-status-indicator-accent",
+    qualified: "app-status-indicator",
   };
 
   return (
-    <span className={styles[status as keyof typeof styles] || "ultra-badge"}>
+    <span className={styles[status as keyof typeof styles] || "app-status-indicator"}>
       {status}
     </span>
   );
@@ -347,9 +347,9 @@ function ChannelBadge({ channel }: { channel: string }) {
   const Icon = icons[channel as keyof typeof icons];
 
   return (
-    <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full">
-      <Icon className="h-4 w-4" />
-      <span className="text-sm font-medium">{channel}</span>
+    <div className="layout-flex layout-items-center layout-gap-2 app-bg-gray-100 layout-pad-x-4 layout-pad-y-2 app-corner-circle">
+      <Icon className="layout-height-4 layout-width-4" />
+      <span className="app-text-sm app-font-medium">{channel}</span>
     </div>
   );
 }

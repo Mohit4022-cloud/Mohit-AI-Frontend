@@ -24,33 +24,33 @@ export function Header() {
   };
 
   return (
-    <header className="h-16 border-b bg-card flex items-center justify-between px-6">
-      <div className="flex items-center flex-1 max-w-md">
-        <Search className="h-4 w-4 text-muted-foreground mr-2" />
+    <header className="layout-height-16 app-border-bottom app-bg-card layout-flex layout-items-center layout-justify-between layout-pad-x-6">
+      <div className="layout-flex layout-items-center layout-flex-grow layout-max-width-md">
+        <Search className="layout-height-4 layout-width-4 app-text-secondary layout-margin-right-2" />
         <Input
           type="search"
           placeholder="Search leads, conversations..."
-          className="border-0 focus-visible:ring-0"
+          className="app-border-0 app-focus-ring-0"
         />
       </div>
 
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
-          <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-primary" />
+      <div className="layout-flex layout-items-center layout-gap-4">
+        <Button variant="ghost" size="icon" className="layout-relative">
+          <Bell className="layout-height-5 layout-width-5" />
+          <span className="layout-absolute layout-top-1 layout-right-1 layout-height-2 layout-width-2 app-corner-circle app-bg-action" />
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
+              <User className="layout-height-5 layout-width-5" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuContent align="end" className="layout-width-56">
             <DropdownMenuLabel>
               <div>
-                <p className="font-medium">{user?.name || "User"}</p>
-                <p className="text-sm text-muted-foreground">{user?.email}</p>
+                <p className="app-font-medium">{user?.name || "User"}</p>
+                <p className="app-text-sm app-text-secondary">{user?.email}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

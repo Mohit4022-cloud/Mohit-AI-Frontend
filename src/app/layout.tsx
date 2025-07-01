@@ -24,6 +24,7 @@ import "./pricing-page-styles.css";
 import "./solutions-page-styles.css";
 import "./homepage-enhanced-styles.css";
 import "./footer-styles.css";
+import "./internal-platform.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
