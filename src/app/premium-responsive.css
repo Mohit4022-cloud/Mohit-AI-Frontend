@@ -1,0 +1,432 @@
+/* Responsive Excellence - Premium Light Design */
+
+/* Responsive Typography */
+html {
+  font-size: clamp(14px, 2vw, 18px);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Performance Optimizations */
+  .float-shape, 
+  .hero-mesh {
+    animation: none;
+    opacity: 0.03;
+  }
+  
+  /* Section Spacing */
+  .section-padding {
+    padding: 60px 20px;
+  }
+  
+  /* Button Adjustments */
+  .button-magnetic, 
+  .button-outline {
+    padding: 16px 24px;
+    font-size: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Typography Scale */
+  :root {
+    --font-hero: clamp(40px, 10vw, 56px);
+    --font-h2: clamp(28px, 7vw, 36px);
+    --font-stat: clamp(32px, 8vw, 48px);
+  }
+  
+  /* Navigation Mobile */
+  .nav-modern {
+    padding: 12px 0;
+  }
+  
+  .nav-menu {
+    display: none;
+  }
+  
+  .nav-mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 80px 24px 24px;
+    transition: right 0.3s ease;
+    z-index: 999;
+  }
+  
+  .nav-mobile-menu.active {
+    right: 0;
+  }
+  
+  /* Hero Mobile */
+  .hero-section {
+    min-height: auto;
+    padding: 100px 0 60px;
+  }
+  
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  /* Form Mobile */
+  .form-premium {
+    padding: 24px;
+    border-radius: 16px;
+    margin: 0 -4px;
+  }
+  
+  /* Cards Mobile */
+  .stat-card-premium,
+  .feature-card {
+    padding: 32px 24px;
+  }
+  
+  /* Grid Adjustments */
+  .stats-grid,
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  /* Reduce Visual Effects */
+  .glass-light,
+  .glass-nav {
+    backdrop-filter: blur(8px);
+  }
+  
+  /* Touch Targets */
+  a, button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Tablet Optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .section-padding {
+    padding: 80px 40px;
+  }
+  
+  .hero-grid {
+    gap: 60px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop Optimizations */
+@media (min-width: 1025px) {
+  .section-padding {
+    padding: 120px 80px;
+  }
+  
+  .container-max {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+  html {
+    font-size: 18px;
+  }
+  
+  .section-padding {
+    padding: 140px 120px;
+  }
+}
+
+/* Ultra Wide Screens */
+@media (min-width: 2560px) {
+  html {
+    font-size: 20px;
+  }
+  
+  .container-max {
+    max-width: 1800px;
+  }
+}
+
+/* Key Implementation Principles */
+
+/* 1. White Space Mastery */
+.white-space-xs { padding: 20px; }
+.white-space-sm { padding: 40px; }
+.white-space-md { padding: 60px; }
+.white-space-lg { padding: 80px; }
+.white-space-xl { padding: 120px; }
+
+.margin-xs { margin: 20px; }
+.margin-sm { margin: 40px; }
+.margin-md { margin: 60px; }
+.margin-lg { margin: 80px; }
+.margin-xl { margin: 120px; }
+
+/* 2. Subtle Sophistication */
+.subtle-hover {
+  transition: all 0.3s ease;
+}
+
+.subtle-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* 3. Pink Accent Strategy */
+.accent-pink-hover {
+  transition: color 0.3s ease;
+}
+
+.accent-pink-hover:hover {
+  color: var(--accent-pink);
+}
+
+.accent-pink-border {
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.accent-pink-border:hover {
+  border-color: var(--accent-pink-light);
+}
+
+/* 4. Smooth Everything */
+* {
+  scroll-behavior: smooth;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 5. Modern Minimalism */
+.minimal-card {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  padding: 40px;
+  transition: all 0.3s ease;
+}
+
+.minimal-card:hover {
+  border-color: rgba(255, 110, 199, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* 6. Performance First - 60fps */
+.performance-critical {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* 7. Accessibility - WCAG AA */
+.accessible-focus:focus-visible {
+  outline: 2px solid var(--accent-pink);
+  outline-offset: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Contrast Ratios */
+.high-contrast {
+  color: var(--text-primary);
+  background: var(--background-primary);
+}
+
+/* Focus Trap */
+.focus-trap:focus {
+  outline: 2px solid var(--accent-pink);
+  outline-offset: 2px;
+}
+
+/* Skip to Content */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent-pink);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Responsive Images */
+.image-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Responsive Video */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe,
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive Tables */
+@media (max-width: 768px) {
+  .table-responsive {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: black;
+    background: white;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  .section-padding {
+    padding: 20px 0;
+  }
+}
+
+/* Orientation Support */
+@media (orientation: landscape) and (max-height: 500px) {
+  .hero-section {
+    min-height: auto;
+    padding: 60px 0 40px;
+  }
+  
+  .section-padding {
+    padding: 40px 20px;
+  }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .image-2x {
+    image-rendering: -webkit-optimize-contrast;
+  }
+  
+  .border-thin {
+    border-width: 0.5px;
+  }
+}
+
+/* Hover Support Detection */
+@media (hover: hover) and (pointer: fine) {
+  .hover-effect:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .hover-effect:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Container Queries Preparation */
+.container-query-ready {
+  container-type: inline-size;
+}
+
+/* Responsive Utilities */
+.hide-mobile { display: block; }
+.show-mobile { display: none; }
+
+@media (max-width: 768px) {
+  .hide-mobile { display: none; }
+  .show-mobile { display: block; }
+}
+
+.hide-tablet { display: block; }
+.show-tablet { display: none; }
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hide-tablet { display: none; }
+  .show-tablet { display: block; }
+}
+
+.hide-desktop { display: none; }
+.show-desktop { display: block; }
+
+@media (min-width: 1025px) {
+  .hide-desktop { display: block; }
+  .show-desktop { display: none; }
+}
+
+/* Final Polish */
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+::selection {
+  background: var(--accent-pink-light);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background: var(--accent-pink-light);
+  color: var(--text-primary);
+}

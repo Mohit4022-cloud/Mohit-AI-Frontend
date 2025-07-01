@@ -7,6 +7,7 @@ import "./integrated-fixes.css";
 import "./complete-layout-fix.css";
 import "./design-preserving-fixes.css";
 import "./targeted-fixes.css";
+import "./premium-complete.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
