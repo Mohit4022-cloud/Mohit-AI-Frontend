@@ -47,25 +47,16 @@ jobs:
         # Create deployment directory
         mkdir -p deploy
         
-        # Check if standalone build exists and use it
-        if [ -d ".next/standalone" ]; then
-          echo "Using Next.js standalone build"
-          cp -r .next/standalone/* deploy/
-          cp -r .next/static deploy/.next/
-          cp -r public deploy/
-        else
-          echo "Using regular build with all dependencies"
-          cp -r .next deploy/
-          cp -r public deploy/
-          cp -r node_modules deploy/
-          cp package.json deploy/
-          cp package-lock.json deploy/
-          cp -r prisma deploy/
-          cp server.js deploy/
-          cp azure-server.js deploy/
-        fi
-        
-        # Always copy simple server for testing
+        # For now, use full deployment with all dependencies
+        echo "Creating full deployment package"
+        cp -r .next deploy/
+        cp -r public deploy/
+        cp -r node_modules deploy/
+        cp package.json deploy/
+        cp package-lock.json deploy/
+        cp -r prisma deploy/
+        cp server.js deploy/
+        cp azure-server.js deploy/
         cp simple-server.js deploy/
         
         # Ensure package.json exists in deploy directory
@@ -76,7 +67,7 @@ jobs:
           "name": "mohit-ai-frontend",
           "version": "1.0.1",
           "scripts": {
-            "start": "node simple-server.js"
+            "start": "node server.js"
           }
         }
         EOF
