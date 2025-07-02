@@ -65,6 +65,9 @@ jobs:
           cp azure-server.js deploy/
         fi
         
+        # Always copy simple server for testing
+        cp simple-server.js deploy/
+        
         # Ensure package.json exists in deploy directory
         if [ ! -f "deploy/package.json" ]; then
           echo "Creating minimal package.json for Azure"
@@ -73,7 +76,7 @@ jobs:
           "name": "mohit-ai-frontend",
           "version": "1.0.1",
           "scripts": {
-            "start": "node azure-server.js"
+            "start": "node simple-server.js"
           }
         }
         EOF
