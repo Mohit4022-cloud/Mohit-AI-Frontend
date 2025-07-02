@@ -44,25 +44,25 @@ jobs:
 
     - name: Create deployment package
       run: |
-        # Check if standalone build exists
-        if [ -d ".next/standalone" ]; then
-          echo "Using Next.js standalone build"
-          cp -r .next/standalone/* ./
-          cp -r .next/static .next/
-          cp -r public ./
-        else
-          echo "Standalone build not found, using regular build"
-        fi
-        
         # Create deployment directory
         mkdir -p deploy
-        cp -r .next deploy/
-        cp -r public deploy/
-        cp -r node_modules deploy/
-        cp package.json deploy/
-        cp package-lock.json deploy/
-        cp -r prisma deploy/
-        cp server.js deploy/
+        
+        # Check if standalone build exists and use it
+        if [ -d ".next/standalone" ]; then
+          echo "Using Next.js standalone build"
+          cp -r .next/standalone/* deploy/
+          cp -r .next/static deploy/.next/
+          cp -r public deploy/
+        else
+          echo "Using regular build with all dependencies"
+          cp -r .next deploy/
+          cp -r public deploy/
+          cp -r node_modules deploy/
+          cp package.json deploy/
+          cp package-lock.json deploy/
+          cp -r prisma deploy/
+          cp server.js deploy/
+        fi
         
         # Create web.config for IIS
         cat > deploy/web.config << 'EOF'
@@ -113,7 +113,6 @@ jobs:
         app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ./deploy.zip
-        startup-command: 'node server.js'
 
     - name: Cleanup
       if: always()
