@@ -64,6 +64,35 @@ jobs:
           cp server.js deploy/
         fi
         
+        # Ensure package.json exists in deploy directory
+        if [ ! -f "deploy/package.json" ]; then
+          echo "Creating minimal package.json for Azure"
+          cat > deploy/package.json << 'EOF'
+        {
+          "name": "mohit-ai-frontend",
+          "version": "1.0.1",
+          "scripts": {
+            "start": "node server.js"
+          }
+        }
+        EOF
+        fi
+        
+        # Create a startup script that logs errors
+        cat > deploy/startup.sh << 'EOF'
+        #!/bin/bash
+        echo "Starting Next.js application..."
+        echo "Current directory: $(pwd)"
+        echo "Files in directory:"
+        ls -la
+        echo "Node version: $(node --version)"
+        echo "PORT: $PORT"
+        
+        # Start the application
+        node server.js
+        EOF
+        chmod +x deploy/startup.sh
+        
         # Create web.config for IIS
         cat > deploy/web.config << 'EOF'
         <?xml version="1.0" encoding="utf-8"?>
