@@ -67,8 +67,6 @@ body {
   letter-spacing: -0.01em;
   overflow-x: hidden;
   padding: 0;
-  /* Fix: Account for 100px fixed nav */
-  padding-top: 100px;
   margin: 0;
 }
 
