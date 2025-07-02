@@ -6,6 +6,7 @@ on:
       - main
       - master
       - Ultra-modern-UI
+      - V7
   workflow_dispatch:
 
 env:
