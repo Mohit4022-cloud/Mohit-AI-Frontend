@@ -1,5 +1,8 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
+import { CounterAnimation } from "@/components/CounterAnimation";
+import { useState } from "react";
 import {
   ArrowRight,
   Phone,
@@ -19,16 +22,25 @@ import {
   Smartphone,
   Bot,
   Brain,
+  CheckCircle2,
+  Briefcase,
+  Award,
+  BarChart3,
+  HeadphonesIcon,
+  Globe,
+  Gauge,
+  Building2,
+  Rocket,
+  LineChart,
+  FileText,
+  ChevronRight,
+  Calendar,
+  DollarSign,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title:
-    "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
-  description:
-    "Mohit AI - Never Miss Another Inbound Lead | Respond in Under 60 Seconds",
-};
-
 export default function HomePage() {
+  const [selectedDay, setSelectedDay] = useState<"without" | "with">("without");
+  
   return (
     <>
       {/* Skip to content for accessibility */}
@@ -286,78 +298,191 @@ export default function HomePage() {
           </div>
         </section>
         
-        {/* Statistics Section */}
-        <section className="stats-section">
+        {/* How It Works Section */}
+        <section className="how-it-works-section">
           <div className="stats-container">
-            <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-icon">
-                  <Clock className="h-8 w-8 text-pink" />
+            <div className="section-header">
+              <h2 className="section-heading">
+                How Mohit AI <span className="text-pink">Works</span>
+              </h2>
+              <p className="section-description">
+                Capture every inbound lead instantly, plus supercharge your outbound efforts
+              </p>
+            </div>
+            
+            <div className="process-steps">
+              <div className="process-step">
+                <div className="step-number pulse-animation">1</div>
+                <div className="step-icon floating">
+                  <Zap className="w-8 h-8" />
                 </div>
-                <div className="stat-value">47</div>
-                <h3 className="stat-label">Second</h3>
-                <p className="stat-description">Response Time</p>
+                <h3 className="step-title">Instant Lead Capture</h3>
+                <p className="step-description">
+                  Connect your forms, website, CRM, and phone. AI responds to every inbound lead in under 60 seconds, 24/7.
+                </p>
               </div>
               
-              <div className="stat-card">
-                <div className="stat-icon">
-                  <TrendingUp className="h-8 w-8" />
-                </div>
-                <div className="stat-value">391%</div>
-                <h3 className="stat-label">Higher</h3>
-                <p className="stat-description">Conversion Rate</p>
+              <div className="process-connector flow-animation">
+                <ChevronRight className="w-6 h-6" />
               </div>
               
-              <div className="stat-card">
-                <div className="stat-icon">
-                  <Target className="h-8 w-8" />
+              <div className="process-step">
+                <div className="step-number pulse-animation">2</div>
+                <div className="step-icon floating" style={{animationDelay: '0.5s'}}>
+                  <Brain className="w-8 h-8" />
                 </div>
-                <div className="stat-value">21×</div>
-                <h3 className="stat-label">More Qualified</h3>
-                <p className="stat-description">Leads Generated</p>
+                <h3 className="step-title">AI Engages & Qualifies</h3>
+                <p className="step-description">
+                  AI instantly researches each lead, has natural conversations via voice/text, and identifies buying intent.
+                </p>
+              </div>
+              
+              <div className="process-connector flow-animation" style={{animationDelay: '0.3s'}}>
+                <ChevronRight className="w-6 h-6" />
+              </div>
+              
+              <div className="process-step">
+                <div className="step-number pulse-animation">3</div>
+                <div className="step-icon floating" style={{animationDelay: '1s'}}>
+                  <Calendar className="w-8 h-8" />
+                </div>
+                <h3 className="step-title">Book Hot Meetings</h3>
+                <p className="step-description">
+                  Qualified leads get meetings booked instantly. Your team only talks to interested, qualified prospects.
+                </p>
               </div>
             </div>
           </div>
         </section>
         
-        {/* Trust Section */}
+        {/* Trust Section - Redesigned */}
         <section className="trust-section">
-          <div className="stats-container">
-            <h2 className="trust-heading">
-              <span className="text-pink">500+</span> Sales Teams<br />
-              Trust Mohit AI
-            </h2>
+          <div className="trust-container">
+            <div className="trust-header">
+              <div className="trust-badge-floating">
+                <Award className="w-6 h-6" />
+                <span>Trusted by Industry Leaders</span>
+              </div>
+              <h2 className="trust-heading">
+                Join <span className="trust-number"><CounterAnimation target={500} />+</span> Sales Teams
+              </h2>
+              <p className="trust-subtitle">
+                Who are crushing their quotas with Mohit AI
+              </p>
+            </div>
             
-            <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-value">10-15</div>
-                <p className="stat-label">Hot Leads Daily</p>
+            <div className="impact-metrics">
+              <div className="impact-card">
+                <div className="impact-visual">
+                  <div className="impact-circle">
+                    <Target className="w-12 h-12" />
+                  </div>
+                  <div className="impact-line"></div>
+                </div>
+                <div className="impact-content">
+                  <h3 className="impact-value">
+                    <CounterAnimation target={15} />-<CounterAnimation target={20} />
+                  </h3>
+                  <p className="impact-label">Hot Leads Daily</p>
+                </div>
               </div>
               
-              <div className="stat-card">
-                <div className="stat-value">3x</div>
-                <p className="stat-label">More Meetings</p>
+              <div className="impact-card" style={{animationDelay: '0.2s'}}>
+                <div className="impact-visual">
+                  <div className="impact-circle">
+                    <Calendar className="w-12 h-12" />
+                  </div>
+                  <div className="impact-line"></div>
+                </div>
+                <div className="impact-content">
+                  <h3 className="impact-value">
+                    <CounterAnimation target={3} />x
+                  </h3>
+                  <p className="impact-label">More Meetings Booked</p>
+                </div>
               </div>
               
-              <div className="stat-card">
-                <div className="stat-value text-black">80%</div>
-                <p className="stat-label">Less Cold Calling</p>
+              <div className="impact-card" style={{animationDelay: '0.4s'}}>
+                <div className="impact-visual">
+                  <div className="impact-circle">
+                    <TrendingUp className="w-12 h-12" />
+                  </div>
+                  <div className="impact-line"></div>
+                </div>
+                <div className="impact-content">
+                  <h3 className="impact-value">
+                    <CounterAnimation target={80} />%
+                  </h3>
+                  <p className="impact-label">Less Cold Calling</p>
+                </div>
               </div>
             </div>
             
-            <div className="trust-badges">
-              <div className="trust-badge">
-                <Shield className="h-4 w-4" />
-                SOC 2 Type II Certified
+          </div>
+        </section>
+        
+        {/* Integration Partners */}
+        <section className="integrations-section">
+          <div className="stats-container">
+            <div className="section-header">
+              <h2 className="section-heading">
+                Seamlessly Integrates With Your <span className="text-pink">Tech Stack</span>
+              </h2>
+            </div>
+            
+            <div className="integrations-grid">
+              <div className="integration-card">
+                <div className="integration-icon">
+                  <Building2 className="w-8 h-8" />
+                </div>
+                <span>Salesforce</span>
               </div>
-              <div className="trust-badge">
-                <Zap className="h-4 w-4" />
-                99.9% Uptime SLA
+              <div className="integration-card">
+                <div className="integration-icon">
+                  <Building2 className="w-8 h-8" />
+                </div>
+                <span>HubSpot</span>
               </div>
-              <div className="trust-badge">
-                <Lock className="h-4 w-4" />
-                Bank-Level Encryption
+              <div className="integration-card">
+                <div className="integration-icon">
+                  <Building2 className="w-8 h-8" />
+                </div>
+                <span>Pipedrive</span>
               </div>
+              <div className="integration-card">
+                <div className="integration-icon">
+                  <MessageCircle className="w-8 h-8" />
+                </div>
+                <span>Slack</span>
+              </div>
+              <div className="integration-card">
+                <div className="integration-icon">
+                  <Mail className="w-8 h-8" />
+                </div>
+                <span>Gmail</span>
+              </div>
+              <div className="integration-card">
+                <div className="integration-icon">
+                  <Calendar className="w-8 h-8" />
+                </div>
+                <span>Calendly</span>
+              </div>
+              <div className="integration-card">
+                <div className="integration-icon">
+                  <Users className="w-8 h-8" />
+                </div>
+                <span>LinkedIn</span>
+              </div>
+              <div className="integration-card">
+                <div className="integration-icon">
+                  <Globe className="w-8 h-8" />
+                </div>
+                <span>Zoom</span>
+              </div>
+            </div>
+            
+            <div className="integration-cta">
+              <p>Don't see your tool? <Link href="/integrations" className="text-pink hover:underline">View all integrations</Link> or request a new one.</p>
             </div>
           </div>
         </section>
@@ -383,11 +508,6 @@ export default function HomePage() {
                   <Phone className="h-8 w-8" />
                 </div>
                 <h3 className="feature-title">AI Voice Calling</h3>
-                <p className="feature-description">
-                  Your AI SDR makes hundreds of personalized calls daily using
-                  natural voice AI, qualifies interest, and books meetings
-                  automatically.
-                </p>
               </div>
               
               <div className="feature-card">
@@ -395,112 +515,250 @@ export default function HomePage() {
                   <Mail className="h-8 w-8" />
                 </div>
                 <h3 className="feature-title">Intelligent Email</h3>
-                <p className="feature-description">
-                  AI writes and sends personalized emails based on prospect
-                  research, company news, and buying signals. Follows up
-                  automatically.
-                </p>
               </div>
               
               <div className="feature-card">
                 <div className="feature-icon">
                   <Users className="h-8 w-8" />
                 </div>
-                <h3 className="feature-title">Multi-Channel</h3>
-                <p className="feature-description">
-                  Seamlessly engage prospects across email, LinkedIn, SMS, and
-                  phone calls. Maintains consistent messaging while adapting to
-                  preferences.
-                </p>
+                <h3 className="feature-title">Multi-Channel Outreach</h3>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <Brain className="h-8 w-8" />
+                </div>
+                <h3 className="feature-title">Smart Lead Scoring</h3>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <BarChart3 className="h-8 w-8" />
+                </div>
+                <h3 className="feature-title">Real-Time Analytics</h3>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <HeadphonesIcon className="h-8 w-8" />
+                </div>
+                <h3 className="feature-title">24/7 Coverage</h3>
               </div>
             </div>
           </div>
         </section>
         
-        {/* Testimonials */}
-        <section className="trust-section">
-          <div className="features-container">
-            <div className="text-center">
-              <h2 className="features-heading">
-                What Our <span className="text-pink">Customers Say</span>
+        {/* Results Section */}
+        <section className="results-section">
+          <div className="stats-container">
+            <div className="section-header">
+              <h2 className="section-heading">
+                Real Results From <span className="text-pink">Real Companies</span>
+              </h2>
+              <p className="section-description">
+                See how companies like yours are transforming their sales with Mohit AI
+              </p>
+            </div>
+            
+            <div className="results-grid">
+              <div className="result-card hover-lift">
+                <div className="result-metric">
+                  <TrendingUp className="w-10 h-10 text-pink rotate-animation" />
+                  <div>
+                    <div className="metric-value">
+                      <CounterAnimation target={391} suffix="%" />
+                    </div>
+                    <span className="metric-label">Increase in Inbound Conversion</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="result-card hover-lift">
+                <div className="result-metric">
+                  <Clock className="w-10 h-10 text-pink pulse-icon" />
+                  <div>
+                    <div className="metric-value">
+                      <CounterAnimation target={47} suffix="s" />
+                    </div>
+                    <span className="metric-label">Inbound Response Time</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="result-card hover-lift">
+                <div className="result-metric">
+                  <Calendar className="w-10 h-10 text-pink bounce-animation" />
+                  <div>
+                    <div className="metric-value">
+                      <CounterAnimation target={156} suffix="%" />
+                    </div>
+                    <span className="metric-label">More Qualified Meetings</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="result-card hover-lift">
+                <div className="result-metric">
+                  <DollarSign className="w-10 h-10 text-pink shimmer-icon" />
+                  <div>
+                    <div className="metric-value">
+                      <CounterAnimation target={5.2} prefix="$" suffix="M" decimal={true} />
+                    </div>
+                    <span className="metric-label">Additional Revenue</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Day in the Life Comparison */}
+        <section className="comparison-section">
+          <div className="stats-container">
+            <div className="section-header">
+              <h2 className="section-heading">
+                Day in the Life: <span className="text-pink">With vs Without AI</span>
+              </h2>
+              <p className="section-description">
+                See how Mohit AI transforms your sales team's daily workflow
+              </p>
+            </div>
+            
+            <div className="day-toggle">
+              <button 
+                className={`toggle-btn ${selectedDay === 'without' ? 'active' : ''}`}
+                onClick={() => setSelectedDay('without')}
+              >
+                😫 Without AI
+              </button>
+              <button 
+                className={`toggle-btn ${selectedDay === 'with' ? 'active' : ''}`}
+                onClick={() => setSelectedDay('with')}
+              >
+                🚀 With AI
+              </button>
+            </div>
+            
+            <div className="day-comparison">
+              <div className={`day-column ${selectedDay === 'without' ? 'without-ai active' : 'without-ai'}`}>
+                <h3 className="day-title">😫 Without Mohit AI</h3>
+                
+                <div className="timeline">
+                  <div className="time-block">
+                    <span className="time">8:00 AM</span>
+                    <div className="activity">
+                      <h4>Check Yesterday's Leads</h4>
+                      <p>Find 47 new inbound leads from overnight. Start manual follow-up.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="time-block">
+                    <span className="time">10:30 AM</span>
+                    <div className="activity">
+                      <h4>Still Following Up</h4>
+                      <p>Only reached 12 leads. Most aren't answering. Energy dropping.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="time-block">
+                    <span className="time">2:00 PM</span>
+                    <div className="activity">
+                      <h4>Lunch Lead Surge</h4>
+                      <p>23 new leads came in during lunch. Now 58 leads behind.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="time-block">
+                    <span className="time">5:30 PM</span>
+                    <div className="activity">
+                      <h4>Giving Up</h4>
+                      <p>Contacted 31 leads total. 39 will go cold. 0 meetings booked.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className={`day-column ${selectedDay === 'with' ? 'with-ai active' : 'with-ai'}`}>
+                <h3 className="day-title">🚀 With Mohit AI</h3>
+                
+                <div className="timeline">
+                  <div className="time-block">
+                    <span className="time">8:00 AM</span>
+                    <div className="activity">
+                      <h4>AI Already Working</h4>
+                      <p>All 47 overnight leads contacted. 12 qualified, 3 meetings booked.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="time-block">
+                    <span className="time">10:30 AM</span>
+                    <div className="activity">
+                      <h4>Focus on Hot Leads</h4>
+                      <p>Deep conversations with 5 qualified prospects. High energy.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="time-block">
+                    <span className="time">2:00 PM</span>
+                    <div className="activity">
+                      <h4>AI Handles Surge</h4>
+                      <p>23 lunch leads auto-contacted. You close 2 deals from morning.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="time-block">
+                    <span className="time">5:30 PM</span>
+                    <div className="activity">
+                      <h4>Record Day</h4>
+                      <p>100% lead coverage. 8 meetings booked. 2 deals closed. Going home happy.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Common Objections */}
+        <section className="objections-section">
+          <div className="stats-container">
+            <div className="section-header">
+              <h2 className="section-heading">
+                Common <span className="text-pink">Concerns</span> Addressed
               </h2>
             </div>
             
-            <div className="features-grid" style={{ marginTop: 'var(--space-3xl)' }}>
-              <div className="feature-card">
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-6 h-6 text-pink fill-current"
-                    />
-                  ))}
+            <div className="objections-grid">
+              <div className="objection-card">
+                <div className="objection-icon">
+                  <MessageCircle className="w-8 h-8" />
                 </div>
-                <p className="feature-description" style={{ fontSize: '1.125rem', marginBottom: 'var(--space-lg)' }}>
-                  &ldquo;We went from missing 40% of our inbound leads to
-                  capturing every single one. Mohit AI paid for itself in the
-                  first week.&rdquo;
-                </p>
-                <div style={{ borderTop: '1px solid var(--border-gray)', paddingTop: 'var(--space-md)' }}>
-                  <p className="feature-title" style={{ fontSize: '1.125rem' }}>Sarah Chen</p>
-                  <p className="stat-description">VP Sales at TechFlow</p>
-                </div>
+                <h3>"Will it sound robotic?"</h3>
+                <p>Our AI uses natural voice technology that adapts to each conversation. Prospects often don't realize they're talking to AI.</p>
               </div>
               
-              <div className="feature-card">
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-6 h-6 text-pink fill-current"
-                    />
-                  ))}
+              <div className="objection-card">
+                <div className="objection-icon">
+                  <Shield className="w-8 h-8" />
                 </div>
-                <p className="feature-description" style={{ fontSize: '1.125rem', marginBottom: 'var(--space-lg)' }}>
-                  &ldquo;$75/month for an AI that books more meetings than our
-                  $65k/year SDR? We&apos;re saving $5,000/month and converting 3x more.&rdquo;
-                </p>
-                <div style={{ borderTop: '1px solid var(--border-gray)', paddingTop: 'var(--space-md)' }}>
-                  <p className="feature-title" style={{ fontSize: '1.125rem' }}>Marcus Johnson</p>
-                  <p className="stat-description">Founder at GrowthLab</p>
-                </div>
+                <h3>"Is my data secure?"</h3>
+                <p>SOC 2 Type II certified with bank-level encryption. Your data never trains our models. Full compliance guaranteed.</p>
               </div>
               
-              <div className="feature-card">
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-6 h-6 text-pink fill-current"
-                    />
-                  ))}
+              <div className="objection-card">
+                <div className="objection-icon">
+                  <Users className="w-8 h-8" />
                 </div>
-                <p className="feature-description" style={{ fontSize: '1.125rem', marginBottom: 'var(--space-lg)' }}>
-                  &ldquo;Finally, an AI that actually works across all channels.
-                  Our leads come from everywhere. Mohit AI handles them all.&rdquo;
-                </p>
-                <div style={{ borderTop: '1px solid var(--border-gray)', paddingTop: 'var(--space-md)' }}>
-                  <p className="feature-title" style={{ fontSize: '1.125rem' }}>Jennifer Park</p>
-                  <p className="stat-description">RevOps at CloudFirst</p>
-                </div>
+                <h3>"Will it replace my team?"</h3>
+                <p>No. It handles repetitive tasks so your team can focus on high-value activities like closing deals and building relationships.</p>
               </div>
               
-              <div className="feature-card">
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-6 h-6 text-pink fill-current"
-                    />
-                  ))}
+              <div className="objection-card">
+                <div className="objection-icon">
+                  <Zap className="w-8 h-8" />
                 </div>
-                <p className="feature-description" style={{ fontSize: '1.125rem', marginBottom: 'var(--space-lg)' }}>
-                  &ldquo;The ROI is incredible. Our conversion rate jumped 391% and we&apos;re closing deals faster than ever before.&rdquo;
-                </p>
-                <div style={{ borderTop: '1px solid var(--border-gray)', paddingTop: 'var(--space-md)' }}>
-                  <p className="feature-title" style={{ fontSize: '1.125rem' }}>David Kim</p>
-                  <p className="stat-description">CEO at ScaleUp Inc</p>
-                </div>
+                <h3>"How fast is setup?"</h3>
+                <p>Connect your CRM and go live in under 15 minutes. No complex workflows or coding required. We handle everything.</p>
               </div>
             </div>
           </div>
