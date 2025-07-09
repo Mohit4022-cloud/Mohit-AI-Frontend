@@ -40,6 +40,7 @@ import {
 
 export default function HomePage() {
   const [selectedDay, setSelectedDay] = useState<"without" | "with">("without");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
     <>
@@ -55,11 +56,11 @@ export default function HomePage() {
             Mohit AI
           </Link>
 
-          <div className="navbar-menu">
-            <Link href="/product" className="navbar-link">
+          <div className={`navbar-menu ${mobileMenuOpen ? 'active' : ''}`}>
+            <Link href="/product" className="navbar-link" onClick={() => setMobileMenuOpen(false)}>
               Product
             </Link>
-            <Link href="/pricing" className="navbar-link">
+            <Link href="/pricing" className="navbar-link" onClick={() => setMobileMenuOpen(false)}>
               Pricing
             </Link>
 
@@ -70,30 +71,40 @@ export default function HomePage() {
                 <ChevronDown className="w-4 h-4" />
               </button>
               <div className="navbar-dropdown-menu">
-                <Link href="/solutions" className="navbar-dropdown-item">
+                <Link href="/solutions" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
                   By Industry
                 </Link>
-                <Link href="/solutions/for-sdrs" className="navbar-dropdown-item">
+                <Link href="/solutions/for-sdrs" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
                   For SDRs
                 </Link>
-                <Link href="/solutions/for-managers" className="navbar-dropdown-item">
+                <Link href="/solutions/for-managers" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
                   For Managers
                 </Link>
-                <Link href="/solutions/enterprise" className="navbar-dropdown-item">
+                <Link href="/solutions/enterprise" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
                   Enterprise
                 </Link>
-                <Link href="/solutions/small-business" className="navbar-dropdown-item">
+                <Link href="/solutions/small-business" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
                   Small Business
                 </Link>
               </div>
             </div>
 
-            <Link href="/resources" className="navbar-link">
+            <Link href="/resources" className="navbar-link" onClick={() => setMobileMenuOpen(false)}>
               Resources
             </Link>
-            <Link href="/security" className="navbar-link">
+            <Link href="/security" className="navbar-link" onClick={() => setMobileMenuOpen(false)}>
               Security
             </Link>
+            
+            {/* Mobile Actions */}
+            <div className="navbar-actions">
+              <Link href="/dashboard" className="btn btn-outline" onClick={() => setMobileMenuOpen(false)}>
+                Check out the platform
+              </Link>
+              <Link href="/register" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
+                Get Started
+              </Link>
+            </div>
           </div>
 
           <div className="navbar-actions">
@@ -104,6 +115,17 @@ export default function HomePage() {
               Get Started
             </Link>
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </nav>
 
@@ -482,7 +504,7 @@ export default function HomePage() {
             </div>
             
             <div className="integration-cta">
-              <p>Don't see your tool? <Link href="/integrations" className="text-pink hover:underline">View all integrations</Link> or request a new one.</p>
+              <p>Don&apos;t see your tool? <Link href="/integrations" className="text-pink hover:underline">View all integrations</Link> or request a new one.</p>
             </div>
           </div>
         </section>
@@ -624,7 +646,7 @@ export default function HomePage() {
                 Day in the Life: <span className="text-pink">With vs Without AI</span>
               </h2>
               <p className="section-description">
-                See how Mohit AI transforms your sales team's daily workflow
+                See how Mohit AI transforms your sales team&apos;s daily workflow
               </p>
             </div>
             
@@ -651,7 +673,7 @@ export default function HomePage() {
                   <div className="time-block">
                     <span className="time">8:00 AM</span>
                     <div className="activity">
-                      <h4>Check Yesterday's Leads</h4>
+                      <h4>Check Yesterday&apos;s Leads</h4>
                       <p>Find 47 new inbound leads from overnight. Start manual follow-up.</p>
                     </div>
                   </div>
@@ -660,7 +682,7 @@ export default function HomePage() {
                     <span className="time">10:30 AM</span>
                     <div className="activity">
                       <h4>Still Following Up</h4>
-                      <p>Only reached 12 leads. Most aren't answering. Energy dropping.</p>
+                      <p>Only reached 12 leads. Most aren&apos;t answering. Energy dropping.</p>
                     </div>
                   </div>
                   
@@ -737,15 +759,15 @@ export default function HomePage() {
                 <div className="objection-icon">
                   <MessageCircle className="w-8 h-8" />
                 </div>
-                <h3>"Will it sound robotic?"</h3>
-                <p>Our AI uses natural voice technology that adapts to each conversation. Prospects often don't realize they're talking to AI.</p>
+                <h3>&quot;Will it sound robotic?&quot;</h3>
+                <p>Our AI uses natural voice technology that adapts to each conversation. Prospects often don&apos;t realize they&apos;re talking to AI.</p>
               </div>
               
               <div className="objection-card">
                 <div className="objection-icon">
                   <Shield className="w-8 h-8" />
                 </div>
-                <h3>"Is my data secure?"</h3>
+                <h3>&quot;Is my data secure?&quot;</h3>
                 <p>SOC 2 Type II certified with bank-level encryption. Your data never trains our models. Full compliance guaranteed.</p>
               </div>
               
@@ -753,7 +775,7 @@ export default function HomePage() {
                 <div className="objection-icon">
                   <Users className="w-8 h-8" />
                 </div>
-                <h3>"Will it replace my team?"</h3>
+                <h3>&quot;Will it replace my team?&quot;</h3>
                 <p>No. It handles repetitive tasks so your team can focus on high-value activities like closing deals and building relationships.</p>
               </div>
               
@@ -761,7 +783,7 @@ export default function HomePage() {
                 <div className="objection-icon">
                   <Zap className="w-8 h-8" />
                 </div>
-                <h3>"How fast is setup?"</h3>
+                <h3>&quot;How fast is setup?&quot;</h3>
                 <p>Connect your CRM and go live in under 15 minutes. No complex workflows or coding required. We handle everything.</p>
               </div>
             </div>
