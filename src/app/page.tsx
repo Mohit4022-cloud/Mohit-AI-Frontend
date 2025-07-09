@@ -569,6 +569,7 @@ export default function HomePage() {
                       <CounterAnimation target={391} suffix="%" />
                     </div>
                     <span className="metric-label">Increase in Inbound Conversion</span>
+                    <span className="metric-description">vs. industry average of 2%</span>
                   </div>
                 </div>
               </div>
@@ -580,7 +581,8 @@ export default function HomePage() {
                     <div className="metric-value">
                       <CounterAnimation target={47} suffix="s" />
                     </div>
-                    <span className="metric-label">Inbound Response Time</span>
+                    <span className="metric-label">Average Response Time</span>
+                    <span className="metric-description">24/7 instant engagement</span>
                   </div>
                 </div>
               </div>
@@ -593,6 +595,7 @@ export default function HomePage() {
                       <CounterAnimation target={156} suffix="%" />
                     </div>
                     <span className="metric-label">More Qualified Meetings</span>
+                    <span className="metric-description">Booked automatically</span>
                   </div>
                 </div>
               </div>
@@ -605,6 +608,7 @@ export default function HomePage() {
                       <CounterAnimation target={5.2} prefix="$" suffix="M" decimal={true} />
                     </div>
                     <span className="metric-label">Additional Revenue</span>
+                    <span className="metric-description">Generated per customer</span>
                   </div>
                 </div>
               </div>
@@ -759,6 +763,210 @@ export default function HomePage() {
                 </div>
                 <h3>"How fast is setup?"</h3>
                 <p>Connect your CRM and go live in under 15 minutes. No complex workflows or coding required. We handle everything.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* AI Capabilities Showcase */}
+        <section className="ai-showcase-section">
+          <div className="showcase-container">
+            <div className="showcase-header">
+              <div className="showcase-badge">
+                <Sparkles className="w-5 h-5" />
+                <span>Advanced AI Technology</span>
+              </div>
+              <h2 className="showcase-heading">
+                Experience the Future of <span className="text-pink">Sales Automation</span>
+              </h2>
+              <p className="showcase-description">
+                Watch our AI in action as it seamlessly handles complex sales scenarios
+              </p>
+            </div>
+            
+            <div className="showcase-grid">
+              <div className="showcase-card">
+                <div className="card-glow"></div>
+                <div className="card-content">
+                  <div className="ai-brain">
+                    <div className="brain-core">
+                      <Brain className="w-8 h-8" />
+                    </div>
+                    <div className="neural-paths">
+                      {[...Array(6)].map((_, i) => (
+                        <div key={i} className={`path path-${i + 1}`}></div>
+                      ))}
+                    </div>
+                  </div>
+                  <h3>Natural Language Processing</h3>
+                  <p>Understands context, sentiment, and intent in real-time conversations</p>
+                </div>
+              </div>
+              
+              <div className="showcase-card" style={{animationDelay: '0.2s'}}>
+                <div className="card-glow"></div>
+                <div className="card-content">
+                  <div className="voice-wave">
+                    <div className="wave-bars">
+                      {[...Array(7)].map((_, i) => (
+                        <div key={i} className={`bar bar-${i + 1}`}></div>
+                      ))}
+                    </div>
+                    <Phone className="w-8 h-8 voice-icon" />
+                  </div>
+                  <h3>Human-Like Voice AI</h3>
+                  <p>Natural conversations that build trust and rapport with prospects</p>
+                </div>
+              </div>
+              
+              <div className="showcase-card" style={{animationDelay: '0.4s'}}>
+                <div className="card-glow"></div>
+                <div className="card-content">
+                  <div className="learning-animation">
+                    <div className="data-flow">
+                      {[...Array(4)].map((_, i) => (
+                        <div key={i} className={`data-point point-${i + 1}`}></div>
+                      ))}
+                    </div>
+                    <TrendingUp className="w-8 h-8 learning-icon" />
+                  </div>
+                  <h3>Continuous Learning</h3>
+                  <p>Gets smarter with every interaction, improving conversion rates over time</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Success Metrics Dashboard */}
+        <section className="metrics-dashboard-section">
+          <div className="dashboard-container">
+            <div className="dashboard-header">
+              <h2 className="dashboard-heading">
+                Real-Time <span className="text-pink">Performance Metrics</span>
+              </h2>
+              <p className="dashboard-description">
+                Live data from our customers showing the impact of Mohit AI
+              </p>
+            </div>
+            
+            <div className="dashboard-grid">
+              <div className="metric-display">
+                <div className="metric-graph">
+                  <svg viewBox="0 0 100 60" className="graph-svg">
+                    <path
+                      d="M 0,50 Q 25,40 50,20 T 100,10"
+                      className="graph-line"
+                      strokeDasharray="200"
+                      strokeDashoffset="200"
+                    />
+                    <circle cx="100" cy="10" r="4" className="graph-dot" />
+                  </svg>
+                </div>
+                <div className="metric-info">
+                  <span className="metric-label">Leads Captured Today</span>
+                  <div className="metric-value">
+                    <CounterAnimation target={1847} />
+                  </div>
+                  <div className="metric-change positive">
+                    <TrendingUp className="w-4 h-4" />
+                    <span>+23% from yesterday</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="metric-display" style={{animationDelay: '0.2s'}}>
+                <div className="metric-graph">
+                  <div className="circular-progress">
+                    <svg viewBox="0 0 100 100">
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        className="progress-bg"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        className="progress-fill"
+                        strokeDasharray="283"
+                        strokeDashoffset="23"
+                      />
+                    </svg>
+                    <div className="progress-text">92%</div>
+                  </div>
+                </div>
+                <div className="metric-info">
+                  <span className="metric-label">Lead Response Rate</span>
+                  <div className="metric-value">
+                    <CounterAnimation target={92} suffix="%" />
+                  </div>
+                  <div className="metric-change positive">
+                    <Award className="w-4 h-4" />
+                    <span>Industry leading</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="metric-display" style={{animationDelay: '0.4s'}}>
+                <div className="metric-graph">
+                  <div className="bar-chart">
+                    {[65, 78, 82, 91, 95].map((height, i) => (
+                      <div
+                        key={i}
+                        className="bar"
+                        style={{
+                          height: `${height}%`,
+                          animationDelay: `${1 + i * 0.1}s`
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="metric-info">
+                  <span className="metric-label">Meetings Booked</span>
+                  <div className="metric-value">
+                    <CounterAnimation target={437} />
+                  </div>
+                  <div className="metric-change positive">
+                    <Calendar className="w-4 h-4" />
+                    <span>This week</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="metric-display" style={{animationDelay: '0.6s'}}>
+                <div className="metric-graph">
+                  <div className="pulse-indicator">
+                    <div className="pulse-ring"></div>
+                    <div className="pulse-ring"></div>
+                    <div className="pulse-core">
+                      <Zap className="w-6 h-6" />
+                    </div>
+                  </div>
+                </div>
+                <div className="metric-info">
+                  <span className="metric-label">Average Response Time</span>
+                  <div className="metric-value">
+                    <CounterAnimation target={47} suffix="s" />
+                  </div>
+                  <div className="metric-change">
+                    <Clock className="w-4 h-4" />
+                    <span>24/7 availability</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="dashboard-footer">
+              <div className="live-indicator">
+                <span className="live-dot"></span>
+                <span>Live data from last 24 hours</span>
+              </div>
+              <div className="customer-count">
+                <Users className="w-4 h-4" />
+                <span><CounterAnimation target={500} />+ active customers</span>
               </div>
             </div>
           </div>
