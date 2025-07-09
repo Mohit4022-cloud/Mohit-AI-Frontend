@@ -15,6 +15,10 @@ import {
   Target,
   Sparkles,
   ChevronDown,
+  MessageCircle,
+  Smartphone,
+  Bot,
+  Brain,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -196,6 +200,88 @@ export default function HomePage() {
                   Get Started
                 </button>
               </form>
+            </div>
+          </div>
+        </section>
+        
+        {/* Ultra Modern AI Animation Section */}
+        <section className="animation-section">
+          {/* Background particles */}
+          <div className="background-particles">
+            {[...Array(20)].map((_, i) => (
+              <div key={i} className={`bg-particle bg-particle-${i + 1}`}></div>
+            ))}
+          </div>
+          
+          <div className="animation-container">
+            <div className="ultra-modern-animation">
+              <div className="neural-network">
+                {/* Central AI Core */}
+                <div className="ai-core-3d">
+                  <div className="core-inner">
+                    <Sparkles className="bot-icon" />
+                  </div>
+                  <div className="core-outer"></div>
+                  <div className="core-particles">
+                    {[...Array(12)].map((_, i) => (
+                      <div key={i} className={`particle particle-${i + 1}`}></div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Orbiting Channels */}
+                <div className="orbit-container">
+                  <div className="orbit-path">
+                    <div className="channel-orb orb-1">
+                      <Phone className="w-5 h-5" />
+                      <div className="orb-trail"></div>
+                    </div>
+                    <div className="channel-orb orb-2">
+                      <MessageCircle className="w-5 h-5" />
+                      <div className="orb-trail"></div>
+                    </div>
+                    <div className="channel-orb orb-3">
+                      <Mail className="w-5 h-5" />
+                      <div className="orb-trail"></div>
+                    </div>
+                    <div className="channel-orb orb-4">
+                      <Smartphone className="w-5 h-5" />
+                      <div className="orb-trail"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Data Streams */}
+                <div className="data-streams">
+                  {[...Array(8)].map((_, i) => (
+                    <div key={i} className={`stream stream-${i + 1}`}>
+                      <div className="stream-particle"></div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Holographic Grid */}
+                <div className="holo-grid">
+                  <div className="grid-line horizontal"></div>
+                  <div className="grid-line vertical"></div>
+                </div>
+              </div>
+              
+              {/* Floating Stats */}
+              <div className="floating-stats">
+                <div className="stat stat-1">
+                  <span className="stat-value">47s</span>
+                  <span className="stat-label">Response</span>
+                </div>
+                <div className="stat stat-2">
+                  <span className="stat-value">24/7</span>
+                  <span className="stat-label">Active</span>
+                </div>
+                <div className="stat stat-3">
+                  <span className="stat-value">4</span>
+                  <span className="stat-label">Channels</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
