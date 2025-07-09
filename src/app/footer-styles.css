@@ -330,9 +330,9 @@
 
 /* Region Selector */
 .footer-region {
-  position: absolute;
-  bottom: 24px;
-  right: 40px;
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
 }
 
 .region-selector {
@@ -425,7 +425,6 @@
   }
   
   .footer-region {
-    position: static;
     margin-top: 24px;
     display: flex;
     justify-content: center;

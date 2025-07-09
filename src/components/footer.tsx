@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   Mail,
-  Twitter,
   Linkedin,
   Github,
   ArrowRight,
@@ -140,16 +139,7 @@ export function Footer() {
           {/* Social Links */}
           <div className="footer-social">
             <a
-              href="https://twitter.com/mohitai"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-              className="social-link"
-            >
-              <Twitter className="w-5 h-5" />
-            </a>
-            <a
-              href="https://linkedin.com/company/mohitai"
+              href="https://www.linkedin.com/in/mtiwari11"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -158,7 +148,7 @@ export function Footer() {
               <Linkedin className="w-5 h-5" />
             </a>
             <a
-              href="https://github.com/mohitai"
+              href="https://github.com/Mohit4022-cloud"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -167,7 +157,7 @@ export function Footer() {
               <Github className="w-5 h-5" />
             </a>
             <a
-              href="mailto:hello@mohitai.com"
+              href="mailto:mohittiwari4022@gmail.com"
               aria-label="Email"
               className="social-link"
             >
@@ -176,7 +166,7 @@ export function Footer() {
           </div>
         </div>
         
-        {/* Language/Region Selector (Optional) */}
+        {/* Language/Region Selector */}
         <div className="footer-region">
           <button className="region-selector">
             <Globe className="w-4 h-4" />
