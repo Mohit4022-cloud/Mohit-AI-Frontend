@@ -19,6 +19,7 @@ import {
   Sparkles,
   ChevronDown,
   MessageCircle,
+  MessageSquare,
   Smartphone,
   Bot,
   Brain,
@@ -301,55 +302,67 @@ export default function HomePage() {
         {/* How It Works Section */}
         <section className="how-it-works-section">
           <div className="stats-container">
-            <div className="section-header">
-              <h2 className="section-heading">
-                How Mohit AI <span className="text-pink">Works</span>
-              </h2>
-              <p className="section-description">
-                Capture every inbound lead instantly, plus supercharge your outbound efforts
-              </p>
+            <div>
+              <div className="section-header">
+                <h2 className="section-heading">
+                  How Mohit AI <span className="text-pink">Works</span>
+                </h2>
+                <p className="section-description">
+                  Capture every inbound lead instantly, plus supercharge your outbound efforts
+                </p>
+              </div>
             </div>
             
             <div className="process-steps">
-              <div className="process-step">
-                <div className="step-number pulse-animation">1</div>
-                <div className="step-icon floating">
-                  <Zap className="w-8 h-8" />
+              <div>
+                <div className="process-step">
+                  <div className="step-number pulse-animation">1</div>
+                  <div className="step-icon floating">
+                    <Zap className="w-8 h-8" />
+                  </div>
+                  <h3 className="step-title">Instant Lead Capture</h3>
+                  <p className="step-description">
+                    Connect your forms, website, CRM, and phone. AI responds to every inbound lead in under 60 seconds, 24/7.
+                  </p>
                 </div>
-                <h3 className="step-title">Instant Lead Capture</h3>
-                <p className="step-description">
-                  Connect your forms, website, CRM, and phone. AI responds to every inbound lead in under 60 seconds, 24/7.
-                </p>
               </div>
               
-              <div className="process-connector flow-animation">
-                <ChevronRight className="w-6 h-6" />
-              </div>
-              
-              <div className="process-step">
-                <div className="step-number pulse-animation">2</div>
-                <div className="step-icon floating" style={{animationDelay: '0.5s'}}>
-                  <Brain className="w-8 h-8" />
+              <div>
+                <div className="process-connector flow-animation">
+                  <ChevronRight className="w-6 h-6" />
                 </div>
-                <h3 className="step-title">AI Engages & Qualifies</h3>
-                <p className="step-description">
-                  AI instantly researches each lead, has natural conversations via voice/text, and identifies buying intent.
-                </p>
               </div>
               
-              <div className="process-connector flow-animation" style={{animationDelay: '0.3s'}}>
-                <ChevronRight className="w-6 h-6" />
-              </div>
-              
-              <div className="process-step">
-                <div className="step-number pulse-animation">3</div>
-                <div className="step-icon floating" style={{animationDelay: '1s'}}>
-                  <Calendar className="w-8 h-8" />
+              <div>
+                <div className="process-step">
+                  <div className="step-number pulse-animation">2</div>
+                  <div className="step-icon floating" style={{animationDelay: '0.5s'}}>
+                    <Brain className="w-8 h-8" />
+                  </div>
+                  <h3 className="step-title">AI Engages & Qualifies</h3>
+                  <p className="step-description">
+                    AI instantly researches each lead, has natural conversations via voice/text, and identifies buying intent.
+                  </p>
                 </div>
-                <h3 className="step-title">Book Hot Meetings</h3>
-                <p className="step-description">
-                  Qualified leads get meetings booked instantly. Your team only talks to interested, qualified prospects.
-                </p>
+              </div>
+              
+              <div>
+                <div className="process-connector flow-animation" style={{animationDelay: '0.3s'}}>
+                  <ChevronRight className="w-6 h-6" />
+                </div>
+              </div>
+              
+              <div>
+                <div className="process-step">
+                  <div className="step-number pulse-animation">3</div>
+                  <div className="step-icon floating" style={{animationDelay: '1s'}}>
+                    <Calendar className="w-8 h-8" />
+                  </div>
+                  <h3 className="step-title">Book Hot Meetings</h3>
+                  <p className="step-description">
+                    Qualified leads get meetings booked instantly. Your team only talks to interested, qualified prospects.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -358,21 +371,24 @@ export default function HomePage() {
         {/* Trust Section - Redesigned */}
         <section className="trust-section">
           <div className="trust-container">
-            <div className="trust-header">
-              <div className="trust-badge-floating">
-                <Award className="w-6 h-6" />
-                <span>Trusted by Industry Leaders</span>
+            <div>
+              <div className="trust-header">
+                <div className="trust-badge-floating">
+                  <Award className="w-6 h-6" />
+                  <span>Trusted by Industry Leaders</span>
+                </div>
+                <h2 className="trust-heading">
+                  Join <span className="trust-number"><CounterAnimation target={500} />+</span> Sales Teams
+                </h2>
+                <p className="trust-subtitle">
+                  Who are crushing their quotas with Mohit AI
+                </p>
               </div>
-              <h2 className="trust-heading">
-                Join <span className="trust-number"><CounterAnimation target={500} />+</span> Sales Teams
-              </h2>
-              <p className="trust-subtitle">
-                Who are crushing their quotas with Mohit AI
-              </p>
             </div>
             
             <div className="impact-metrics">
-              <div className="impact-card">
+              <div>
+                <div className="impact-card">
                 <div className="impact-visual">
                   <div className="impact-circle">
                     <Target className="w-12 h-12" />
@@ -386,8 +402,10 @@ export default function HomePage() {
                   <p className="impact-label">Hot Leads Daily</p>
                 </div>
               </div>
+              </div>
               
-              <div className="impact-card" style={{animationDelay: '0.2s'}}>
+              <div>
+                <div className="impact-card" style={{animationDelay: '0.2s'}}>
                 <div className="impact-visual">
                   <div className="impact-circle">
                     <Calendar className="w-12 h-12" />
@@ -401,8 +419,10 @@ export default function HomePage() {
                   <p className="impact-label">More Meetings Booked</p>
                 </div>
               </div>
+              </div>
               
-              <div className="impact-card" style={{animationDelay: '0.4s'}}>
+              <div>
+                <div className="impact-card" style={{animationDelay: '0.4s'}}>
                 <div className="impact-visual">
                   <div className="impact-circle">
                     <TrendingUp className="w-12 h-12" />
@@ -416,6 +436,7 @@ export default function HomePage() {
                   <p className="impact-label">Less Cold Calling</p>
                 </div>
               </div>
+              </div>
             </div>
             
           </div>
@@ -424,10 +445,12 @@ export default function HomePage() {
         {/* Integration Partners */}
         <section className="integrations-section">
           <div className="stats-container">
-            <div className="section-header">
-              <h2 className="section-heading">
-                Seamlessly Integrates With Your <span className="text-pink">Tech Stack</span>
-              </h2>
+            <div>
+              <div className="section-header">
+                <h2 className="section-heading">
+                  Seamlessly Integrates With Your <span className="text-pink">Tech Stack</span>
+                </h2>
+              </div>
             </div>
             
             <div className="integrations-grid">
@@ -481,8 +504,10 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className="integration-cta">
+            <div>
+              <div className="integration-cta">
               <p>Don't see your tool? <Link href="/integrations" className="text-pink hover:underline">View all integrations</Link> or request a new one.</p>
+            </div>
             </div>
           </div>
         </section>
@@ -490,16 +515,18 @@ export default function HomePage() {
         {/* Features Section */}
         <section className="features-section">
           <div className="features-container">
-            <div className="features-header">
-              <h2 className="features-heading">
-                Your AI SDR&apos;s<br />
-                <span className="text-pink">Complete Toolkit</span>
-              </h2>
-              
-              <p className="features-description">
-                Mohit AI handles all aspects of prospecting and outreach,
-                delivering only qualified, interested leads to your human SDRs.
-              </p>
+            <div>
+              <div className="features-header">
+                <h2 className="features-heading">
+                  Your AI SDR&apos;s<br />
+                  <span className="text-pink">Complete Toolkit</span>
+                </h2>
+                
+                <p className="features-description">
+                  Mohit AI handles all aspects of prospecting and outreach,
+                  delivering only qualified, interested leads to your human SDRs.
+                </p>
+              </div>
             </div>
             
             <div className="features-grid">
@@ -551,13 +578,15 @@ export default function HomePage() {
         {/* Results Section */}
         <section className="results-section">
           <div className="stats-container">
-            <div className="section-header">
-              <h2 className="section-heading">
-                Real Results From <span className="text-pink">Real Companies</span>
-              </h2>
-              <p className="section-description">
-                See how companies like yours are transforming their sales with Mohit AI
-              </p>
+            <div>
+              <div className="section-header">
+                <h2 className="section-heading">
+                  Real Results From <span className="text-pink">Real Companies</span>
+                </h2>
+                <p className="section-description">
+                  See how companies like yours are transforming their sales with Mohit AI
+                </p>
+              </div>
             </div>
             
             <div className="results-grid">
@@ -619,13 +648,15 @@ export default function HomePage() {
         {/* Day in the Life Comparison */}
         <section className="comparison-section">
           <div className="stats-container">
-            <div className="section-header">
-              <h2 className="section-heading">
-                Day in the Life: <span className="text-pink">With vs Without AI</span>
-              </h2>
-              <p className="section-description">
-                See how Mohit AI transforms your sales team's daily workflow
-              </p>
+            <div>
+              <div className="section-header">
+                <h2 className="section-heading">
+                  Day in the Life: <span className="text-pink">With vs Without AI</span>
+                </h2>
+                <p className="section-description">
+                  See how Mohit AI transforms your sales team's daily workflow
+                </p>
+              </div>
             </div>
             
             <div className="day-toggle">
@@ -643,8 +674,9 @@ export default function HomePage() {
               </button>
             </div>
             
-            <div className="day-comparison">
-              <div className={`day-column ${selectedDay === 'without' ? 'without-ai active' : 'without-ai'}`}>
+            <div>
+              <div className="day-comparison">
+                <div className={`day-column ${selectedDay === 'without' ? 'without-ai active' : 'without-ai'}`}>
                 <h3 className="day-title">😫 Without Mohit AI</h3>
                 
                 <div className="timeline">
@@ -720,16 +752,19 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+            </div>
           </div>
         </section>
         
         {/* Common Objections */}
         <section className="objections-section">
           <div className="stats-container">
-            <div className="section-header">
-              <h2 className="section-heading">
-                Common <span className="text-pink">Concerns</span> Addressed
-              </h2>
+            <div>
+              <div className="section-header">
+                <h2 className="section-heading">
+                  Common <span className="text-pink">Concerns</span> Addressed
+                </h2>
+              </div>
             </div>
             
             <div className="objections-grid">
@@ -771,17 +806,19 @@ export default function HomePage() {
         {/* AI Capabilities Showcase */}
         <section className="ai-showcase-section">
           <div className="showcase-container">
-            <div className="showcase-header">
-              <div className="showcase-badge">
-                <Sparkles className="w-5 h-5" />
-                <span>Advanced AI Technology</span>
+            <div>
+              <div className="showcase-header">
+                <div className="showcase-badge">
+                  <Sparkles className="w-5 h-5" />
+                  <span>Advanced AI Technology</span>
+                </div>
+                <h2 className="showcase-heading">
+                  Experience the Future of <span className="text-pink">Sales Automation</span>
+                </h2>
+                <p className="showcase-description">
+                  Watch our AI in action as it seamlessly handles complex sales scenarios
+                </p>
               </div>
-              <h2 className="showcase-heading">
-                Experience the Future of <span className="text-pink">Sales Automation</span>
-              </h2>
-              <p className="showcase-description">
-                Watch our AI in action as it seamlessly handles complex sales scenarios
-              </p>
             </div>
             
             <div className="showcase-grid">
@@ -841,13 +878,15 @@ export default function HomePage() {
         {/* Success Metrics Dashboard */}
         <section className="metrics-dashboard-section">
           <div className="dashboard-container">
-            <div className="dashboard-header">
-              <h2 className="dashboard-heading">
-                Real-Time <span className="text-pink">Performance Metrics</span>
-              </h2>
-              <p className="dashboard-description">
-                Live data from our customers showing the impact of Mohit AI
-              </p>
+            <div>
+              <div className="dashboard-header">
+                <h2 className="dashboard-heading">
+                  Real-Time <span className="text-pink">Performance Metrics</span>
+                </h2>
+                <p className="dashboard-description">
+                  Live data from our customers showing the impact of Mohit AI
+                </p>
+              </div>
             </div>
             
             <div className="dashboard-grid">
@@ -959,7 +998,8 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className="dashboard-footer">
+            <div>
+              <div className="dashboard-footer">
               <div className="live-indicator">
                 <span className="live-dot"></span>
                 <span>Live data from last 24 hours</span>
@@ -968,6 +1008,7 @@ export default function HomePage() {
                 <Users className="w-4 h-4" />
                 <span><CounterAnimation target={500} />+ active customers</span>
               </div>
+            </div>
             </div>
           </div>
         </section>

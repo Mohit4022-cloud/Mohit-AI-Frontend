@@ -27,6 +27,7 @@ import "./footer-styles.css";
 import "./internal-platform.css";
 import "./landing-animations.css";
 import "./ultra-modern-animation.css";
+import "./ultra-animations.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";

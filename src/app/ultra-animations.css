@@ -1,0 +1,323 @@
+/* Ultra Premium Scroll Animations */
+
+/* Bounce In Animation */
+@keyframes bounce-in {
+  0% {
+    transform: translateY(30px) scale(0.95);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-10px) scale(1.02);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(5px) scale(0.98);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Reveal Line Animation */
+@keyframes reveal-line {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+/* Text Reveal Animation */
+@keyframes text-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glow Pulse Animation */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 110, 199, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 110, 199, 0.6);
+  }
+}
+
+/* Parallax Layers */
+.parallax-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-layer {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  will-change: transform;
+}
+
+.parallax-layer-1 {
+  z-index: 1;
+}
+
+.parallax-layer-2 {
+  z-index: 2;
+}
+
+.parallax-layer-3 {
+  z-index: 3;
+}
+
+/* Magnetic Hover Effect */
+.magnetic-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Morphing Background */
+@keyframes morph {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+.morph-gradient {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 110, 199, 0.2) 0%, transparent 70%);
+  animation: morph 20s ease-in-out infinite;
+  filter: blur(40px);
+}
+
+/* Stagger Grid Animation */
+.stagger-grid {
+  display: grid;
+  gap: 32px;
+}
+
+.stagger-grid > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stagger-grid.animated > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-grid.animated > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-grid.animated > *:nth-child(2) { transition-delay: 100ms; }
+.stagger-grid.animated > *:nth-child(3) { transition-delay: 200ms; }
+.stagger-grid.animated > *:nth-child(4) { transition-delay: 300ms; }
+.stagger-grid.animated > *:nth-child(5) { transition-delay: 400ms; }
+.stagger-grid.animated > *:nth-child(6) { transition-delay: 500ms; }
+.stagger-grid.animated > *:nth-child(7) { transition-delay: 600ms; }
+.stagger-grid.animated > *:nth-child(8) { transition-delay: 700ms; }
+
+/* Text Split Animation */
+.split-text {
+  overflow: hidden;
+}
+
+.split-text .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.split-text.animated .word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.split-text.animated .word:nth-child(1) { transition-delay: 0ms; }
+.split-text.animated .word:nth-child(2) { transition-delay: 50ms; }
+.split-text.animated .word:nth-child(3) { transition-delay: 100ms; }
+.split-text.animated .word:nth-child(4) { transition-delay: 150ms; }
+.split-text.animated .word:nth-child(5) { transition-delay: 200ms; }
+.split-text.animated .word:nth-child(6) { transition-delay: 250ms; }
+
+/* Reveal Mask Animation */
+.reveal-mask {
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal-mask::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  transform-origin: left center;
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-mask.animated::after {
+  transform: scaleX(0);
+}
+
+/* Floating Elements */
+@keyframes float-advanced {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(10px) rotate(5deg);
+  }
+}
+
+.float-element {
+  animation: float-advanced 6s ease-in-out infinite;
+}
+
+.float-element:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.float-element:nth-child(3) {
+  animation-delay: 2s;
+}
+
+/* 3D Card Tilt Effect */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tilt-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.tilt-card:hover::before {
+  opacity: 1;
+}
+
+/* Gradient Shift Animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 10s ease infinite;
+}
+
+/* Particle System */
+.particle-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--accent-pink);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particle-float 10s linear infinite;
+}
+
+@keyframes particle-float {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(90vh) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(10vh) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+}
+
+/* Loading Skeleton */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimized Performance */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
