@@ -1,0 +1,78 @@
+/* Force Desktop Sidebar View - Override all mobile detection */
+/* This ensures labels always show on actual desktop/laptop screens */
+
+/* Override any viewport-based hiding */
+@media screen and (min-width: 1px) {
+  .dashboard-sidebar {
+    width: 220px !important;
+    min-width: 220px !important;
+  }
+
+  .dashboard-sidebar .app-nav-label {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .dashboard-sidebar .app-nav-title {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .dashboard-sidebar .app-nav-action span {
+    display: inline !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .dashboard-sidebar .app-nav-badge {
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .dashboard-sidebar .app-nav-status {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .dashboard-sidebar .app-nav-icon {
+    margin-right: 10px !important;
+  }
+
+  .dashboard-sidebar .app-nav-icon-box {
+    margin-right: 10px !important;
+  }
+
+  .dashboard-sidebar .app-nav-link {
+    padding: 8px 16px !important;
+    justify-content: flex-start !important;
+  }
+
+  .dashboard-sidebar .app-nav-header {
+    padding: 12px 16px !important;
+    justify-content: flex-start !important;
+  }
+
+  .dashboard-sidebar .app-nav-logo {
+    margin-right: 10px !important;
+  }
+
+  .dashboard-sidebar .app-nav-section {
+    padding: 0 8px !important;
+  }
+
+  /* Ensure action button shows text */
+  .dashboard-sidebar .app-nav-action {
+    padding: 10px 16px !important;
+    justify-content: center !important;
+    width: calc(100% - 16px) !important;
+  }
+}
+
+/* Override layout-with-nav margin */
+.layout-with-nav {
+  margin-left: 220px !important;
+}

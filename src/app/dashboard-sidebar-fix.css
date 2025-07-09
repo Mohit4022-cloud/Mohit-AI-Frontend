@@ -1,0 +1,96 @@
+/* Dashboard Sidebar Fix - Force labels to show on desktop */
+/* This file only affects internal dashboard pages */
+
+/* Force sidebar to full width on desktop */
+.dashboard-sidebar {
+  width: 220px !important;
+}
+
+/* Force labels to be visible */
+.dashboard-sidebar .app-nav-label {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.dashboard-sidebar .app-nav-title {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dashboard-sidebar .app-nav-action span {
+  display: inline !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dashboard-sidebar .app-nav-badge {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dashboard-sidebar .app-nav-status {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure proper spacing when labels are visible */
+.dashboard-sidebar .app-nav-icon {
+  margin-right: 10px !important;
+}
+
+.dashboard-sidebar .app-nav-icon-box {
+  margin-right: 10px !important;
+}
+
+/* Fix link padding and alignment */
+.dashboard-sidebar .app-nav-link {
+  padding: 8px 16px !important;
+  justify-content: flex-start !important;
+}
+
+/* Fix header alignment */
+.dashboard-sidebar .app-nav-header {
+  justify-content: flex-start !important;
+}
+
+.dashboard-sidebar .app-nav-logo {
+  margin-right: 10px !important;
+}
+
+/* Only apply mobile styles on actual mobile devices */
+@media (max-width: 768px) {
+  .dashboard-sidebar .app-nav-label {
+    display: none !important;
+  }
+
+  .dashboard-sidebar .app-nav-title {
+    display: none !important;
+  }
+
+  .dashboard-sidebar .app-nav-action span {
+    display: none !important;
+  }
+
+  .dashboard-sidebar .app-nav-badge {
+    display: none !important;
+  }
+
+  .dashboard-sidebar .app-nav-status {
+    display: none !important;
+  }
+
+  .dashboard-sidebar .app-nav-icon {
+    margin-right: 0 !important;
+  }
+
+  .dashboard-sidebar .app-nav-icon-box {
+    margin-right: 0 !important;
+  }
+}

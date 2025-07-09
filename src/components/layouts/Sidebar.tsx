@@ -17,6 +17,10 @@ import {
 } from "lucide-react";
 import { TryAIVoice } from "@/components/TryAIVoice";
 import "@/app/navigation-optimizations.css";
+import "@/app/dashboard-sidebar-fix.css";
+import "@/app/dashboard-sidebar-force-desktop.css";
+import "@/app/dashboard-sidebar-override.css";
+import "@/app/dashboard-sidebar-colors.css";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -34,7 +38,7 @@ export function Sidebar() {
 
   return (
     <>
-      <div className="app-navigation-panel">
+      <div className="app-navigation-panel dashboard-sidebar">
         {/* Compact Header */}
         <div className="app-nav-header">
           <div className="app-nav-logo">
