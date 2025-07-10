@@ -1,5 +1,18 @@
 /* Mobile Responsive Styles for Commit 2f33578 */
 
+/* Desktop styles */
+@media (min-width: 769px) {
+  /* Show desktop-only navbar actions on desktop */
+  .navbar-actions.desktop-only {
+    display: flex !important;
+  }
+  
+  /* Hide mobile menu actions on desktop */
+  .navbar-menu .navbar-actions {
+    display: none !important;
+  }
+}
+
 /* Mobile Navigation */
 @media (max-width: 768px) {
   /* Hide desktop menu */
@@ -97,6 +110,11 @@
   /* Hide desktop actions on mobile */
   .navbar-actions {
     display: none;
+  }
+  
+  /* Keep desktop-only navbar actions hidden on mobile */
+  .navbar-actions.desktop-only {
+    display: none !important;
   }
 
   /* Add mobile actions to menu */

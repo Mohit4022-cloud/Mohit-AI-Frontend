@@ -107,7 +107,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="navbar-actions">
+          <div className="navbar-actions desktop-only">
             <Link href="/dashboard" className="btn btn-outline">
               Check out the platform
             </Link>

@@ -112,3 +112,7 @@ playwright/.cache/
 
 # Storybook
 storybook-static/
+
+# Azure deployment files
+LogFiles/
+deployments/
