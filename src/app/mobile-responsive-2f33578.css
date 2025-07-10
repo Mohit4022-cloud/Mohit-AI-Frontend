@@ -15,6 +15,15 @@
 
 /* Mobile Navigation */
 @media (max-width: 768px) {
+  /* Navbar container fixes */
+  .navbar-fixed {
+    padding: 16px 0;
+  }
+  
+  .navbar-container {
+    padding: 0 16px;
+  }
+  
   /* Hide desktop menu */
   .navbar-menu {
     display: none;
@@ -136,7 +145,26 @@
 /* Desktop menu toggle hidden */
 @media (min-width: 769px) {
   .mobile-menu-toggle {
+    display: none !important;
+  }
+}
+
+/* Ensure mobile toggle is visible on mobile */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: flex !important;
+  }
+  
+  /* Hide desktop nav items on mobile */
+  .navbar-link,
+  .navbar-dropdown {
     display: none;
+  }
+  
+  /* Show them inside mobile menu */
+  .navbar-menu .navbar-link,
+  .navbar-menu .navbar-dropdown {
+    display: block;
   }
 }
 
