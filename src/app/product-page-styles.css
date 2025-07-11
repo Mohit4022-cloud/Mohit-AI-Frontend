@@ -32,7 +32,7 @@
   display: flex;
   gap: 24px;
   margin-top: 32px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .trust-badge-item {
