@@ -23,288 +23,193 @@ const PricingAnimation: React.FC = () => {
     setCanvasSize();
     window.addEventListener('resize', setCanvasSize);
 
-    // Pricing value cards floating animation
-    interface PriceCard {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
+    // Clean minimal price tiers
+    interface PriceTier {
+      label: string;
       value: string;
-      size: number;
-      rotation: number;
-      rotationSpeed: number;
-      opacity: number;
-      glowIntensity: number;
-      color: string;
-      pulsePhase: number;
-    }
-
-    const priceCards: PriceCard[] = [];
-    const values = ['$75', '$299', '$799', '20%', '3x', '500+', '24/7', '156%'];
-    const colors = ['#FF6EC7', '#BA55D3', '#DDA0DD', '#FFB6C1', '#FF69B4', '#DA70D6', '#EE82EE', '#FF1493'];
-
-    // Create price cards
-    for (let i = 0; i < 8; i++) {
-      priceCards.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        value: values[i],
-        size: Math.random() * 20 + 40,
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.01,
-        opacity: 0.7,
-        glowIntensity: 0,
-        color: colors[i],
-        pulsePhase: Math.random() * Math.PI * 2
-      });
-    }
-
-    // Growth chart points
-    interface ChartPoint {
-      x: number;
       y: number;
       targetY: number;
-      value: number;
+      opacity: number;
+      highlighted: boolean;
     }
 
-    const chartPoints: ChartPoint[] = [];
-    const numPoints = 8;
-    const chartHeight = canvas.height * 0.4;
-    const chartBottom = canvas.height * 0.7;
+    const tiers: PriceTier[] = [
+      { label: 'Starter', value: '$75', y: 0, targetY: 0, opacity: 0, highlighted: false },
+      { label: 'Professional', value: '$299', y: 0, targetY: 0, opacity: 0, highlighted: true },
+      { label: 'Scale', value: '$799', y: 0, targetY: 0, opacity: 0, highlighted: false }
+    ];
 
-    for (let i = 0; i < numPoints; i++) {
-      const progress = i / (numPoints - 1);
-      const growth = Math.pow(progress, 1.5); // Exponential growth curve
-      chartPoints.push({
-        x: canvas.width * 0.2 + (canvas.width * 0.6 * progress),
-        y: chartBottom,
-        targetY: chartBottom - (chartHeight * growth),
-        value: growth
-      });
-    }
+    // Set initial positions
+    const spacing = canvas.height / 4;
+    tiers.forEach((tier, i) => {
+      tier.targetY = spacing + (i * spacing * 0.8);
+      tier.y = tier.targetY + 50;
+    });
 
-    // Particle system for ambiance
-    interface Particle {
+    // Minimal floating dots
+    interface Dot {
       x: number;
       y: number;
-      vx: number;
-      vy: number;
       size: number;
       opacity: number;
-      color: string;
-      life: number;
+      speed: number;
     }
 
-    const particles: Particle[] = [];
-    const maxParticles = 50;
+    const dots: Dot[] = [];
+    for (let i = 0; i < 20; i++) {
+      dots.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 1,
+        opacity: Math.random() * 0.3 + 0.1,
+        speed: Math.random() * 0.5 + 0.1
+      });
+    }
 
-    // Animation loop
-    let frame = 0;
+    // Connection lines
+    let connectionProgress = 0;
+
     const animate = () => {
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+      // Clear canvas with subtle fade
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      frame++;
+      // Update connection progress
+      connectionProgress += 0.005;
+      if (connectionProgress > 1) connectionProgress = 0;
 
-      // Draw growth chart
-      ctx.save();
+      // Draw connection lines between tiers
+      ctx.strokeStyle = 'rgba(255, 110, 199, 0.1)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([5, 10]);
       
-      // Chart glow effect
-      const gradient = ctx.createLinearGradient(0, chartBottom, 0, chartBottom - chartHeight);
-      gradient.addColorStop(0, 'rgba(255, 110, 199, 0)');
-      gradient.addColorStop(1, 'rgba(255, 110, 199, 0.2)');
-      ctx.fillStyle = gradient;
-      
-      ctx.beginPath();
-      ctx.moveTo(chartPoints[0].x, chartBottom);
-      
-      // Draw smooth curve through points
-      for (let i = 0; i < chartPoints.length - 1; i++) {
-        const p1 = chartPoints[i];
-        const p2 = chartPoints[i + 1];
+      for (let i = 0; i < tiers.length - 1; i++) {
+        const tier1 = tiers[i];
+        const tier2 = tiers[i + 1];
         
-        // Update Y position with smooth animation
-        p1.y += (p1.targetY - p1.y) * 0.05;
-        
-        const cp1x = p1.x + (p2.x - p1.x) * 0.5;
-        const cp1y = p1.y;
-        const cp2x = p1.x + (p2.x - p1.x) * 0.5;
-        const cp2y = p2.y;
-        
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
-      }
-      
-      // Update last point
-      chartPoints[chartPoints.length - 1].y += 
-        (chartPoints[chartPoints.length - 1].targetY - chartPoints[chartPoints.length - 1].y) * 0.05;
-      
-      ctx.lineTo(chartPoints[chartPoints.length - 1].x, chartBottom);
-      ctx.closePath();
-      ctx.fill();
-      
-      // Draw chart line
-      ctx.strokeStyle = '#FF6EC7';
-      ctx.lineWidth = 3;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.beginPath();
-      ctx.moveTo(chartPoints[0].x, chartPoints[0].y);
-      
-      for (let i = 1; i < chartPoints.length; i++) {
-        const p1 = chartPoints[i - 1];
-        const p2 = chartPoints[i];
-        
-        const cp1x = p1.x + (p2.x - p1.x) * 0.5;
-        const cp1y = p1.y;
-        const cp2x = p1.x + (p2.x - p1.x) * 0.5;
-        const cp2y = p2.y;
-        
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
-      }
-      
-      ctx.stroke();
-      
-      // Draw chart points
-      chartPoints.forEach((point, i) => {
-        const pulse = Math.sin(frame * 0.05 + i * 0.5) * 0.2 + 1;
-        
-        // Point glow
-        const glowGradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, 20 * pulse);
-        glowGradient.addColorStop(0, 'rgba(255, 110, 199, 0.3)');
-        glowGradient.addColorStop(1, 'rgba(255, 110, 199, 0)');
-        ctx.fillStyle = glowGradient;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 20 * pulse, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(canvas.width * 0.3, tier1.y);
+        ctx.lineTo(canvas.width * 0.3, tier2.y);
+        ctx.stroke();
+      }
+      
+      ctx.setLineDash([]);
+
+      // Draw pricing tiers
+      tiers.forEach((tier, index) => {
+        // Smooth animation
+        tier.y += (tier.targetY - tier.y) * 0.05;
+        tier.opacity = Math.min(1, tier.opacity + 0.02);
+
+        const x = canvas.width * 0.3;
+
+        // Draw tier circle
+        ctx.save();
         
-        // Point center
+        if (tier.highlighted) {
+          // Glow effect for highlighted tier
+          const glow = ctx.createRadialGradient(x, tier.y, 0, x, tier.y, 30);
+          glow.addColorStop(0, 'rgba(255, 110, 199, 0.2)');
+          glow.addColorStop(1, 'rgba(255, 110, 199, 0)');
+          ctx.fillStyle = glow;
+          ctx.fillRect(x - 30, tier.y - 30, 60, 60);
+        }
+
+        // Tier dot
+        ctx.fillStyle = tier.highlighted ? '#FF6EC7' : '#E5E7EB';
+        ctx.beginPath();
+        ctx.arc(x, tier.y, tier.highlighted ? 8 : 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Inner dot
         ctx.fillStyle = '#FFFFFF';
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
+        ctx.arc(x, tier.y, tier.highlighted ? 4 : 3, 0, Math.PI * 2);
         ctx.fill();
-        
-        ctx.strokeStyle = '#FF6EC7';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+
+        // Tier label
+        ctx.globalAlpha = tier.opacity;
+        ctx.fillStyle = '#6B7280';
+        ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(tier.label, x - 20, tier.y);
+
+        // Price value
+        ctx.fillStyle = tier.highlighted ? '#FF6EC7' : '#1A1A1A';
+        ctx.font = tier.highlighted ? 'bold 24px -apple-system, BlinkMacSystemFont, sans-serif' : '20px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(tier.value, x + 20, tier.y);
+
+        // Per month label
+        ctx.fillStyle = '#9CA3AF';
+        ctx.font = '12px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.fillText('/month', x + 80, tier.y + 2);
+
+        ctx.restore();
       });
+
+      // Draw growth indicator
+      const growthX = canvas.width * 0.7;
+      const growthY = canvas.height * 0.5;
+      
+      ctx.save();
+      ctx.globalAlpha = 0.8;
+      
+      // Growth arrow
+      ctx.strokeStyle = '#FF6EC7';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(growthX - 30, growthY + 20);
+      ctx.lineTo(growthX, growthY - 10);
+      ctx.lineTo(growthX + 30, growthY + 20);
+      ctx.stroke();
+      
+      // Arrow head
+      ctx.beginPath();
+      ctx.moveTo(growthX, growthY - 10);
+      ctx.lineTo(growthX - 5, growthY - 5);
+      ctx.moveTo(growthX, growthY - 10);
+      ctx.lineTo(growthX + 5, growthY - 5);
+      ctx.stroke();
+      
+      // Growth text
+      ctx.fillStyle = '#FF6EC7';
+      ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Scale', growthX, growthY + 40);
+      
+      ctx.fillStyle = '#6B7280';
+      ctx.font = '12px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText('as you grow', growthX, growthY + 55);
       
       ctx.restore();
 
-      // Update and draw price cards
-      priceCards.forEach((card, index) => {
-        // Update position
-        card.x += card.vx;
-        card.y += card.vy;
-        card.rotation += card.rotationSpeed;
-        card.pulsePhase += 0.02;
+      // Update and draw minimal dots
+      dots.forEach(dot => {
+        dot.y -= dot.speed;
         
-        // Bounce off edges with damping
-        if (card.x < 50 || card.x > canvas.width - 50) {
-          card.vx *= -0.8;
-          card.x = Math.max(50, Math.min(canvas.width - 50, card.x));
-        }
-        if (card.y < 50 || card.y > canvas.height - 50) {
-          card.vy *= -0.8;
-          card.y = Math.max(50, Math.min(canvas.height - 50, card.y));
+        if (dot.y < -10) {
+          dot.y = canvas.height + 10;
+          dot.x = Math.random() * canvas.width;
         }
         
-        // Add slight drift
-        card.vx += (Math.random() - 0.5) * 0.02;
-        card.vy += (Math.random() - 0.5) * 0.02;
-        
-        // Limit velocity
-        card.vx = Math.max(-0.5, Math.min(0.5, card.vx));
-        card.vy = Math.max(-0.5, Math.min(0.5, card.vy));
-        
-        // Draw card
         ctx.save();
-        ctx.translate(card.x, card.y);
-        ctx.rotate(card.rotation);
-        
-        const pulse = Math.sin(card.pulsePhase) * 0.1 + 1;
-        const cardSize = card.size * pulse;
-        
-        // Card glow
-        const glowGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, cardSize);
-        glowGradient.addColorStop(0, `${card.color}33`);
-        glowGradient.addColorStop(1, `${card.color}00`);
-        ctx.fillStyle = glowGradient;
+        ctx.globalAlpha = dot.opacity;
+        ctx.fillStyle = '#FFB6C1';
         ctx.beginPath();
-        ctx.arc(0, 0, cardSize, 0, Math.PI * 2);
+        ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
         ctx.fill();
-        
-        // Card background
-        ctx.fillStyle = `${card.color}22`;
-        ctx.strokeStyle = card.color;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(-cardSize/2, -cardSize/3, cardSize, cardSize * 0.66, 8);
-        ctx.fill();
-        ctx.stroke();
-        
-        // Card text
-        ctx.fillStyle = card.color;
-        ctx.font = `bold ${cardSize * 0.3}px -apple-system, BlinkMacSystemFont, sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(card.value, 0, 0);
-        
         ctx.restore();
       });
-
-      // Create new particles
-      if (particles.length < maxParticles && Math.random() < 0.1) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: canvas.height + 10,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: -Math.random() * 1 - 0.5,
-          size: Math.random() * 3 + 1,
-          opacity: 0,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          life: 0
-        });
-      }
-
-      // Update and draw particles
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const particle = particles[i];
-        
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        particle.life += 0.02;
-        
-        // Fade in and out
-        if (particle.life < 0.2) {
-          particle.opacity = particle.life * 5;
-        } else if (particle.life > 0.8) {
-          particle.opacity = (1 - particle.life) * 5;
-        } else {
-          particle.opacity = 1;
-        }
-        
-        // Remove dead particles
-        if (particle.life > 1 || particle.y < -10) {
-          particles.splice(i, 1);
-          continue;
-        }
-        
-        // Draw particle
-        ctx.save();
-        ctx.globalAlpha = particle.opacity * 0.6;
-        ctx.fillStyle = particle.color;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
 
       requestAnimationFrame(animate);
     };
 
-    animate();
+    // Start animation after a short delay
+    setTimeout(() => {
+      animate();
+    }, 100);
 
     return () => {
       window.removeEventListener('resize', setCanvasSize);
@@ -315,7 +220,7 @@ const PricingAnimation: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ opacity: 0.8 }}
+      style={{ opacity: 0.9 }}
     />
   );
 };
