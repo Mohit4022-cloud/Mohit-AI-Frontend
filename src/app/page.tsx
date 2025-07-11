@@ -756,7 +756,6 @@ export default function HomePage() {
                         <div key={i} className={`bar bar-${i + 1}`}></div>
                       ))}
                     </div>
-                    <Phone className="w-8 h-8 voice-icon" />
                   </div>
                   <h3>Human-Like Voice AI</h3>
                   <p>Natural conversations that build trust and rapport with prospects</p>
@@ -921,13 +920,9 @@ export default function HomePage() {
           <div className="stats-container">
             <div className="cta-container">
               <div className="cta-content">
-                <h2 className="cta-heading">
+                <h2 className="cta-heading" style={{color: 'var(--text-primary)'}}>
                   Never Miss Another Lead
                 </h2>
-                <p className="cta-description">
-                  Join 500+ teams responding to every lead in under 60 seconds. 
-                  Start your free trial and see results today.
-                </p>
               </div>
               
               <div className="cta-buttons">

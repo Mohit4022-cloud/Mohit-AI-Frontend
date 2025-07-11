@@ -56,7 +56,8 @@
 }
 
 /* CTA content text */
-.cta-content h2 {
+.cta-content h2,
+.cta-content .cta-heading {
   color: var(--text-primary, #0A0A0A) !important;
   font-size: 48px !important;
   font-weight: 700 !important;
