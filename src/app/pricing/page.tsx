@@ -22,7 +22,7 @@ import {
   Building,
 } from "lucide-react";
 import { useState } from "react";
-import PricingHeroAnimation from "@/components/PricingHeroAnimation";
+import PricingAnimation from "@/components/PricingAnimation";
 
 export default function PricingPage() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">("monthly");
@@ -109,7 +109,9 @@ export default function PricingPage() {
         {/* Pricing Hero Section */}
         <section className="hero-section pricing-hero">
           <div className="hero-container">
-            <PricingHeroAnimation />
+            <div className="pricing-animation-container">
+              <PricingAnimation />
+            </div>
             <div className="pricing-hero-content">
               <div className="section-badge">
                 <Sparkles className="w-4 h-4" />
