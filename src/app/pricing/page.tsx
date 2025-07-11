@@ -188,7 +188,7 @@ export default function PricingPage() {
                 </div>
                 
                 <div className="pricing-features">
-                  <h4 className="features-heading">Everything you need to start:</h4>
+                  <h4 className="features-heading">Includes:</h4>
                   <ul className="features-list">
                     <li>
                       <Check className="w-5 h-5 text-pink" />
@@ -341,7 +341,7 @@ export default function PricingPage() {
                 </div>
                 
                 <div className="pricing-features">
-                  <h4 className="features-heading">Everything in Professional, plus:</h4>
+                  <h4 className="features-heading">Everything in Pro, plus:</h4>
                   <ul className="features-list">
                     <li>
                       <Check className="w-5 h-5 text-pink" />
@@ -399,11 +399,10 @@ export default function PricingPage() {
                   <Building className="h-12 w-12 text-pink" />
                 </div>
                 <h2 className="enterprise-heading">
-                  Need More Than 2,000 Conversations?
+                  Enterprise
                 </h2>
                 <p className="enterprise-description">
-                  Get custom pricing, unlimited seats, dedicated infrastructure,
-                  and enterprise-grade security for your high-volume sales operations.
+                  Custom pricing for high-volume teams.
                 </p>
                 <div className="enterprise-features">
                   <div className="enterprise-feature">

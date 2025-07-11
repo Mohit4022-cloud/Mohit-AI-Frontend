@@ -365,7 +365,7 @@
 }
 
 .enterprise-heading {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 16px;
@@ -605,7 +605,7 @@
   }
   
   .enterprise-heading {
-    font-size: 28px;
+    font-size: 24px;
   }
   
   .comparison-heading,
