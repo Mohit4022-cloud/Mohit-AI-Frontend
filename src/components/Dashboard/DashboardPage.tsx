@@ -1,18 +1,40 @@
-'use client';
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   TrendingUp, TrendingDown, Users, Phone, MessageCircle,
-  Clock, Calendar, ArrowRight, MoreVertical,
+  BarChart3, Clock, Calendar, ArrowRight, MoreVertical,
   Activity, Target, Zap, Award
 } from 'lucide-react';
+import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import {
-  LineChart, Line, BarChart, Bar, ResponsiveContainer, 
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend
-} from 'recharts';
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+} from 'chart.js';
 
-const DashboardPage = () => {
+// Register ChartJS components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
+
+const DashboardPage: React.FC = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState('week');
   const [hoveredMetric, setHoveredMetric] = useState<string | null>(null);
 
@@ -84,21 +106,92 @@ const DashboardPage = () => {
   ];
 
   // Chart data
-  const responseMetricsData = [
-    { time: '6AM', value: 45 },
-    { time: '9AM', value: 52 },
-    { time: '12PM', value: 38 },
-    { time: '3PM', value: 42 },
-    { time: '6PM', value: 35 },
-    { time: '9PM', value: 48 }
-  ];
+  const responseMetricsData = {
+    labels: ['6AM', '9AM', '12PM', '3PM', '6PM', '9PM'],
+    datasets: [
+      {
+        label: 'Response Time',
+        data: [45, 52, 38, 42, 35, 48],
+        fill: true,
+        backgroundColor: 'rgba(236, 72, 153, 0.1)',
+        borderColor: '#ec4899',
+        borderWidth: 2,
+        tension: 0.4,
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        pointBackgroundColor: '#ec4899',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2
+      }
+    ]
+  };
 
-  const channelPerformanceData = [
-    { channel: 'Voice', count: 245, percentage: 49 },
-    { channel: 'Chat', count: 189, percentage: 38 },
-    { channel: 'Email', count: 126, percentage: 25 },
-    { channel: 'SMS', count: 87, percentage: 17 }
-  ];
+  const channelData = {
+    labels: ['Voice Calls', 'Live Chat', 'Email', 'SMS'],
+    datasets: [
+      {
+        data: [245, 189, 126, 87],
+        backgroundColor: [
+          'rgba(236, 72, 153, 0.8)',
+          'rgba(139, 92, 246, 0.8)',
+          'rgba(59, 130, 246, 0.8)',
+          'rgba(16, 185, 129, 0.8)'
+        ],
+        borderWidth: 0,
+        borderRadius: 8
+      }
+    ]
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        titleColor: '#fff',
+        bodyColor: '#fff',
+        padding: 12,
+        borderRadius: 8,
+        titleFont: {
+          size: 14,
+          weight: 600
+        },
+        bodyFont: {
+          size: 13
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          borderColor: 'transparent'
+        },
+        ticks: {
+          color: '#737373',
+          font: {
+            size: 12
+          }
+        }
+      },
+      y: {
+        grid: {
+          color: 'rgba(255, 255, 255, 0.05)',
+          borderColor: 'transparent'
+        },
+        ticks: {
+          color: '#737373',
+          font: {
+            size: 12
+          }
+        }
+      }
+    }
+  };
 
   // Active leads data
   const activeLeads = [
@@ -134,21 +227,6 @@ const DashboardPage = () => {
     }
   ];
 
-  // Custom tooltip for charts
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="chart-tooltip">
-          <p className="tooltip-label">{label}</p>
-          <p className="tooltip-value">
-            {payload[0].name}: {payload[0].value}
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <motion.div 
       className="dashboard-page"
@@ -159,7 +237,7 @@ const DashboardPage = () => {
       {/* Page Header */}
       <motion.div className="page-header" variants={itemVariants}>
         <div className="header-content">
-          <h1 className="page-title gradient-text">
+          <h1 className="page-title">
             Performance Dashboard
           </h1>
           <p className="page-subtitle">
@@ -273,29 +351,7 @@ const DashboardPage = () => {
           </div>
           
           <div className="chart-wrapper">
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={responseMetricsData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
-                <XAxis 
-                  dataKey="time" 
-                  stroke="#737373"
-                  style={{ fontSize: '0.75rem' }}
-                />
-                <YAxis 
-                  stroke="#737373"
-                  style={{ fontSize: '0.75rem' }}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Line 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke="#ec4899"
-                  strokeWidth={2}
-                  dot={{ fill: '#ec4899', r: 4 }}
-                  activeDot={{ r: 6 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <Line data={responseMetricsData} options={chartOptions} />
           </div>
           
           {/* Animated Background Pattern */}
@@ -325,37 +381,51 @@ const DashboardPage = () => {
           </div>
           
           <div className="channel-stats">
-            {channelPerformanceData.slice(0, 2).map((channel, index) => (
-              <div key={channel.channel} className="channel-item">
-                <div className={`channel-icon ${channel.channel.toLowerCase()}`}>
-                  {channel.channel === 'Voice' ? <Phone size={20} /> : <MessageCircle size={20} />}
-                </div>
-                <div className="channel-info">
-                  <div className="channel-name">{channel.channel} Calls</div>
-                  <div className="channel-count">{channel.count}</div>
-                </div>
-                <div className="channel-percentage">{channel.percentage}%</div>
-                <div className="channel-bar">
-                  <motion.div 
-                    className="channel-bar-fill"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${channel.percentage}%` }}
-                    transition={{ duration: 1, delay: index * 0.1, ease: "easeOut" }}
-                    style={{ 
-                      background: channel.channel === 'Voice' 
-                        ? 'linear-gradient(90deg, #ec4899 0%, #db2777 100%)'
-                        : 'linear-gradient(90deg, #8b5cf6 0%, #6d28d9 100%)'
-                    }}
-                  />
-                </div>
+            <div className="channel-item">
+              <div className="channel-icon voice">
+                <Phone size={20} />
               </div>
-            ))}
+              <div className="channel-info">
+                <div className="channel-name">Voice Calls</div>
+                <div className="channel-count">245</div>
+              </div>
+              <div className="channel-percentage">49%</div>
+              <div className="channel-bar">
+                <motion.div 
+                  className="channel-bar-fill"
+                  initial={{ width: 0 }}
+                  animate={{ width: '49%' }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  style={{ background: 'linear-gradient(90deg, #ec4899 0%, #db2777 100%)' }}
+                />
+              </div>
+            </div>
+            
+            <div className="channel-item">
+              <div className="channel-icon chat">
+                <MessageCircle size={20} />
+              </div>
+              <div className="channel-info">
+                <div className="channel-name">Live Chat</div>
+                <div className="channel-count">189</div>
+              </div>
+              <div className="channel-percentage">38%</div>
+              <div className="channel-bar">
+                <motion.div 
+                  className="channel-bar-fill"
+                  initial={{ width: 0 }}
+                  animate={{ width: '38%' }}
+                  transition={{ duration: 1, delay: 0.1, ease: "easeOut" }}
+                  style={{ background: 'linear-gradient(90deg, #8b5cf6 0%, #6d28d9 100%)' }}
+                />
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
 
       {/* Active Leads Section */}
-      <motion.div className="active-leads-section quantum-card" variants={itemVariants}>
+      <motion.div className="active-leads-section" variants={itemVariants}>
         <div className="section-header">
           <h3 className="section-title">Active Leads</h3>
           <p className="section-subtitle">Currently being processed</p>
@@ -373,7 +443,7 @@ const DashboardPage = () => {
             {activeLeads.map((lead, index) => (
               <motion.div
                 key={lead.id}
-                className="lead-item hover-lift"
+                className="lead-item"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
@@ -445,13 +515,12 @@ const DashboardPage = () => {
           justify-content: space-between;
           align-items: center;
           margin-bottom: 2rem;
-          flex-wrap: wrap;
-          gap: 1rem;
         }
 
         .page-title {
           font-size: 2.25rem;
           font-weight: 800;
+          color: var(--color-neutral-100);
           margin-bottom: 0.5rem;
           letter-spacing: -0.02em;
         }
@@ -509,7 +578,6 @@ const DashboardPage = () => {
           border-radius: 1rem;
           border: 1px solid var(--dashboard-border);
           overflow: hidden;
-          backdrop-filter: blur(10px);
         }
 
         .metric-header {
@@ -517,6 +585,33 @@ const DashboardPage = () => {
           justify-content: space-between;
           align-items: flex-start;
           margin-bottom: 1rem;
+        }
+
+        .metric-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 0.75rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.1);
+          color: white;
+        }
+
+        .metric-icon.primary {
+          background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+        }
+
+        .metric-icon.blue {
+          background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .metric-icon.green {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .metric-icon.purple {
+          background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
         }
 
         .metric-menu {
@@ -532,24 +627,6 @@ const DashboardPage = () => {
         .metric-menu:hover {
           background: rgba(255, 255, 255, 0.05);
           color: var(--color-neutral-300);
-        }
-
-        .metric-body {
-          position: relative;
-          z-index: 1;
-        }
-
-        .metric-change {
-          display: flex;
-          align-items: center;
-          gap: 0.25rem;
-          font-size: 0.875rem;
-          margin-top: 0.5rem;
-        }
-
-        .change-label {
-          color: var(--color-neutral-500);
-          margin-left: 0.25rem;
         }
 
         .metric-sparkline {
@@ -602,28 +679,9 @@ const DashboardPage = () => {
         }
 
         .chart-wrapper {
+          height: 300px;
           position: relative;
           z-index: 1;
-        }
-
-        .chart-tooltip {
-          background: rgba(0, 0, 0, 0.9);
-          border: 1px solid var(--dashboard-border);
-          border-radius: 0.5rem;
-          padding: 0.75rem;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        .tooltip-label {
-          color: var(--color-neutral-400);
-          font-size: 0.75rem;
-          margin-bottom: 0.25rem;
-        }
-
-        .tooltip-value {
-          color: var(--color-neutral-100);
-          font-weight: 600;
-          font-size: 0.875rem;
         }
 
         .chart-legend {
@@ -730,6 +788,9 @@ const DashboardPage = () => {
         }
 
         .active-leads-section {
+          background: var(--dashboard-surface);
+          border: 1px solid var(--dashboard-border);
+          border-radius: 1rem;
           padding: 1.5rem;
         }
 
@@ -814,17 +875,14 @@ const DashboardPage = () => {
 
         .status-dot.new {
           background: #10b981;
-          box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
         }
 
         .status-dot.qualifying {
           background: #f59e0b;
-          box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
         }
 
         .status-dot.contacted {
           background: #3b82f6;
-          box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
         }
 
         .lead-info {
@@ -927,6 +985,7 @@ const DashboardPage = () => {
           .page-header {
             flex-direction: column;
             align-items: flex-start;
+            gap: 1rem;
           }
         }
       `}</style>
