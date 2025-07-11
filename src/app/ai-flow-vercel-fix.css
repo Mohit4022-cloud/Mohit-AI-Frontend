@@ -1,0 +1,84 @@
+/* Vercel-specific AI Flow Background Fix */
+
+/* Target the section with maximum specificity */
+html body main section.ai-flow-section,
+html body section.ai-flow-section,
+body main section.ai-flow-section,
+body section.ai-flow-section,
+main section.ai-flow-section,
+section.ai-flow-section,
+.ai-flow-section {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+/* Ensure the canvas doesn't have any background */
+.ai-flow-section .ai-flow-canvas,
+section.ai-flow-section canvas,
+.ai-flow-canvas {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Make sure the container doesn't override */
+.ai-flow-section .flow-container {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Force black background on all possible parent elements */
+html, body {
+  background-color: #ffffff; /* Keep body white */
+}
+
+/* Target with attribute selectors for extra specificity */
+[class*="ai-flow-section"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+/* Use :where() for zero-specificity override */
+:where(.ai-flow-section) {
+  background: #000000 !important;
+}
+
+/* Target with ID if it exists */
+#ai-flow-section,
+[id*="ai-flow"] {
+  background: #000000 !important;
+}
+
+/* Media query to ensure it works on all screen sizes */
+@media screen {
+  .ai-flow-section {
+    background: #000000 !important;
+    background-color: #000000 !important;
+  }
+}
+
+/* Print media should also be black */
+@media print {
+  .ai-flow-section {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Ensure no pseudo-elements override */
+.ai-flow-section::before,
+.ai-flow-section::after {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Target any child divs that might have backgrounds */
+.ai-flow-section div {
+  background-color: transparent !important;
+}
+
+/* Only allow the section itself to have black background */
+.ai-flow-section:not(canvas):not(.flow-overlay) {
+  background: #000000 !important;
+}

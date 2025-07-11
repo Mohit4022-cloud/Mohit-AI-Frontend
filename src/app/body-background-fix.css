@@ -1,0 +1,35 @@
+/* Body Background Fix - Ensure body doesn't override section backgrounds */
+
+/* Override Tailwind's body background */
+body {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+}
+
+/* Ensure the AI flow section maintains its black background */
+body .ai-flow-section,
+body section.ai-flow-section,
+main .ai-flow-section,
+main section.ai-flow-section,
+#main .ai-flow-section,
+#main section.ai-flow-section {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  isolation: isolate;
+}
+
+/* Prevent any child elements from inheriting white background */
+.ai-flow-section * {
+  background-color: transparent !important;
+}
+
+/* Except for elements that should have specific backgrounds */
+.ai-flow-section .flow-overlay {
+  background: transparent !important;
+}
+
+/* Force canvas to be transparent */
+.ai-flow-section canvas {
+  background: transparent !important;
+  background-color: transparent !important;
+}

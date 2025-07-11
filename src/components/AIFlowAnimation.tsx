@@ -9,10 +9,42 @@ export default function AIFlowAnimation() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    
+    // Force black background on the section - nuclear option
+    const section = canvas.closest('.ai-flow-section');
+    if (section && section instanceof HTMLElement) {
+      // Remove any existing background styles
+      section.style.removeProperty('background');
+      section.style.removeProperty('background-color');
+      section.style.removeProperty('backgroundColor');
+      
+      // Force set black background with maximum priority
+      section.style.cssText += 'background: #000000 !important; background-color: #000000 !important;';
+      
+      // Also set via setAttribute as a fallback
+      section.setAttribute('style', section.getAttribute('style') + '; background: #000000 !important; background-color: #000000 !important;');
+      
+      // Create a style element to override any CSS
+      const styleOverride = document.createElement('style');
+      styleOverride.textContent = `
+        .ai-flow-section, 
+        section.ai-flow-section,
+        body .ai-flow-section,
+        body section.ai-flow-section,
+        main .ai-flow-section,
+        main section.ai-flow-section,
+        #main .ai-flow-section,
+        #main section.ai-flow-section {
+          background: #000000 !important;
+          background-color: #000000 !important;
+        }
+      `;
+      document.head.appendChild(styleOverride);
+    }
 
     // Use low-latency context for better performance
     const ctx = canvas.getContext('2d', { 
-      alpha: false,
+      alpha: true, // Changed to true to allow transparency
       desynchronized: true,
       willReadFrequently: false 
     });
@@ -110,8 +142,8 @@ export default function AIFlowAnimation() {
     let animationLoop: { start: () => void; stop: () => void } | null = null;
 
     const animate = (timestamp: number) => {
-      // Clear with solid color for better performance
-      ctx.fillStyle = '#FFFFFF';
+      // Clear with black background to match the section
+      ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Update nodes only if not reduced motion
@@ -276,7 +308,11 @@ export default function AIFlowAnimation() {
   }, []);
 
   return (
-    <section className="ai-flow-section" style={{ background: '#000000' }}>
+    <section className="ai-flow-section" style={{ 
+      background: '#000000 !important',
+      backgroundColor: '#000000 !important',
+      '--section-bg': '#000000'
+    } as React.CSSProperties}>
       <div className="flow-container">
         <canvas 
           ref={canvasRef}
@@ -284,7 +320,8 @@ export default function AIFlowAnimation() {
           style={{ 
             willChange: 'auto',
             transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: 'hidden',
+            background: 'transparent'
           }}
         />
         <div className="flow-overlay">

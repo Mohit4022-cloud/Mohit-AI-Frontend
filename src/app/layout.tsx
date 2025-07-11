@@ -35,6 +35,8 @@ import "./internal-platform.css";
 import "./landing-animations.css";
 import "./navbar-logo-styles.css";
 import "./mobile-responsive-2f33578.css";
+import "./body-background-fix.css";
+import "./ai-flow-vercel-fix.css";
 import { Providers } from "@/components/providers";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { config } from "@/lib/config";
