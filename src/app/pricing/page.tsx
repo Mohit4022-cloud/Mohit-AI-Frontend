@@ -45,10 +45,6 @@ export default function PricingPage() {
 
   return (
     <>
-      {/* Skip to content for accessibility */}
-      <a href="#main" className="skip-to-content">
-        Skip to content
-      </a>
 
       {/* Fixed Navigation - Reused from product page */}
       <nav className="navbar-fixed">

@@ -25,10 +25,6 @@ import { useState } from "react";
 export default function ProductPage() {
   return (
     <>
-      {/* Skip to content for accessibility */}
-      <a href="#main" className="skip-to-content">
-        Skip to content
-      </a>
 
       {/* Fixed Navigation - Reused from main page */}
       <nav className="navbar-fixed">

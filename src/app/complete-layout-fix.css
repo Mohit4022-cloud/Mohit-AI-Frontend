@@ -759,34 +759,6 @@ body {
   outline-offset: 2px;
 }
 
-/* Skip to content link */
-.skip-to-content {
-  position: absolute;
-  left: -9999px;
-  top: -9999px;
-  z-index: 9999;
-  padding: 12px 24px;
-  background-color: var(--primary-black, #000);
-  color: var(--pure-white, #fff);
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  opacity: 0;
-  pointer-events: none;
-  transition: none;
-}
-
-.skip-to-content:focus {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 20px;
-  opacity: 1;
-  pointer-events: auto;
-  outline: 2px solid var(--primary-pink, #FF6EC7);
-  outline-offset: 2px;
-}
 
 /* Screen reader only */
 .sr-only {

@@ -48,10 +48,6 @@ export default function EnterprisePage() {
 
   return (
     <>
-      {/* Skip to content for accessibility */}
-      <a href="#main" className="skip-to-content">
-        Skip to content
-      </a>
 
       {/* Fixed Navigation */}
       <nav className="navbar-fixed">

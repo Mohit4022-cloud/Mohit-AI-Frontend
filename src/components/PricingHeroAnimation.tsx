@@ -102,10 +102,13 @@ export default function PricingHeroAnimation() {
         position: 'absolute',
         top: 0,
         left: 0,
+        right: 0,
+        bottom: 0,
         width: '100%',
         height: '100%',
         pointerEvents: 'none',
-        opacity: 0.4
+        opacity: 0.6,
+        zIndex: 0
       }}
     />
   );
