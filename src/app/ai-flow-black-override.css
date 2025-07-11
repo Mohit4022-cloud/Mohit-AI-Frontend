@@ -1,0 +1,84 @@
+/* AI Flow Black Background Override - MUST BE LOADED LAST */
+
+/* Force black background with maximum specificity */
+body section.ai-flow-section,
+main section.ai-flow-section,
+#main section.ai-flow-section,
+.ai-flow-section {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+  padding: 0 !important;
+}
+
+body section.ai-flow-section::before,
+main section.ai-flow-section::before,
+#main section.ai-flow-section::before,
+.ai-flow-section::before {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+}
+
+/* Override ALL media queries */
+@media all {
+  body section.ai-flow-section,
+  main section.ai-flow-section,
+  #main section.ai-flow-section,
+  .ai-flow-section {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+  
+  body section.ai-flow-section::before,
+  main section.ai-flow-section::before,
+  #main section.ai-flow-section::before,
+  .ai-flow-section::before {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+}
+
+/* Dark mode specific override */
+@media (prefers-color-scheme: dark) {
+  body section.ai-flow-section,
+  main section.ai-flow-section,
+  #main section.ai-flow-section,
+  .ai-flow-section {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+  
+  body section.ai-flow-section::before,
+  main section.ai-flow-section::before,
+  #main section.ai-flow-section::before,
+  .ai-flow-section::before {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+}
+
+/* Light mode specific override */
+@media (prefers-color-scheme: light) {
+  body section.ai-flow-section,
+  main section.ai-flow-section,
+  #main section.ai-flow-section,
+  .ai-flow-section {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+  
+  body section.ai-flow-section::before,
+  main section.ai-flow-section::before,
+  #main section.ai-flow-section::before,
+  .ai-flow-section::before {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+}

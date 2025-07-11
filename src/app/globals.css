@@ -12,6 +12,9 @@
 @import './ultra-modern-animation.css';
 @import './ai-flow-animation.css';
 
+/* Critical override - MUST BE LAST */
+@import './ai-flow-black-override.css';
+
 /* Custom styles for beautiful landing pages */
 @layer base {
   :root {

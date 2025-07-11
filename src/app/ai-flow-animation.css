@@ -84,11 +84,11 @@
 /* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   .ai-flow-section {
-    background: linear-gradient(180deg, #0A0A0A 0%, #1A1A1A 50%, #0A0A0A 100%);
+    background: #000000 !important;
   }
   
   .ai-flow-section::before {
-    background: linear-gradient(180deg, #0A0A0A 0%, #1A1A1A 50%, #0A0A0A 100%);
+    background: #000000 !important;
   }
   
   .flow-title {
@@ -106,5 +106,26 @@
   .flow-description {
     animation: none;
     opacity: 1;
+  }
+}
+
+/* Override any generic section styles - MUST BE LAST */
+section.ai-flow-section {
+  background: #000000 !important;
+  padding: 0 !important;
+}
+
+section.ai-flow-section::before {
+  background: #000000 !important;
+}
+
+/* Ensure dark mode override */
+@media (prefers-color-scheme: dark) {
+  section.ai-flow-section {
+    background: #000000 !important;
+  }
+  
+  section.ai-flow-section::before {
+    background: #000000 !important;
   }
 }

@@ -276,7 +276,7 @@ export default function AIFlowAnimation() {
   }, []);
 
   return (
-    <section className="ai-flow-section">
+    <section className="ai-flow-section" style={{ background: '#000000' }}>
       <div className="flow-container">
         <canvas 
           ref={canvasRef}
