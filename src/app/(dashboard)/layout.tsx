@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/authStore";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import { Header } from "@/components/layouts/Header";
+import "@/styles/globals.css";
 
 export default function DashboardLayout({
   children,
@@ -25,12 +26,41 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="layout-full-height layout-base-bg">
+    <div className="quantum-dashboard-layout">
       <Sidebar />
-      <div className="layout-with-nav">
+      <div className="dashboard-main-content">
         <Header />
-        <main className="layout-pad-6">{children}</main>
+        <main className="dashboard-page-content animate-fadeIn">{children}</main>
       </div>
+      
+      <style jsx>{`
+        .quantum-dashboard-layout {
+          display: flex;
+          height: 100vh;
+          background: var(--dashboard-bg);
+          overflow: hidden;
+        }
+        
+        .dashboard-main-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          margin-left: 280px;
+          transition: margin-left 0.3s ease;
+        }
+        
+        /* When sidebar is collapsed */
+        :global(.quantum-sidebar[style*="width: 80px"]) + .dashboard-main-content {
+          margin-left: 80px;
+        }
+        
+        .dashboard-page-content {
+          flex: 1;
+          padding: 2rem;
+          overflow-y: auto;
+          background: var(--dashboard-bg);
+        }
+      `}</style>
     </div>
   );
 }
