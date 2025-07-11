@@ -10,6 +10,7 @@
 
 /* Import animation styles */
 @import './ultra-modern-animation.css';
+@import './ai-flow-animation.css';
 
 /* Custom styles for beautiful landing pages */
 @layer base {
