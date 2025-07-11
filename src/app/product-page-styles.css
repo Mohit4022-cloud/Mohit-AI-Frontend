@@ -43,6 +43,14 @@
   color: var(--text-secondary);
 }
 
+/* Product Hero Buttons */
+.product-hero .hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: nowrap;
+  margin-bottom: 24px;
+}
+
 /* Product Demo Visual */
 .product-demo-visual {
   position: relative;
