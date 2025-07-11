@@ -16,6 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { TryAIVoice } from "@/components/TryAIVoice";
+import MohitAILogo from "@/components/MohitAILogo";
 import "@/app/navigation-optimizations.css";
 import "@/app/dashboard-sidebar-fix.css";
 import "@/app/dashboard-sidebar-force-desktop.css";
@@ -42,7 +43,7 @@ export function Sidebar() {
         {/* Compact Header */}
         <div className="app-nav-header">
           <div className="app-nav-logo">
-            <Zap className="h-5 w-5" />
+            <MohitAILogo size="small" />
           </div>
           <span className="app-nav-title">Mohit AI</span>
         </div>

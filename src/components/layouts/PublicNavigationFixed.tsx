@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import MohitAILogo from "@/components/MohitAILogo";
 
 export function PublicNavigationFixed() {
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
@@ -13,7 +14,8 @@ export function PublicNavigationFixed() {
         <div className="nav-container">
           {/* Brand */}
           <Link href="/" className="nav-brand">
-            Mohit AI
+            <MohitAILogo size="small" />
+            <span>Mohit AI</span>
           </Link>
 
           {/* Desktop Navigation */}

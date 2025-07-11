@@ -223,7 +223,6 @@ export default function ProductPage() {
             
             <div className="features-grid">
               <div className="feature-card step-card">
-                <div className="step-number">1</div>
                 <div className="feature-icon">
                   <Globe className="h-8 w-8" />
                 </div>
@@ -236,7 +235,6 @@ export default function ProductPage() {
               </div>
               
               <div className="feature-card step-card">
-                <div className="step-number">2</div>
                 <div className="feature-icon">
                   <MessageSquare className="h-8 w-8" />
                 </div>
@@ -249,7 +247,6 @@ export default function ProductPage() {
               </div>
               
               <div className="feature-card step-card">
-                <div className="step-number">3</div>
                 <div className="feature-icon">
                   <Users className="h-8 w-8" />
                 </div>

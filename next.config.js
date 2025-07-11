@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
-
 const securityHeaders = [
   {
     key: 'X-DNS-Prefetch-Control',
@@ -94,18 +90,6 @@ const nextConfig = {
       }
     }
 
-    // Bundle analyzer
-    if (process.env.ANALYZE) {
-      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-      config.plugins.push(
-        new BundleAnalyzerPlugin({
-          analyzerMode: 'static',
-          reportFilename: './analyze.html',
-          openAnalyzer: true,
-        })
-      )
-    }
-
     // Webpack caching
     config.cache = {
       type: 'filesystem',
@@ -123,4 +107,12 @@ const nextConfig = {
   },
 }
 
-module.exports = withBundleAnalyzer(nextConfig)
+// If bundle analyzer is available, use it, otherwise export config directly
+try {
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  })
+  module.exports = withBundleAnalyzer(nextConfig)
+} catch (e) {
+  module.exports = nextConfig
+}

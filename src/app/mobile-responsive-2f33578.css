@@ -121,15 +121,20 @@
   .navbar-menu .navbar-actions {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border-subtle);
+    gap: 16px;
+    margin-top: 32px;
+    padding: 24px 20px;
+    background: var(--background-secondary, #FAFBFC);
+    border-radius: 16px;
+    margin-left: -20px;
+    margin-right: -20px;
   }
 
   .navbar-menu .btn {
     width: 100%;
     text-align: center;
+    padding: 12px 24px;
+    font-size: 15px;
   }
 }
 

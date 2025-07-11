@@ -129,7 +129,15 @@ export default function PricingPage() {
                 trust Mohit AI to accelerate their sales.
               </p>
               
-              {/* Billing Toggle */}
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing Cards Section */}
+        <section className="pricing-section">
+          <div className="pricing-container">
+            {/* Billing Toggle */}
+            <div className="billing-toggle-wrapper">
               <div className="billing-toggle-container">
                 <button
                   className={`billing-option ${billingPeriod === "monthly" ? "active" : ""}`}
@@ -155,12 +163,7 @@ export default function PricingPage() {
                 </button>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Pricing Cards Section */}
-        <section className="pricing-section">
-          <div className="pricing-container">
+            
             <div className="pricing-grid">
               {/* Starter Plan */}
               <div className="pricing-card">

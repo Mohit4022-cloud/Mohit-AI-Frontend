@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Menu, X } from "lucide-react";
+import MohitAILogo from "@/components/MohitAILogo";
 
 export function PublicNavigation() {
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
@@ -16,9 +17,10 @@ export function PublicNavigation() {
           <div className="flex items-center">
             <Link
               href="/"
-              className="ultra-heading-3"
+              className="ultra-heading-3 flex items-center gap-3"
             >
-              Mohit AI
+              <MohitAILogo size="small" />
+              <span>Mohit AI</span>
             </Link>
           </div>
 

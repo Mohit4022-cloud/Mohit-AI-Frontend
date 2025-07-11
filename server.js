@@ -4,7 +4,7 @@ const next = require('next');
 const { Server } = require('socket.io');
 
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = '0.0.0.0'; // Listen on all interfaces for production
+const hostname = 'localhost'; // Changed to localhost for local development
 const port = parseInt(process.env.PORT || '3000', 10);
 
 console.log(`Starting server in ${dev ? 'development' : 'production'} mode`);
