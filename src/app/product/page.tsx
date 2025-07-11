@@ -100,11 +100,6 @@ export default function ProductPage() {
                 <span className="text-pink">Never Sleeps</span>
               </h1>
               
-              <p className="hero-description">
-                Mohit AI responds to every lead in under 60 seconds, qualifies prospects,
-                books meetings, and nurtures relationships across voice, email, SMS, and chat
-                - all for the price of lunch.
-              </p>
               
               <div className="hero-buttons">
                 <Link href="/demo" className="btn btn-secondary">
