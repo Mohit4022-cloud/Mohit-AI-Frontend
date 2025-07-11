@@ -1,12 +1,12 @@
-/* AI Flow Black Background Override - MUST BE LOADED LAST */
+/* AI Flow White Background Override - MUST BE LOADED LAST */
 
-/* Force black background with maximum specificity */
+/* Force white background with maximum specificity */
 body section.ai-flow-section,
 main section.ai-flow-section,
 #main section.ai-flow-section,
 .ai-flow-section {
-  background: #000000 !important;
-  background-color: #000000 !important;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
   background-image: none !important;
   padding: 0 !important;
 }
@@ -15,8 +15,8 @@ body section.ai-flow-section::before,
 main section.ai-flow-section::before,
 #main section.ai-flow-section::before,
 .ai-flow-section::before {
-  background: #000000 !important;
-  background-color: #000000 !important;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
   background-image: none !important;
 }
 
@@ -26,8 +26,8 @@ main section.ai-flow-section::before,
   main section.ai-flow-section,
   #main section.ai-flow-section,
   .ai-flow-section {
-    background: #000000 !important;
-    background-color: #000000 !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     background-image: none !important;
   }
   
@@ -35,8 +35,8 @@ main section.ai-flow-section::before,
   main section.ai-flow-section::before,
   #main section.ai-flow-section::before,
   .ai-flow-section::before {
-    background: #000000 !important;
-    background-color: #000000 !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     background-image: none !important;
   }
 }
@@ -47,8 +47,8 @@ main section.ai-flow-section::before,
   main section.ai-flow-section,
   #main section.ai-flow-section,
   .ai-flow-section {
-    background: #000000 !important;
-    background-color: #000000 !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     background-image: none !important;
   }
   
@@ -56,8 +56,8 @@ main section.ai-flow-section::before,
   main section.ai-flow-section::before,
   #main section.ai-flow-section::before,
   .ai-flow-section::before {
-    background: #000000 !important;
-    background-color: #000000 !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     background-image: none !important;
   }
 }
@@ -68,8 +68,8 @@ main section.ai-flow-section::before,
   main section.ai-flow-section,
   #main section.ai-flow-section,
   .ai-flow-section {
-    background: #000000 !important;
-    background-color: #000000 !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     background-image: none !important;
   }
   
@@ -77,8 +77,8 @@ main section.ai-flow-section::before,
   main section.ai-flow-section::before,
   #main section.ai-flow-section::before,
   .ai-flow-section::before {
-    background: #000000 !important;
-    background-color: #000000 !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     background-image: none !important;
   }
 }

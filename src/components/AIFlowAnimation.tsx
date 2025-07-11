@@ -9,38 +9,6 @@ export default function AIFlowAnimation() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
-    // Force black background on the section - nuclear option
-    const section = canvas.closest('.ai-flow-section');
-    if (section && section instanceof HTMLElement) {
-      // Remove any existing background styles
-      section.style.removeProperty('background');
-      section.style.removeProperty('background-color');
-      section.style.removeProperty('backgroundColor');
-      
-      // Force set black background with maximum priority
-      section.style.cssText += 'background: #000000 !important; background-color: #000000 !important;';
-      
-      // Also set via setAttribute as a fallback
-      section.setAttribute('style', section.getAttribute('style') + '; background: #000000 !important; background-color: #000000 !important;');
-      
-      // Create a style element to override any CSS
-      const styleOverride = document.createElement('style');
-      styleOverride.textContent = `
-        .ai-flow-section, 
-        section.ai-flow-section,
-        body .ai-flow-section,
-        body section.ai-flow-section,
-        main .ai-flow-section,
-        main section.ai-flow-section,
-        #main .ai-flow-section,
-        #main section.ai-flow-section {
-          background: #000000 !important;
-          background-color: #000000 !important;
-        }
-      `;
-      document.head.appendChild(styleOverride);
-    }
 
     // Use low-latency context for better performance
     const ctx = canvas.getContext('2d', { 
@@ -142,8 +110,8 @@ export default function AIFlowAnimation() {
     let animationLoop: { start: () => void; stop: () => void } | null = null;
 
     const animate = (timestamp: number) => {
-      // Clear with black background to match the section
-      ctx.fillStyle = '#000000';
+      // Clear with white background to match the section
+      ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Update nodes only if not reduced motion
@@ -174,13 +142,12 @@ export default function AIFlowAnimation() {
       // Draw connections in batch for better performance
       ctx.save();
       
-      // Add subtle glow effect for better visibility
-      ctx.shadowBlur = 5;
-      ctx.shadowColor = '#FF6EC7';
+      // Very subtle lines for white background
+      ctx.shadowBlur = 0; // No glow on white
       
-      ctx.globalAlpha = 0.25; // Balanced visibility
+      ctx.globalAlpha = 0.08; // Very subtle
       ctx.strokeStyle = '#FF6EC7';
-      ctx.lineWidth = 1.5; // Subtle increase for visibility
+      ctx.lineWidth = 1; // Thin lines
       nodes.forEach((node) => {
         node.connections.forEach((targetIndex) => {
           const target = nodes[targetIndex];
@@ -237,24 +204,15 @@ export default function AIFlowAnimation() {
           particle.x = (1 - t) * (1 - t) * source.x + 2 * (1 - t) * t * midX + t * t * target.x;
           particle.y = (1 - t) * (1 - t) * source.y + 2 * (1 - t) * t * midY + t * t * target.y;
           
-          // Enhanced particle rendering with subtle glow
+          // Subtle particle rendering for white background
           ctx.save();
-          ctx.globalAlpha = particle.opacity;
+          ctx.globalAlpha = particle.opacity * 0.8;
           
-          // Add subtle particle glow for better visibility
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = '#FF6EC7';
+          // No glow on white background
           
           ctx.fillStyle = '#FF6EC7';
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, 4, 0, Math.PI * 2); // Back to original size
-          ctx.fill();
-          
-          // Add bright core
-          ctx.shadowBlur = 0;
-          ctx.fillStyle = '#FFB6E1';
-          ctx.beginPath();
-          ctx.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2);
+          ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2); // Smaller for subtlety
           ctx.fill();
           
           ctx.restore();
@@ -287,15 +245,12 @@ export default function AIFlowAnimation() {
       nodes.forEach((node, index) => {
         const pulse = reducedMotion ? 1 : Math.sin(node.pulsePhase) * 0.3 + 0.7;
         
-        // Subtle node glow for better visibility
-        ctx.globalAlpha = 0.3 * pulse; // Balanced visibility
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#FF6EC7';
+        // Very subtle node glow for white background
+        ctx.globalAlpha = 0.1 * pulse; // Very subtle
         ctx.fillStyle = '#FF6EC7';
         ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius * 3, 0, Math.PI * 2);
+        ctx.arc(node.x, node.y, node.radius * 2.5, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0; // Reset shadow for performance
         
         // Node core
         ctx.globalAlpha = 1;
@@ -330,10 +285,9 @@ export default function AIFlowAnimation() {
 
   return (
     <section className="ai-flow-section" style={{ 
-      background: '#000000 !important',
-      backgroundColor: '#000000 !important',
-      '--section-bg': '#000000'
-    } as React.CSSProperties}>
+      background: '#FFFFFF',
+      backgroundColor: '#FFFFFF'
+    }}>
       <div className="flow-container">
         <canvas 
           ref={canvasRef}

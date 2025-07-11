@@ -13,7 +13,7 @@
 @import './ai-flow-animation.css';
 
 /* Critical override - MUST BE LAST */
-@import './ai-flow-black-override.css';
+@import './ai-flow-white-override.css';
 
 /* Custom styles for beautiful landing pages */
 @layer base {

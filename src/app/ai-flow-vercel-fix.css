@@ -8,8 +8,8 @@ body section.ai-flow-section,
 main section.ai-flow-section,
 section.ai-flow-section,
 .ai-flow-section {
-  background-color: #000000 !important;
-  background: #000000 !important;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
 }
 
 /* Ensure the canvas doesn't have any background */
@@ -33,34 +33,34 @@ html, body {
 
 /* Target with attribute selectors for extra specificity */
 [class*="ai-flow-section"] {
-  background: #000000 !important;
-  background-color: #000000 !important;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
 }
 
 /* Use :where() for zero-specificity override */
 :where(.ai-flow-section) {
-  background: #000000 !important;
+  background: #FFFFFF !important;
 }
 
 /* Target with ID if it exists */
 #ai-flow-section,
 [id*="ai-flow"] {
-  background: #000000 !important;
+  background: #FFFFFF !important;
 }
 
 /* Media query to ensure it works on all screen sizes */
 @media screen {
   .ai-flow-section {
-    background: #000000 !important;
-    background-color: #000000 !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
   }
 }
 
 /* Print media should also be black */
 @media print {
   .ai-flow-section {
-    background: #000000 !important;
-    background-color: #000000 !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -80,5 +80,5 @@ html, body {
 
 /* Only allow the section itself to have black background */
 .ai-flow-section:not(canvas):not(.flow-overlay) {
-  background: #000000 !important;
+  background: #FFFFFF !important;
 }

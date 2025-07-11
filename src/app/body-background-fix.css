@@ -6,15 +6,15 @@ body {
   background: #ffffff !important;
 }
 
-/* Ensure the AI flow section maintains its black background */
+/* Ensure the AI flow section maintains its white background */
 body .ai-flow-section,
 body section.ai-flow-section,
 main .ai-flow-section,
 main section.ai-flow-section,
 #main .ai-flow-section,
 #main section.ai-flow-section {
-  background-color: #000000 !important;
-  background: #000000 !important;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
   isolation: isolate;
 }
 
