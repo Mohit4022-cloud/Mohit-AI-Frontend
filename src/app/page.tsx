@@ -973,7 +973,7 @@ export default function HomePage() {
                   <div className="metric-value">
                     <CounterAnimation target={47} suffix="s" />
                   </div>
-                  <div className="metric-change">
+                  <div className="metric-change positive">
                     <Clock className="w-4 h-4" />
                     <span>24/7 availability</span>
                   </div>

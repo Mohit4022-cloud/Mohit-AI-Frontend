@@ -91,7 +91,7 @@
   width: 450px;
   height: 450px;
   transform-style: preserve-3d;
-  animation: float3d 8s ease-in-out infinite, rotateSpace 30s linear infinite;
+  animation: float3d 8s ease-in-out infinite, rotateSpace 6s linear infinite;
 }
 
 /* Add a glowing backdrop */
@@ -141,7 +141,7 @@
   width: 180px;
   height: 180px;
   aspect-ratio: 1;
-  animation: coreRotate 20s linear infinite;
+  animation: coreRotate 1s linear infinite;
   filter: drop-shadow(0 0 30px rgba(255, 110, 199, 0.6));
   cursor: pointer;
   transition: filter 0.3s ease;
@@ -190,7 +190,7 @@
   position: absolute;
   inset: -50%;
   background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: energyRotate 3s linear infinite;
+  animation: energyRotate 0.5s linear infinite;
 }
 
 @keyframes gradientShift {
@@ -359,7 +359,7 @@
 .orbit-container {
   position: absolute;
   inset: 0;
-  animation: orbitRotate 30s linear infinite;
+  animation: orbitRotate 2s linear infinite;
   pointer-events: none;
 }
 
@@ -453,7 +453,7 @@
 .channel-orb svg {
   color: white;
   transition: all 0.3s ease;
-  animation: iconRotate 30s linear infinite reverse;
+  animation: iconRotate 2s linear infinite reverse;
   width: 28px;
   height: 28px;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
