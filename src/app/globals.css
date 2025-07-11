@@ -8,6 +8,9 @@
 @import './typography-colors.css';
 @import './platform-optimizations.css';
 
+/* Import animation styles */
+@import './ultra-modern-animation.css';
+
 /* Custom styles for beautiful landing pages */
 @layer base {
   :root {
