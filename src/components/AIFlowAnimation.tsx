@@ -174,13 +174,13 @@ export default function AIFlowAnimation() {
       // Draw connections in batch for better performance
       ctx.save();
       
-      // Add glow effect for better visibility
-      ctx.shadowBlur = 10;
+      // Add subtle glow effect for better visibility
+      ctx.shadowBlur = 5;
       ctx.shadowColor = '#FF6EC7';
       
-      ctx.globalAlpha = 0.4; // Increased from 0.1 for better visibility
+      ctx.globalAlpha = 0.25; // Balanced visibility
       ctx.strokeStyle = '#FF6EC7';
-      ctx.lineWidth = 2; // Increased from 1 for better visibility
+      ctx.lineWidth = 1.5; // Subtle increase for visibility
       nodes.forEach((node) => {
         node.connections.forEach((targetIndex) => {
           const target = nodes[targetIndex];
@@ -237,24 +237,24 @@ export default function AIFlowAnimation() {
           particle.x = (1 - t) * (1 - t) * source.x + 2 * (1 - t) * t * midX + t * t * target.x;
           particle.y = (1 - t) * (1 - t) * source.y + 2 * (1 - t) * t * midY + t * t * target.y;
           
-          // Enhanced particle rendering with glow
+          // Enhanced particle rendering with subtle glow
           ctx.save();
           ctx.globalAlpha = particle.opacity;
           
-          // Add particle glow for better visibility
-          ctx.shadowBlur = 15;
+          // Add subtle particle glow for better visibility
+          ctx.shadowBlur = 8;
           ctx.shadowColor = '#FF6EC7';
           
           ctx.fillStyle = '#FF6EC7';
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, 5, 0, Math.PI * 2); // Increased size from 4 to 5
+          ctx.arc(particle.x, particle.y, 4, 0, Math.PI * 2); // Back to original size
           ctx.fill();
           
           // Add bright core
           ctx.shadowBlur = 0;
           ctx.fillStyle = '#FFB6E1';
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+          ctx.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2);
           ctx.fill();
           
           ctx.restore();
@@ -287,9 +287,9 @@ export default function AIFlowAnimation() {
       nodes.forEach((node, index) => {
         const pulse = reducedMotion ? 1 : Math.sin(node.pulsePhase) * 0.3 + 0.7;
         
-        // Enhanced node glow for better visibility
-        ctx.globalAlpha = 0.4 * pulse; // Increased from 0.2
-        ctx.shadowBlur = 20;
+        // Subtle node glow for better visibility
+        ctx.globalAlpha = 0.3 * pulse; // Balanced visibility
+        ctx.shadowBlur = 10;
         ctx.shadowColor = '#FF6EC7';
         ctx.fillStyle = '#FF6EC7';
         ctx.beginPath();
