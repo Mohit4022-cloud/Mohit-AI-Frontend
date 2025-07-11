@@ -5,6 +5,7 @@ import { debounce, createAnimationLoop, isMobileDevice, prefersReducedMotion } f
 
 export default function AIFlowAnimation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<{ start: () => void; stop: () => void } | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,7 +37,7 @@ export default function AIFlowAnimation() {
     const debouncedResize = debounce(updateSize, 250);
     window.addEventListener('resize', debouncedResize, { passive: true });
 
-    // Neural network nodes
+    // Neural network nodes with reduced complexity for mobile
     const nodes: Array<{
       x: number;
       y: number;
@@ -53,6 +54,7 @@ export default function AIFlowAnimation() {
     const totalHeight = canvas.offsetHeight;
     const layerSpacing = totalWidth / (layers.length + 1);
 
+    // Create nodes
     layers.forEach((nodeCount, layerIndex) => {
       const x = layerSpacing * (layerIndex + 1);
       const ySpacing = totalHeight / (nodeCount + 1);
@@ -71,7 +73,7 @@ export default function AIFlowAnimation() {
       }
     });
 
-    // Create connections between adjacent layers
+    // Create connections
     let nodeIndex = 0;
     for (let layer = 0; layer < layers.length - 1; layer++) {
       const currentLayerSize = layers[layer];
@@ -80,7 +82,6 @@ export default function AIFlowAnimation() {
       
       for (let i = 0; i < currentLayerSize; i++) {
         const currentNode = nodes[nodeIndex + i];
-        // Connect to 2-3 nodes in the next layer
         const connectionCount = Math.min(2 + Math.floor(Math.random() * 2), nextLayerSize);
         const selectedNodes = new Set<number>();
         
@@ -94,7 +95,7 @@ export default function AIFlowAnimation() {
       nodeIndex += currentLayerSize;
     }
 
-    // Data particles flowing through the network
+    // Data particles
     const particles: Array<{
       x: number;
       y: number;
@@ -107,8 +108,31 @@ export default function AIFlowAnimation() {
 
     // Animation variables
     let frame = 0;
-    let animationLoop: { start: () => void; stop: () => void } | null = null;
 
+    // Pre-calculate static values
+    const connectionPaths = new Map<string, Path2D>();
+    const nodeGlows = new Map<number, { gradient: CanvasGradient }>();
+
+    // Pre-render connection paths
+    const updateConnectionPaths = () => {
+      connectionPaths.clear();
+      nodes.forEach((node, idx) => {
+        node.connections.forEach((targetIndex) => {
+          const target = nodes[targetIndex];
+          if (target) {
+            const path = new Path2D();
+            const midX = (node.x + target.x) / 2;
+            const midY = (node.y + target.y) / 2 + 20;
+            path.moveTo(node.x, node.y);
+            path.quadraticCurveTo(midX, midY, target.x, target.y);
+            connectionPaths.set(`${idx}-${targetIndex}`, path);
+          }
+        });
+      });
+    };
+    updateConnectionPaths();
+
+    // Animation function
     const animate = (timestamp: number) => {
       // Clear with solid color for better performance
       ctx.fillStyle = '#FFFFFF';
@@ -116,55 +140,41 @@ export default function AIFlowAnimation() {
 
       // Update nodes only if not reduced motion
       if (!reducedMotion) {
-        nodes.forEach((node, index) => {
-        // Subtle floating animation
-        node.x += node.vx;
-        node.y += node.vy;
+        nodes.forEach((node) => {
+          // Subtle floating animation
+          node.x += node.vx;
+          node.y += node.vy;
 
-        // Soft boundaries
-        const margin = 50;
-        if (node.x < margin || node.x > canvas.offsetWidth - margin) node.vx *= -0.8;
-        if (node.y < margin || node.y > canvas.offsetHeight - margin) node.vy *= -0.8;
+          // Soft boundaries
+          const margin = 50;
+          if (node.x < margin || node.x > canvas.offsetWidth - margin) node.vx *= -0.8;
+          if (node.y < margin || node.y > canvas.offsetHeight - margin) node.vy *= -0.8;
 
-        // Add slight random motion
-        node.vx += (Math.random() - 0.5) * 0.02;
-        node.vy += (Math.random() - 0.5) * 0.02;
+          // Add slight random motion
+          node.vx += (Math.random() - 0.5) * 0.02;
+          node.vy += (Math.random() - 0.5) * 0.02;
 
-        // Damping
-        node.vx *= 0.99;
-        node.vy *= 0.99;
+          // Damping
+          node.vx *= 0.99;
+          node.vy *= 0.99;
 
           // Update pulse phase
           node.pulsePhase += 0.02;
         });
       }
 
-      // Draw connections in batch for better performance
+      // Draw connections in batch
       ctx.save();
       ctx.globalAlpha = 0.1;
       ctx.strokeStyle = '#FF6EC7';
       ctx.lineWidth = 1;
-      nodes.forEach((node) => {
-        node.connections.forEach((targetIndex) => {
-          const target = nodes[targetIndex];
-          if (target) {
-            ctx.beginPath();
-            ctx.moveTo(node.x, node.y);
-            
-            // Create slight curve for more organic look
-            const midX = (node.x + target.x) / 2;
-            const midY = (node.y + target.y) / 2 + 20;
-            ctx.quadraticCurveTo(midX, midY, target.x, target.y);
-            
-            ctx.stroke();
-          }
-        });
+      connectionPaths.forEach(path => {
+        ctx.stroke(path);
       });
       ctx.restore();
 
       // Create new particles
       if (frame % (isMobile ? 45 : 30) === 0 && particles.length < maxParticles) {
-        // Pick a random starting node from the first layer
         const firstLayerNodes = nodes.slice(0, layers[0]);
         const sourceNode = Math.floor(Math.random() * firstLayerNodes.length);
         const source = nodes[sourceNode];
@@ -183,7 +193,8 @@ export default function AIFlowAnimation() {
         }
       }
 
-      // Update and draw particles
+      // Batch particle rendering
+      ctx.save();
       particles.forEach((particle, index) => {
         const source = nodes[particle.sourceNode];
         const target = nodes[particle.targetNode];
@@ -201,15 +212,13 @@ export default function AIFlowAnimation() {
           particle.y = (1 - t) * (1 - t) * source.y + 2 * (1 - t) * t * midY + t * t * target.y;
           
           // Simple particle rendering for performance
-          ctx.save();
           ctx.globalAlpha = particle.opacity;
           ctx.fillStyle = '#FF6EC7';
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, 4, 0, Math.PI * 2);
           ctx.fill();
-          ctx.restore();
           
-          // When particle reaches target, continue to next node or fade out
+          // When particle reaches target
           if (particle.progress >= 1) {
             const currentTarget = nodes[particle.targetNode];
             if (currentTarget.connections.length > 0 && Math.random() > 0.3) {
@@ -224,6 +233,7 @@ export default function AIFlowAnimation() {
           }
         }
       });
+      ctx.restore();
 
       // Remove faded particles
       for (let i = particles.length - 1; i >= 0; i--) {
@@ -234,10 +244,10 @@ export default function AIFlowAnimation() {
 
       // Batch node rendering
       ctx.save();
-      nodes.forEach((node, index) => {
+      nodes.forEach((node) => {
         const pulse = reducedMotion ? 1 : Math.sin(node.pulsePhase) * 0.3 + 0.7;
         
-        // Simple node glow for performance
+        // Simple node rendering for performance
         ctx.globalAlpha = 0.2 * pulse;
         ctx.fillStyle = '#FF6EC7';
         ctx.beginPath();
@@ -264,12 +274,12 @@ export default function AIFlowAnimation() {
     };
 
     // Use optimized animation loop
-    animationLoop = createAnimationLoop(animate, fps);
-    animationLoop.start();
+    animationRef.current = createAnimationLoop(animate, fps);
+    animationRef.current.start();
 
     return () => {
-      if (animationLoop) {
-        animationLoop.stop();
+      if (animationRef.current) {
+        animationRef.current.stop();
       }
       window.removeEventListener('resize', debouncedResize);
     };

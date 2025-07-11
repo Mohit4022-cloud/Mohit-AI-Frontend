@@ -1,0 +1,24 @@
+/* Deferred Animation Styles - Load after initial paint */
+/* These animations are not critical for first render */
+
+/* Animation modules */
+@import "./ultra-animation-optimized.css";
+@import "./sales-ai-animation.css";
+@import "./landing-animations.css";
+@import "./ai-flow-animation.css";
+
+/* Stats animations */
+@import "./ultra-premium-stats.css";
+@import "./quantum-stats.css";
+@import "./minimal-stats.css";
+
+/* Scroll effects */
+@import "./premium-scroll-effects-optimized.css";
+
+/* Additional fixes that can be deferred */
+@import "./integrated-fixes.css";
+@import "./targeted-fixes.css";
+@import "./hero-text-fix.css";
+@import "./hero-override-fix.css";
+@import "./white-line-position-fix.css";
+@import "./feature-icon-color-fix.css";

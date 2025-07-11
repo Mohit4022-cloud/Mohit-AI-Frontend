@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
+import { debounce, createAnimationLoop, isMobileDevice, prefersReducedMotion } from '@/lib/performance-utils';
 
 const PricingAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -9,19 +10,32 @@ const PricingAnimation: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { 
+      alpha: false,
+      desynchronized: true 
+    });
     if (!ctx) return;
+
+    // Performance settings
+    const isMobile = isMobileDevice();
+    const reducedMotion = prefersReducedMotion();
+    const fps = isMobile ? 30 : 60;
 
     const setCanvasSize = () => {
       const container = canvas.parentElement;
       if (container) {
-        canvas.width = container.offsetWidth;
-        canvas.height = container.offsetHeight;
+        const dpr = Math.min(window.devicePixelRatio, 2);
+        canvas.width = container.offsetWidth * dpr;
+        canvas.height = container.offsetHeight * dpr;
+        ctx.scale(dpr, dpr);
+        canvas.style.width = container.offsetWidth + 'px';
+        canvas.style.height = container.offsetHeight + 'px';
       }
     };
 
     setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
+    const debouncedResize = debounce(setCanvasSize, 250);
+    window.addEventListener('resize', debouncedResize, { passive: true });
 
     // Clean minimal price tiers
     interface PriceTier {
@@ -46,7 +60,7 @@ const PricingAnimation: React.FC = () => {
       tier.y = tier.targetY + 50;
     });
 
-    // Neural network nodes
+    // Neural network nodes - reduced for mobile
     interface Node {
       x: number;
       y: number;
@@ -54,7 +68,7 @@ const PricingAnimation: React.FC = () => {
     }
 
     const nodes: Node[] = [];
-    const nodeCount = 12;
+    const nodeCount = isMobile ? 8 : 12;
     
     // Create network nodes in a grid-like pattern
     for (let i = 0; i < nodeCount; i++) {
@@ -89,9 +103,10 @@ const PricingAnimation: React.FC = () => {
     }
 
     const packets: DataPacket[] = [];
+    const maxPackets = isMobile ? 3 : 5;
     
     // Initialize some data packets
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < maxPackets; i++) {
       const fromNode = Math.floor(Math.random() * nodeCount);
       const toNode = nodes[fromNode].connections[Math.floor(Math.random() * nodes[fromNode].connections.length)];
       if (toNode !== undefined) {
@@ -104,12 +119,20 @@ const PricingAnimation: React.FC = () => {
       }
     }
 
-    const animate = () => {
-      // Clear canvas completely
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let animationLoop: { start: () => void; stop: () => void } | null = null;
 
-      // Draw neural network connections
-      ctx.strokeStyle = 'rgba(255, 110, 199, 0.03)';
+    const animate = (timestamp: number) => {
+      // Clear with solid color for better performance
+      const container = canvas.parentElement;
+      if (container) {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, container.offsetWidth, container.offsetHeight);
+      }
+
+      // Draw neural network connections - batch for performance
+      ctx.save();
+      ctx.globalAlpha = 0.03;
+      ctx.strokeStyle = '#FF6EC7';
       ctx.lineWidth = 1;
       
       nodes.forEach((node, i) => {
@@ -121,19 +144,25 @@ const PricingAnimation: React.FC = () => {
           ctx.stroke();
         });
       });
+      ctx.restore();
 
-      // Draw neural network nodes
-      nodes.forEach(node => {
-        ctx.fillStyle = 'rgba(255, 110, 199, 0.05)';
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
-        ctx.fill();
-        
-        ctx.fillStyle = 'rgba(255, 110, 199, 0.1)';
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
-        ctx.fill();
-      });
+      // Draw neural network nodes - simplified for performance
+      if (!reducedMotion) {
+        ctx.save();
+        ctx.fillStyle = '#FF6EC7';
+        nodes.forEach(node => {
+          ctx.globalAlpha = 0.05;
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
+          ctx.fill();
+          
+          ctx.globalAlpha = 0.1;
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.restore();
+      }
 
       // Animate data packets
       packets.forEach((packet, index) => {
@@ -141,7 +170,7 @@ const PricingAnimation: React.FC = () => {
           const fromNode = nodes[packet.from];
           const toNode = nodes[packet.to];
           
-          packet.progress += 0.02;
+          packet.progress += reducedMotion ? 0.04 : 0.02;
           
           if (packet.progress >= 1) {
             // Reset packet to new connection
@@ -155,19 +184,26 @@ const PricingAnimation: React.FC = () => {
             }
           }
           
-          // Draw packet
-          const x = fromNode.x + (toNode.x - fromNode.x) * packet.progress;
-          const y = fromNode.y + (toNode.y - fromNode.y) * packet.progress;
-          
-          ctx.fillStyle = 'rgba(255, 110, 199, 0.3)';
-          ctx.beginPath();
-          ctx.arc(x, y, 2, 0, Math.PI * 2);
-          ctx.fill();
+          // Draw packet - simplified for performance
+          if (!reducedMotion) {
+            const x = fromNode.x + (toNode.x - fromNode.x) * packet.progress;
+            const y = fromNode.y + (toNode.y - fromNode.y) * packet.progress;
+            
+            ctx.save();
+            ctx.globalAlpha = 0.3;
+            ctx.fillStyle = '#FF6EC7';
+            ctx.beginPath();
+            ctx.arc(x, y, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
         }
       });
 
       // Draw very subtle connection lines between tiers
-      ctx.strokeStyle = 'rgba(255, 110, 199, 0.05)';
+      ctx.save();
+      ctx.globalAlpha = 0.05;
+      ctx.strokeStyle = '#FF6EC7';
       ctx.lineWidth = 1;
       ctx.setLineDash([5, 10]);
       
@@ -182,14 +218,15 @@ const PricingAnimation: React.FC = () => {
       }
       
       ctx.setLineDash([]);
+      ctx.restore();
 
       // Draw pricing tiers
       tiers.forEach((tier, index) => {
         // Smooth animation
         tier.y += (tier.targetY - tier.y) * 0.05;
-        tier.opacity = Math.min(1, tier.opacity + 0.02);
+        tier.opacity = Math.min(1, tier.opacity + (reducedMotion ? 0.1 : 0.02));
 
-        const x = canvas.width * 0.3;
+        const x = (container?.offsetWidth || canvas.width) * 0.3;
 
         // Draw tier circle
         ctx.save();
@@ -238,8 +275,8 @@ const PricingAnimation: React.FC = () => {
       });
 
       // Very subtle growth indicator
-      const growthX = canvas.width * 0.7;
-      const growthY = canvas.height * 0.5;
+      const growthX = (container?.offsetWidth || canvas.width) * 0.7;
+      const growthY = (container?.offsetHeight || canvas.height) * 0.5;
       
       ctx.save();
       ctx.globalAlpha = 0.6;
@@ -274,16 +311,21 @@ const PricingAnimation: React.FC = () => {
       ctx.restore();
 
 
-      requestAnimationFrame(animate);
     };
 
+    // Use optimized animation loop
+    animationLoop = createAnimationLoop(animate, fps);
+    
     // Start animation after a short delay
     setTimeout(() => {
-      animate();
+      animationLoop?.start();
     }, 100);
 
     return () => {
-      window.removeEventListener('resize', setCanvasSize);
+      if (animationLoop) {
+        animationLoop.stop();
+      }
+      window.removeEventListener('resize', debouncedResize);
     };
   }, []);
 
@@ -291,7 +333,12 @@ const PricingAnimation: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ opacity: 0.9 }}
+      style={{ 
+        opacity: 0.9,
+        willChange: 'auto',
+        transform: 'translateZ(0)',
+        backfaceVisibility: 'hidden'
+      }}
     />
   );
 };

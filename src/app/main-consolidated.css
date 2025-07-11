@@ -1,0 +1,40 @@
+/* Main Consolidated CSS - Performance Optimized */
+/* This file consolidates critical styles for initial render */
+
+/* Import only essential global styles */
+@import "./globals.css";
+
+/* Core layout and design system */
+@import "./ultra-modern.css";
+@import "./premium-complete.css";
+
+/* Layout fixes consolidated */
+@import "./layout-fixes.css";
+@import "./complete-layout-fix.css";
+@import "./design-preserving-fixes.css";
+
+/* Navigation styles */
+@import "./navigation-fix.css";
+@import "./navbar-logo-styles.css";
+
+/* Hero section styles */
+@import "./hero-positioning-fix.css";
+@import "./hero-final-fix.css";
+
+/* Essential component styles */
+@import "./footer-styles.css";
+@import "./form-height-fix.css";
+
+/* Mobile responsive */
+@import "./mobile-responsive-2f33578.css";
+
+/* Performance optimizations - load these first */
+@import "./performance-optimizations.css";
+
+/* Feature and icon styles */
+@import "./feature-icon-fix.css";
+@import "./icon-force-pink.css";
+
+/* Homepage styles */
+@import "./homepage-enhanced-styles.css";
+@import "./cta-premium-style.css";

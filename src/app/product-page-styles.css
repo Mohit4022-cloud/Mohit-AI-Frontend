@@ -48,7 +48,8 @@
   display: flex;
   gap: 16px;
   flex-wrap: nowrap;
-  margin-bottom: 24px;
+  margin-bottom: 0;
+  margin-top: 32px;
 }
 
 /* Product Demo Visual */

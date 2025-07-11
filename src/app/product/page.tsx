@@ -111,21 +111,6 @@ export default function ProductPage() {
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
-              
-              <div className="hero-trust-badges">
-                <div className="trust-badge-item">
-                  <CheckCircle className="w-5 h-5 text-pink" />
-                  <span>No credit card required</span>
-                </div>
-                <div className="trust-badge-item">
-                  <Shield className="w-5 h-5 text-pink" />
-                  <span>SOC 2 certified</span>
-                </div>
-                <div className="trust-badge-item">
-                  <Users className="w-5 h-5 text-pink" />
-                  <span>Trusted by 500+ teams</span>
-                </div>
-              </div>
             </div>
 
             {/* Product Demo Visual */}
@@ -540,7 +525,7 @@ export default function ProductPage() {
             <div className="cta-container">
               <div className="cta-content">
                 <h2 className="cta-heading">
-                  Ready to 10x Your Sales?
+                  Ready to <span className="text-pink">10x Your Sales?</span>
                 </h2>
                 <p className="cta-description">
                   Join 500+ teams using Mohit AI to respond to every lead in 
