@@ -1,0 +1,315 @@
+/* Minimal Stats Animation - Ultra Clean Design */
+
+.minimal-stats-section {
+  position: relative;
+  padding: 120px 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%);
+  overflow: hidden;
+}
+
+.stats-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 80px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Stat Card */
+.stat-card {
+  position: relative;
+  text-align: center;
+  padding: 60px 40px;
+  cursor: pointer;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.stat-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Background Number */
+.stat-bg-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 180px;
+  font-weight: 900;
+  color: rgba(255, 110, 199, 0.03);
+  z-index: 0;
+  transition: all 0.6s ease;
+  user-select: none;
+}
+
+.stat-card:hover .stat-bg-number {
+  color: rgba(255, 110, 199, 0.05);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Stat Content */
+.stat-content {
+  position: relative;
+  z-index: 2;
+}
+
+.stat-number {
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 16px;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.stat-number .number {
+  background: linear-gradient(180deg, #1A1A1A 0%, #4B5563 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.stat-number .unit {
+  font-size: 48px;
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.stat-card:hover .stat-number .number {
+  background: linear-gradient(135deg, #FF6EC7 0%, #E94B9B 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: scale(1.05);
+}
+
+.stat-text {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6B7280;
+  transition: all 0.4s ease;
+}
+
+.stat-card:hover .stat-text {
+  color: #FF6EC7;
+  letter-spacing: 0.15em;
+}
+
+/* Glow Effect */
+.stat-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 110, 199, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stat-card:hover .stat-glow {
+  opacity: 1;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.3); }
+}
+
+/* Floating Elements */
+.floating-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.float-element {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+}
+
+.element-1 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #FF6EC7 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: float1 20s ease-in-out infinite;
+}
+
+.element-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #E94B9B 0%, transparent 70%);
+  bottom: -150px;
+  right: -150px;
+  animation: float2 25s ease-in-out infinite;
+}
+
+.element-3 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, #FFB6E1 0%, transparent 70%);
+  top: 50%;
+  right: 10%;
+  animation: float3 30s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, 30px) scale(1.1); }
+  66% { transform: translate(-30px, 50px) scale(0.9); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40px, -40px) scale(0.9); }
+  66% { transform: translate(40px, -20px) scale(1.1); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, 40px) scale(1.05); }
+  66% { transform: translate(30px, -40px) scale(0.95); }
+}
+
+/* Subtle Animation on Load */
+.stat-card {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Line Connections */
+.stats-grid::before,
+.stats-grid::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 110, 199, 0.1) 50%, transparent 100%);
+  z-index: 0;
+}
+
+.stats-grid::before {
+  left: calc(33.33% - 50px);
+  transform: translateY(-50%);
+}
+
+.stats-grid::after {
+  right: calc(33.33% - 50px);
+  transform: translateY(-50%);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .stats-grid {
+    gap: 60px;
+  }
+  
+  .stat-number {
+    font-size: 64px;
+  }
+  
+  .stat-bg-number {
+    font-size: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .minimal-stats-section {
+    padding: 80px 0;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  
+  .stat-card {
+    padding: 40px 30px;
+  }
+  
+  .stat-number {
+    font-size: 56px;
+  }
+  
+  .stat-bg-number {
+    font-size: 120px;
+  }
+  
+  .stats-grid::before,
+  .stats-grid::after {
+    display: none;
+  }
+  
+  .floating-elements {
+    display: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .minimal-stats-section {
+    background: linear-gradient(180deg, #0A0A0A 0%, #1A1A1A 100%);
+  }
+  
+  .stat-number .number {
+    background: linear-gradient(180deg, #FFFFFF 0%, #B0B0B0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  .stat-text {
+    color: #9CA3AF;
+  }
+  
+  .stat-bg-number {
+    color: rgba(255, 110, 199, 0.05);
+  }
+}
+
+/* Performance Optimization */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

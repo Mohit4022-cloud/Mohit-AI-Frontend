@@ -1,0 +1,42 @@
+/* Navbar Logo Styles */
+
+/* Update navbar brand to display flex */
+.navbar-brand,
+.nav-brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  text-decoration: none !important;
+}
+
+/* Ensure logo doesn't affect text alignment */
+.navbar-brand .mohit-ai-logo,
+.nav-brand .mohit-ai-logo {
+  flex-shrink: 0;
+}
+
+/* App navigation logo styles */
+.app-nav-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-nav-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Ensure logo is visible in navigation */
+.mohit-ai-logo {
+  display: inline-block;
+}
+
+/* Fix any z-index issues */
+.navbar-fixed .mohit-ai-logo,
+.nav-fixed .mohit-ai-logo,
+.app-navigation-panel .mohit-ai-logo {
+  position: relative;
+  z-index: 10;
+}
