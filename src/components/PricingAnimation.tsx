@@ -23,7 +23,7 @@ const PricingAnimation: React.FC = () => {
     setCanvasSize();
     window.addEventListener('resize', setCanvasSize);
 
-    // Enhanced price tiers with features
+    // Enhanced price tiers
     interface PriceTier {
       label: string;
       value: string;
@@ -32,9 +32,9 @@ const PricingAnimation: React.FC = () => {
       opacity: number;
       highlighted: boolean;
       scale: number;
-      features: string[];
-      featureOpacity: number;
-      hoverProgress: number;
+      glowIntensity: number;
+      ringRadius: number;
+      ringOpacity: number;
     }
 
     const tiers: PriceTier[] = [
@@ -46,9 +46,9 @@ const PricingAnimation: React.FC = () => {
         opacity: 0, 
         highlighted: false, 
         scale: 1,
-        features: ['100 calls', '1 user', 'Email support'],
-        featureOpacity: 0,
-        hoverProgress: 0
+        glowIntensity: 0,
+        ringRadius: 20,
+        ringOpacity: 0
       },
       { 
         label: 'Professional', 
@@ -58,9 +58,9 @@ const PricingAnimation: React.FC = () => {
         opacity: 0, 
         highlighted: true, 
         scale: 1.1,
-        features: ['500 calls', '5 users', 'Priority support'],
-        featureOpacity: 0,
-        hoverProgress: 0
+        glowIntensity: 0.5,
+        ringRadius: 25,
+        ringOpacity: 0.3
       },
       { 
         label: 'Scale', 
@@ -70,9 +70,9 @@ const PricingAnimation: React.FC = () => {
         opacity: 0, 
         highlighted: false, 
         scale: 1,
-        features: ['2000 calls', '20 users', 'Dedicated support'],
-        featureOpacity: 0,
-        hoverProgress: 0
+        glowIntensity: 0,
+        ringRadius: 20,
+        ringOpacity: 0
       }
     ];
 
@@ -80,7 +80,7 @@ const PricingAnimation: React.FC = () => {
     const spacing = canvas.height / 4;
     tiers.forEach((tier, i) => {
       tier.targetY = spacing + (i * spacing * 0.8);
-      tier.y = tier.targetY + 50;
+      tier.y = tier.targetY + 100;
     });
 
     // Interactive hover detection
@@ -93,324 +93,233 @@ const PricingAnimation: React.FC = () => {
     };
     canvas.addEventListener('mousemove', handleMouseMove);
 
-    // Animated particles with trails
-    interface Particle {
+    // Elegant floating orbs
+    interface Orb {
       x: number;
       y: number;
-      vx: number;
-      vy: number;
+      targetX: number;
+      targetY: number;
       size: number;
       opacity: number;
       color: string;
-      trail: { x: number; y: number; opacity: number }[];
+      speed: number;
     }
 
-    const particles: Particle[] = [];
-    for (let i = 0; i < 15; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: -Math.random() * 0.5 - 0.2,
-        size: Math.random() * 3 + 1,
-        opacity: Math.random() * 0.4 + 0.1,
-        color: ['#FF6EC7', '#FFB6C1', '#DDA0DD'][Math.floor(Math.random() * 3)],
-        trail: []
+    const orbs: Orb[] = [];
+    const orbColors = ['#FF6EC7', '#FFB6C1', '#DDA0DD', '#F0E6FF'];
+    
+    for (let i = 0; i < 8; i++) {
+      const angle = (i / 8) * Math.PI * 2;
+      const radius = 150;
+      const centerX = canvas.width * 0.5;
+      const centerY = canvas.height * 0.5;
+      
+      orbs.push({
+        x: centerX + Math.cos(angle) * radius,
+        y: centerY + Math.sin(angle) * radius,
+        targetX: centerX + Math.cos(angle) * radius,
+        targetY: centerY + Math.sin(angle) * radius,
+        size: Math.random() * 20 + 10,
+        opacity: Math.random() * 0.3 + 0.1,
+        color: orbColors[Math.floor(Math.random() * orbColors.length)],
+        speed: Math.random() * 0.5 + 0.5
       });
     }
 
-    // Animated connections
-    interface Connection {
+    // Flowing connections
+    interface Flow {
+      points: { x: number; y: number }[];
       progress: number;
       opacity: number;
-      from: number;
-      to: number;
     }
 
-    const connections: Connection[] = [
-      { progress: 0, opacity: 0.3, from: 0, to: 1 },
-      { progress: 0.33, opacity: 0.3, from: 1, to: 2 }
-    ];
-
-    // Feature badges animation
-    let featureAnimationProgress = 0;
-
-    // Performance metrics
-    interface Metric {
-      label: string;
-      value: string;
-      x: number;
-      y: number;
-      progress: number;
+    const flows: Flow[] = [];
+    
+    // Create flowing paths between tiers
+    for (let i = 0; i < 3; i++) {
+      flows.push({
+        points: [],
+        progress: i * 0.33,
+        opacity: 0.2
+      });
     }
-
-    const metrics: Metric[] = [
-      { label: 'Response Time', value: '47s', x: 0, y: 0, progress: 0 },
-      { label: 'Conversion Rate', value: '+391%', x: 0, y: 0, progress: 0 },
-      { label: 'ROI', value: '5.2x', x: 0, y: 0, progress: 0 }
-    ];
-
-    // Position metrics
-    const metricsStartX = canvas.width * 0.65;
-    metrics.forEach((metric, i) => {
-      metric.x = metricsStartX;
-      metric.y = spacing + (i * spacing * 0.8);
-    });
 
     let frame = 0;
 
     const animate = () => {
-      // Clear canvas
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      // Subtle clear with trail effect
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       frame++;
-      featureAnimationProgress = (Math.sin(frame * 0.01) + 1) / 2;
 
-      // Draw animated connections with pulse
-      connections.forEach((conn, index) => {
-        conn.progress += 0.01;
-        if (conn.progress > 1) conn.progress = 0;
-
-        const tier1 = tiers[conn.from];
-        const tier2 = tiers[conn.to];
+      // Update orb positions with smooth floating
+      orbs.forEach((orb, i) => {
+        const angle = (frame * 0.001 * orb.speed) + (i / orbs.length) * Math.PI * 2;
+        const radius = 120 + Math.sin(frame * 0.002 + i) * 30;
+        const centerX = canvas.width * 0.5;
+        const centerY = canvas.height * 0.5;
         
-        // Animated gradient line
-        const gradient = ctx.createLinearGradient(
-          canvas.width * 0.3, tier1.y,
-          canvas.width * 0.3, tier2.y
-        );
-        gradient.addColorStop(0, `rgba(255, 110, 199, ${conn.opacity * 0.5})`);
-        gradient.addColorStop(conn.progress, `rgba(255, 110, 199, ${conn.opacity})`);
-        gradient.addColorStop(Math.min(conn.progress + 0.1, 1), `rgba(255, 110, 199, ${conn.opacity * 0.5})`);
-        gradient.addColorStop(1, 'rgba(255, 110, 199, 0)');
+        orb.targetX = centerX + Math.cos(angle) * radius;
+        orb.targetY = centerY + Math.sin(angle) * radius;
         
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 2;
+        // Smooth movement
+        orb.x += (orb.targetX - orb.x) * 0.05;
+        orb.y += (orb.targetY - orb.y) * 0.05;
+        
+        // Draw orb with glow
+        const glow = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.size * 2);
+        glow.addColorStop(0, orb.color + '40');
+        glow.addColorStop(0.5, orb.color + '20');
+        glow.addColorStop(1, orb.color + '00');
+        
+        ctx.fillStyle = glow;
         ctx.beginPath();
-        ctx.moveTo(canvas.width * 0.3, tier1.y);
-        ctx.lineTo(canvas.width * 0.3, tier2.y);
-        ctx.stroke();
+        ctx.arc(orb.x, orb.y, orb.size * 2, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Core
+        ctx.fillStyle = orb.color + '60';
+        ctx.beginPath();
+        ctx.arc(orb.x, orb.y, orb.size * 0.3, 0, Math.PI * 2);
+        ctx.fill();
       });
 
-      // Draw pricing tiers with enhanced interactivity
+      // Draw elegant connections between tiers
+      const tierX = canvas.width * 0.35;
+      
+      for (let i = 0; i < tiers.length - 1; i++) {
+        const tier1 = tiers[i];
+        const tier2 = tiers[i + 1];
+        
+        // Create curved path
+        ctx.strokeStyle = 'rgba(255, 110, 199, 0.1)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 4]);
+        
+        ctx.beginPath();
+        ctx.moveTo(tierX, tier1.y);
+        
+        const cp1x = tierX + 50;
+        const cp1y = tier1.y + (tier2.y - tier1.y) * 0.3;
+        const cp2x = tierX + 50;
+        const cp2y = tier1.y + (tier2.y - tier1.y) * 0.7;
+        
+        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, tierX, tier2.y);
+        ctx.stroke();
+        
+        ctx.setLineDash([]);
+      }
+
+      // Draw pricing tiers with enhanced design
       tiers.forEach((tier, index) => {
         // Smooth animation
-        tier.y += (tier.targetY - tier.y) * 0.05;
-        tier.opacity = Math.min(1, tier.opacity + 0.02);
+        tier.y += (tier.targetY - tier.y) * 0.08;
+        tier.opacity = Math.min(1, tier.opacity + 0.03);
 
-        const x = canvas.width * 0.3;
+        const x = tierX;
         
-        // Check hover
+        // Check hover proximity
         const distance = Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - tier.y, 2));
-        const isHovered = distance < 100;
-        tier.hoverProgress += (isHovered ? 0.05 : -0.05);
-        tier.hoverProgress = Math.max(0, Math.min(1, tier.hoverProgress));
-
-        // Update scale based on hover
-        const targetScale = tier.highlighted ? 1.1 : (isHovered ? 1.05 : 1);
-        tier.scale += (targetScale - tier.scale) * 0.1;
+        const isNear = distance < 150;
+        
+        // Update glow intensity
+        const targetGlow = tier.highlighted ? 0.5 : (isNear ? 0.3 : 0);
+        tier.glowIntensity += (targetGlow - tier.glowIntensity) * 0.1;
+        
+        // Update ring animation
+        tier.ringRadius += 0.5;
+        if (tier.ringRadius > 50) tier.ringRadius = 20;
+        tier.ringOpacity = tier.highlighted ? 0.3 * (1 - (tier.ringRadius - 20) / 30) : 0;
 
         ctx.save();
         
-        // Enhanced glow effect
-        if (tier.highlighted || tier.hoverProgress > 0) {
-          const glowSize = 40 * tier.scale;
+        // Expanding ring effect for highlighted tier
+        if (tier.ringOpacity > 0) {
+          ctx.strokeStyle = `rgba(255, 110, 199, ${tier.ringOpacity})`;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(x, tier.y, tier.ringRadius, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        
+        // Glow effect
+        if (tier.glowIntensity > 0) {
+          const glowSize = 60;
           const glow = ctx.createRadialGradient(x, tier.y, 0, x, tier.y, glowSize);
-          glow.addColorStop(0, `rgba(255, 110, 199, ${0.3 * (tier.highlighted ? 1 : tier.hoverProgress)})`);
-          glow.addColorStop(0.5, `rgba(255, 110, 199, ${0.1 * (tier.highlighted ? 1 : tier.hoverProgress)})`);
+          glow.addColorStop(0, `rgba(255, 110, 199, ${tier.glowIntensity * 0.3})`);
+          glow.addColorStop(0.5, `rgba(255, 182, 193, ${tier.glowIntensity * 0.1})`);
           glow.addColorStop(1, 'rgba(255, 110, 199, 0)');
           ctx.fillStyle = glow;
           ctx.fillRect(x - glowSize, tier.y - glowSize, glowSize * 2, glowSize * 2);
         }
 
-        // Tier circle with breathing effect
-        const breathe = Math.sin(frame * 0.02 + index) * 0.1 + 1;
-        const circleSize = (tier.highlighted ? 10 : 8) * tier.scale * breathe;
+        // Main tier circle
+        const circleSize = tier.highlighted ? 12 : 10;
         
-        // Outer ring
-        ctx.strokeStyle = tier.highlighted ? '#FF6EC7' : '#E5E7EB';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(x, tier.y, circleSize + 4, 0, Math.PI * 2);
-        ctx.stroke();
-        
-        // Main circle
-        ctx.fillStyle = tier.highlighted ? '#FF6EC7' : '#E5E7EB';
+        // Outer circle
+        ctx.fillStyle = tier.highlighted ? '#FF6EC7' : '#F3F4F6';
         ctx.beginPath();
         ctx.arc(x, tier.y, circleSize, 0, Math.PI * 2);
         ctx.fill();
-
-        // Inner dot
+        
+        // Inner circle
         ctx.fillStyle = '#FFFFFF';
         ctx.beginPath();
-        ctx.arc(x, tier.y, circleSize * 0.5, 0, Math.PI * 2);
+        ctx.arc(x, tier.y, circleSize - 3, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Center dot
+        ctx.fillStyle = tier.highlighted ? '#FF6EC7' : '#E5E7EB';
+        ctx.beginPath();
+        ctx.arc(x, tier.y, 3, 0, Math.PI * 2);
         ctx.fill();
 
-        // Tier label with fade
+        // Clean typography
         ctx.globalAlpha = tier.opacity;
+        
+        // Tier label
         ctx.fillStyle = '#6B7280';
-        ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.font = '13px -apple-system, BlinkMacSystemFont, sans-serif';
         ctx.textAlign = 'right';
         ctx.textBaseline = 'middle';
-        ctx.fillText(tier.label, x - 25, tier.y);
+        ctx.fillText(tier.label, x - 30, tier.y);
 
-        // Price value (no floating)
+        // Price value
         ctx.fillStyle = tier.highlighted ? '#FF6EC7' : '#1A1A1A';
         ctx.font = tier.highlighted ? 
-          'bold 26px -apple-system, BlinkMacSystemFont, sans-serif' : 
-          '22px -apple-system, BlinkMacSystemFont, sans-serif';
+          'bold 24px -apple-system, BlinkMacSystemFont, sans-serif' : 
+          '20px -apple-system, BlinkMacSystemFont, sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText(tier.value, x + 25, tier.y);
+        ctx.fillText(tier.value, x + 30, tier.y);
 
-        // Per month label
+        // Per month
         ctx.fillStyle = '#9CA3AF';
         ctx.font = '12px -apple-system, BlinkMacSystemFont, sans-serif';
-        ctx.fillText('/month', x + 85, tier.y + 2);
-
-        // Animated features on hover
-        tier.featureOpacity += (tier.hoverProgress > 0.5 ? 0.05 : -0.05);
-        tier.featureOpacity = Math.max(0, Math.min(1, tier.featureOpacity));
-        
-        if (tier.featureOpacity > 0) {
-          ctx.globalAlpha = tier.featureOpacity * tier.opacity;
-          ctx.fillStyle = '#6B7280';
-          ctx.font = '11px -apple-system, BlinkMacSystemFont, sans-serif';
-          tier.features.forEach((feature, i) => {
-            const featureY = tier.y + 20 + (i * 15);
-            const featureX = x + 25;
-            ctx.fillText(feature, featureX, featureY);
-          });
-        }
+        ctx.fillText('/mo', x + 85, tier.y + 1);
 
         ctx.restore();
       });
 
-      // Draw performance metrics with stagger animation
-      metrics.forEach((metric, index) => {
-        metric.progress = Math.min(1, metric.progress + 0.02);
-        
-        const staggerDelay = index * 0.3;
-        const progress = Math.max(0, Math.min(1, (frame / 60 - staggerDelay) / 2));
-        
-        if (progress > 0) {
-          ctx.save();
-          ctx.globalAlpha = progress;
-          
-          // Metric card
-          const cardX = metric.x + Math.sin(frame * 0.02 + index) * 3;
-          const cardY = metric.y;
-          
-          // Card background
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
-          ctx.strokeStyle = 'rgba(255, 110, 199, 0.2)';
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.roundRect(cardX - 60, cardY - 25, 120, 50, 8);
-          ctx.fill();
-          ctx.stroke();
-          
-          // Metric value
-          ctx.fillStyle = '#FF6EC7';
-          ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, sans-serif';
-          ctx.textAlign = 'center';
-          ctx.fillText(metric.value, cardX, cardY);
-          
-          // Metric label
-          ctx.fillStyle = '#9CA3AF';
-          ctx.font = '10px -apple-system, BlinkMacSystemFont, sans-serif';
-          ctx.fillText(metric.label, cardX, cardY + 15);
-          
-          ctx.restore();
-        }
-      });
-
-      // Enhanced particles with trails
-      particles.forEach(particle => {
-        // Update trail
-        particle.trail.push({ 
-          x: particle.x, 
-          y: particle.y, 
-          opacity: particle.opacity 
-        });
-        
-        if (particle.trail.length > 10) {
-          particle.trail.shift();
-        }
-        
-        // Update position
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        
-        // Add some wave motion
-        particle.x += Math.sin(frame * 0.02 + particle.y * 0.01) * 0.3;
-        
-        // Wrap around
-        if (particle.y < -10) {
-          particle.y = canvas.height + 10;
-          particle.x = Math.random() * canvas.width;
-          particle.trail = [];
-        }
-        if (particle.x < -10) particle.x = canvas.width + 10;
-        if (particle.x > canvas.width + 10) particle.x = -10;
-        
-        // Draw trail
-        ctx.save();
-        particle.trail.forEach((point, i) => {
-          const trailOpacity = (i / particle.trail.length) * point.opacity * 0.3;
-          ctx.globalAlpha = trailOpacity;
-          ctx.fillStyle = particle.color;
-          ctx.beginPath();
-          ctx.arc(point.x, point.y, particle.size * (i / particle.trail.length), 0, Math.PI * 2);
-          ctx.fill();
-        });
-        
-        // Draw particle
-        ctx.globalAlpha = particle.opacity;
-        ctx.fillStyle = particle.color;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
-      // Growth indicator with pulse
-      const growthX = canvas.width * 0.5;
-      const growthY = canvas.height * 0.85;
-      const pulse = Math.sin(frame * 0.03) * 0.1 + 1;
+      // Draw central focal element
+      const centerX = canvas.width * 0.5;
+      const centerY = canvas.height * 0.5;
       
+      // Rotating gradient ring
       ctx.save();
-      ctx.globalAlpha = 0.8;
+      ctx.translate(centerX, centerY);
+      ctx.rotate(frame * 0.001);
       
-      // Pulsing background
-      const pulseGradient = ctx.createRadialGradient(growthX, growthY - 20, 0, growthX, growthY - 20, 50 * pulse);
-      pulseGradient.addColorStop(0, 'rgba(255, 110, 199, 0.1)');
-      pulseGradient.addColorStop(1, 'rgba(255, 110, 199, 0)');
-      ctx.fillStyle = pulseGradient;
-      ctx.fillRect(growthX - 100, growthY - 70, 200, 100);
+      const gradient = ctx.createLinearGradient(-100, 0, 100, 0);
+      gradient.addColorStop(0, 'rgba(255, 110, 199, 0.2)');
+      gradient.addColorStop(0.5, 'rgba(255, 182, 193, 0.1)');
+      gradient.addColorStop(1, 'rgba(221, 160, 221, 0.2)');
       
-      // Animated arrow
-      ctx.strokeStyle = '#FF6EC7';
+      ctx.strokeStyle = gradient;
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(growthX - 30, growthY);
-      ctx.lineTo(growthX, growthY - 30 * pulse);
-      ctx.lineTo(growthX + 30, growthY);
+      ctx.arc(0, 0, 80, 0, Math.PI * 2);
       ctx.stroke();
-      
-      // Arrow head
-      ctx.beginPath();
-      ctx.moveTo(growthX, growthY - 30 * pulse);
-      ctx.lineTo(growthX - 5, growthY - 25 * pulse);
-      ctx.moveTo(growthX, growthY - 30 * pulse);
-      ctx.lineTo(growthX + 5, growthY - 25 * pulse);
-      ctx.stroke();
-      
-      // Growth text
-      ctx.fillStyle = '#FF6EC7';
-      ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('Scale with confidence', growthX, growthY + 20);
       
       ctx.restore();
 
