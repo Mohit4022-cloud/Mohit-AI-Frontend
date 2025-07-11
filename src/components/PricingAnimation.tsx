@@ -46,29 +46,125 @@ const PricingAnimation: React.FC = () => {
       tier.y = tier.targetY + 50;
     });
 
-    // Very subtle floating dots
-    interface Dot {
+    // Neural network nodes
+    interface Node {
       x: number;
       y: number;
-      size: number;
-      opacity: number;
-      speed: number;
+      connections: number[];
     }
 
-    const dots: Dot[] = [];
-    for (let i = 0; i < 15; i++) {
-      dots.push({
+    const nodes: Node[] = [];
+    const nodeCount = 12;
+    
+    // Create network nodes in a grid-like pattern
+    for (let i = 0; i < nodeCount; i++) {
+      nodes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 1.5 + 0.5,
-        opacity: Math.random() * 0.15 + 0.05,
-        speed: Math.random() * 0.3 + 0.1
+        connections: []
       });
+    }
+    
+    // Create connections between nearby nodes
+    nodes.forEach((node, i) => {
+      nodes.forEach((otherNode, j) => {
+        if (i !== j) {
+          const distance = Math.sqrt(
+            Math.pow(node.x - otherNode.x, 2) + 
+            Math.pow(node.y - otherNode.y, 2)
+          );
+          if (distance < 200 && node.connections.length < 3) {
+            node.connections.push(j);
+          }
+        }
+      });
+    });
+
+    // Data packets flowing through network
+    interface DataPacket {
+      from: number;
+      to: number;
+      progress: number;
+      active: boolean;
+    }
+
+    const packets: DataPacket[] = [];
+    
+    // Initialize some data packets
+    for (let i = 0; i < 5; i++) {
+      const fromNode = Math.floor(Math.random() * nodeCount);
+      const toNode = nodes[fromNode].connections[Math.floor(Math.random() * nodes[fromNode].connections.length)];
+      if (toNode !== undefined) {
+        packets.push({
+          from: fromNode,
+          to: toNode,
+          progress: 0,
+          active: true
+        });
+      }
     }
 
     const animate = () => {
       // Clear canvas completely
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw neural network connections
+      ctx.strokeStyle = 'rgba(255, 110, 199, 0.03)';
+      ctx.lineWidth = 1;
+      
+      nodes.forEach((node, i) => {
+        node.connections.forEach(connectionIndex => {
+          const connectedNode = nodes[connectionIndex];
+          ctx.beginPath();
+          ctx.moveTo(node.x, node.y);
+          ctx.lineTo(connectedNode.x, connectedNode.y);
+          ctx.stroke();
+        });
+      });
+
+      // Draw neural network nodes
+      nodes.forEach(node => {
+        ctx.fillStyle = 'rgba(255, 110, 199, 0.05)';
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = 'rgba(255, 110, 199, 0.1)';
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Animate data packets
+      packets.forEach((packet, index) => {
+        if (packet.active) {
+          const fromNode = nodes[packet.from];
+          const toNode = nodes[packet.to];
+          
+          packet.progress += 0.02;
+          
+          if (packet.progress >= 1) {
+            // Reset packet to new connection
+            packet.from = packet.to;
+            const connections = nodes[packet.from].connections;
+            if (connections.length > 0) {
+              packet.to = connections[Math.floor(Math.random() * connections.length)];
+              packet.progress = 0;
+            } else {
+              packet.active = false;
+            }
+          }
+          
+          // Draw packet
+          const x = fromNode.x + (toNode.x - fromNode.x) * packet.progress;
+          const y = fromNode.y + (toNode.y - fromNode.y) * packet.progress;
+          
+          ctx.fillStyle = 'rgba(255, 110, 199, 0.3)';
+          ctx.beginPath();
+          ctx.arc(x, y, 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
 
       // Draw very subtle connection lines between tiers
       ctx.strokeStyle = 'rgba(255, 110, 199, 0.05)';
@@ -177,23 +273,6 @@ const PricingAnimation: React.FC = () => {
       
       ctx.restore();
 
-      // Update and draw very subtle dots
-      dots.forEach(dot => {
-        dot.y -= dot.speed;
-        
-        if (dot.y < -10) {
-          dot.y = canvas.height + 10;
-          dot.x = Math.random() * canvas.width;
-        }
-        
-        ctx.save();
-        ctx.globalAlpha = dot.opacity;
-        ctx.fillStyle = '#FFB6C1';
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
 
       requestAnimationFrame(animate);
     };
