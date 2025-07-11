@@ -743,7 +743,6 @@ export default function HomePage() {
                     </div>
                   </div>
                   <h3>Natural Language Processing</h3>
-                  <p>Understands context, sentiment, and intent in real-time conversations</p>
                 </div>
               </div>
               
@@ -758,7 +757,6 @@ export default function HomePage() {
                     </div>
                   </div>
                   <h3>Human-Like Voice AI</h3>
-                  <p>Natural conversations that build trust and rapport with prospects</p>
                 </div>
               </div>
               
@@ -774,7 +772,6 @@ export default function HomePage() {
                     <TrendingUp className="w-8 h-8 learning-icon" />
                   </div>
                   <h3>Continuous Learning</h3>
-                  <p>Gets smarter with every interaction, improving conversion rates over time</p>
                 </div>
               </div>
             </div>

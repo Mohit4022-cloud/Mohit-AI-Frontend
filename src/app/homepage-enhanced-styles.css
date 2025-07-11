@@ -1761,6 +1761,10 @@
   position: relative;
   z-index: 1;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
 
 /* AI Brain Animation */
@@ -1875,6 +1879,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--accent-pink-subtle);
+  border-radius: 50%;
 }
 
 .wave-bars {
@@ -1911,6 +1917,11 @@
   height: 120px;
   margin: 0 auto 32px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-pink-subtle);
+  border-radius: 50%;
 }
 
 .data-flow {
@@ -1947,11 +1958,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--accent-pink);
-  background: var(--accent-pink-subtle);
-  padding: 20px;
-  border-radius: 24px;
-  border: 2px solid rgba(255, 110, 199, 0.2);
-  box-shadow: 0 8px 32px rgba(255, 110, 199, 0.2);
   z-index: 2;
 }
 
@@ -1959,13 +1965,7 @@
   font-size: 24px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 12px;
-}
-
-.showcase-card p {
-  font-size: 16px;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  margin-bottom: 0;
 }
 
 /* Success Metrics Dashboard Section */
