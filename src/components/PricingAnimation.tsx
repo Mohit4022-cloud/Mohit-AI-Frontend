@@ -255,14 +255,13 @@ const PricingAnimation: React.FC = () => {
         ctx.textBaseline = 'middle';
         ctx.fillText(tier.label, x - 25, tier.y);
 
-        // Animated price value
-        const priceOffset = Math.sin(frame * 0.03 + index) * 2;
+        // Price value (no floating)
         ctx.fillStyle = tier.highlighted ? '#FF6EC7' : '#1A1A1A';
         ctx.font = tier.highlighted ? 
           'bold 26px -apple-system, BlinkMacSystemFont, sans-serif' : 
           '22px -apple-system, BlinkMacSystemFont, sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText(tier.value, x + 25, tier.y + priceOffset);
+        ctx.fillText(tier.value, x + 25, tier.y);
 
         // Per month label
         ctx.fillStyle = '#9CA3AF';
