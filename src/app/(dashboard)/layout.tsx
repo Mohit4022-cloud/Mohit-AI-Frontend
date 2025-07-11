@@ -6,6 +6,8 @@ import { useAuthStore } from "@/stores/authStore";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import { Header } from "@/components/layouts/Header";
 import { ThemeProvider } from "@/hooks/useTheme";
+import NotificationProvider from "@/components/UI/NotificationSystem";
+import { PageTransition } from "@/components/UI/PageTransition";
 import "@/styles/globals.css";
 
 export default function DashboardLayout({
@@ -28,11 +30,17 @@ export default function DashboardLayout({
 
   return (
     <ThemeProvider defaultTheme="dark">
-      <div className="quantum-dashboard-layout">
-        <Sidebar />
-        <div className="dashboard-main-content">
-          <Header />
-          <main className="dashboard-page-content animate-fadeIn">{children}</main>
+      <NotificationProvider>
+        <div className="quantum-dashboard-layout">
+          <Sidebar />
+          <div className="dashboard-main-content">
+            <Header />
+            <main className="dashboard-page-content">
+              <PageTransition type="slide" duration={0.3}>
+                {children}
+              </PageTransition>
+            </main>
+          </div>
         </div>
       
       <style jsx>{`
@@ -63,7 +71,8 @@ export default function DashboardLayout({
           background: var(--dashboard-bg);
         }
       `}</style>
-      </div>
+        </div>
+      </NotificationProvider>
     </ThemeProvider>
   );
 }
