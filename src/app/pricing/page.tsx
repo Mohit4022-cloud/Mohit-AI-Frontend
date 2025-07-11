@@ -109,9 +109,6 @@ export default function PricingPage() {
         {/* Pricing Hero Section */}
         <section className="hero-section pricing-hero">
           <div className="hero-container">
-            <div className="pricing-animation-container">
-              <PricingAnimation />
-            </div>
             <div className="pricing-hero-content">
               <div className="section-badge">
                 <Sparkles className="w-4 h-4" />
@@ -124,6 +121,9 @@ export default function PricingPage() {
               </h1>
               
               
+            </div>
+            <div className="pricing-animation-container">
+              <PricingAnimation />
             </div>
           </div>
         </section>
