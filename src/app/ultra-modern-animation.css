@@ -1,7 +1,7 @@
 /* Animation Section */
 .animation-section {
   padding: 60px 0 140px 0;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%);
+  background: #000000;
   position: relative;
   overflow: hidden;
 }
