@@ -125,11 +125,6 @@ export default function PricingPage() {
                 <span className="text-pink">With Your Growth</span>
               </h1>
               
-              <p className="hero-description">
-                Start with just $75/month. No setup fees, no hidden costs.
-                Upgrade, downgrade, or cancel anytime. See why 500+ teams
-                trust Mohit AI to accelerate their sales.
-              </p>
               
             </div>
           </div>
