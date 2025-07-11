@@ -5,6 +5,7 @@ import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CompactThemeSwitcher } from "@/components/UI/ThemeSwitcher";
 
 export function Header() {
   const router = useRouter();
@@ -34,6 +35,9 @@ export function Header() {
 
       {/* Right Section */}
       <div className="header-right">
+        {/* Theme Switcher */}
+        <CompactThemeSwitcher />
+        
         {/* Notifications */}
         <motion.button 
           className="header-button notifications"

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/authStore";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import { Header } from "@/components/layouts/Header";
+import { ThemeProvider } from "@/hooks/useTheme";
 import "@/styles/globals.css";
 
 export default function DashboardLayout({
@@ -26,12 +27,13 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="quantum-dashboard-layout">
-      <Sidebar />
-      <div className="dashboard-main-content">
-        <Header />
-        <main className="dashboard-page-content animate-fadeIn">{children}</main>
-      </div>
+    <ThemeProvider defaultTheme="dark">
+      <div className="quantum-dashboard-layout">
+        <Sidebar />
+        <div className="dashboard-main-content">
+          <Header />
+          <main className="dashboard-page-content animate-fadeIn">{children}</main>
+        </div>
       
       <style jsx>{`
         .quantum-dashboard-layout {
@@ -61,6 +63,7 @@ export default function DashboardLayout({
           background: var(--dashboard-bg);
         }
       `}</style>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
