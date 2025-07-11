@@ -3,8 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNotification } from '@/hooks/useNotification';
-import QuantumButton from '@/components/UI/QuantumButton';
-import QuantumCard from '@/components/UI/QuantumCard';
+import QuantumButton from '@/components/ui/QuantumButton';
+import QuantumCard from '@/components/ui/QuantumCard';
 import { 
   CheckCircle, 
   AlertCircle, 

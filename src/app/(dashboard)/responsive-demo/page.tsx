@@ -9,9 +9,9 @@ import {
   DeviceRender,
   ResponsiveText,
   ResponsiveSpacer
-} from '@/components/UI/ResponsiveContainer';
-import QuantumCard from '@/components/UI/QuantumCard';
-import QuantumButton from '@/components/UI/QuantumButton';
+} from '@/components/ui/ResponsiveContainer';
+import QuantumCard from '@/components/ui/QuantumCard';
+import QuantumButton from '@/components/ui/QuantumButton';
 import { useBreakpoint, useDeviceType, useViewport, useOrientation } from '@/utils/responsive';
 import { Monitor, Tablet, Smartphone, Maximize2 } from 'lucide-react';
 import { animations } from '@/utils/animations';
