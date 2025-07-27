@@ -95,9 +95,9 @@ export default function HomePage() {
             
             {/* Mobile Actions */}
             <div className="navbar-actions">
-              <Link href="/dashboard" className="btn btn-outline" onClick={() => setMobileMenuOpen(false)}>
+              <a href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline" onClick={() => setMobileMenuOpen(false)}>
                 Check out the platform
-              </Link>
+              </a>
               <Link href="/register" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
                 Get Started
               </Link>
@@ -105,9 +105,9 @@ export default function HomePage() {
           </div>
 
           <div className="navbar-actions desktop-only">
-            <Link href="/dashboard" className="btn btn-outline">
+            <a href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
               Check out the platform
-            </Link>
+            </a>
             <Link href="/register" className="btn btn-primary">
               Get Started
             </Link>
