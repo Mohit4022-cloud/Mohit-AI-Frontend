@@ -33,6 +33,12 @@ import "./navbar-logo-styles.css";
 import "./mobile-responsive-2f33578.css";
 import "./body-background-fix.css";
 import "./ai-flow-vercel-fix.css";
+import "./product-page-styles.css";
+import "./resources-page-styles.css";
+import "./security-page-styles.css";
+import "./feature-text-fix.css";
+import "./styles-phase5.css";
+import "./styles.css";
 import { Footer } from "@/components/footer";
 
 const inter = Inter({
@@ -130,6 +136,7 @@ export default function RootLayout({
         </div>
         {children}
         <Footer />
+        <script src="/premium-interactions.js" defer></script>
       </body>
     </html>
   );
