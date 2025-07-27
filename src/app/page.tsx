@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { CounterAnimation } from "@/components/CounterAnimation";
 import { useState } from "react";
-import AIFlowAnimation from "@/components/AIFlowAnimation";
 import {
   ArrowRight,
   Phone,
@@ -45,6 +44,10 @@ export default function HomePage() {
   
   return (
     <>
+      {/* Skip to content for accessibility */}
+      <a href="#main" className="skip-to-content">
+        Skip to content
+      </a>
 
       {/* Fixed Navigation */}
       <nav className="navbar-fixed">
@@ -235,8 +238,87 @@ export default function HomePage() {
           </div>
         </section>
         
-        {/* AI Flow Animation */}
-        <AIFlowAnimation />
+        {/* Ultra Modern AI Animation Section */}
+        <section className="animation-section">
+          {/* Background particles */}
+          <div className="background-particles">
+            {[...Array(20)].map((_, i) => (
+              <div key={i} className={`bg-particle bg-particle-${i + 1}`}></div>
+            ))}
+          </div>
+          
+          <div className="animation-container">
+            <div className="ultra-modern-animation">
+              <div className="neural-network">
+                {/* Central AI Core */}
+                <div className="ai-core-3d">
+                  <div className="core-inner">
+                    <Sparkles className="bot-icon" />
+                  </div>
+                  <div className="core-outer"></div>
+                  <div className="core-particles">
+                    {[...Array(12)].map((_, i) => (
+                      <div key={i} className={`particle particle-${i + 1}`}></div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Orbiting Channels */}
+                <div className="orbit-container">
+                  <div className="orbit-path">
+                    <div className="channel-orb orb-1">
+                      <Phone className="w-5 h-5" />
+                      <div className="orb-trail"></div>
+                    </div>
+                    <div className="channel-orb orb-2">
+                      <MessageCircle className="w-5 h-5" />
+                      <div className="orb-trail"></div>
+                    </div>
+                    <div className="channel-orb orb-3">
+                      <Mail className="w-5 h-5" />
+                      <div className="orb-trail"></div>
+                    </div>
+                    <div className="channel-orb orb-4">
+                      <Smartphone className="w-5 h-5" />
+                      <div className="orb-trail"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Data Streams */}
+                <div className="data-streams">
+                  {[...Array(8)].map((_, i) => (
+                    <div key={i} className={`stream stream-${i + 1}`}>
+                      <div className="stream-particle"></div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Holographic Grid */}
+                <div className="holo-grid">
+                  <div className="grid-line horizontal"></div>
+                  <div className="grid-line vertical"></div>
+                </div>
+              </div>
+              
+              {/* Floating Stats */}
+              <div className="floating-stats">
+                <div className="stat stat-1">
+                  <span className="stat-value">47s</span>
+                  <span className="stat-label">Response</span>
+                </div>
+                <div className="stat stat-2">
+                  <span className="stat-value">24/7</span>
+                  <span className="stat-label">Active</span>
+                </div>
+                <div className="stat stat-3">
+                  <span className="stat-value">4</span>
+                  <span className="stat-label">Channels</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         
         {/* How It Works Section */}
         <section className="how-it-works-section">
@@ -739,6 +821,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <h3>Natural Language Processing</h3>
+                  <p>Understands context, sentiment, and intent in real-time conversations</p>
                 </div>
               </div>
               
@@ -751,8 +834,10 @@ export default function HomePage() {
                         <div key={i} className={`bar bar-${i + 1}`}></div>
                       ))}
                     </div>
+                    <Phone className="w-8 h-8 voice-icon" />
                   </div>
                   <h3>Human-Like Voice AI</h3>
+                  <p>Natural conversations that build trust and rapport with prospects</p>
                 </div>
               </div>
               
@@ -768,6 +853,7 @@ export default function HomePage() {
                     <TrendingUp className="w-8 h-8 learning-icon" />
                   </div>
                   <h3>Continuous Learning</h3>
+                  <p>Gets smarter with every interaction, improving conversion rates over time</p>
                 </div>
               </div>
             </div>
@@ -887,7 +973,7 @@ export default function HomePage() {
                   <div className="metric-value">
                     <CounterAnimation target={47} suffix="s" />
                   </div>
-                  <div className="metric-change positive">
+                  <div className="metric-change">
                     <Clock className="w-4 h-4" />
                     <span>24/7 availability</span>
                   </div>
@@ -913,9 +999,13 @@ export default function HomePage() {
           <div className="stats-container">
             <div className="cta-container">
               <div className="cta-content">
-                <h2 className="cta-heading" style={{color: 'var(--text-primary)'}}>
+                <h2 className="cta-heading">
                   Never Miss Another Lead
                 </h2>
+                <p className="cta-description">
+                  Join 500+ teams responding to every lead in under 60 seconds. 
+                  Start your free trial and see results today.
+                </p>
               </div>
               
               <div className="cta-buttons">

@@ -2,11 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import modern background system for internal pages */
-@import './modern-background.css';
-@import './modern-cards.css';
+/* Typography colors for external pages */
 @import './typography-colors.css';
-@import './platform-optimizations.css';
 
 /* Import animation styles */
 @import './ultra-modern-animation.css';

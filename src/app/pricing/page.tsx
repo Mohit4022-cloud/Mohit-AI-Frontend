@@ -22,7 +22,6 @@ import {
   Building,
 } from "lucide-react";
 import { useState } from "react";
-import PricingAnimation from "@/components/PricingAnimation";
 
 export default function PricingPage() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">("monthly");
@@ -45,6 +44,10 @@ export default function PricingPage() {
 
   return (
     <>
+      {/* Skip to content for accessibility */}
+      <a href="#main" className="skip-to-content">
+        Skip to content
+      </a>
 
       {/* Fixed Navigation - Reused from product page */}
       <nav className="navbar-fixed">
@@ -120,19 +123,13 @@ export default function PricingPage() {
                 <span className="text-pink">With Your Growth</span>
               </h1>
               
+              <p className="hero-description">
+                Start with just $75/month. No setup fees, no hidden costs.
+                Upgrade, downgrade, or cancel anytime. See why 500+ teams
+                trust Mohit AI to accelerate their sales.
+              </p>
               
-            </div>
-            <div className="pricing-animation-container">
-              <PricingAnimation />
-            </div>
-          </div>
-        </section>
-
-        {/* Pricing Cards Section */}
-        <section className="pricing-section">
-          <div className="pricing-container">
-            {/* Billing Toggle */}
-            <div className="billing-toggle-wrapper">
+              {/* Billing Toggle */}
               <div className="billing-toggle-container">
                 <button
                   className={`billing-option ${billingPeriod === "monthly" ? "active" : ""}`}
@@ -158,7 +155,12 @@ export default function PricingPage() {
                 </button>
               </div>
             </div>
-            
+          </div>
+        </section>
+
+        {/* Pricing Cards Section */}
+        <section className="pricing-section">
+          <div className="pricing-container">
             <div className="pricing-grid">
               {/* Starter Plan */}
               <div className="pricing-card">
@@ -188,7 +190,7 @@ export default function PricingPage() {
                 </div>
                 
                 <div className="pricing-features">
-                  <h4 className="features-heading">Includes:</h4>
+                  <h4 className="features-heading">Everything you need to start:</h4>
                   <ul className="features-list">
                     <li>
                       <Check className="w-5 h-5 text-pink" />
@@ -341,7 +343,7 @@ export default function PricingPage() {
                 </div>
                 
                 <div className="pricing-features">
-                  <h4 className="features-heading">Everything in Pro, plus:</h4>
+                  <h4 className="features-heading">Everything in Professional, plus:</h4>
                   <ul className="features-list">
                     <li>
                       <Check className="w-5 h-5 text-pink" />
@@ -399,10 +401,11 @@ export default function PricingPage() {
                   <Building className="h-12 w-12 text-pink" />
                 </div>
                 <h2 className="enterprise-heading">
-                  Enterprise
+                  Need More Than 2,000 Conversations?
                 </h2>
                 <p className="enterprise-description">
-                  Custom pricing for high-volume teams.
+                  Get custom pricing, unlimited seats, dedicated infrastructure,
+                  and enterprise-grade security for your high-volume sales operations.
                 </p>
                 <div className="enterprise-features">
                   <div className="enterprise-feature">

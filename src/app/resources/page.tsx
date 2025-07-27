@@ -363,11 +363,9 @@ export default function ResourcesPage() {
               </span>
               <Sparkles className="w-5 h-5 text-pink-500" />
             </div>
-            <h1 className="text-6xl md:text-7xl font-extrabold mb-6 leading-tight">
+            <h1 className="text-6xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
+              Resources to Master{" "}
               <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-                Resources to Master
-              </span>{" "}
-              <span className="text-gray-900">
                 Inbound Lead Response
               </span>
             </h1>

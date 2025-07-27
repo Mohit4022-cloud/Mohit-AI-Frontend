@@ -1,520 +1,437 @@
 "use client";
 
 import Link from "next/link";
+import { PublicLayout } from "@/components/layouts/PublicLayout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Check, Shield, Users, Zap, BarChart } from "lucide-react";
 import { useState } from "react";
-import {
-  ArrowRight,
-  Shield,
-  Users,
-  Globe,
-  Building2,
-  Lock,
-  ChevronDown,
-  CheckCircle2,
-  Award,
-  Zap,
-  HeadphonesIcon,
-  BarChart3,
-  FileText,
-  Download,
-  Play,
-  ShieldCheck,
-  Key,
-  Cloud,
-  Cpu,
-  Database,
-  GitBranch,
-  Layers,
-  Server,
-  TrendingUp,
-  UserCheck,
-  Briefcase,
-  Phone,
-  Mail,
-  MapPin,
-  BadgeCheck,
-  FileCheck,
-  Scale,
-  Clock,
-  Activity,
-  AlertTriangle,
-  CheckSquare,
-  XCircle,
-  Brain,
-} from "lucide-react";
 
 export default function EnterprisePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Enterprise contact form submitted:", formData);
+    alert(
+      "Thank you for your interest! Our enterprise team will contact you shortly.",
+    );
+    setFormData({ name: "", email: "", company: "", phone: "", message: "" });
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
-    <>
-
-      {/* Fixed Navigation */}
-      <nav className="navbar-fixed">
-        <div className="navbar-container">
-          <Link href="/" className="navbar-brand">
-            Mohit AI
-          </Link>
-
-          <div className={`navbar-menu ${mobileMenuOpen ? 'active' : ''}`}>
-            <Link href="/product" className="navbar-link" onClick={() => setMobileMenuOpen(false)}>
-              Product
-            </Link>
-            <Link href="/pricing" className="navbar-link" onClick={() => setMobileMenuOpen(false)}>
-              Pricing
-            </Link>
-
-            {/* Solutions Dropdown */}
-            <div className="navbar-dropdown">
-              <button className="navbar-dropdown-toggle">
-                Solutions
-                <ChevronDown className="w-4 h-4" />
-              </button>
-              <div className="navbar-dropdown-menu">
-                <Link href="/solutions" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
-                  By Industry
-                </Link>
-                <Link href="/solutions/for-sdrs" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
-                  For SDRs
-                </Link>
-                <Link href="/solutions/for-managers" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
-                  For Managers
-                </Link>
-                <Link href="/solutions/enterprise" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
-                  Enterprise
-                </Link>
-                <Link href="/solutions/small-business" className="navbar-dropdown-item" onClick={() => setMobileMenuOpen(false)}>
-                  Small Business
-                </Link>
-              </div>
-            </div>
-
-            <Link href="/resources" className="navbar-link" onClick={() => setMobileMenuOpen(false)}>
-              Resources
-            </Link>
-            <Link href="/security" className="navbar-link" onClick={() => setMobileMenuOpen(false)}>
-              Security
-            </Link>
-            
-            {/* Mobile Actions */}
-            <div className="navbar-actions">
-              <Link href="#contact" className="btn btn-outline" onClick={() => setMobileMenuOpen(false)}>
-                Contact Sales
-              </Link>
-              <Link href="/demo" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
-                Request Demo
-              </Link>
-            </div>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="navbar-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </nav>
-
-      <main id="main">
-        {/* Hero Section */}
-        <section className="enterprise-hero">
-          <div className="enterprise-hero-bg">
-            <div className="mesh-background">
-              <div className="mesh-circle mesh-circle-1"></div>
-              <div className="mesh-circle mesh-circle-2"></div>
-              <div className="mesh-circle mesh-circle-3"></div>
-            </div>
-          </div>
-          <div className="enterprise-container">
-            <div className="enterprise-hero-content">
-              <div className="enterprise-badge">
-                <Building2 className="w-4 h-4" />
-                <span>Enterprise Solution</span>
-              </div>
-              <h1 className="enterprise-heading">
-                Enterprise-Grade AI SDR Platform
-                <span className="enterprise-heading-accent">
-                  Trusted by Industry Leaders
-                </span>
-              </h1>
-              <p className="enterprise-description">
-                Deploy AI-powered sales at scale with the security, compliance, and reliability that 
-                Fortune 500 companies demand. White-glove support and custom implementations for 
-                organizations with 500+ employees.
-              </p>
-              <div className="enterprise-hero-stats">
-                <div className="enterprise-stat">
-                  <div className="stat-value">99.99%</div>
-                  <div className="stat-label">Uptime SLA</div>
-                </div>
-                <div className="enterprise-stat">
-                  <div className="stat-value">SOC 2</div>
-                  <div className="stat-label">Type II Certified</div>
-                </div>
-                <div className="enterprise-stat">
-                  <div className="stat-value">24/7</div>
-                  <div className="stat-label">Priority Support</div>
-                </div>
-                <div className="enterprise-stat">
-                  <div className="stat-value">100M+</div>
-                  <div className="stat-label">Leads Processed</div>
-                </div>
-              </div>
-              <div className="enterprise-hero-actions">
-                <Link href="#contact" className="enterprise-btn-primary">
-                  <Phone className="w-5 h-5" />
-                  <span>Talk to Sales</span>
-                </Link>
-                <Link href="#demo" className="enterprise-btn-secondary">
-                  <Play className="w-5 h-5" />
-                  <span>Watch Demo</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Trust Logos Section */}
-        <section className="enterprise-trust">
-          <div className="enterprise-container">
-            <p className="trust-intro">Trusted by leading enterprises worldwide</p>
-            <div className="trust-logos">
-              <div className="trust-logo">
-                <Building2 className="w-8 h-8" />
-                <span>Fortune 500</span>
-              </div>
-              <div className="trust-logo">
-                <Building2 className="w-8 h-8" />
-                <span>Global Bank</span>
-              </div>
-              <div className="trust-logo">
-                <Building2 className="w-8 h-8" />
-                <span>Tech Giant</span>
-              </div>
-              <div className="trust-logo">
-                <Building2 className="w-8 h-8" />
-                <span>Healthcare Leader</span>
-              </div>
-              <div className="trust-logo">
-                <Building2 className="w-8 h-8" />
-                <span>Retail Corp</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="enterprise-features">
-          <div className="enterprise-container">
-            <h2 className="enterprise-section-heading">
-              Enterprise Features That Scale
-              <span className="heading-underline"></span>
-            </h2>
-            <p className="enterprise-section-description">
-              Built from the ground up for enterprise needs with advanced capabilities, 
-              security, and customization options.
+    <PublicLayout>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-5xl font-bold text-white leading-tight mb-8">
+              Enterprise-Grade AI Sales Platform
+            </h1>
+            <p className="text-xl text-gray-300 mb-12">
+              Scale your sales operations with the security, compliance, and
+              support that enterprise organizations demand.
             </p>
-
-            <div className="features-grid">
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <Users className="w-6 h-6" />
-                </div>
-                <h3>Dedicated Success Team</h3>
-                <p>
-                  Your own Customer Success Manager and technical team to ensure 
-                  smooth deployment and ongoing optimization.
-                </p>
-                <ul className="feature-list">
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Weekly strategy sessions
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Custom training programs
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    24/7 priority support
-                  </li>
-                </ul>
+            <div className="flex gap-4 justify-center">
+              <Link href="#contact">
+                <Button className="bg-gradient-to-r from-purple-300 to-purple-500 text-white hover:from-purple-400 hover:to-purple-600">
+                  Contact Sales
+                </Button>
+              </Link>
+              <Link href="/demo">
+                <Button
+                  variant="outline"
+                  className="border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white"
+                >
+                  Request Demo
+                </Button>
+              </Link>
+            </div>
+            <div className="mt-12 flex flex-wrap justify-center gap-8 text-gray-400">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5" />
+                <span>SOC 2 Type II</span>
               </div>
-
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <Brain className="w-6 h-6" />
-                </div>
-                <h3>Custom AI Training</h3>
-                <p>
-                  Train our AI on your specific sales methodology, brand voice, and 
-                  unique business requirements.
-                </p>
-                <ul className="feature-list">
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Industry-specific models
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Custom objection handling
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Proprietary integrations
-                  </li>
-                </ul>
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5" />
+                <span>GDPR Compliant</span>
               </div>
-
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <Shield className="w-6 h-6" />
-                </div>
-                <h3>Advanced Security</h3>
-                <p>
-                  Bank-level security with comprehensive compliance certifications 
-                  and advanced access controls.
-                </p>
-                <ul className="feature-list">
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    SOC 2 Type II certified
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    GDPR & CCPA compliant
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Enterprise SSO/SAML
-                  </li>
-                </ul>
-              </div>
-
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <TrendingUp className="w-6 h-6" />
-                </div>
-                <h3>Unlimited Scale</h3>
-                <p>
-                  No limits on users, leads, or conversations. Scale your sales 
-                  operations without constraints.
-                </p>
-                <ul className="feature-list">
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Unlimited team seats
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    10M+ daily conversations
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Global infrastructure
-                  </li>
-                </ul>
-              </div>
-
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <GitBranch className="w-6 h-6" />
-                </div>
-                <h3>API & Integrations</h3>
-                <p>
-                  Deep integrations with your existing tech stack and full API 
-                  access for custom workflows.
-                </p>
-                <ul className="feature-list">
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    REST & GraphQL APIs
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Webhook events
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Custom connectors
-                  </li>
-                </ul>
-              </div>
-
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <Globe className="w-6 h-6" />
-                </div>
-                <h3>Global Deployment</h3>
-                <p>
-                  Deploy across multiple regions with data residency options and 
-                  local compliance support.
-                </p>
-                <ul className="feature-list">
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Multi-region hosting
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    Data sovereignty
-                  </li>
-                  <li>
-                    <CheckCircle2 className="w-4 h-4" />
-                    &lt;45ms global latency
-                  </li>
-                </ul>
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5" />
+                <span>99.9% SLA</span>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Security Section */}
-        <section className="enterprise-security">
-          <div className="enterprise-container">
-            <div className="security-grid">
-              <div className="security-content">
-                <h2 className="enterprise-section-heading">
-                  Bank-Level Security & Compliance
-                  <span className="heading-underline"></span>
-                </h2>
-                <p className="security-intro">
-                  Meet the strictest security requirements with our comprehensive 
-                  compliance framework and enterprise-grade infrastructure.
-                </p>
-                
-                <div className="compliance-badges">
-                  <div className="compliance-badge">
-                    <ShieldCheck className="w-8 h-8" />
-                    <div>
-                      <h4>SOC 2 Type II</h4>
-                      <p>Annual audits</p>
-                    </div>
-                  </div>
-                  <div className="compliance-badge">
-                    <FileCheck className="w-8 h-8" />
-                    <div>
-                      <h4>ISO 27001</h4>
-                      <p>Certified</p>
-                    </div>
-                  </div>
-                  <div className="compliance-badge">
-                    <Scale className="w-8 h-8" />
-                    <div>
-                      <h4>GDPR & CCPA</h4>
-                      <p>Compliant</p>
-                    </div>
-                  </div>
-                  <div className="compliance-badge">
-                    <BadgeCheck className="w-8 h-8" />
-                    <div>
-                      <h4>HIPAA Ready</h4>
-                      <p>Available</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="security-features">
-                  <h3>Advanced Security Features</h3>
-                  <div className="feature-grid">
-                    <div className="security-feature">
-                      <Lock className="w-5 h-5" />
-                      <span>256-bit AES encryption at rest</span>
-                    </div>
-                    <div className="security-feature">
-                      <Shield className="w-5 h-5" />
-                      <span>TLS 1.3 encryption in transit</span>
-                    </div>
-                    <div className="security-feature">
-                      <Key className="w-5 h-5" />
-                      <span>Enterprise SSO (SAML, OIDC)</span>
-                    </div>
-                    <div className="security-feature">
-                      <UserCheck className="w-5 h-5" />
-                      <span>Role-based access control</span>
-                    </div>
-                    <div className="security-feature">
-                      <AlertTriangle className="w-5 h-5" />
-                      <span>Real-time threat monitoring</span>
-                    </div>
-                    <div className="security-feature">
-                      <FileText className="w-5 h-5" />
-                      <span>Comprehensive audit logs</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="security-visual">
-                <div className="security-diagram">
-                  <div className="diagram-layer">
-                    <Shield className="w-6 h-6" />
-                    <span>Application Layer Security</span>
-                  </div>
-                  <div className="diagram-layer">
-                    <Server className="w-6 h-6" />
-                    <span>Infrastructure Protection</span>
-                  </div>
-                  <div className="diagram-layer">
-                    <Database className="w-6 h-6" />
-                    <span>Data Encryption</span>
-                  </div>
-                  <div className="diagram-layer">
-                    <Cloud className="w-6 h-6" />
-                    <span>Network Security</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* Enterprise Features */}
+      <section className="py-20 bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-4xl font-bold text-white mb-6">
+              Built for Enterprise Scale
+            </h2>
+            <p className="text-xl text-gray-300">
+              Everything you need to deploy AI-powered sales at scale
+            </p>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="enterprise-cta" id="contact">
-          <div className="enterprise-container">
-            <div className="cta-content">
-              <h2 className="cta-heading">
-                Scale Your Sales with Enterprise AI
-              </h2>
-              <p className="cta-description">
-                Join Fortune 500 companies and industry leaders who trust Mohit AI to power their sales operations. 
-                Experience the difference of enterprise-grade AI with white-glove support.
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">
+                Enterprise Security
+              </h3>
+              <p className="text-gray-300">
+                Bank-level encryption, SSO, role-based access control, and
+                comprehensive audit logs.
               </p>
-              
-              <div className="cta-stats">
-                <div className="cta-stat">
-                  <div className="cta-stat-value">500+</div>
-                  <div className="cta-stat-label">Enterprise Clients</div>
-                </div>
-                <div className="cta-stat">
-                  <div className="cta-stat-value">3.2x</div>
-                  <div className="cta-stat-label">Average ROI</div>
-                </div>
-                <div className="cta-stat">
-                  <div className="cta-stat-value">45%</div>
-                  <div className="cta-stat-label">Lead Conversion Increase</div>
-                </div>
+            </div>
+            <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
+                <Users className="w-6 h-6 text-white" />
               </div>
-              
-              <div className="cta-actions">
-                <Link href="#contact-form" className="enterprise-btn-primary">
-                  <Phone className="w-5 h-5" />
-                  Get Your Custom Demo
-                </Link>
-                <Link href="/security" className="enterprise-btn-secondary">
-                  <Shield className="w-5 h-5" />
-                  Download Security Whitepaper
-                </Link>
+              <h3 className="text-xl font-bold text-white mb-4">
+                Dedicated Support
+              </h3>
+              <p className="text-gray-300">
+                24/7 priority support, dedicated success manager, and custom
+                onboarding.
+              </p>
+            </div>
+            <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
+                <Zap className="w-6 h-6 text-white" />
               </div>
+              <h3 className="text-xl font-bold text-white mb-4">
+                Custom Integrations
+              </h3>
+              <p className="text-gray-300">
+                Seamless integration with your existing CRM, sales tools, and
+                data warehouse.
+              </p>
+            </div>
+            <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 hover:shadow-xl transition-all duration-300">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
+                <BarChart className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">
+                Advanced Analytics
+              </h3>
+              <p className="text-gray-300">
+                Custom dashboards, unlimited data retention, and API access for
+                deep insights.
+              </p>
             </div>
           </div>
-        </section>
-      </main>
-    </>
+        </div>
+      </section>
+
+      {/* Compliance Section */}
+      <section className="py-20 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl font-bold text-white mb-8">
+                Compliance & Security First
+              </h2>
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
+                    <Check className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">
+                      SOC 2 Type II Certified
+                    </h3>
+                    <p className="text-gray-300">
+                      Annual third-party audits ensure the highest security
+                      standards
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
+                    <Check className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">
+                      GDPR & CCPA Compliant
+                    </h3>
+                    <p className="text-gray-300">
+                      Full compliance with global data privacy regulations
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
+                    <Check className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">
+                      Enterprise SSO
+                    </h3>
+                    <p className="text-gray-300">
+                      Support for SAML, OIDC, and major identity providers
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
+                    <Check className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">
+                      Data Residency Options
+                    </h3>
+                    <p className="text-gray-300">
+                      Choose where your data is stored with multi-region
+                      deployment
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700">
+              <h3 className="text-2xl font-bold text-white mb-6">
+                Enterprise Security Features
+              </h3>
+              <ul className="space-y-4">
+                <li className="flex items-center space-x-3 text-gray-300">
+                  <Check className="w-5 h-5 text-purple-400" />
+                  <span>256-bit AES encryption at rest</span>
+                </li>
+                <li className="flex items-center space-x-3 text-gray-300">
+                  <Check className="w-5 h-5 text-purple-400" />
+                  <span>TLS 1.3 encryption in transit</span>
+                </li>
+                <li className="flex items-center space-x-3 text-gray-300">
+                  <Check className="w-5 h-5 text-purple-400" />
+                  <span>Regular penetration testing</span>
+                </li>
+                <li className="flex items-center space-x-3 text-gray-300">
+                  <Check className="w-5 h-5 text-purple-400" />
+                  <span>Real-time threat monitoring</span>
+                </li>
+                <li className="flex items-center space-x-3 text-gray-300">
+                  <Check className="w-5 h-5 text-purple-400" />
+                  <span>Custom data retention policies</span>
+                </li>
+                <li className="flex items-center space-x-3 text-gray-300">
+                  <Check className="w-5 h-5 text-purple-400" />
+                  <span>IP allowlisting</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Support Section */}
+      <section className="py-20 bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-4xl font-bold text-white mb-6">
+              White-Glove Support
+            </h2>
+            <p className="text-xl text-gray-300">
+              Your success is our priority with dedicated support at every step
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700">
+              <h3 className="text-xl font-bold text-white mb-4">
+                Dedicated Success Manager
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Your single point of contact for strategic guidance and best
+                practices.
+              </p>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li>• Weekly check-ins</li>
+                <li>• Quarterly business reviews</li>
+                <li>• Strategic planning sessions</li>
+              </ul>
+            </div>
+            <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700">
+              <h3 className="text-xl font-bold text-white mb-4">
+                24/7 Priority Support
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Get help whenever you need it with guaranteed response times.
+              </p>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li>• 15-minute response SLA</li>
+                <li>• Direct access to engineers</li>
+                <li>• Priority issue resolution</li>
+              </ul>
+            </div>
+            <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700">
+              <h3 className="text-xl font-bold text-white mb-4">
+                Custom Onboarding
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Tailored implementation plan to ensure smooth deployment.
+              </p>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li>• Custom training programs</li>
+                <li>• Data migration assistance</li>
+                <li>• Integration support</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form Section */}
+      <section id="contact" className="py-20 bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-6">
+              Let&apos;s Talk About Your Needs
+            </h2>
+            <p className="text-xl text-gray-300">
+              Get in touch with our enterprise team to discuss custom pricing
+              and implementation
+            </p>
+          </div>
+          <div className="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-700">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="name" className="text-gray-200">
+                    Full name
+                  </Label>
+                  <Input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="mt-1 bg-gray-700 border-gray-600 text-white"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email" className="text-gray-200">
+                    Work email
+                  </Label>
+                  <Input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="mt-1 bg-gray-700 border-gray-600 text-white"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="company" className="text-gray-200">
+                    Company name
+                  </Label>
+                  <Input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="mt-1 bg-gray-700 border-gray-600 text-white"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phone" className="text-gray-200">
+                    Phone number
+                  </Label>
+                  <Input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="mt-1 bg-gray-700 border-gray-600 text-white"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="message" className="text-gray-200">
+                  Tell us about your requirements
+                </Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="mt-1 bg-gray-700 border-gray-600 text-white"
+                  placeholder="Number of users, current tech stack, specific requirements..."
+                  required
+                />
+              </div>
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-purple-300 to-purple-500 text-white hover:from-purple-400 hover:to-purple-600"
+              >
+                Contact Enterprise Sales
+              </Button>
+              <p className="text-xs text-gray-400 text-center">
+                We&apos;ll respond within 1 business day
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-purple-300 to-purple-500 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-bold mb-6">
+            Ready to Scale Your Sales with AI?
+          </h2>
+          <p className="text-xl text-white/90 mb-12">
+            Join Fortune 500 companies using Mohit AI to transform their sales
+            operations
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link href="#contact">
+              <Button
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white hover:text-purple-600 transition-all duration-200"
+              >
+                Contact Sales
+              </Button>
+            </Link>
+            <Link href="/demo">
+              <Button className="bg-gray-900 text-white hover:bg-gray-800 transition-all duration-200">
+                Request Demo
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </PublicLayout>
   );
 }
