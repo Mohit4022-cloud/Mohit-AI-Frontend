@@ -179,10 +179,6 @@ export default function SolutionsPage() {
 
   return (
     <>
-      {/* Skip to content for accessibility */}
-      <a href="#main" className="skip-to-content">
-        Skip to content
-      </a>
 
       {/* Fixed Navigation - Reused from other pages */}
       <nav className="navbar-fixed">

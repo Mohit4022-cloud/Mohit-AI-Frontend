@@ -31,11 +31,16 @@ import "./ultra-animation.css";
 import "./sales-ai-animation.css";
 import "./minimal-stats.css";
 import "./footer-styles.css";
+import "./internal-platform.css";
 import "./landing-animations.css";
 import "./navbar-logo-styles.css";
 import "./mobile-responsive-2f33578.css";
 import "./body-background-fix.css";
 import "./ai-flow-vercel-fix.css";
+import { Providers } from "@/components/providers";
+import { ErrorBoundary } from "@/components/error-boundary";
+import { config } from "@/lib/config";
+import { GrammarlySuppressor } from "@/components/grammarly-suppressor";
 import { Footer } from "@/components/footer";
 
 const inter = Inter({
@@ -57,28 +62,28 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Mohit AI - Never Miss Another Inbound Lead",
-    template: "%s | Mohit AI",
+    default: `${config.app.name} - Never Miss Another Inbound Lead`,
+    template: `%s | ${config.app.name}`,
   },
-  description: "AI-powered sales platform that responds to every lead in under 60 seconds. Works across voice, chat, email, and SMS.",
-  keywords: ["AI sales", "lead response", "sales automation", "AI SDR", "voice AI", "sales AI"],
-  authors: [{ name: "Mohit AI" }],
-  creator: "Mohit AI",
-  publisher: "Mohit AI",
+  description: config.app.description,
+  keywords: config.app.keywords,
+  authors: [{ name: config.app.name }],
+  creator: config.app.name,
+  publisher: config.app.name,
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://mohit-ai.com"),
+  metadataBase: new URL(config.app.url),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Mohit AI - Never Miss Another Inbound Lead",
-    description: "AI-powered sales platform that responds to every lead in under 60 seconds. Works across voice, chat, email, and SMS.",
-    url: "https://mohit-ai.com",
-    siteName: "Mohit AI",
+    title: `${config.app.name} - Never Miss Another Inbound Lead`,
+    description: config.app.description,
+    url: config.app.url,
+    siteName: config.app.name,
     locale: "en_US",
     type: "website",
     images: [
@@ -86,14 +91,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Mohit AI",
+        alt: config.app.name,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohit AI - Never Miss Another Inbound Lead",
-    description: "AI-powered sales platform that responds to every lead in under 60 seconds. Works across voice, chat, email, and SMS.",
+    title: `${config.app.name} - Never Miss Another Inbound Lead`,
+    description: config.app.description,
     images: ["/twitter-image.png"],
   },
   robots: {
@@ -124,16 +129,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="dns-prefetch" href={config.api.baseUrl} />
+        <link rel="preconnect" href={config.api.baseUrl} />
+        {/* Remove or update CSP to allow localhost connections */}
+        <meta 
+          httpEquiv="Content-Security-Policy" 
+          content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' http://localhost:3002 ws://localhost:3002 wss://api.elevenlabs.io https://api.elevenlabs.io; media-src 'self' blob:; worker-src 'self' blob:;"
+        />
+      </head>
       <body className={inter.className}>
         <div className="mesh-background">
           <div className="mesh-circle mesh-circle-1"></div>
           <div className="mesh-circle mesh-circle-2"></div>
           <div className="mesh-circle mesh-circle-3"></div>
         </div>
-        {children}
-        <Footer />
-        <script src="/premium-interactions.js" defer></script>
+        <ErrorBoundary>
+          <Providers>
+            <GrammarlySuppressor />
+            {children}
+            <Footer />
+          </Providers>
+        </ErrorBoundary>
       </body>
     </html>
   );
