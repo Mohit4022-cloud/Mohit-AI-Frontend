@@ -1,0 +1,224 @@
+/* Override all gradients with solid pink color #FF6EC7 */
+/* IMPORTANT: This file must be loaded last to override all gradients */
+
+/* Root variable overrides */
+:root {
+  --gradient-primary: #FF6EC7 !important;
+  --gradient-pink: #FF6EC7 !important;
+  --gradient-chart-pink: #FF6EC7 !important;
+  --gradient-purple: #FF6EC7 !important;
+  --gradient-accent: #FF6EC7 !important;
+}
+
+/* Override gradient classes */
+.bg-gradient-primary,
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-b,
+.bg-gradient-to-bl,
+.bg-gradient-to-l,
+.bg-gradient-to-tl,
+.bg-gradient-to-t,
+.bg-gradient-to-tr {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override gradient text */
+.gradient-text,
+.text-gradient {
+  background: #FF6EC7 !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override specific gradient patterns */
+[class*="from-purple"],
+[class*="from-pink"],
+[class*="from-blue"],
+[class*="from-indigo"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+[class*="to-purple"],
+[class*="to-pink"],
+[class*="to-blue"],
+[class*="to-indigo"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override inline gradient styles */
+[style*="linear-gradient"],
+[style*="radial-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Button gradient overrides */
+.btn-primary,
+.btn-secondary,
+.button-gradient,
+button[class*="gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.button-gradient:hover,
+button[class*="gradient"]:hover {
+  background: #FF5EB7 !important; /* Slightly darker pink on hover */
+  background-image: none !important;
+}
+
+/* Card and section gradient overrides */
+.gradient-card,
+.gradient-section,
+.gradient-background,
+[class*="gradient-bg"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Icon and decorative gradient overrides */
+.gradient-icon,
+.gradient-decoration,
+[class*="gradient-border"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+  border-color: #FF6EC7 !important;
+}
+
+/* Specific component overrides */
+.hero-gradient,
+.feature-gradient,
+.cta-gradient,
+.stats-gradient {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Animation gradient overrides */
+.gradient-animation,
+.animated-gradient {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+  animation: none !important;
+}
+
+/* Pseudo-element gradient overrides */
+*::before,
+*::after {
+  background-image: none !important;
+}
+
+[class*="gradient"]::before,
+[class*="gradient"]::after {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Ensure text remains visible */
+.text-white {
+  color: white !important;
+}
+
+.text-black {
+  color: black !important;
+}
+
+/* Override gradient fills in SVGs */
+linearGradient,
+radialGradient {
+  display: none !important;
+}
+
+stop {
+  stop-color: #FF6EC7 !important;
+}
+
+/* Force pink color for elements that might use gradients */
+.bg-purple-300,
+.bg-purple-400,
+.bg-purple-500,
+.bg-purple-600 {
+  background-color: #FF6EC7 !important;
+}
+
+.text-purple-300,
+.text-purple-400,
+.text-purple-500,
+.text-purple-600 {
+  color: #FF6EC7 !important;
+}
+
+/* Override hover states */
+[class*="hover:from-"],
+[class*="hover:to-"] {
+  background: #FF5EB7 !important;
+  background-image: none !important;
+}
+
+/* Override focus states */
+[class*="focus:from-"],
+[class*="focus:to-"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Ensure all gradient variables are overridden */
+* {
+  --tw-gradient-from: #FF6EC7 !important;
+  --tw-gradient-to: #FF6EC7 !important;
+  --tw-gradient-stops: #FF6EC7, #FF6EC7 !important;
+}
+
+/* Override specific CSS gradients found in the codebase */
+.solution-card-technology,
+.solution-card-retail,
+.solution-card-healthcare,
+.solution-card-finance,
+.solution-card-education {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+.premium-card,
+.card-gradient,
+.gradient-border,
+.gradient-surface {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override newsletter and CTA sections */
+.newsletter-section {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override any element with gradient in style attribute */
+[style*="gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Force override for specific problem areas */
+.bg-gradient-primary {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Text gradients should show as solid pink */
+.gradient-text,
+.text-gradient,
+[class*="text-transparent"] {
+  background: transparent !important;
+  background-image: none !important;
+  color: #FF6EC7 !important;
+  -webkit-text-fill-color: #FF6EC7 !important;
+}

@@ -364,7 +364,7 @@ export default function ResourcesPage() {
               <Sparkles className="w-5 h-5 text-pink-500" />
             </div>
             <h1 className="text-6xl md:text-7xl font-extrabold mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-clip-text text-transparent" style={{color: '#FF6EC7'}}>
                 Resources to Master
               </span>{" "}
               <span className="text-gray-900">
@@ -557,7 +557,7 @@ export default function ResourcesPage() {
           <div className="tools-grid">
             <div className="tool-card">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#FF6EC7'}}>
                   <Calculator className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">ROI Calculator</h3>
@@ -573,7 +573,7 @@ export default function ResourcesPage() {
 
             <div className="tool-card">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#FF6EC7'}}>
                   <TrendingUp className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Response Time Analyzer</h3>
@@ -589,7 +589,7 @@ export default function ResourcesPage() {
 
             <div className="tool-card">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#FF6EC7'}}>
                   <Users className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Team Size Calculator</h3>
@@ -623,7 +623,7 @@ export default function ResourcesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-8 rounded-2xl border border-pink-100">
+            <div className="p-8 rounded-2xl border border-pink-100" style={{backgroundColor: '#FFF0F7'}}>
               <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-6 shadow-lg">
                 <Zap className="w-8 h-8 text-pink-500" />
               </div>
@@ -633,13 +633,13 @@ export default function ResourcesPage() {
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500">4 lessons • 2 hours</span>
-                <Button className="bg-gradient-to-r from-pink-500 to-purple-600 text-white">
+                <Button className="text-white" style={{backgroundColor: '#FF6EC7'}}>
                   Start Course
                 </Button>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-2xl border border-purple-100">
+            <div className="p-8 rounded-2xl border border-pink-100" style={{backgroundColor: '#FFF0F7'}}>
               <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-6 shadow-lg">
                 <TrendingUp className="w-8 h-8 text-purple-500" />
               </div>
@@ -649,13 +649,13 @@ export default function ResourcesPage() {
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500">6 lessons • 3 hours</span>
-                <Button className="bg-gradient-to-r from-purple-500 to-pink-600 text-white">
+                <Button className="text-white" style={{backgroundColor: '#FF6EC7'}}>
                   Start Course
                 </Button>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-8 rounded-2xl border border-pink-100">
+            <div className="p-8 rounded-2xl border border-pink-100" style={{backgroundColor: '#FFF0F7'}}>
               <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-6 shadow-lg">
                 <Star className="w-8 h-8 text-pink-500" />
               </div>
@@ -665,7 +665,7 @@ export default function ResourcesPage() {
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500">8 lessons • 4 hours</span>
-                <Button className="bg-gradient-to-r from-pink-500 to-purple-600 text-white">
+                <Button className="text-white" style={{backgroundColor: '#FF6EC7'}}>
                   Start Course
                 </Button>
               </div>
@@ -719,7 +719,8 @@ export default function ResourcesPage() {
               />
               <Button
                 type="submit"
-                className="bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:shadow-lg hover:shadow-pink-500/25 transition-all duration-300"
+                className="text-white hover:shadow-lg hover:shadow-pink-500/25 transition-all duration-300"
+                style={{backgroundColor: '#FF6EC7'}}
               >
                 Subscribe
               </Button>
@@ -732,7 +733,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-pink-500 to-purple-600 text-white">
+      <section className="py-20 text-white" style={{backgroundColor: '#FF6EC7'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Ready to Never Miss Another Lead?

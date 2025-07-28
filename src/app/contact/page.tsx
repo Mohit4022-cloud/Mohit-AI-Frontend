@@ -114,7 +114,8 @@ export default function ContactPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-purple-300 to-purple-500 text-white font-medium hover:from-purple-400 hover:to-purple-600"
+                  className="w-full text-white font-medium"
+                  style={{backgroundColor: '#FF6EC7'}}
                 >
                   Send Message
                 </Button>
