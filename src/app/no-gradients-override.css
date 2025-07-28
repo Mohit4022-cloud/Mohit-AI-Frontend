@@ -1,13 +1,23 @@
 /* Override all gradients with solid pink color #FF6EC7 */
 /* IMPORTANT: This file must be loaded last to override all gradients */
 
-/* Root variable overrides */
+/* Root variable overrides - More comprehensive */
 :root {
   --gradient-primary: #FF6EC7 !important;
   --gradient-pink: #FF6EC7 !important;
   --gradient-chart-pink: #FF6EC7 !important;
   --gradient-purple: #FF6EC7 !important;
   --gradient-accent: #FF6EC7 !important;
+  --gradient-light: #FF6EC7 !important;
+  --gradient-mesh: #FF6EC7 !important;
+  --gradient-dark: #FF6EC7 !important;
+  --gradient-aurora: #FF6EC7 !important;
+  --gradient-success: #FF6EC7 !important;
+  --gradient-warning: #FF6EC7 !important;
+  --gradient-info: #FF6EC7 !important;
+  --gradient-chart-purple: #FF6EC7 !important;
+  --gradient-chart-blue: #FF6EC7 !important;
+  --gradient-chart-green: #FF6EC7 !important;
 }
 
 /* Override gradient classes */
@@ -207,6 +217,22 @@ stop {
   background-image: none !important;
 }
 
+/* More specific inline style overrides */
+[style*="linear-gradient"],
+[style*="radial-gradient"],
+[style*="conic-gradient"],
+[style*="repeating-linear-gradient"],
+[style*="repeating-radial-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override elements using CSS variables for gradients */
+[style*="var(--gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
 /* Force override for specific problem areas */
 .bg-gradient-primary {
   background: #FF6EC7 !important;
@@ -221,4 +247,120 @@ stop {
   background-image: none !important;
   color: #FF6EC7 !important;
   -webkit-text-fill-color: #FF6EC7 !important;
+}
+
+/* Specific hero section overrides */
+.hero-section {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+.hero-section::before,
+.hero-section::after {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+  display: none !important;
+}
+
+.hero-mesh,
+.float-shape,
+.float-shape-1,
+.float-shape-2,
+.float-shape-3 {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+  display: none !important;
+}
+
+/* Override hero text gradients */
+.hero-heading .text-pink,
+.hero-heading span[class*="gradient"],
+.text-pink {
+  background: transparent !important;
+  background-image: none !important;
+  color: #FF6EC7 !important;
+  -webkit-text-fill-color: #FF6EC7 !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+/* Override mesh backgrounds */
+.mesh-background,
+.mesh-circle,
+[class*="mesh-circle"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+  display: none !important;
+}
+
+/* Override all background images that might contain gradients */
+*[style*="background"][style*="gradient"],
+*[style*="backgroundImage"][style*="gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Force override for problematic areas with higher specificity */
+body * {
+  --gradient-primary: #FF6EC7 !important;
+  --gradient-pink: #FF6EC7 !important;
+  --gradient-light: #FF6EC7 !important;
+  --gradient-mesh: #FF6EC7 !important;
+  --gradient-dark: #FF6EC7 !important;
+  --gradient-aurora: #FF6EC7 !important;
+}
+
+/* Override animation gradient elements */
+@keyframes meshMove {
+  0%, 100% { transform: none; }
+}
+
+@keyframes float {
+  0%, 100% { transform: none; }
+}
+
+/* Disable gradient animations */
+.gradient-animation,
+.animated-gradient,
+[class*="gradient"][class*="animation"] {
+  animation: none !important;
+}
+
+/* Override stat card gradients */
+.stat-card::before {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override specific page hero sections */
+#main .hero-section,
+main .hero-section,
+.hero-section.hero-section {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override radial gradients in decorative elements */
+*[style*="radial-gradient"][style*="rgba(255, 110, 199"] {
+  display: none !important;
+}
+
+/* Ensure solid backgrounds for common gradient containers */
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-b,
+.bg-gradient-to-bl,
+.bg-gradient-to-l,
+.bg-gradient-to-tl,
+.bg-gradient-to-t,
+.bg-gradient-to-tr,
+[class*="bg-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Force pink background on body if gradient is applied */
+body[style*="gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
 }

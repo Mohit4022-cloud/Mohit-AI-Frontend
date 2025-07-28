@@ -935,7 +935,7 @@ export default function ForSDRsPage() {
       <style jsx>{`
         /* SDR Page Specific Styles */
         .sdr-hero {
-          background: linear-gradient(135deg, #FAFBFC 0%, #FFFFFF 100%);
+          background: #FF6EC7;
           position: relative;
           overflow: hidden;
         }
@@ -947,7 +947,7 @@ export default function ForSDRsPage() {
           right: -20%;
           width: 800px;
           height: 800px;
-          background: radial-gradient(circle, rgba(255, 110, 199, 0.08) 0%, transparent 70%);
+          background: #FF6EC7;
           animation: float 20s ease-in-out infinite;
         }
 
@@ -1066,7 +1066,7 @@ export default function ForSDRsPage() {
 
         .progress-fill {
           height: 100%;
-          background: var(--gradient-pink);
+          background: #FF6EC7;
           border-radius: 100px;
           max-width: 100%;
         }
@@ -1158,7 +1158,7 @@ export default function ForSDRsPage() {
         }
 
         .day-tab.active {
-          background: var(--gradient-pink);
+          background: #FF6EC7;
           border-color: transparent;
           color: white;
         }
@@ -1330,7 +1330,7 @@ export default function ForSDRsPage() {
           left: 0;
           width: 40px;
           height: 40px;
-          background: var(--gradient-pink);
+          background: #FF6EC7;
           color: white;
           border-radius: 50%;
           display: flex;
@@ -1754,14 +1754,14 @@ export default function ForSDRsPage() {
           line-height: 1.1;
           margin-bottom: 60px;
           text-align: center;
-          background: linear-gradient(135deg, var(--text-primary) 0%, #6B7280 100%);
+          background: #FF6EC7;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
 
         .sdr-faq .faq-heading .text-pink {
-          background: var(--gradient-pink);
+          background: #FF6EC7;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -1799,7 +1799,7 @@ export default function ForSDRsPage() {
 
         /* CTA Section */
         .sdr-cta {
-          background: linear-gradient(135deg, #FAFBFC 0%, #FFFFFF 100%);
+          background: #FF6EC7;
           padding: 120px 0;
           position: relative;
           overflow: hidden;
@@ -1812,7 +1812,7 @@ export default function ForSDRsPage() {
           right: -10%;
           width: 600px;
           height: 600px;
-          background: radial-gradient(circle, rgba(255, 110, 199, 0.08) 0%, transparent 70%);
+          background: #FF6EC7;
           border-radius: 50%;
         }
 
@@ -1829,7 +1829,7 @@ export default function ForSDRsPage() {
           font-weight: 800;
           line-height: 1;
           margin-bottom: 24px;
-          background: linear-gradient(135deg, #1F2937 0%, #FF6EC7 100%);
+          background: #FF6EC7;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;

@@ -1,0 +1,152 @@
+/* FORCE NO GRADIENTS - Override homepage-enhanced-styles.css and all other gradients */
+
+/* Override hero section gradient from homepage-enhanced-styles.css */
+.hero-section {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Remove the radial gradient pseudo-element */
+.hero-section::before {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+.hero-section::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Override with maximum specificity */
+body .hero-section,
+main .hero-section,
+#main .hero-section,
+section.hero-section,
+.hero-section.hero-section.hero-section {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Remove all decorative gradient elements */
+.hero-mesh,
+.mesh-circle,
+.float-shape,
+.float-shape-1,
+.float-shape-2,
+.float-shape-3,
+[class*="mesh"],
+[class*="float"] {
+  display: none !important;
+}
+
+/* Override any inline styles */
+[style*="linear-gradient"],
+[style*="radial-gradient"],
+[style*="conic-gradient"],
+[style*="repeating-linear-gradient"],
+[style*="repeating-radial-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Force all sections to have solid backgrounds */
+section {
+  background-image: none !important;
+}
+
+/* Override gradient variables */
+* {
+  --gradient-primary: #FF6EC7 !important;
+  --gradient-secondary: #FF6EC7 !important;
+  --gradient-accent: #FF6EC7 !important;
+  --gradient-pink: #FF6EC7 !important;
+}
+
+/* Remove animations that might restore gradients */
+* {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Target specific gradient patterns in homepage */
+.hero-section[style*="background"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override gradient text */
+.text-pink,
+.gradient-text,
+[class*="gradient-text"],
+[class*="text-transparent"] {
+  background: transparent !important;
+  background-image: none !important;
+  color: #FF6EC7 !important;
+  -webkit-text-fill-color: #FF6EC7 !important;
+}
+
+/* Ensure buttons don't have gradients */
+.btn,
+button,
+[role="button"],
+.hero-buttons .btn,
+.hero-buttons button {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+.btn-outline,
+.btn-secondary {
+  background: transparent !important;
+  background-image: none !important;
+  border-color: #FF6EC7 !important;
+  color: #FF6EC7 !important;
+}
+
+/* Override homepage-enhanced-styles.css specifically */
+.hero-section {
+  background: #FF6EC7 !important;
+  /* Override the linear-gradient(180deg, #FAFBFC 0%, #FFFFFF 100%) */
+  background-image: none !important;
+}
+
+/* Target the radial gradient decoration */
+.hero-section::before {
+  /* Override the radial-gradient(circle, rgba(255, 110, 199, 0.05) 0%, transparent 70%) */
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Force override with !important on every property */
+.hero-section,
+.hero-section * {
+  background-image: none !important;
+}
+
+/* Override at the root level */
+:root .hero-section {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Use attribute selector for maximum specificity */
+[class~="hero-section"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override with ID selector if it exists */
+#hero,
+#hero-section {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}

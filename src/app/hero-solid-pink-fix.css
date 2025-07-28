@@ -1,0 +1,132 @@
+/* Specific fix for hero sections to ensure solid pink background */
+
+/* Target main hero section with high specificity */
+#main .hero-section,
+main .hero-section,
+body .hero-section,
+.hero-section {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+  position: relative !important;
+}
+
+/* Remove all pseudo elements that might have gradients */
+.hero-section::before,
+.hero-section::after,
+#main .hero-section::before,
+#main .hero-section::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Target containers within hero */
+.hero-section .hero-container,
+.hero-section .hero-content,
+.hero-section .hero-grid {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+/* Remove decorative elements */
+.hero-section .hero-mesh,
+.hero-section .float-shape,
+.hero-section [class*="float-shape"],
+.hero-section [class*="mesh"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Ensure demo form has solid background */
+.hero-section .demo-form-card {
+  background: white !important;
+  background-image: none !important;
+}
+
+/* Fix text gradients in hero */
+.hero-section .text-pink,
+.hero-section .gradient-text,
+.hero-section [class*="gradient-text"],
+.hero-heading .text-pink {
+  background: transparent !important;
+  background-image: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  color: #FF6EC7 !important;
+  -webkit-text-fill-color: #FF6EC7 !important;
+}
+
+/* Target specific page hero sections */
+.managers-hero,
+.sdrs-hero,
+.pricing-hero,
+.resources-hero,
+.security-hero,
+.enterprise-hero,
+.solution-hero {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Remove background from body mesh elements */
+body > .mesh-background,
+body .mesh-circle {
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Override any remaining gradient variables in hero context */
+.hero-section * {
+  --gradient-primary: #FF6EC7 !important;
+  --gradient-pink: #FF6EC7 !important;
+  --gradient-light: #FF6EC7 !important;
+  --gradient-mesh: #FF6EC7 !important;
+}
+
+/* Ensure buttons in hero don't have gradients */
+.hero-section .btn,
+.hero-section button,
+.hero-section a[class*="btn"] {
+  background-image: none !important;
+}
+
+.hero-section .btn-primary,
+.hero-section .btn-secondary {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+.hero-section .btn-outline {
+  background: transparent !important;
+  background-image: none !important;
+  border-color: #FF6EC7 !important;
+  color: #FF6EC7 !important;
+}
+
+/* Override any inline styles in hero */
+.hero-section [style*="background"][style*="gradient"],
+.hero-section [style*="linear-gradient"],
+.hero-section [style*="radial-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Ensure readability with solid background */
+.hero-section .hero-heading,
+.hero-section .hero-description {
+  position: relative;
+  z-index: 1;
+}
+
+/* Add white background to content areas for readability */
+.hero-section .hero-content {
+  background: rgba(255, 255, 255, 0.95) !important;
+  padding: 40px !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+}

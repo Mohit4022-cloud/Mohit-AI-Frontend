@@ -72,6 +72,9 @@ import "./ai-flow-vercel-fix.css";
 import "./main-consolidated.css";
 import "./styles-phase5.css";
 import "./no-gradients-override.css";
+import "./force-solid-pink.css";
+import "./hero-solid-pink-fix.css";
+import "./force-no-gradients.css";
 import { Footer } from "@/components/footer";
 
 const inter = Inter({
@@ -160,7 +163,57 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: `
+          /* CRITICAL: Force all gradients to solid pink */
+          :root, *, *::before, *::after {
+            --gradient-primary: #FF6EC7 !important;
+            --gradient-pink: #FF6EC7 !important;
+            --gradient-light: #FF6EC7 !important;
+            --gradient-mesh: #FF6EC7 !important;
+            --gradient-dark: #FF6EC7 !important;
+            --gradient-aurora: #FF6EC7 !important;
+            --gradient-success: #FF6EC7 !important;
+            --gradient-warning: #FF6EC7 !important;
+            --gradient-info: #FF6EC7 !important;
+            --gradient-chart-pink: #FF6EC7 !important;
+            --gradient-chart-purple: #FF6EC7 !important;
+            --gradient-chart-blue: #FF6EC7 !important;
+            --gradient-chart-green: #FF6EC7 !important;
+          }
+          
+          /* Force hero sections to solid pink - Override homepage-enhanced-styles.css */
+          .hero-section, .managers-hero, .sdrs-hero {
+            background: #FF6EC7 !important;
+            background-color: #FF6EC7 !important;
+            background-image: none !important;
+          }
+          
+          /* Remove hero gradient pseudo-elements */
+          .hero-section::before,
+          .hero-section::after,
+          .managers-hero::before,
+          .managers-hero::after,
+          .sdrs-hero::before,
+          .sdrs-hero::after {
+            display: none !important;
+            content: none !important;
+            background: none !important;
+            background-image: none !important;
+          }
+          
+          /* Remove all gradient backgrounds */
+          *[style*="gradient"] {
+            background: #FF6EC7 !important;
+            background-image: none !important;
+          }
+          
+          /* Hide decorative gradient elements */
+          .mesh-background, .mesh-circle, .hero-mesh, .float-shape {
+            display: none !important;
+          }
+        ` }} />
+      </head>
       <body className={inter.className}>
         <div className="mesh-background">
           <div className="mesh-circle mesh-circle-1"></div>
@@ -170,6 +223,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <script src="/premium-interactions.js" defer></script>
+        <script src="/remove-gradients.js" defer></script>
       </body>
     </html>
   );

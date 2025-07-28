@@ -97,7 +97,7 @@ export default function MohitAILogo({ size = 'medium', className = '' }: MohitAI
 
         .logo-inner {
           position: absolute;
-          background: linear-gradient(135deg, #FF6EC7 0%, #E94B9B 25%, #FF6EC7 50%, #FFB6E1 75%, #FF6EC7 100%);
+          background: #FF6EC7;
           background-size: 300% 300%;
           border-radius: 50%;
           display: flex;
@@ -115,7 +115,7 @@ export default function MohitAILogo({ size = 'medium', className = '' }: MohitAI
           content: '';
           position: absolute;
           inset: -50%;
-          background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          background: transparent;
           animation: energyRotate 2s linear infinite;
         }
 

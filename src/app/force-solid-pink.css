@@ -1,0 +1,213 @@
+/* FORCE ALL GRADIENTS TO SOLID PINK - NUCLEAR OPTION */
+/* This file uses the most aggressive selectors possible */
+
+/* Override ALL CSS variables globally */
+* {
+  --gradient-primary: #FF6EC7 !important;
+  --gradient-pink: #FF6EC7 !important;
+  --gradient-light: #FF6EC7 !important;
+  --gradient-mesh: #FF6EC7 !important;
+  --gradient-dark: #FF6EC7 !important;
+  --gradient-aurora: #FF6EC7 !important;
+  --gradient-success: #FF6EC7 !important;
+  --gradient-warning: #FF6EC7 !important;
+  --gradient-info: #FF6EC7 !important;
+  --gradient-chart-pink: #FF6EC7 !important;
+  --gradient-chart-purple: #FF6EC7 !important;
+  --gradient-chart-blue: #FF6EC7 !important;
+  --gradient-chart-green: #FF6EC7 !important;
+}
+
+/* Target hero sections with maximum specificity */
+html body main section.hero-section,
+html body #main section.hero-section,
+html body .hero-section,
+body .hero-section,
+.hero-section {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override all possible gradient selectors */
+*[class*="gradient"],
+*[class*="Gradient"],
+*[class*="GRADIENT"],
+*[style*="gradient"],
+*[style*="Gradient"],
+*[style*="GRADIENT"] {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Target all elements that might have gradients */
+div, section, header, footer, nav, main, aside, article,
+span, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea,
+ul, ol, li, table, tr, td, th, form, label, select, option {
+  background-image: none !important;
+}
+
+/* Override background shorthand property */
+*[style*="background:"] {
+  background-image: none !important;
+}
+
+/* Target pseudo elements */
+*::before,
+*::after {
+  background-image: none !important;
+}
+
+*::before[style*="gradient"],
+*::after[style*="gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override text gradients with extreme prejudice */
+.text-pink,
+.gradient-text,
+.text-gradient,
+*[class*="text-transparent"],
+*[class*="text-gradient"],
+*[class*="gradient-text"] {
+  background: transparent !important;
+  background-image: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  color: #FF6EC7 !important;
+  -webkit-text-fill-color: #FF6EC7 !important;
+}
+
+/* Target styled-jsx generated styles */
+[id^="__jsx-"] {
+  background-image: none !important;
+}
+
+/* Override inline styles with gradients */
+*[style*="linear-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+*[style*="radial-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+*[style*="conic-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+*[style*="repeating-linear-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+*[style*="repeating-radial-gradient"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override mesh and decorative elements */
+.mesh-background,
+.mesh-circle,
+.hero-mesh,
+.float-shape,
+*[class*="mesh"],
+*[class*="float-shape"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Force solid backgrounds on common containers */
+.hero-container,
+.hero-content,
+.hero-grid,
+.container,
+.wrapper,
+.section,
+.page-content {
+  background-image: none !important;
+}
+
+/* Override animations that might restore gradients */
+@keyframes gradientShift { to { background-position: 0 0; } }
+@keyframes meshMove { to { transform: none; } }
+@keyframes float { to { transform: none; } }
+@keyframes energyRotate { to { transform: none; } }
+
+/* Disable all gradient animations */
+* {
+  animation-name: none !important;
+}
+
+/* Target specific problem areas found in the codebase */
+.managers-hero,
+.sdrs-hero,
+.hero-badge,
+.solution-hero,
+.pricing-hero,
+.resources-hero,
+.security-hero,
+.enterprise-hero {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override chart gradients */
+.recharts-rectangle,
+.recharts-bar,
+.recharts-line,
+.recharts-area {
+  fill: #FF6EC7 !important;
+  stroke: #FF6EC7 !important;
+}
+
+/* Target Next.js specific elements */
+#__next * {
+  background-image: none !important;
+}
+
+/* Use attribute selectors for maximum reach */
+[class*="bg-gradient-to-"],
+[class*="from-"],
+[class*="to-"],
+[class*="via-"] {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Override Tailwind gradient utilities */
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-b,
+.bg-gradient-to-bl,
+.bg-gradient-to-l,
+.bg-gradient-to-tl,
+.bg-gradient-to-t,
+.bg-gradient-to-tr {
+  background: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Final nuclear option - override everything */
+* {
+  background-image: none !important;
+}
+
+/* Keep text readable */
+.text-white,
+h1, h2, h3, h4, h5, h6,
+p, span, a, button {
+  color: inherit;
+}
+
+/* Ensure buttons and interactive elements remain visible */
+button, a, input, select, textarea {
+  position: relative;
+  z-index: 1;
+}

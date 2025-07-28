@@ -844,7 +844,7 @@ export default function ForManagersPage() {
       <style jsx>{`
         /* Manager-specific styles */
         .managers-hero {
-          background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFB 100%);
+          background: #FF6EC7;
           padding: 120px 0 80px;
         }
 
@@ -1193,7 +1193,7 @@ export default function ForManagersPage() {
         }
 
         .roi-column.mohit-ai {
-          background: linear-gradient(135deg, rgba(255, 110, 199, 0.05) 0%, rgba(255, 182, 225, 0.05) 100%);
+          background: #FF6EC7;
           border-color: rgba(255, 110, 199, 0.2);
         }
 
@@ -1279,7 +1279,7 @@ export default function ForManagersPage() {
         }
 
         .savings-highlight {
-          background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+          background: #FF6EC7;
           color: white;
           padding: 24px;
           border-radius: 12px;
@@ -1362,7 +1362,7 @@ export default function ForManagersPage() {
 
         .data-point {
           flex: 1;
-          background: linear-gradient(to top, #FF6EC7, #FFB6E1);
+          background: #FF6EC7;
           border-radius: 8px 8px 0 0;
           position: relative;
           transition: height 0.3s ease;
@@ -1568,7 +1568,7 @@ export default function ForManagersPage() {
         .divider-icon {
           width: 60px;
           height: 60px;
-          background: linear-gradient(135deg, #FF6EC7 0%, #FFB6E1 100%);
+          background: #FF6EC7;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -1614,7 +1614,7 @@ export default function ForManagersPage() {
         .company-logo {
           width: 60px;
           height: 60px;
-          background: linear-gradient(135deg, #FF6EC7 0%, #FFB6E1 100%);
+          background: #FF6EC7;
           border-radius: 12px;
           display: flex;
           align-items: center;
@@ -1698,7 +1698,7 @@ export default function ForManagersPage() {
         .mohit-hub {
           width: 140px;
           height: 140px;
-          background: linear-gradient(135deg, #FF6EC7 0%, #FFB6E1 100%);
+          background: #FF6EC7;
           border-radius: 50%;
           display: flex;
           flex-direction: column;
@@ -1863,7 +1863,7 @@ export default function ForManagersPage() {
 
         /* Executive CTA */
         .executive-cta {
-          background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
+          background: #FF6EC7;
           color: white;
         }
 
