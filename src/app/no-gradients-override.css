@@ -1,16 +1,152 @@
-/* Override all gradients with solid pink color #FF6EC7 */
-/* IMPORTANT: This file must be loaded last to override all gradients */
+/* COMPLETE GRADIENT REMOVAL AND BUTTON VISIBILITY FIX */
+/* This file must be loaded last to override all styles */
 
-/* Root variable overrides */
-:root {
-  --gradient-primary: #FF6EC7 !important;
-  --gradient-pink: #FF6EC7 !important;
-  --gradient-chart-pink: #FF6EC7 !important;
-  --gradient-purple: #FF6EC7 !important;
-  --gradient-accent: #FF6EC7 !important;
+/* ===================================
+   REMOVE ALL GRADIENTS - FORCE SOLID COLORS
+   =================================== */
+
+/* Override ALL elements with gradients */
+*,
+*::before,
+*::after {
+  background-image: none !important;
 }
 
-/* Override gradient classes */
+/* Remove all gradient-related CSS properties */
+* {
+  --tw-gradient-from: transparent !important;
+  --tw-gradient-to: transparent !important;
+  --tw-gradient-stops: transparent !important;
+  --gradient-primary: transparent !important;
+  --gradient-pink: transparent !important;
+  --gradient-chart-pink: transparent !important;
+  --gradient-purple: transparent !important;
+  --gradient-accent: transparent !important;
+}
+
+/* ===================================
+   BUTTON STYLES - SOLID COLORS ONLY
+   =================================== */
+
+/* Primary buttons - Black background, white text */
+.btn-primary,
+button.btn-primary,
+a.btn-primary,
+.ultra-button-accent,
+button[class*="primary"]:not(.btn-outline) {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+.btn-primary:hover,
+button.btn-primary:hover,
+a.btn-primary:hover,
+.ultra-button-accent:hover,
+button[class*="primary"]:not(.btn-outline):hover {
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #1a1a1a !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Outline buttons - White background, black text */
+.btn-outline,
+button.btn-outline,
+a.btn-outline,
+.ultra-button-primary,
+button[class*="outline"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+.btn-outline:hover,
+button.btn-outline:hover,
+a.btn-outline:hover,
+.ultra-button-primary:hover,
+button[class*="outline"]:hover {
+  background: #f5f5f5 !important;
+  background-color: #f5f5f5 !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Secondary buttons - Pink background, white text */
+.btn-secondary,
+button.btn-secondary,
+a.btn-secondary {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #FF6EC7 !important;
+}
+
+.btn-secondary:hover,
+button.btn-secondary:hover,
+a.btn-secondary:hover {
+  background: #FF5EB7 !important;
+  background-color: #FF5EB7 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #FF5EB7 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ===================================
+   NAVBAR SPECIFIC BUTTON FIXES
+   =================================== */
+
+/* Navbar outline button - MUST BE VISIBLE */
+.navbar-actions .btn-outline,
+.navbar-actions a.btn-outline,
+.nav-buttons .btn-outline,
+.nav-buttons a.btn-outline,
+nav .btn-outline,
+nav a.btn-outline {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Navbar primary button */
+.navbar-actions .btn-primary,
+.navbar-actions a.btn-primary,
+.nav-buttons .btn-primary,
+.nav-buttons a.btn-primary,
+nav .btn-primary,
+nav a.btn-primary {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* ===================================
+   REMOVE GRADIENTS FROM ALL ELEMENTS
+   =================================== */
+
+/* Remove gradients from any element with gradient classes */
+[class*="gradient"],
+[class*="from-"],
+[class*="to-"],
+[class*="via-"],
 .bg-gradient-primary,
 .bg-gradient-to-r,
 .bg-gradient-to-br,
@@ -20,229 +156,28 @@
 .bg-gradient-to-tl,
 .bg-gradient-to-t,
 .bg-gradient-to-tr {
-  background: #FF6EC7 !important;
   background-image: none !important;
 }
 
-/* Override gradient text */
-.gradient-text,
-.text-gradient {
-  background: #FF6EC7 !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  color: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Override specific gradient patterns */
-[class*="from-purple"],
-[class*="from-pink"],
-[class*="from-blue"],
-[class*="from-indigo"] {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-[class*="to-purple"],
-[class*="to-pink"],
-[class*="to-blue"],
-[class*="to-indigo"] {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Override inline gradient styles */
-[style*="linear-gradient"],
-[style*="radial-gradient"] {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Button gradient overrides - excluding navbar buttons */
-.btn-secondary,
-.button-gradient,
-button[class*="gradient"] {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-.btn-secondary:hover,
-.button-gradient:hover,
-button[class*="gradient"]:hover {
-  background: #FF5EB7 !important; /* Slightly darker pink on hover */
-  background-image: none !important;
-}
-
-/* Navbar button specific overrides to ensure visibility */
-.navbar-actions .btn-outline,
-.nav-buttons .btn-outline {
-  background: white !important;
-  color: black !important;
-  border: 2px solid black !important;
-}
-
-.navbar-actions .btn-outline:hover,
-.nav-buttons .btn-outline:hover {
-  background: #f5f5f5 !important;
-  color: black !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
-}
-
-.navbar-actions .btn-primary,
-.nav-buttons .btn-primary {
-  background: black !important;
-  color: white !important;
-  border: 2px solid black !important;
-}
-
-.navbar-actions .btn-primary:hover,
-.nav-buttons .btn-primary:hover {
-  background: #1a1a1a !important;
-  color: white !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Card and section gradient overrides */
-.gradient-card,
-.gradient-section,
-.gradient-background,
-[class*="gradient-bg"] {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Icon and decorative gradient overrides */
-.gradient-icon,
-.gradient-decoration,
-[class*="gradient-border"] {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-  border-color: #FF6EC7 !important;
-}
-
-/* Specific component overrides */
+/* Pink sections should use solid pink */
 .hero-gradient,
 .feature-gradient,
 .cta-gradient,
-.stats-gradient {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Animation gradient overrides */
-.gradient-animation,
-.animated-gradient {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-  animation: none !important;
-}
-
-/* Pseudo-element gradient overrides */
-*::before,
-*::after {
-  background-image: none !important;
-}
-
-[class*="gradient"]::before,
-[class*="gradient"]::after {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Ensure text remains visible */
-.text-white {
-  color: white !important;
-}
-
-.text-black {
-  color: black !important;
-}
-
-/* Override gradient fills in SVGs */
-linearGradient,
-radialGradient {
-  display: none !important;
-}
-
-stop {
-  stop-color: #FF6EC7 !important;
-}
-
-/* Force pink color for elements that might use gradients */
-.bg-purple-300,
-.bg-purple-400,
-.bg-purple-500,
-.bg-purple-600 {
-  background-color: #FF6EC7 !important;
-}
-
-.text-purple-300,
-.text-purple-400,
-.text-purple-500,
-.text-purple-600 {
-  color: #FF6EC7 !important;
-}
-
-/* Override hover states */
-[class*="hover:from-"],
-[class*="hover:to-"] {
-  background: #FF5EB7 !important;
-  background-image: none !important;
-}
-
-/* Override focus states */
-[class*="focus:from-"],
-[class*="focus:to-"] {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Ensure all gradient variables are overridden */
-* {
-  --tw-gradient-from: #FF6EC7 !important;
-  --tw-gradient-to: #FF6EC7 !important;
-  --tw-gradient-stops: #FF6EC7, #FF6EC7 !important;
-}
-
-/* Override specific CSS gradients found in the codebase */
-.solution-card-technology,
-.solution-card-retail,
-.solution-card-healthcare,
-.solution-card-finance,
-.solution-card-education {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-.premium-card,
-.card-gradient,
-.gradient-border,
-.gradient-surface {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Override newsletter and CTA sections */
+.stats-gradient,
+.gradient-card,
+.gradient-section,
+.gradient-background,
 .newsletter-section {
   background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
   background-image: none !important;
 }
 
-/* Override any element with gradient in style attribute */
-[style*="gradient"] {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
+/* ===================================
+   TEXT COLOR FIXES
+   =================================== */
 
-/* Force override for specific problem areas */
-.bg-gradient-primary {
-  background: #FF6EC7 !important;
-  background-image: none !important;
-}
-
-/* Text gradients should show as solid pink */
+/* Gradient text should be solid pink */
 .gradient-text,
 .text-gradient,
 [class*="text-transparent"] {
@@ -250,4 +185,121 @@ stop {
   background-image: none !important;
   color: #FF6EC7 !important;
   -webkit-text-fill-color: #FF6EC7 !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+/* ===================================
+   FORM BUTTON FIXES
+   =================================== */
+
+/* Form buttons should follow same pattern */
+form .btn-primary,
+form button[type="submit"]:not(.btn-outline) {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+form .btn-secondary {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #FF6EC7 !important;
+}
+
+/* ===================================
+   OVERRIDE INLINE STYLES
+   =================================== */
+
+/* Remove gradients from inline styles */
+[style*="gradient"] {
+  background-image: none !important;
+}
+
+/* ===================================
+   SVG GRADIENT REMOVAL
+   =================================== */
+
+/* Hide SVG gradients */
+linearGradient,
+radialGradient,
+pattern {
+  display: none !important;
+}
+
+/* SVG elements should use solid colors */
+stop {
+  stop-color: #FF6EC7 !important;
+}
+
+/* ===================================
+   ENSURE VISIBILITY
+   =================================== */
+
+/* Make sure all buttons are visible */
+button,
+.btn,
+[class*="btn-"],
+a[class*="btn"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* ===================================
+   ULTRA BUTTON OVERRIDES
+   =================================== */
+
+.ultra-button {
+  background-image: none !important;
+}
+
+.ultra-button-primary {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+.ultra-button-accent {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+/* ===================================
+   FINAL OVERRIDES - MAXIMUM SPECIFICITY
+   =================================== */
+
+/* Force navbar buttons to be visible with maximum specificity */
+body nav .navbar-actions a.btn-outline,
+body nav .navbar-actions .btn-outline,
+body .navbar-fixed .navbar-actions a.btn-outline,
+body .navbar-fixed .navbar-actions .btn-outline {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline-flex !important;
+}
+
+body nav .navbar-actions a.btn-primary,
+body nav .navbar-actions .btn-primary,
+body .navbar-fixed .navbar-actions a.btn-primary,
+body .navbar-fixed .navbar-actions .btn-primary {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline-flex !important;
 }
