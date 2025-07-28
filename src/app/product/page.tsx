@@ -78,7 +78,7 @@ export default function ProductPage() {
             <Link href="/dashboard" className="btn btn-outline">
               Check out the platform
             </Link>
-            <Link href="/register" className="btn btn-primary">
+            <Link href="https://platform.mohit-ai.com" className="btn btn-primary">
               Get Started
             </Link>
           </div>
@@ -102,11 +102,11 @@ export default function ProductPage() {
               
               
               <div className="hero-buttons">
-                <Link href="/demo" className="btn btn-secondary">
+                <Link href="https://platform.mohit-ai.com" className="btn btn-secondary">
                   <span>See It In Action</span>
                   <Play className="w-5 h-5" />
                 </Link>
-                <Link href="/register" className="btn btn-outline">
+                <Link href="https://platform.mohit-ai.com" className="btn btn-outline">
                   <span>Start Free Trial</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -534,11 +534,11 @@ export default function ProductPage() {
               </div>
               
               <div className="cta-buttons">
-                <Link href="/register" className="btn">
+                <Link href="https://platform.mohit-ai.com" className="btn">
                   <Sparkles className="w-5 h-5" />
                   Start Free Trial
                 </Link>
-                <Link href="/demo" className="btn">
+                <Link href="https://platform.mohit-ai.com" className="btn">
                   Schedule Demo
                 </Link>
               </div>

@@ -98,7 +98,7 @@ export default function PricingPage() {
             <Link href="/dashboard" className="btn btn-outline">
               Check out the platform
             </Link>
-            <Link href="/register" className="btn btn-primary">
+            <Link href="https://platform.mohit-ai.com" className="btn btn-primary">
               Get Started
             </Link>
           </div>
@@ -181,7 +181,7 @@ export default function PricingPage() {
                 </div>
                 
                 <div className="pricing-cta">
-                  <Link href="/register" className="btn btn-outline-primary">
+                  <Link href="https://platform.mohit-ai.com" className="btn btn-outline-primary">
                     <span>Start Free Trial</span>
                     <ArrowRight className="w-5 h-5" />
                   </Link>
@@ -256,7 +256,7 @@ export default function PricingPage() {
                 </div>
                 
                 <div className="pricing-cta">
-                  <Link href="/register" className="btn btn-primary">
+                  <Link href="https://platform.mohit-ai.com" className="btn btn-primary">
                     <span>Start Free Trial</span>
                     <ArrowRight className="w-5 h-5" />
                   </Link>
@@ -334,7 +334,7 @@ export default function PricingPage() {
                 </div>
                 
                 <div className="pricing-cta">
-                  <Link href="/register" className="btn btn-outline-primary">
+                  <Link href="https://platform.mohit-ai.com" className="btn btn-outline-primary">
                     <span>Start Free Trial</span>
                     <ArrowRight className="w-5 h-5" />
                   </Link>
@@ -718,7 +718,7 @@ export default function PricingPage() {
               </div>
               
               <div className="cta-buttons">
-                <Link href="/register" className="btn">
+                <Link href="https://platform.mohit-ai.com" className="btn">
                   <Sparkles className="w-5 h-5" />
                   Get Started Free
                 </Link>

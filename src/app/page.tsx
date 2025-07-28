@@ -98,7 +98,7 @@ export default function HomePage() {
               <a href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline" onClick={() => setMobileMenuOpen(false)}>
                 Check out the platform
               </a>
-              <Link href="/register" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="https://platform.mohit-ai.com" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
                 Get Started
               </Link>
             </div>
@@ -108,7 +108,7 @@ export default function HomePage() {
             <a href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
               Check out the platform
             </a>
-            <Link href="/register" className="btn btn-primary">
+            <Link href="https://platform.mohit-ai.com" className="btn btn-primary">
               Get Started
             </Link>
           </div>
@@ -142,11 +142,11 @@ export default function HomePage() {
               </p>
               
               <div className="hero-buttons">
-                <Link href="/register" className="btn btn-secondary">
+                <Link href="https://platform.mohit-ai.com" className="btn btn-secondary">
                   <span>Start Your Free Trial</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
-                <Link href="/demo" className="btn btn-outline">
+                <Link href="https://platform.mohit-ai.com" className="btn btn-outline">
                   <Play className="w-5 h-5" />
                   <span>Watch Demo</span>
                 </Link>
@@ -919,7 +919,7 @@ export default function HomePage() {
               </div>
               
               <div className="cta-buttons">
-                <Link href="/register" className="btn">
+                <Link href="https://platform.mohit-ai.com" className="btn">
                   <Sparkles className="w-5 h-5" />
                   Start Free Trial
                 </Link>

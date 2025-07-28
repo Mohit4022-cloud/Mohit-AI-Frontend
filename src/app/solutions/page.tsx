@@ -232,7 +232,7 @@ export default function SolutionsPage() {
             <Link href="/dashboard" className="btn btn-outline">
               Check out the platform
             </Link>
-            <Link href="/register" className="btn btn-primary">
+            <Link href="https://platform.mohit-ai.com" className="btn btn-primary">
               Get Started
             </Link>
           </div>
@@ -261,11 +261,11 @@ export default function SolutionsPage() {
               </p>
               
               <div className="hero-buttons">
-                <Link href="/demo" className="btn btn-secondary">
+                <Link href="https://platform.mohit-ai.com" className="btn btn-secondary">
                   <span>See Your Industry Demo</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
-                <Link href="/register" className="btn btn-outline">
+                <Link href="https://platform.mohit-ai.com" className="btn btn-outline">
                   <span>Start Free Trial</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -353,7 +353,7 @@ export default function SolutionsPage() {
                 </div>
                 
                 <div className="industry-cta">
-                  <Link href="/register" className="btn btn-primary">
+                  <Link href="https://platform.mohit-ai.com" className="btn btn-primary">
                     <span>Start Your Free Trial</span>
                     <ArrowRight className="w-5 h-5" />
                   </Link>
@@ -765,11 +765,11 @@ export default function SolutionsPage() {
               </div>
               
               <div className="cta-buttons">
-                <Link href="/register" className="btn">
+                <Link href="https://platform.mohit-ai.com" className="btn">
                   <Sparkles className="w-5 h-5" />
                   Start Free Trial
                 </Link>
-                <Link href="/demo" className="btn">
+                <Link href="https://platform.mohit-ai.com" className="btn">
                   Schedule Demo
                 </Link>
               </div>

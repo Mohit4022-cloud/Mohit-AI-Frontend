@@ -109,7 +109,7 @@ export function PublicNavigation() {
                 </button>
               </Link>
 
-              <Link href="/register">
+              <Link href="https://platform.mohit-ai.com">
                 <button className="ultra-button ultra-button-accent">
                   Get Started
                 </button>
@@ -222,7 +222,7 @@ export function PublicNavigation() {
                   </button>
                 </Link>
 
-                <Link href="/register" className="w-full">
+                <Link href="https://platform.mohit-ai.com" className="w-full">
                   <button className="ultra-button ultra-button-accent w-full">
                     Get Started
                   </button>

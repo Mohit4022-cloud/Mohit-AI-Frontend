@@ -755,14 +755,14 @@ export default function SecurityPage() {
           </p>
           <div className="flex gap-4 justify-center">
             <Link
-              href="/contact"
+              href="https://platform.mohit-ai.com"
               className="btn btn-secondary inline-flex items-center"
             >
               <span>Request Security Docs</span>
               <FileCheck className="w-5 h-5" />
             </Link>
             <Link
-              href="/contact"
+              href="https://platform.mohit-ai.com"
               className="btn btn-outline inline-flex items-center"
             >
               <span>Talk to Security Team</span>
