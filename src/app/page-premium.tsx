@@ -159,7 +159,7 @@ export default function PremiumHomePage() {
                   {[1, 2, 3, 4, 5].map((i) => (
                     <div
                       key={i}
-                      className="w-10 h-10 rounded-full  border-2 border-black" style={{backgroundColor: '#FF6EC7'}}
+                      className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 border-2 border-black"
                     />
                   ))}
                 </div>

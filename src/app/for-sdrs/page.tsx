@@ -46,7 +46,7 @@ export default function ForSDRsPage() {
               </p>
               <div className="flex gap-4 mb-12">
                 <Link href="/signup">
-                  <Button className=" text-white  " style={{backgroundColor: '#FF6EC7'}}>
+                  <Button className="bg-gradient-to-r from-purple-300 to-purple-500 text-white hover:from-purple-400 hover:to-purple-600">
                     Start Free Trial
                   </Button>
                 </Link>
@@ -78,7 +78,7 @@ export default function ForSDRsPage() {
                 </h3>
                 <ul className="space-y-6">
                   <li className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                       <Check className="w-4 h-4" />
                     </div>
                     <div>
@@ -91,7 +91,7 @@ export default function ForSDRsPage() {
                     </div>
                   </li>
                   <li className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                       <Check className="w-4 h-4" />
                     </div>
                     <div>
@@ -104,7 +104,7 @@ export default function ForSDRsPage() {
                     </div>
                   </li>
                   <li className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                       <Check className="w-4 h-4" />
                     </div>
                     <div>
@@ -176,7 +176,7 @@ export default function ForSDRsPage() {
               </h2>
               <div className="space-y-8">
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white font-bold" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white font-bold">
                     1
                   </div>
                   <div>
@@ -190,7 +190,7 @@ export default function ForSDRsPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white font-bold" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white font-bold">
                     2
                   </div>
                   <div>
@@ -204,7 +204,7 @@ export default function ForSDRsPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white font-bold" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white font-bold">
                     3
                   </div>
                   <div>
@@ -278,7 +278,7 @@ export default function ForSDRsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20  text-white" style={{backgroundColor: '#FF6EC7'}}>
+      <section className="py-20 bg-gradient-to-r from-purple-300 to-purple-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Ready to Hit Your Numbers?

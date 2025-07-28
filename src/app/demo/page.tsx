@@ -74,19 +74,19 @@ export default function DemoPage() {
               </p>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 rounded-full bg-pink flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                     <Check className="w-4 h-4" />
                   </div>
                   <p className="text-gray-600">Natural voice AI technology</p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 rounded-full bg-pink flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                     <Check className="w-4 h-4" />
                   </div>
                   <p className="text-gray-600">Real-time objection handling</p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 rounded-full bg-pink flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                     <Check className="w-4 h-4" />
                   </div>
                   <p className="text-gray-600">Automatic meeting scheduling</p>
@@ -164,8 +164,7 @@ export default function DemoPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full text-white"
-                  style={{backgroundColor: '#FF6EC7'}}
+                  className="w-full bg-gradient-to-r from-purple-300 to-purple-500 text-white hover:from-purple-400 hover:to-purple-600"
                 >
                   Schedule Demo
                 </Button>

@@ -50,7 +50,7 @@ export default function SmallBusinessPage() {
             </p>
             <div className="flex gap-4 justify-center mb-12">
               <Link href="/signup">
-                <Button className=" text-white  " style={{backgroundColor: '#FF6EC7'}}>
+                <Button className="bg-gradient-to-r from-purple-300 to-purple-500 text-white hover:from-purple-400 hover:to-purple-600">
                   Start Free Trial
                 </Button>
               </Link>
@@ -83,7 +83,7 @@ export default function SmallBusinessPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-12 h-12 rounded-lg  flex items-center justify-center mb-6" style={{backgroundColor: '#FF6EC7'}}>
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
                 <DollarSign className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-black mb-4">
@@ -95,7 +95,7 @@ export default function SmallBusinessPage() {
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-12 h-12 rounded-lg  flex items-center justify-center mb-6" style={{backgroundColor: '#FF6EC7'}}>
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
                 <Clock className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-black mb-4">Quick Setup</h3>
@@ -105,7 +105,7 @@ export default function SmallBusinessPage() {
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-12 h-12 rounded-lg  flex items-center justify-center mb-6" style={{backgroundColor: '#FF6EC7'}}>
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-black mb-4">
@@ -117,7 +117,7 @@ export default function SmallBusinessPage() {
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-12 h-12 rounded-lg  flex items-center justify-center mb-6" style={{backgroundColor: '#FF6EC7'}}>
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center mb-6">
                 <HeadphonesIcon className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-black mb-4">
@@ -142,7 +142,7 @@ export default function SmallBusinessPage() {
               </h2>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                     <Check className="w-4 h-4" />
                   </div>
                   <div>
@@ -155,7 +155,7 @@ export default function SmallBusinessPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                     <Check className="w-4 h-4" />
                   </div>
                   <div>
@@ -168,7 +168,7 @@ export default function SmallBusinessPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                     <Check className="w-4 h-4" />
                   </div>
                   <div>
@@ -181,7 +181,7 @@ export default function SmallBusinessPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full  flex items-center justify-center text-white" style={{backgroundColor: '#FF6EC7'}}>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-300 to-purple-500 flex items-center justify-center text-white">
                     <Check className="w-4 h-4" />
                   </div>
                   <div>
@@ -288,7 +288,7 @@ export default function SmallBusinessPage() {
                 </li>
               </ul>
               <Link href="/signup" className="block">
-                <Button className="w-full  text-white  " style={{backgroundColor: '#FF6EC7'}}>
+                <Button className="w-full bg-gradient-to-r from-purple-300 to-purple-500 text-white hover:from-purple-400 hover:to-purple-600">
                   Start Free Trial
                 </Button>
               </Link>
@@ -447,7 +447,7 @@ export default function SmallBusinessPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20  text-white" style={{backgroundColor: '#FF6EC7'}}>
+      <section className="py-20 bg-gradient-to-r from-purple-300 to-purple-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Your Competition is Already Using AI

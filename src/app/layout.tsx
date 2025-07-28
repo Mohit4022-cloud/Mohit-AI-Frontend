@@ -71,7 +71,6 @@ import "./body-background-fix.css";
 import "./ai-flow-vercel-fix.css";
 import "./main-consolidated.css";
 import "./styles-phase5.css";
-import "./no-gradients-override.css";
 import { Footer } from "@/components/footer";
 
 const inter = Inter({
