@@ -261,3 +261,75 @@ body .navbar-fixed .navbar-actions a.btn-primary {
   visibility: visible !important;
   display: inline-flex !important;
 }
+
+/* ===================================
+   PRICING PAGE SPECIFIC FIXES
+   =================================== */
+
+/* Fix pricing grid layout */
+.pricing-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 24px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+/* Fix pricing card text display */
+.pricing-card {
+  min-width: 350px !important;
+  white-space: normal !important;
+}
+
+.pricing-card h3,
+.pricing-card h4,
+.pricing-card p,
+.pricing-card span,
+.pricing-card li {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Ensure features heading displays properly */
+.features-heading {
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  white-space: normal !important;
+}
+
+/* Fix pricing features list */
+.features-list {
+  white-space: normal !important;
+}
+
+.features-list li {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  white-space: normal !important;
+}
+
+.features-list li span {
+  flex: 1 !important;
+  white-space: normal !important;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1200px) {
+  .pricing-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .pricing-card {
+    min-width: 100% !important;
+    max-width: 400px !important;
+    margin: 0 auto !important;
+  }
+}
