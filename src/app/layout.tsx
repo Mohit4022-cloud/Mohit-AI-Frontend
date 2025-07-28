@@ -160,7 +160,40 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: `
+          /* CRITICAL: Force hero sections to solid pink */
+          .hero-section,
+          .managers-hero,
+          .sdrs-hero,
+          .sdr-hero {
+            background: #FF6EC7 !important;
+            background-color: #FF6EC7 !important;
+            background-image: none !important;
+          }
+          
+          /* Remove ALL hero gradient decorations */
+          .hero-section::before,
+          .hero-section::after,
+          .managers-hero::before,
+          .managers-hero::after,
+          .sdrs-hero::before,
+          .sdrs-hero::after,
+          .sdr-hero::before,
+          .sdr-hero::after {
+            display: none !important;
+            content: none !important;
+            background: none !important;
+            background-image: none !important;
+          }
+          
+          /* Override any inline gradient styles */
+          [style*="gradient"] {
+            background: #FF6EC7 !important;
+            background-image: none !important;
+          }
+        ` }} />
+      </head>
       <body className={inter.className}>
         <div className="mesh-background">
           <div className="mesh-circle mesh-circle-1"></div>
@@ -170,6 +203,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <script src="/premium-interactions.js" defer></script>
+        <script src="/remove-hero-gradients.js"></script>
       </body>
     </html>
   );

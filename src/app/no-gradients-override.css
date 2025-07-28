@@ -177,6 +177,57 @@ stop {
   --tw-gradient-stops: #FF6EC7, #FF6EC7 !important;
 }
 
+/* HERO SECTION SPECIFIC OVERRIDES */
+/* Override homepage-enhanced-styles.css hero gradient */
+.hero-section {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Remove hero pseudo-element gradient decoration */
+.hero-section::before,
+.hero-section::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Override managers and SDRs hero sections */
+.managers-hero,
+.sdrs-hero,
+.sdr-hero {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
+/* Remove pseudo-elements from all hero types */
+.managers-hero::before,
+.managers-hero::after,
+.sdrs-hero::before,
+.sdrs-hero::after,
+.sdr-hero::before,
+.sdr-hero::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Force override with higher specificity */
+section.hero-section,
+main .hero-section,
+#main .hero-section,
+body .hero-section {
+  background: #FF6EC7 !important;
+  background-color: #FF6EC7 !important;
+  background-image: none !important;
+}
+
 /* Override specific CSS gradients found in the codebase */
 .solution-card-technology,
 .solution-card-retail,
