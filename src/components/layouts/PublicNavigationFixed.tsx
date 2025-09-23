@@ -85,10 +85,10 @@ export function PublicNavigationFixed() {
 
           {/* CTA Buttons */}
           <div className="nav-buttons">
-            <Link href="/dashboard" className="btn btn-primary">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
               Check out the platform
             </Link>
-            <Link href="/register" className="btn btn-accent">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-accent">
               Get Started
             </Link>
           </div>

@@ -109,10 +109,10 @@ export default function ForSDRsPage() {
           </div>
 
           <div className="navbar-actions">
-            <Link href="/dashboard" className="btn btn-outline">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
               Check out the platform
             </Link>
-            <Link href="/register" className="btn btn-primary">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
               Get Started
             </Link>
           </div>
@@ -171,7 +171,7 @@ export default function ForSDRsPage() {
               </div>
               
               <div className="hero-buttons">
-                <Link href="/register" className="btn btn-secondary">
+                <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
                   <span>Start Free Trial</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -792,7 +792,7 @@ export default function ForSDRsPage() {
                 </div>
 
                 <div className="calculator-cta">
-                  <Link href="/register" className="btn btn-secondary">
+                  <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
                     <span>Start Earning More Today</span>
                     <ArrowRight className="w-5 h-5" />
                   </Link>
@@ -914,7 +914,7 @@ export default function ForSDRsPage() {
               </div>
               
               <div className="cta-buttons">
-                <Link href="/register" className="btn">
+                <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn">
                   <Sparkles className="w-5 h-5" />
                   Start Free Trial
                 </Link>

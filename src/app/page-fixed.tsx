@@ -42,7 +42,7 @@ export default function HomePageFixed() {
             </p>
             
             <div className="hero-buttons">
-              <Link href="/register" className="btn btn-accent">
+              <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-accent">
                 <span>Start Your Free Trial</span>
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
@@ -274,7 +274,7 @@ export default function HomePageFixed() {
             </p>
             
             <div className="hero-buttons" style={{ marginTop: 'var(--space-2xl)' }}>
-              <Link href="/register" className="btn btn-accent">
+              <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-accent">
                 <Sparkles className="w-5 h-5 mr-2" />
                 Start Free Trial
               </Link>

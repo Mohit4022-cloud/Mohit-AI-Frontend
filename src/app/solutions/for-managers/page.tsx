@@ -88,20 +88,20 @@ export default function ForManagersPage() {
             
             {/* Mobile Actions */}
             <div className="navbar-actions">
-              <Link href="/dashboard" className="btn btn-outline" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline" onClick={() => setMobileMenuOpen(false)}>
                 Check out the platform
               </Link>
-              <Link href="/register" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
                 Get Started
               </Link>
             </div>
           </div>
 
           <div className="navbar-actions desktop-only">
-            <Link href="/dashboard" className="btn btn-outline">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
               Check out the platform
             </Link>
-            <Link href="/register" className="btn btn-primary">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
               Get Started
             </Link>
           </div>

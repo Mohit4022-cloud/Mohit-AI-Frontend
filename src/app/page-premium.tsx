@@ -110,10 +110,10 @@ export default function PremiumHomePage() {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/dashboard" className="button-premium button-glass">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="button-premium button-glass">
               Check out the platform
             </Link>
-            <Link href="/register" className="button-premium button-primary-modern">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="button-premium button-primary-modern">
               Get Started
               <ArrowUpRight className="w-4 h-4" />
             </Link>
@@ -142,7 +142,7 @@ export default function PremiumHomePage() {
               </p>
               
               <div className="flex flex-wrap gap-4">
-                <Link href="/register" className="button-premium button-primary-modern button-magnetic">
+                <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="button-premium button-primary-modern button-magnetic">
                   <Sparkles className="w-5 h-5" />
                   Start Your Free Trial
                   <ArrowRight className="w-4 h-4" />
@@ -476,7 +476,7 @@ export default function PremiumHomePage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/register" className="button-premium button-primary-modern">
+                  <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="button-premium button-primary-modern">
                     <Sparkles className="w-5 h-5" />
                     Start Free Trial
                   </Link>

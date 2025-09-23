@@ -215,7 +215,7 @@ export default function FeaturesPage() {
             every time.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/register">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer">
               <Button
                 variant="outline"
                 className="px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-black font-medium rounded-lg transition-all duration-200"

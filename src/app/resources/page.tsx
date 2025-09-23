@@ -342,10 +342,10 @@ export default function ResourcesPage() {
           </div>
 
           <div className="navbar-actions">
-            <Link href="/login" className="navbar-btn-secondary">
-              Sign In
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="navbar-btn-secondary">
+              Check out the platform
             </Link>
-            <Link href="/dashboard" className="navbar-btn-primary">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="navbar-btn-primary">
               Get Started
             </Link>
           </div>

@@ -229,7 +229,7 @@ export default function SolutionsPage() {
           </div>
 
           <div className="navbar-actions">
-            <Link href="/dashboard" className="btn btn-outline">
+            <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
               Check out the platform
             </Link>
             <Link href="https://platform.mohit-ai.com" className="btn btn-primary">

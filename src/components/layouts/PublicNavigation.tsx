@@ -103,7 +103,7 @@ export function PublicNavigation() {
 
             {/* Aligned CTA buttons */}
             <div className="flex items-center gap-4 ml-8">
-              <Link href="/dashboard">
+              <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer">
                 <button className="ultra-button ultra-button-primary">
                   Check out the platform
                 </button>
@@ -216,7 +216,7 @@ export function PublicNavigation() {
               </Link>
 
               <div className="flex flex-col items-center gap-4 w-full px-4 mt-4">
-                <Link href="/dashboard" className="w-full">
+                <Link href="https://platform.mohit-ai.com" target="_blank" rel="noopener noreferrer" className="w-full">
                   <button className="ultra-button ultra-button-primary w-full">
                     Check out the platform
                   </button>
